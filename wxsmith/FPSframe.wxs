@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="FPSFrame">
+		<title>FreePictureSplitter</title>
+		<size>579,338</size>
+		<font>
+			<size>12</size>
+			<style>normal</style>
+			<weight>normal</weight>
+			<underlined>0</underlined>
+			<family>swiss</family>
+			<face>Segoe UI Symbol</face>
+		</font>
+		<object class="wxPanel" name="ID_PANELMAIN" variable="MainPanel" member="yes">
+			<pos>264,104</pos>
+			<object class="wxBoxSizer" variable="BackgroundSizer" member="no">
+				<orient>wxVERTICAL</orient>
+				<object class="sizeritem">
+					<object class="wxBoxSizer" variable="DirsSizer" member="no">
+						<object class="sizeritem">
+							<object class="wxStaticText" name="ID_STATICTEXTINPUT" variable="InputDirText" member="yes">
+								<label>(Input Directory)</label>
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="spacer">
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+							<size>123,8</size>
+						</object>
+						<object class="sizeritem">
+							<object class="wxStaticText" name="ID_STATICTEXTOUTPUT" variable="OutputDirText" member="yes">
+								<label>(Output Directory)</label>
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+					</object>
+					<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+					<border>5</border>
+					<option>1</option>
+				</object>
+				<object class="sizeritem">
+					<object class="wxGauge" name="ID_GAUGESPLIT" variable="SplitGauge" member="yes" />
+					<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+					<border>5</border>
+					<option>1</option>
+				</object>
+				<object class="sizeritem">
+					<object class="wxBoxSizer" variable="RowsColsSizer" member="no">
+						<object class="sizeritem">
+							<object class="wxStaticText" name="ID_STATICTEXTROWS" variable="RowsText" member="yes">
+								<label>Row Number:</label>
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxSpinCtrl" name="ID_SPINCTRLROWS" variable="RowsSpin" member="yes">
+								<value>0</value>
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxStaticText" name="ID_STATICTEXTCOLS" variable="ColsText" member="yes">
+								<label>Column Number:</label>
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxSpinCtrl" name="ID_SPINCTRLCOLS" variable="ColsSpin" member="yes">
+								<value>0</value>
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+					</object>
+					<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+					<border>5</border>
+					<option>1</option>
+				</object>
+				<object class="sizeritem">
+					<object class="wxBoxSizer" variable="ButtonsSizer" member="no">
+						<object class="sizeritem">
+							<object class="wxButton" name="ID_BUTTONSPLIT" variable="SplitBtn" member="yes">
+								<label>Split Now!</label>
+								<handler function="OnSplitBtnClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+						<object class="sizeritem">
+							<object class="wxButton" name="ID_BUTTONCANCEL" variable="CancelBtn" member="yes">
+								<label>Cancel</label>
+							</object>
+							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+							<border>5</border>
+							<option>1</option>
+						</object>
+					</object>
+					<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
+					<border>5</border>
+					<option>1</option>
+				</object>
+			</object>
+		</object>
+		<object class="wxMenuBar" variable="MainMenuBar" member="no">
+			<object class="wxMenu" variable="FileMenu" member="no">
+				<label>&amp;File</label>
+				<object class="wxMenu" name="idMenuOpen" variable="miOpen" member="yes">
+					<label>&amp;Open...</label>
+					<help>Open picture files.</help>
+					<object class="wxMenuItem" name="idMenuOpenDir" variable="miOpenDir" member="yes">
+						<label>Directory</label>
+						<help>Open a directory containing picture files.</help>
+						<handler function="OnmiOpenDirSelected" entry="EVT_MENU" />
+					</object>
+				</object>
+				<object class="wxMenuItem" name="idMenuQuit" variable="miQuit" member="no">
+					<label>Quit</label>
+					<accel>Alt-F4</accel>
+					<help>Quit the application</help>
+					<handler function="OnQuit" entry="EVT_MENU" />
+				</object>
+			</object>
+			<object class="wxMenu" variable="HelpMenu" member="no">
+				<label>Help</label>
+				<object class="wxMenuItem" name="idMenuAbout" variable="miAbout" member="no">
+					<label>About</label>
+					<accel>F1</accel>
+					<help>Show info about this application</help>
+					<handler function="OnAbout" entry="EVT_MENU" />
+				</object>
+			</object>
+		</object>
+		<object class="wxStatusBar" name="ID_STATUSBAR1" variable="MainStatusBar" member="yes">
+			<fields>1</fields>
+			<widths>-1</widths>
+			<styles>wxSB_NORMAL</styles>
+		</object>
+	</object>
+</wxsmith>
