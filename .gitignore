@@ -30,11 +30,11 @@
 *.exe
 *.out
 *.app
+bin/
+obj/
 
 # Project Files
 *.cbp
-*.depend
-*.layout
 *.vcxproj
 *.sln
 
@@ -45,6 +45,3 @@
 
 # Resources
 *.res
-
-# wxSmith
-*.wxs
