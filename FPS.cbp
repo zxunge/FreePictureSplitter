@@ -80,14 +80,14 @@
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-mthreads" />
 			<Add option="-Winvalid-pch" />
-			<Add option="-include wx_pch.h" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
-			<Add option="-DWX_PRECOMP" />
 			<Add directory="$(#wx)/include" />
+			<Add directory="." />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="$(#wx)/include" />
@@ -115,8 +115,9 @@
 		<Unit filename="include/FPSMain.h" />
 		<Unit filename="include/SplitThread.h" />
 		<Unit filename="include/fpsSplit.h" />
-		<Unit filename="include/wx_pch.h" />
-		<Unit filename="resource.rc">
+		<Unit filename="include/version.h" />
+		<Unit filename="resources/FPS.ico" />
+		<Unit filename="resources/resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="src/FPSApp.cpp" />
@@ -125,10 +126,16 @@
 		<Unit filename="src/fpsSplit.cpp" />
 		<Unit filename="wxsmith/FPSframe.wxs" />
 		<Extensions>
+			<AutoVersioning>
+				<Scheme minor_max="1" build_max="0" rev_max="0" rev_rand_max="1" build_times_to_increment_minor="100" />
+				<Settings autoincrement="0" date_declarations="1" use_define="0" update_manifest="0" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="include\version.h" />
+				<Changes_Log show_changes_editor="1" app_title="released version %M.%m.%b of %p" changeslog_path="ChangeLog" />
+				<Code header_guard="FPS_VERSION_H" namespace="FPSVersion" prefix="" />
+			</AutoVersioning>
 			<wxsmith version="1">
-				<gui name="wxWidgets" src="FPSApp.cpp" main="FPSFrame" init_handlers="necessary" language="CPP" />
+				<gui name="wxWidgets" src="src/FPSApp.cpp" main="FPSFrame" init_handlers="necessary" language="CPP" />
 				<resources>
-					<wxFrame wxs="wxsmith/FPSframe.wxs" src="FPSMain.cpp" hdr="FPSMain.h" fwddecl="0" i18n="1" name="FPSFrame" language="CPP" />
+					<wxFrame wxs="wxsmith/FPSframe.wxs" src="src/FPSMain.cpp" hdr="include/FPSMain.h" fwddecl="0" i18n="1" name="FPSFrame" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

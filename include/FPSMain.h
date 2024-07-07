@@ -4,7 +4,7 @@
  * Author:    Grit Clef (3396563372@qq.com)
  * Created:   2024-06-24
  * Copyright: Grit Clef (https://zxunge.github.io)
- * License:
+ * License:   GPL v3
  **************************************************************/
 
 #ifndef FPSMAIN_H
@@ -55,7 +55,7 @@ class FPSFrame: public wxFrame
         static const wxWindowID idMenuOpen;
         static const wxWindowID idMenuQuit;
         static const wxWindowID idMenuAbout;
-        static const wxWindowID ID_STATUSBAR1;
+        static const wxWindowID ID_STATUSBARMAIN;
         //*)
         int fileCount;
 
@@ -64,6 +64,7 @@ class FPSFrame: public wxFrame
         wxButton* SplitBtn;
         wxGauge* SplitGauge;
         wxMenu* miOpen;
+        wxMenuBar* MainMenuBar;
         wxMenuItem* miOpenDir;
         wxPanel* MainPanel;
         wxSpinCtrl* ColsSpin;

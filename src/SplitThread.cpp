@@ -1,6 +1,11 @@
-/************************************
- *  Copyright (c) 2024, Grit Clef
- */
+/***************************************************************
+ * Name:      SplitThread.cpp
+ * Purpose:   Code for Split Thread
+ * Author:    Grit Clef (3396563372@qq.com)
+ * Created:   2024-06-24
+ * Copyright: Grit Clef (https://zxunge.github.io)
+ * License:   GPL v3
+ **************************************************************/
 
 #include <wx/app.h>
 #include <wx/dir.h>
@@ -10,12 +15,19 @@
 
 DECLARE_APP(FPSApp)
 
+static inline void SendEvent(FPSFrame *frame, int id)
+{
+    wxThreadEvent event(wxEVT_THREAD, SPLITTER_EVENT);
+    event.SetInt(id);
+    wxQueueEvent(frame, event.Clone());
+}
+
 SplitThread::~SplitThread()
 {
     //dtor
 }
 
-int SplitThread::GetFileCount()
+int SplitThread::GetFileCount(const wxString &fileSpec)
 {
     // 本函数只考虑当前目录下文件，不递归子文件夹
     int fileCount = 0;
@@ -32,47 +44,51 @@ int SplitThread::GetFileCount()
     return fileCount;
 }
 
+int SplitThread::GetAllFilesCount()
+{
+    int fileCount = 0;
+    for (const wxString &fileSpec : fileSpecs)
+        fileCount += GetFileCount(fileSpec);
+    return fileCount;
+}
 
 void *SplitThread::Entry()
 {
     wxString inFilePath, inFileName;
-    wxDir dirIn(m_InputDir),
-          dirOut(m_OutputDir);
-    int fileCount = GetFileCount();
+    wxDir    dirIn(m_InputDir),
+             dirOut(m_OutputDir);
+    int      fileCount = 0;
+    bool     cont      = false;
 
-    wxThreadEvent eventBeg(wxEVT_THREAD, WORKER_EVENT);
-    eventBeg.SetInt(ID_STARTED);
-    wxQueueEvent(m_Frame, eventBeg.Clone());
+    SendEvent(m_Frame, ID_STARTED);
 
-    bool cont = dirIn.GetFirst(&inFileName, fileSpec, wxDIR_FILES);
-
-    for (int i = 1; i <= fileCount && cont; ++i)
+    for (const wxString &fileSpec : fileSpecs)
     {
-        inFilePath = m_InputDir + _T("\\") + inFileName;     // 获取文件名和路径
-        fpsSplit(inFilePath, m_OutputDir, m_Rows, m_Cols);
+        fileCount = GetFileCount(fileSpec);
+        cont = dirIn.GetFirst(&inFileName, fileSpec, wxDIR_FILES);
 
-        wxThreadEvent eventOne(wxEVT_THREAD, WORKER_EVENT);
-        eventOne.SetInt(ID_ENDED_ONE_FILE);
-        wxQueueEvent(m_Frame, eventOne.Clone());
-
-        if (TestDestroy())
+        for (int i = 1; i <= fileCount && cont; ++i)
         {
-            dirIn.Close();
-            dirOut.Close();
-            wxThreadEvent event(wxEVT_THREAD, WORKER_EVENT);
-            event.SetInt(ID_ENDED_ALL_FILES);
-            wxQueueEvent(m_Frame, event.Clone());
-            return nullptr;
+            inFilePath = m_InputDir + _T("\\") + inFileName;     // 获取文件名和路径
+            fpsSplit(inFilePath, m_OutputDir, m_Rows, m_Cols);
+
+            SendEvent(m_Frame, ID_ENDED_ONE_FILE);
+
+            if (TestDestroy())
+            {
+                dirIn.Close();
+                dirOut.Close();
+                SendEvent(m_Frame, ID_CANCELED);
+                return nullptr;
+            }
+
+            cont = dirIn.GetNext(&inFileName);
         }
-
-        cont = dirIn.GetNext(&inFileName);
     }
-    wxThreadEvent event(wxEVT_THREAD, WORKER_EVENT);
-    event.SetInt(ID_ENDED_ALL_FILES);
-    wxQueueEvent(m_Frame, event.Clone());
-
     dirIn.Close();
     dirOut.Close();
+
+    SendEvent(m_Frame, ID_ENDED_ALL_FILES);
 
     return nullptr;
 }

@@ -1,6 +1,11 @@
-/************************************
- *  Copyright (c) 2024, Grit Clef
- */
+/***************************************************************
+ * Name:      fpsSplit.cpp
+ * Purpose:   Code for actual splitting operations
+ * Author:    Grit Clef (3396563372@qq.com)
+ * Created:   2024-06-24
+ * Copyright: Grit Clef (https://zxunge.github.io)
+ * License:   GPL v3
+ **************************************************************/
 
 #include "fpsSplit.h"
 #include <vector>
@@ -12,7 +17,7 @@
 #include <wx/msgdlg.h>
 #include <cstdlib>
 
-using namespace std;
+using std::vector;
 
 static wxString fpsGetFileExtension(const wxString &filename)
 {
