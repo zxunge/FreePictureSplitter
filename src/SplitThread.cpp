@@ -1,5 +1,4 @@
 /***************************************************************
- * Name:      SplitThread.cpp
  * Purpose:   Code for Split Thread
  * Author:    Grit Clef (3396563372@qq.com)
  * Created:   2024-06-24
@@ -30,11 +29,11 @@ SplitThread::~SplitThread()
 int SplitThread::GetFileCount(const wxString &fileSpec)
 {
     // 本函数只考虑当前目录下文件，不递归子文件夹
-    int fileCount = 0;
+    int fileCount {0};
     wxDir dir(m_InputDir);
     wxString filePath;
 
-    bool cont = dir.GetFirst(&filePath, fileSpec, wxDIR_FILES);
+    bool cont {dir.GetFirst(&filePath, fileSpec, wxDIR_FILES)};
     while (cont)
     {
         ++fileCount;
@@ -46,7 +45,7 @@ int SplitThread::GetFileCount(const wxString &fileSpec)
 
 int SplitThread::GetAllFilesCount()
 {
-    int fileCount = 0;
+    int fileCount {0};
     for (const wxString &fileSpec : fileSpecs)
         fileCount += GetFileCount(fileSpec);
     return fileCount;
@@ -57,8 +56,8 @@ void *SplitThread::Entry()
     wxString inFilePath, inFileName;
     wxDir    dirIn(m_InputDir),
              dirOut(m_OutputDir);
-    int      fileCount = 0;
-    bool     cont      = false;
+    int      fileCount {0};
+    bool     cont      {false};
 
     SendEvent(m_Frame, ID_STARTED);
 
@@ -67,7 +66,7 @@ void *SplitThread::Entry()
         fileCount = GetFileCount(fileSpec);
         cont = dirIn.GetFirst(&inFileName, fileSpec, wxDIR_FILES);
 
-        for (int i = 1; i <= fileCount && cont; ++i)
+        for (int i {1}; i <= fileCount && cont; ++i)
         {
             inFilePath = m_InputDir + _T("\\") + inFileName;     // 获取文件名和路径
             fpsSplit(inFilePath, m_OutputDir, m_Rows, m_Cols);

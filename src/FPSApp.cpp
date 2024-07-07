@@ -1,5 +1,4 @@
 /***************************************************************
- * Name:      FPSApp.cpp
  * Purpose:   Code for Application Class
  * Author:    Grit Clef (3396563372@qq.com)
  * Created:   2024-06-24

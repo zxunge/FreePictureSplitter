@@ -1,5 +1,4 @@
 /***************************************************************
- * Name:      FPSMain.cpp
  * Purpose:   Code for Application Frame
  * Author:    Grit Clef (3396563372@qq.com)
  * Created:   2024-06-24
@@ -180,10 +179,7 @@ void FPSFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     OKBtn -> SetDefault();
 
     topsizer -> Add(OKBtn, 0, wxALL | wxALIGN_RIGHT, 15);
-
-#if wxUSE_STATLINE
     topsizer -> Add(new wxStaticLine(&dlg, wxID_ANY), 0, wxEXPAND | wxLEFT | wxRIGHT, 10);
-#endif // wxUSE_STATLINE
 
     dlg.SetSizer(topsizer);
     topsizer -> Fit(&dlg);
@@ -213,14 +209,14 @@ void FPSFrame::OnSplitBtnClick(wxCommandEvent& WXUNUSED(event))
         wxLogError(_("Can't create thread!"));
         return;
     }
-    fileCount = splitThread->GetAllFilesCount();
     splitThread->Run();
 }
 
 void FPSFrame::OnUpdateGauge(wxThreadEvent &event)
 {
     static int count,
-               sgRange = SplitGauge->GetRange();
+               sgRange   {SplitGauge->GetRange()},
+               fileCount {splitThread->GetAllFilesCount()};
 
     switch (event.GetInt())
     {
