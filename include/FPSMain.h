@@ -1,5 +1,4 @@
 /***************************************************************
- * Name:      FPSMain.h
  * Purpose:   Defines Application Frame
  * Author:    Grit Clef (3396563372@qq.com)
  * Created:   2024-06-24
@@ -57,7 +56,6 @@ class FPSFrame: public wxFrame
         static const wxWindowID idMenuAbout;
         static const wxWindowID ID_STATUSBARMAIN;
         //*)
-        int fileCount;
 
         //(*Declarations(FPSFrame)
         wxButton* CancelBtn;
