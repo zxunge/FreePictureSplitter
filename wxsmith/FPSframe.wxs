@@ -2,7 +2,8 @@
 <wxsmith>
 	<object class="wxFrame" name="FPSFrame">
 		<title>FreePictureSplitter</title>
-		<size>579,338</size>
+		<icon>resources/FPS.ico</icon>
+		<size>750,500</size>
 		<font>
 			<size>12</size>
 			<style>normal</style>
@@ -103,6 +104,7 @@
 						<object class="sizeritem">
 							<object class="wxButton" name="ID_BUTTONCANCEL" variable="CancelBtn" member="yes">
 								<label>Cancel</label>
+								<handler function="OnCancelBtnClick" entry="EVT_BUTTON" />
 							</object>
 							<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 							<border>5</border>
@@ -115,7 +117,7 @@
 				</object>
 			</object>
 		</object>
-		<object class="wxMenuBar" variable="MainMenuBar" member="no">
+		<object class="wxMenuBar" variable="MainMenuBar" member="yes">
 			<object class="wxMenu" variable="FileMenu" member="no">
 				<label>&amp;File</label>
 				<object class="wxMenu" name="idMenuOpen" variable="miOpen" member="yes">
@@ -123,6 +125,7 @@
 					<help>Open picture files.</help>
 					<object class="wxMenuItem" name="idMenuOpenDir" variable="miOpenDir" member="yes">
 						<label>Directory</label>
+						<accel>Ctrl-O</accel>
 						<help>Open a directory containing picture files.</help>
 						<handler function="OnmiOpenDirSelected" entry="EVT_MENU" />
 					</object>
@@ -144,7 +147,7 @@
 				</object>
 			</object>
 		</object>
-		<object class="wxStatusBar" name="ID_STATUSBAR1" variable="MainStatusBar" member="yes">
+		<object class="wxStatusBar" name="ID_STATUSBARMAIN" variable="MainStatusBar" member="yes">
 			<fields>1</fields>
 			<widths>-1</widths>
 			<styles>wxSB_NORMAL</styles>

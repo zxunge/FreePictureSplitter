@@ -1,15 +1,17 @@
-/************************************
- *  Copyright (c) 2024, Grit Clef
- */
+/***************************************************************
+ * Name:      fpsSplit.h
+ * Purpose:   Code for actual splitting operations
+ * Author:    Grit Clef (3396563372@qq.com)
+ * Created:   2024-06-24
+ * Copyright: Grit Clef (https://zxunge.github.io)
+ * License:   GPL v3
+ **************************************************************/
 
 #ifndef FPSSPLIT_H_INCLUDED
 #define FPSSPLIT_H_INCLUDED
 
 #include <wx/string.h>
 #include <wx/dir.h>
-
-//const wxString fileSpec = _T("{*.jpg,*.png,*.tiff,*.bmp,*.jpeg}");
-const wxString fileSpec = _T("*.jpg");
 
 // 分割主函数，rows为分割行数，cols为分割列数，InputDir为欲分割图片所在文件夹
 int fpsSplit(const wxString &inputFile, const wxString &outputDir, int rows, int cols);

@@ -4,18 +4,23 @@
  * Author:    Grit Clef (3396563372@qq.com)
  * Created:   2024-06-24
  * Copyright: Grit Clef (https://zxunge.github.io)
- * License:
+ * License:   GPL v3
  **************************************************************/
 
-#include "wx_pch.h"
 #include "FPSMain.h"
 #include "SplitThread.h"
+#include "version.h"
+#include <wx/statline.h>
 #include <wx/msgdlg.h>
+#include <wx/log.h>
 #include <wx/dirdlg.h>
 #include <wx/wxhtml.h>
 
 //(*InternalHeaders(FPSFrame)
+#include <wx/bitmap.h>
 #include <wx/font.h>
+#include <wx/icon.h>
+#include <wx/image.h>
 #include <wx/intl.h>
 #include <wx/string.h>
 //*)
@@ -37,7 +42,7 @@ const wxWindowID FPSFrame::idMenuOpenDir = wxNewId();
 const wxWindowID FPSFrame::idMenuOpen = wxNewId();
 const wxWindowID FPSFrame::idMenuQuit = wxNewId();
 const wxWindowID FPSFrame::idMenuAbout = wxNewId();
-const wxWindowID FPSFrame::ID_STATUSBAR1 = wxNewId();
+const wxWindowID FPSFrame::ID_STATUSBARMAIN = wxNewId();
 //*)
 
 SplitThread *splitThread;
@@ -45,7 +50,7 @@ SplitThread *splitThread;
 BEGIN_EVENT_TABLE(FPSFrame,wxFrame)
     //(*EventTable(FPSFrame)
     //*)
-    EVT_THREAD(WORKER_EVENT, FPSFrame::OnUpdateGauge)
+    EVT_THREAD(SPLITTER_EVENT, FPSFrame::OnUpdateGauge)
 END_EVENT_TABLE()
 
 FPSFrame::FPSFrame(wxWindow* parent,wxWindowID id)
@@ -57,14 +62,18 @@ FPSFrame::FPSFrame(wxWindow* parent,wxWindowID id)
     wxBoxSizer* RowsColsSizer;
     wxMenu* FileMenu;
     wxMenu* HelpMenu;
-    wxMenuBar* MainMenuBar;
     wxMenuItem* miAbout;
     wxMenuItem* miQuit;
 
     Create(parent, id, _("FreePictureSplitter"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("id"));
-    SetClientSize(wxSize(579,338));
+    SetClientSize(wxSize(750,500));
     wxFont thisFont(12,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL,false,_T("Segoe UI Symbol"),wxFONTENCODING_DEFAULT);
     SetFont(thisFont);
+    {
+        wxIcon FrameIcon;
+        FrameIcon.CopyFromBitmap(wxBitmap(wxImage(_T("resources/FPS.ico"))));
+        SetIcon(FrameIcon);
+    }
     MainPanel = new wxPanel(this, ID_PANELMAIN, wxPoint(264,104), wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANELMAIN"));
     BackgroundSizer = new wxBoxSizer(wxVERTICAL);
     DirsSizer = new wxBoxSizer(wxHORIZONTAL);
@@ -98,7 +107,7 @@ FPSFrame::FPSFrame(wxWindow* parent,wxWindowID id)
     MainMenuBar = new wxMenuBar();
     FileMenu = new wxMenu();
     miOpen = new wxMenu();
-    miOpenDir = new wxMenuItem(miOpen, idMenuOpenDir, _("Directory"), _("Open a directory containing picture files."), wxITEM_NORMAL);
+    miOpenDir = new wxMenuItem(miOpen, idMenuOpenDir, _("Directory\tCtrl-O"), _("Open a directory containing picture files."), wxITEM_NORMAL);
     miOpen->Append(miOpenDir);
     FileMenu->Append(idMenuOpen, _("&Open..."), miOpen, _("Open picture files."));
     miQuit = new wxMenuItem(FileMenu, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -109,7 +118,7 @@ FPSFrame::FPSFrame(wxWindow* parent,wxWindowID id)
     HelpMenu->Append(miAbout);
     MainMenuBar->Append(HelpMenu, _("Help"));
     SetMenuBar(MainMenuBar);
-    MainStatusBar = new wxStatusBar(this, ID_STATUSBAR1, 0, _T("ID_STATUSBAR1"));
+    MainStatusBar = new wxStatusBar(this, ID_STATUSBARMAIN, 0, _T("ID_STATUSBARMAIN"));
     int __wxStatusBarWidths_1[1] = { -1 };
     int __wxStatusBarStyles_1[1] = { wxSB_NORMAL };
     MainStatusBar->SetFieldsCount(1,__wxStatusBarWidths_1);
@@ -139,13 +148,13 @@ void FPSFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxBoxSizer   *topsizer;
     wxHtmlWindow *html;
-    wxDialog dlg(this, wxID_ANY, wxString(_("FreePictureSplitter Help")));
+    wxDialog dlg(this, wxID_ANY, wxString(_("About FreePictureSplitter")));
 
     topsizer = new wxBoxSizer(wxVERTICAL);
 
     html = new wxHtmlWindow(&dlg, wxID_ANY, wxDefaultPosition, wxSize(380, 160), wxHW_SCROLLBAR_NEVER);
     html -> SetBorders(0);
-    html -> SetPage(_("                                                   \
+    html -> SetPage(wxString(_("                                          \
         <html>                                                            \
         <head>                                                            \
             <meta charset=\"utf-8\" lang=\"en\">                          \
@@ -155,18 +164,26 @@ void FPSFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
             <p>Author: Grit Clef</p>                                      \
             <p>Contact: 3396563372@qq.com</p>                             \
             <p>Personal Webpage: https://zxunge.github.io</p>             \
-        </body>                                                           \
+            <h3>Version: ") +
+    FPSVersion::FULLVERSION_STRING +
+    FPSVersion::STATUS +
+    _T("</h3>") +
+    _T("</body>                                                           \
         </html>                                                           \
-    "));
+    ")));
     html -> SetInitialSize(wxSize(html -> GetInternalRepresentation() -> GetWidth(),
                                   html -> GetInternalRepresentation() -> GetHeight()));
 
     topsizer -> Add(html, 1, wxALL, 10);
 
-    wxButton *bu1 = new wxButton(&dlg, wxID_OK, _("OK"));
-    bu1 -> SetDefault();
+    wxButton *OKBtn = new wxButton(&dlg, wxID_OK, _("OK"));
+    OKBtn -> SetDefault();
 
-    topsizer -> Add(bu1, 0, wxALL | wxALIGN_RIGHT, 15);
+    topsizer -> Add(OKBtn, 0, wxALL | wxALIGN_RIGHT, 15);
+
+#if wxUSE_STATLINE
+    topsizer -> Add(new wxStaticLine(&dlg, wxID_ANY), 0, wxEXPAND | wxLEFT | wxRIGHT, 10);
+#endif // wxUSE_STATLINE
 
     dlg.SetSizer(topsizer);
     topsizer -> Fit(&dlg);
@@ -189,14 +206,14 @@ void FPSFrame::OnSplitBtnClick(wxCommandEvent& WXUNUSED(event))
         return;
 
     OutputDirText->SetLabel(dlgOutput.GetPath());
-    splitThread = new SplitThread(InputDirText->GetLabel(), OutputDirText->GetLabel(), RowsSpin->GetValue(), ColsSpin->GetValue());
+    splitThread = new SplitThread(InputDirText->GetLabel(), OutputDirText->GetLabel(),
+                                  RowsSpin->GetValue(), ColsSpin->GetValue(), this);
     if (splitThread->Create() != wxTHREAD_NO_ERROR)
     {
         wxLogError(_("Can't create thread!"));
         return;
     }
-    fileCount = splitThread->GetFileCount();
-    splitThread->m_Frame = this;
+    fileCount = splitThread->GetAllFilesCount();
     splitThread->Run();
 }
 
@@ -220,6 +237,11 @@ void FPSFrame::OnUpdateGauge(wxThreadEvent &event)
         wxMessageBox(_("Splitting successfully finished!"), _("FreePictureSplitter Note"), wxICON_INFORMATION, this);
         SplitGauge -> SetValue(0);
         break;
+
+    case ID_CANCELED:
+        wxMessageBox(_("Splitting canceled."), _("FreePictureSplitter Note"), wxICON_INFORMATION, this);
+        SplitGauge -> SetValue(0);
+        break;
     }
 }
 
@@ -227,3 +249,4 @@ void FPSFrame::OnCancelBtnClick(wxCommandEvent& WXUNUSED(event))
 {
     splitThread->Delete();
 }
+

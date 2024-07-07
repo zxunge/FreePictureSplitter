@@ -4,7 +4,7 @@
  * Author:    Grit Clef (3396563372@qq.com)
  * Created:   2024-06-24
  * Copyright: Grit Clef (https://zxunge.github.io)
- * License:
+ * License:   GPL v3
  **************************************************************/
 
 #include "FPSApp.h"
