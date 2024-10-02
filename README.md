@@ -16,7 +16,7 @@ Quality control | ×
 
 ## Building
 > [!NOTE]
-> We only tested it on Windows. On UINX/Linux, the follwing commands may work, too.
+> We only tested it on Windows. On UNIX/Linux, the following commands may work, too.
 ### Windows
 > [!NOTE]
 > We only support from MSYS2 terminal.
