@@ -30,12 +30,8 @@
 *.exe
 *.out
 *.app
-bin/
-obj/
 
 # Project Files
-*.cbp
-*.layout
 *.vcxproj
 *.sln
 

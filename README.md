@@ -1,13 +1,44 @@
 # Introduction
-A fast, small, and easy-to-use picture splitter!
+FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
 
 ## Goals 
 FreePictureSplitter has the following goals:
-- [X] Batch splitting
-- [X] Multiple picture formats 
-- [X] Splitting by columns and rows
-- [ ] Single picture splitting
-- [ ] Splitting by pixels
-- [ ] User configurations
-- [ ] HTML generation
-- [ ] Quality control
+Goals | Implementation
+------|------
+Batch splitting | 1.x only; working in 2.x
+Multiple picture formats | √ 
+Splitting by columns and rows | √ 
+Single picture splitting | 2.x only
+Splitting by pixels | 2.x only
+User configurations | ×
+HTML generation | ×
+Quality control | ×
+
+## Building
+> [!NOTE]
+> We only tested it on Windows. On UINX/Linux, the follwing commands may work, too.
+### Windows
+> [!NOTE]
+> We only support from MSYS2 terminal.
+First, install necessary packages.
+````
+pacman -S mingw-w64-x86_64-toolchain                \
+		  mingw-w64-x86_64-wxwidgets3.2-msw-libs    \
+		  mingw-w64-x86_64-wxwidgets3.2-common-libs \
+		  base-devel                                \
+		  git
+````
+Then, clone the source.
+````
+git clone https://github.com/zxunge/FreePictureSplitter.git
+````
+Enter the source directory, run
+````
+mkdir build && cd $_
+cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
+make -j$(nproc)
+bin/FreePictureSplitter
+````
+Try it!
+> [!NOTE]
+> We only support building using clang, as there will be puzzling errors using gcc.
