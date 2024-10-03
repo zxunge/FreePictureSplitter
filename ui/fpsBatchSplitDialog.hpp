@@ -1,6 +1,6 @@
 #ifndef FPSBATCHSPLITDIALOG_HPP
 #define FPSBATCHSPLITDIALOG_HPP
-#include "UIBase.hpp"
+#include "UiBase.hpp"
 
 class fpsBatchSplitDialog : public fpsBatchSplitDialogBase
 {
