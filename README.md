@@ -20,13 +20,14 @@ Quality control | ×
 ### Windows
 > [!NOTE]
 > We only support from MSYS2 terminal.
+
 First, install necessary packages.
 ````
-pacman -S mingw-w64-x86_64-toolchain                \
-		  mingw-w64-x86_64-wxwidgets3.2-msw-libs    \
-		  mingw-w64-x86_64-wxwidgets3.2-common-libs \
-		  base-devel                                \
-		  git
+pacman -S mingw-w64-clang-x86_64-toolchain                \
+          mingw-w64-clang-x86_64-wxwidgets3.2-msw-libs    \
+          mingw-w64-clang-x86_64-wxwidgets3.2-common-libs \
+          base-devel                                      \
+          git
 ````
 Then, clone the source.
 ````
@@ -39,6 +40,7 @@ cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
 make -j$(nproc)
 bin/FreePictureSplitter
 ````
-Try it!
 > [!NOTE]
 > We only support building using clang, as there will be puzzling errors using gcc.
+
+Try it!
