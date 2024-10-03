@@ -18,9 +18,9 @@ jobs:
         install: >-
           mingw-w64-clang-x86_64-toolchain
           mingw-w64-clang-x86_64-cmake
-          mingw-w64-clang-x86_64-make
           mingw-w64-clang-x86_64-wxwidgets3.2-common
           mingw-w64-clang-x86_64-wxwidgets3.2-msw
+          make
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
       run: |
         cd FreePictureSplitter/
         mkdir build && cd $_
-        cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
+        cmake .. -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
         make -j$(nproc)
 
     - name: Upload artifact
