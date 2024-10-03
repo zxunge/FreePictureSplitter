@@ -42,3 +42,7 @@
 
 # Resources
 *.res
+
+# CMake build files
+build/
+include/config.h

@@ -196,7 +196,7 @@ MainFrameBase::MainFrameBase(wxWindow* parent, wxWindowID id, const wxString& ti
     this->SetMenuBar(m_mainMenuBar);
 
     m_fileMenu = new wxMenu();
-    m_mainMenuBar->Append(m_fileMenu, _("File"));
+    m_mainMenuBar->Append(m_fileMenu, _("&File"));
 
     m_openItem = new wxMenuItem(m_fileMenu, wxID_OPEN, _("Open a picture\tCtrl-O"),
                                 _("Open a picture file for splitting."), wxITEM_NORMAL);
@@ -206,7 +206,7 @@ MainFrameBase::MainFrameBase(wxWindow* parent, wxWindowID id, const wxString& ti
     m_fileMenu->Append(m_quitItem);
 
     m_helpMenu = new wxMenu();
-    m_mainMenuBar->Append(m_helpMenu, _("Help"));
+    m_mainMenuBar->Append(m_helpMenu, _("&Help"));
 
     m_aboutItem = new wxMenuItem(m_helpMenu, wxID_ABOUT, _("About..."), _("About FreePicturSplitter"), wxITEM_NORMAL);
     m_helpMenu->Append(m_aboutItem);
@@ -267,8 +267,167 @@ fpsBatchSplitDialogBase::fpsBatchSplitDialogBase(wxWindow* parent, wxWindowID id
         bBitmapLoaded = true;
     }
 
+    wxBoxSizer* panelSizer = new wxBoxSizer(wxVERTICAL);
+    this->SetSizer(panelSizer);
+
+    m_mainPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDLG_UNIT(this, wxSize(-1, -1)), wxTAB_TRAVERSAL);
+
+    panelSizer->Add(m_mainPanel, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
+    m_mainPanel->SetSizer(mainSizer);
+
+    wxBoxSizer* horiSizer = new wxBoxSizer(wxHORIZONTAL);
+
+    mainSizer->Add(horiSizer, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    wxBoxSizer* optionSizer = new wxBoxSizer(wxVERTICAL);
+
+    horiSizer->Add(optionSizer, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_byNumPanel = new wxPanel(m_mainPanel, wxID_ANY, wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)),
+                               wxTAB_TRAVERSAL | wxBORDER_RAISED);
+    m_byNumPanel->SetBackgroundColour(wxColour(wxT("rgb(255,255,236)")));
+
+    optionSizer->Add(m_byNumPanel, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* numOptionSizer = new wxBoxSizer(wxVERTICAL);
+    m_byNumPanel->SetSizer(numOptionSizer);
+
+    m_numRadio = new wxRadioButton(m_byNumPanel, wxID_ANY, _("Split picture by row and column counts"),
+                                   wxDefaultPosition, wxDLG_UNIT(m_byNumPanel, wxSize(-1, -1)), 0);
+    m_numRadio->SetValue(1);
+
+    numOptionSizer->Add(m_numRadio, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* txtSpinSizerNumRow = new wxBoxSizer(wxHORIZONTAL);
+
+    numOptionSizer->Add(txtSpinSizerNumRow, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_rowsTxt = new wxStaticText(m_byNumPanel, wxID_ANY, _("Number of rows:"), wxDefaultPosition,
+                                 wxDLG_UNIT(m_byNumPanel, wxSize(-1, -1)), 0);
+
+    txtSpinSizerNumRow->Add(m_rowsTxt, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_rowSpin = new wxSpinCtrl(m_byNumPanel, wxID_ANY, wxT("0"), wxDefaultPosition,
+                               wxDLG_UNIT(m_byNumPanel, wxSize(-1, -1)), wxSP_ARROW_KEYS);
+    m_rowSpin->SetRange(0, 100);
+    m_rowSpin->SetValue(0);
+
+    txtSpinSizerNumRow->Add(m_rowSpin, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* txtSpinSizerNumCol = new wxBoxSizer(wxHORIZONTAL);
+
+    numOptionSizer->Add(txtSpinSizerNumCol, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_colsTxt = new wxStaticText(m_byNumPanel, wxID_ANY, _("Number of columns:"), wxDefaultPosition,
+                                 wxDLG_UNIT(m_byNumPanel, wxSize(-1, -1)), 0);
+
+    txtSpinSizerNumCol->Add(m_colsTxt, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_colSpin = new wxSpinCtrl(m_byNumPanel, wxID_ANY, wxT("0"), wxDefaultPosition,
+                               wxDLG_UNIT(m_byNumPanel, wxSize(-1, -1)), wxSP_ARROW_KEYS);
+    m_colSpin->SetRange(0, 100);
+    m_colSpin->SetValue(0);
+
+    txtSpinSizerNumCol->Add(m_colSpin, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_staticLine = new wxStaticLine(m_mainPanel, wxID_ANY, wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)),
+                                    wxLI_HORIZONTAL);
+
+    optionSizer->Add(m_staticLine, 0, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_byPixelPanel = new wxPanel(m_mainPanel, wxID_ANY, wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)),
+                                 wxTAB_TRAVERSAL | wxBORDER_RAISED);
+    m_byPixelPanel->SetBackgroundColour(wxColour(wxT("rgb(255,255,236)")));
+
+    optionSizer->Add(m_byPixelPanel, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* pixelOptionSizer = new wxBoxSizer(wxVERTICAL);
+    m_byPixelPanel->SetSizer(pixelOptionSizer);
+
+    m_pixelRadio = new wxRadioButton(m_byPixelPanel, wxID_ANY, _("Split picture by pixels"), wxDefaultPosition,
+                                     wxDLG_UNIT(m_byPixelPanel, wxSize(-1, -1)), 0);
+    m_pixelRadio->SetValue(1);
+
+    pixelOptionSizer->Add(m_pixelRadio, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* txtSpinSizerPixHeight = new wxBoxSizer(wxHORIZONTAL);
+
+    pixelOptionSizer->Add(txtSpinSizerPixHeight, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_heightTxt = new wxStaticText(m_byPixelPanel, wxID_ANY, _("Height:"), wxDefaultPosition,
+                                   wxDLG_UNIT(m_byPixelPanel, wxSize(-1, -1)), 0);
+
+    txtSpinSizerPixHeight->Add(m_heightTxt, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_heightSpin = new wxSpinCtrl(m_byPixelPanel, wxID_ANY, wxT("0"), wxDefaultPosition,
+                                  wxDLG_UNIT(m_byPixelPanel, wxSize(-1, -1)), wxSP_ARROW_KEYS);
+    m_heightSpin->SetRange(0, 100);
+    m_heightSpin->SetValue(0);
+
+    txtSpinSizerPixHeight->Add(m_heightSpin, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* txtSpinSizerPixWidth = new wxBoxSizer(wxHORIZONTAL);
+
+    pixelOptionSizer->Add(txtSpinSizerPixWidth, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_widthTxt = new wxStaticText(m_byPixelPanel, wxID_ANY, _("Width:"), wxDefaultPosition,
+                                  wxDLG_UNIT(m_byPixelPanel, wxSize(-1, -1)), 0);
+
+    txtSpinSizerPixWidth->Add(m_widthTxt, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_widthSpin = new wxSpinCtrl(m_byPixelPanel, wxID_ANY, wxT("0"), wxDefaultPosition,
+                                 wxDLG_UNIT(m_byPixelPanel, wxSize(-1, -1)), wxSP_ARROW_KEYS);
+    m_widthSpin->SetRange(0, 100);
+    m_widthSpin->SetValue(0);
+
+    txtSpinSizerPixWidth->Add(m_widthSpin, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_scPicsWnd = new wxScrolledWindow(m_mainPanel, wxID_ANY, wxDefaultPosition,
+                                       wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), wxHSCROLL | wxVSCROLL);
+    m_scPicsWnd->SetScrollRate(5, 5);
+
+    horiSizer->Add(m_scPicsWnd, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_filePanel =
+        new wxPanel(m_mainPanel, wxID_ANY, wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), wxTAB_TRAVERSAL);
+
+    mainSizer->Add(m_filePanel, 0, wxALL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* vertSizer = new wxBoxSizer(wxVERTICAL);
+    m_filePanel->SetSizer(vertSizer);
+
+    wxBoxSizer* pathSizer = new wxBoxSizer(wxHORIZONTAL);
+
+    vertSizer->Add(pathSizer, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_pathTxt = new wxStaticText(m_filePanel, wxID_ANY, _("Output path:"), wxDefaultPosition,
+                                 wxDLG_UNIT(m_filePanel, wxSize(-1, -1)), 0);
+
+    pathSizer->Add(m_pathTxt, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_pathCtrl =
+        new wxTextCtrl(m_filePanel, wxID_ANY, wxT(""), wxDefaultPosition, wxDLG_UNIT(m_filePanel, wxSize(-1, -1)), 0);
+#if wxVERSION_NUMBER >= 3000
+    m_pathCtrl->SetHint(wxT(""));
+#endif
+
+    pathSizer->Add(m_pathCtrl, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_browseBtn = new wxButton(m_filePanel, wxID_ANY, _("Browse..."), wxDefaultPosition,
+                               wxDLG_UNIT(m_filePanel, wxSize(-1, -1)), 0);
+
+    pathSizer->Add(m_browseBtn, 0, wxALL, WXC_FROM_DIP(5));
+
+    m_indDirChkBox = new wxCheckBox(m_filePanel, wxID_ANY, _("Create individual directories for each picture"),
+                                    wxDefaultPosition, wxDLG_UNIT(m_filePanel, wxSize(-1, -1)), 0);
+    m_indDirChkBox->SetValue(false);
+
+    vertSizer->Add(m_indDirChkBox, 0, wxALL, WXC_FROM_DIP(5));
+
     SetName(wxT("fpsBatchSplitDialogBase"));
-    SetSize(wxDLG_UNIT(this, wxSize(500, 300)));
+    SetSize(wxDLG_UNIT(this, wxSize(800, 600)));
     if(GetSizer()) {
         GetSizer()->Fit(this);
     }
