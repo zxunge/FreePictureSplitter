@@ -36,7 +36,7 @@ git clone https://github.com/zxunge/FreePictureSplitter.git
 Enter the source directory, run
 ````
 mkdir build && cd $_
-cmake .. -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
+cmake .. -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
 make -j$(nproc)
 bin/FreePictureSplitter
 ````
