@@ -24,8 +24,8 @@ Quality control | ×
 First, install necessary packages.
 ````
 pacman -S mingw-w64-clang-x86_64-toolchain                \
-          mingw-w64-clang-x86_64-wxwidgets3.2-msw-libs    \
-          mingw-w64-clang-x86_64-wxwidgets3.2-common-libs \
+          mingw-w64-clang-x86_64-wxwidgets3.2-msw         \
+          mingw-w64-clang-x86_64-wxwidgets3.2-common      \
           base-devel                                      \
           git
 ````
