@@ -27,7 +27,7 @@ jobs:
       run: |
         mkdir -p wxWidgets/build-release
         cd wxWidgets/build-release
-        ../configure --disable-debug_flag --with-gtk=3 --enable-stl
+        ../configure --disable-debug_flag --with-gtk=3 --enable-stl CC=clang CXX=clang++
         make -j$(nproc) && sudo make install
 
     - name: Checkout FreePictureSplitter
