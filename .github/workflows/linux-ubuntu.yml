@@ -1,0 +1,46 @@
+name: linux-ubuntu
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - name: Install all dependencies
+      shell: bash
+      run: |
+        sudo apt-key adv --fetch-keys https://repos.codelite.org/CodeLite.asc
+        sudo apt-add-repository 'deb https://repos.codelite.org/wx3.2/ubuntu/ jammy universe'
+        sudo apt-get install               \
+                libwxbase3.2-0-unofficial  \
+                libwxbase3.2unofficial-dev \
+                libwxgtk3.2-0-unofficial   \
+                libwxgtk3.2unofficial-dev  \
+                wx3.2-headers              \
+                wx-common                  \
+                libnotify-dev
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        repository: zxunge/FreePictureSplitter
+        path: FreePictureSplitter
+
+    - name: Build
+      shell: bash
+      run: |
+        cd FreePictureSplitter/
+        mkdir build && cd $_
+        cmake .. -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
+        make -j$(nproc)
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: FreePictureSplitter-git
+        path: FreePictureSplitter/build/bin
