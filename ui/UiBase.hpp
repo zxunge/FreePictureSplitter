@@ -28,6 +28,9 @@
 #include <wx/button.h>
 #include <wx/statusbr.h>
 #include <wx/dialog.h>
+#include <wx/scrolwin.h>
+#include <wx/textctrl.h>
+#include <wx/checkbox.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
 #include <wx/persist/toplevel.h>
@@ -116,11 +119,52 @@ public:
 class fpsBatchSplitDialogBase : public wxDialog
 {
 protected:
+    wxPanel* m_mainPanel;
+    wxPanel* m_byNumPanel;
+    wxRadioButton* m_numRadio;
+    wxStaticText* m_rowsTxt;
+    wxSpinCtrl* m_rowSpin;
+    wxStaticText* m_colsTxt;
+    wxSpinCtrl* m_colSpin;
+    wxStaticLine* m_staticLine;
+    wxPanel* m_byPixelPanel;
+    wxRadioButton* m_pixelRadio;
+    wxStaticText* m_heightTxt;
+    wxSpinCtrl* m_heightSpin;
+    wxStaticText* m_widthTxt;
+    wxSpinCtrl* m_widthSpin;
+    wxScrolledWindow* m_scPicsWnd;
+    wxPanel* m_filePanel;
+    wxStaticText* m_pathTxt;
+    wxTextCtrl* m_pathCtrl;
+    wxButton* m_browseBtn;
+    wxCheckBox* m_indDirChkBox;
+
 protected:
 public:
+    wxRadioButton* GetNumRadio() { return m_numRadio; }
+    wxStaticText* GetRowsTxt() { return m_rowsTxt; }
+    wxSpinCtrl* GetRowSpin() { return m_rowSpin; }
+    wxStaticText* GetColsTxt() { return m_colsTxt; }
+    wxSpinCtrl* GetColSpin() { return m_colSpin; }
+    wxPanel* GetByNumPanel() { return m_byNumPanel; }
+    wxStaticLine* GetStaticLine() { return m_staticLine; }
+    wxRadioButton* GetPixelRadio() { return m_pixelRadio; }
+    wxStaticText* GetHeightTxt() { return m_heightTxt; }
+    wxSpinCtrl* GetHeightSpin() { return m_heightSpin; }
+    wxStaticText* GetWidthTxt() { return m_widthTxt; }
+    wxSpinCtrl* GetWidthSpin() { return m_widthSpin; }
+    wxPanel* GetByPixelPanel() { return m_byPixelPanel; }
+    wxScrolledWindow* GetScPicsWnd() { return m_scPicsWnd; }
+    wxStaticText* GetPathTxt() { return m_pathTxt; }
+    wxTextCtrl* GetPathCtrl() { return m_pathCtrl; }
+    wxButton* GetBrowseBtn() { return m_browseBtn; }
+    wxCheckBox* GetIndDirChkBox() { return m_indDirChkBox; }
+    wxPanel* GetFilePanel() { return m_filePanel; }
+    wxPanel* GetMainPanel() { return m_mainPanel; }
     fpsBatchSplitDialogBase(wxWindow* parent, wxWindowID id = wxID_ANY,
                             const wxString& title = _("FreePictureSplitter - Batch Split"),
-                            const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 300),
+                            const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(800, 600),
                             long style = wxDEFAULT_DIALOG_STYLE);
     virtual ~fpsBatchSplitDialogBase();
 };
