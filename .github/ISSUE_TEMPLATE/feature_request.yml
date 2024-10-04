@@ -1,0 +1,23 @@
+name: "Feature Request"
+about: "If you want to add a new feature to FPS, please request."
+labels: ["feature"]"
+title: "[Feature Request]: "
+assignees:
+  - zxunge
+  
+## ISSUE TEMPLATE
+
+body: 
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to come up with a new feature!
+  - type: textarea
+    id: feature-desc
+    attributes:
+      label: Describe your idea in details
+      description: Feature Description and Codes
+      placeholder: Feature request description
+      value: "Feature request description"
+    validations:
+      required: false
