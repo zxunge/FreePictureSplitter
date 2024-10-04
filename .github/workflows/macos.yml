@@ -18,10 +18,18 @@ jobs:
           ref: v3.2.6
           submodules: recursive
           path: wxWidgets
-    
-    - name: Build and install wxWidgets, and Clang
+
+    - name: Install a new Clang
       run: |
-        sudo brew install llvm
+        #brew install llvm
+        wget -q https://github.com/macports/macports-base/releases/download/v2.10.2/MacPorts-2.10.2.tar.bz2
+        tar xjvf MacPorts-2.10.2.tar.bz2
+        cd MacPorts-2.10.2
+        ./configure && make && sudo make install
+        sudo port install clang-18
+        
+    - name: Build and install wxWidgets
+      run: |
         mkdir wxWidgets/build-release
         cd wxWidgets/build-release
         ../configure --enable-shared --disable-monolithic --with-osx_cocoa CXX='clang++ -std=c++17 -stdlib=libc++ -I../src/tiff/libtiff' CC=clang --disable-debug --disable-mediactrl --enable-stl
