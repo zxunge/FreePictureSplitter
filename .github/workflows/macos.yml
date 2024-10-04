@@ -21,7 +21,7 @@ jobs:
     
     - name: Build and install wxWidgets, and Clang
       run: |
-        sudo port install clang-18
+        sudo brew install llvm
         mkdir wxWidgets/build-release
         cd wxWidgets/build-release
         ../configure --enable-shared --disable-monolithic --with-osx_cocoa CXX='clang++ -std=c++17 -stdlib=libc++ -I../src/tiff/libtiff' CC=clang --disable-debug --disable-mediactrl --enable-stl
