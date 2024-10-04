@@ -23,9 +23,11 @@ jobs:
       run: |
         #brew install llvm
         wget -q https://github.com/macports/macports-base/releases/download/v2.10.2/MacPorts-2.10.2.tar.bz2
-        tar xjvf MacPorts-2.10.2.tar.bz2
+        tar xjf MacPorts-2.10.2.tar.bz2
         cd MacPorts-2.10.2
         ./configure && make && sudo make install
+        export PATH=/opt/local/bin:$PATH
+        sudo port -v selfupdate
         sudo port install clang-18
         
     - name: Build and install wxWidgets
