@@ -1,5 +1,5 @@
 <div align=center>
-<img src="https://github.com/zxunge/FreePictureSplitter/raw/refs/heads/main/res/FPS.ico" width="15%" height="15%">
+<img src="https://bgithub.xyz/zxunge/FreePictureSplitter/raw/refs/heads/main/res/FPS.ico" width="15%" height="15%">
 <h1>FreePictureSplitter</h1>
 
 [![linux-ubuntu](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml)
@@ -8,6 +8,7 @@
 <img alt="GitHub Created At" src="https://img.shields.io/github/created-at/zxunge/FreePictureSplitter">
 <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/zxunge/FreePictureSplitter">
 <img alt="GitHub Release" src="https://img.shields.io/github/v/release/zxunge/FreePictureSplitter">
+</div>
 
 # Introduction
 FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
