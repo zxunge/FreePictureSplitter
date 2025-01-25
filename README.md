@@ -1,3 +1,7 @@
+<div align=center>
+<img src="https://github.com/zxunge/FreePictureSplitter/raw/refs/heads/main/res/FPS.ico" width="15%" height="15%">
+<h1>FreePictureSplitter</h1>
+
 [![linux-ubuntu](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml)
 [![windows-msys2](https://github.com/zxunge/FreePictureSplitter/actions/workflows/windows-msys2.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/windows-msys2.yml)
 [![macos](https://github.com/zxunge/FreePictureSplitter/actions/workflows/macos.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/macos.yml)
