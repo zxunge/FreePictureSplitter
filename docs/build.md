@@ -20,13 +20,13 @@ Enter the source directory, run
 ````
 mkdir build && cd $_
 cmake ..
-make -j$(nproc)
+cmake --build . --parallel $(nproc)
 bin/FreePictureSplitter
 ````
 
 Try it!
 
-## Linux
+## UNIX/Linux
 First, you should make sure that you have installed the newest C++ compiler and wxWidgets.
 Then, clone the source.
 ````
@@ -36,7 +36,6 @@ Enter the source directory, run
 ````
 mkdir build && cd $_
 cmake ..
-make -j$(nproc)
+cmake --build . --parallel $(nproc)
 bin/FreePictureSplitter
 ````
-
