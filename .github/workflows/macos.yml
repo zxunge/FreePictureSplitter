@@ -44,7 +44,7 @@ jobs:
       run: |
         cd FreePictureSplitter && mkdir build-release
         cd build-release
-        brew install autoconf automake libtool gettext
+        brew install autoconf automake libtool
         cmake ..
         cmake --build . -j $(sysctl -n hw.physicalcpu)
     
