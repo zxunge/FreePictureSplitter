@@ -45,8 +45,8 @@ jobs:
       run: |
         cd FreePictureSplitter/
         mkdir build && cd $_
-        cmake .. -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_C_COMPILER=clang-18
-        make -j$(nproc)
+        cmake .. -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_C_COMPILER=clang-18
+        cmake --build . --parallel $(nproc)
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
