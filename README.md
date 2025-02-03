@@ -1,5 +1,5 @@
 <div align=center>
-<img src="https://bgithub.xyz/zxunge/FreePictureSplitter/raw/refs/heads/main/res/FPS.ico" width="15%" height="15%">
+<img src="res/FPS.ico" width="15%" height="15%">
 <h1>FreePictureSplitter</h1>
 
 [![linux-ubuntu](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml)
