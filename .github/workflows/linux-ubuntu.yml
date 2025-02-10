@@ -21,7 +21,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: wxWidgets/wxWidgets
-        ref: v3.2.6
         submodules: recursive
         path: wxWidgets
 
