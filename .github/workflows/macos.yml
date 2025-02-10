@@ -20,14 +20,13 @@ jobs:
           path: wxWidgets
 
     - name: Install a new Clang
-      run: |
-        brew install llvm@18
-        export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
-        export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"                                
-        export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+      run: brew install llvm@19
         
     - name: Build and install wxWidgets
       run: |
+        export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+        export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"                                
+        export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
         mkdir wxWidgets/build-release
         cd wxWidgets/build-release
         ../configure --enable-shared --disable-monolithic --with-osx_cocoa CXX='clang++ -std=c++17 -stdlib=libc++ -I../src/tiff/libtiff' CC=clang --disable-debug --disable-mediactrl --enable-stl
@@ -42,6 +41,9 @@ jobs:
 
     - name: Build FreePictureSplitter
       run: |
+        export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+        export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"                                
+        export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
         cd FreePictureSplitter && mkdir build-release
         cd build-release
         brew install autoconf automake libtool
