@@ -32,3 +32,7 @@ Quality control | ❎
 
 ## Building
 See [Building](docs/build.md)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=zxunge/FreePictureSplitter&type=Date)](https://star-history.com/#zxunge/FreePictureSplitter&Date)
