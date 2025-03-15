@@ -34,7 +34,7 @@ public:
     fpsImage(wxString path) 
     {
         m_fileLoaded = m_image.LoadFile(path);
-        m_fileName = m_fileLoaded ? path : wxEmptyString;
+        m_fileName = m_fileLoaded ? path : wxString(wxEmptyString);
     }
     ~fpsImage() {}
     static std::vector<std::vector<wxRect>>
