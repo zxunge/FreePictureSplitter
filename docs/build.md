@@ -1,5 +1,7 @@
 # Building
 
+The 1.x and 2.x versions need wxWidgets, while the incoming 3.x and later versions need Qt 5+.
+
 ## Windows
 > [!NOTE]
 > We only support from MSYS2 terminal.
