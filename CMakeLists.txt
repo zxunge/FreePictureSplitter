@@ -1,33 +1,82 @@
-cmake_minimum_required(VERSION 3.25)
-set(PROJECT_NAME FreePictureSplitter)
-project(${PROJECT_NAME} VERSION 2.0.0
-                        HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter)
+cmake_minimum_required(VERSION 3.20)
+
+project(FreePictureSplitter VERSION 3.0.0 LANGUAGES CXX)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY bin)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(PROJECT_STATUS Alpha)
+aux_source_directory(src SRC)
+list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "src/ui")
 
-configure_file(
-    "${PROJECT_SOURCE_DIR}/include/config.h.in" 
-    "${PROJECT_SOURCE_DIR}/include/config.h"
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+
+set(TS_FILES src/resources/FreePictureSplitter_zh_CN.ts)
+
+set(PROJECT_SOURCES
+        src/main.cpp
+        src/fpscentralwidget.h
+        src/fpscentralwidget.cpp
+        src/ui/fpscentralwidget.ui
+        src/fpswindow.h
+        src/fpswindow.cpp
+        src/3rdparty/QJSONConfig/qjsonconfig.cpp
+        src/3rdparty/QJSONConfig/qjsonconfig.h
+        ${TS_FILES}
 )
 
-include_directories(include ui)
-add_executable(
-    ${PROJECT_NAME} 
-    "${PROJECT_SOURCE_DIR}/src/app.cpp" 
-    "${PROJECT_SOURCE_DIR}/src/fpsImage.cpp" 
-    "${PROJECT_SOURCE_DIR}/src/imagepanel.cpp" 
-    "${PROJECT_SOURCE_DIR}/ui/MainFrame.cpp" 
-    "${PROJECT_SOURCE_DIR}/ui/fpsBatchSplitDialog.cpp"
-    "${PROJECT_SOURCE_DIR}/ui/UiBase.cpp"
-    "${PROJECT_SOURCE_DIR}/ui/bitmaps.cpp"
-    "${PROJECT_SOURCE_DIR}/res/win_resources.rc"
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(FreePictureSplitter
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+    )
+# Define target properties for Android with Qt 6 as:
+#    set_property(TARGET FreePictureSplitter APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
+#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
+# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+
+    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+else()
+    if(ANDROID)
+        add_library(FreePictureSplitter SHARED
+            ${PROJECT_SOURCES}
+        )
+# Define properties for Android with Qt 5 after find_package() calls as:
+#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+    else()
+        add_executable(FreePictureSplitter
+            ${PROJECT_SOURCES}
+        )
+    endif()
+
+    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+endif()
+
+include(src/3rdparty/QGoodWindow/QGoodWindow/QGoodWindow/QGoodWindow.cmake)
+include(src/3rdparty/QGoodWindow/QGoodWindow/QGoodCentralWidget/QGoodCentralWidget.cmake)
+
+include_directories(src/3rdparty/QJSONConfig)
+
+target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+set_target_properties(FreePictureSplitter PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER com.freepicturesplitter
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE TRUE
+    WIN32_EXECUTABLE TRUE
 )
-find_package(wxWidgets COMPONENTS core base html aui adv xml xrc)
-if(wxWidgets_FOUND)
-    include(${wxWidgets_USE_FILE})
-    target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+
+install(TARGETS FreePictureSplitter
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(FreePictureSplitter)
 endif()
