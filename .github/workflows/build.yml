@@ -1,0 +1,80 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  msys2:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        qt-version: [qt5, qt6]
+
+    steps:
+    - name: Setup MSYS2 Environment
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: mingw64
+        update: true
+        install: >-
+          mingw-w64-x86_64-toolchain
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-${{ matrix.qt-version }}-base
+          make
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        repository: zxunge/FreePictureSplitter
+        path: FreePictureSplitter
+        submodules: recursive
+
+    - name: Build
+      shell: msys2 {0}
+      run: |
+        cd FreePictureSplitter/
+        mkdir build && cd $_
+        cmake ..
+        cmake --build . --parallel $(nproc)
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: FreePictureSplitter-msys2
+        path: FreePictureSplitter/build/FreePictureSplitter.exe
+        
+  ubuntu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        qt-version: [qt5, qt6]
+        
+    steps:
+    - name: Install dpendencies
+      if: matrix.qt-version == 'qt5'
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential qtbase5-dev
+
+    - name: Install dpendencies
+      if: matrix.qt-version == 'qt6'
+      run: |
+        sudo apt update
+        sudo apt install -y build-essential qt6-base-dev
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        repository: zxunge/FreePictureSplitter
+        path: FreePictureSplitter
+        submodules: recursive
+
+    - name: Build
+      run: |
+        cd FreePictureSplitter/
+        mkdir build && cd $_
+        cmake .
+        cmake --build . --parallel $(nproc)
