@@ -2,9 +2,7 @@
 <img src="res/FPS.ico" width="15%" height="15%">
 <h1>FreePictureSplitter</h1>
 
-[![linux-ubuntu](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/linux-ubuntu.yml?style=flat-square&logo=linux)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml)
-[![windows-msys2](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/windows-msys2.yml?style=flat-square&logo=windows)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/windows-msys2.yml)
-[![macos](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/macos.yml?style=flat-square&logo=apple)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/macos.yml)
+[![All-platforms](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/build.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/build.yml)
 [![Downloads](https://img.shields.io/github/downloads/zxunge/FreePictureSplitter/total.svg?maxAge=2592001&style=flat-square)](https://github.com/zxunge/FreePictureSplitter/releases/)
 [![Welcome PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
 [![Stars](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)
