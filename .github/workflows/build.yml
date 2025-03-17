@@ -23,6 +23,7 @@ jobs:
           mingw-w64-x86_64-cmake
           mingw-w64-x86_64-ninja
           mingw-w64-x86_64-${{ matrix.qt-version }}-base
+          mingw-w64-x86_64-${{ matrix.qt-version }}-tools
           make
 
     - name: Checkout
@@ -76,5 +77,5 @@ jobs:
       run: |
         cd FreePictureSplitter/
         mkdir build && cd $_
-        cmake .
+        cmake ..
         cmake --build . --parallel $(nproc)
