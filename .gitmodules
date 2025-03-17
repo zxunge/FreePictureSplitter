@@ -3,7 +3,7 @@
 	url = https://github.com/stdware/qwindowkit.git
 [submodule "src/3rdparty/QJSONConfig"]
 	path = src/3rdparty/QJSONConfig
-	url = git@github.com:zxunge/QJSONConfig
+	url = https://github.com/zxunge/QJSONConfig.git
 [submodule "src/3rdparty/qmsetup"]
 	path = src/3rdparty/qmsetup
-	url = git@github.com:stdware/qmsetup
+	url = https://github.com/stdware/qmsetup.git
