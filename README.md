@@ -1,13 +1,17 @@
 <div align=center>
-<img src="https://bgithub.xyz/zxunge/FreePictureSplitter/raw/refs/heads/main/res/FPS.ico" width="15%" height="15%">
+<img src="res/FPS.ico" width="15%" height="15%">
 <h1>FreePictureSplitter</h1>
 
-[![linux-ubuntu](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml)
-[![windows-msys2](https://github.com/zxunge/FreePictureSplitter/actions/workflows/windows-msys2.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/windows-msys2.yml)
-[![macos](https://github.com/zxunge/FreePictureSplitter/actions/workflows/macos.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/macos.yml)
-<img alt="GitHub Created At" src="https://img.shields.io/github/created-at/zxunge/FreePictureSplitter">
-<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/zxunge/FreePictureSplitter">
-<img alt="GitHub Release" src="https://img.shields.io/github/v/release/zxunge/FreePictureSplitter">
+[![linux-ubuntu](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/linux-ubuntu.yml?style=flat-square&logo=linux)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/linux-ubuntu.yml)
+[![windows-msys2](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/windows-msys2.yml?style=flat-square&logo=windows)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/windows-msys2.yml)
+[![macos](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/macos.yml?style=flat-square&logo=apple)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/macos.yml)
+[![Downloads](https://img.shields.io/github/downloads/zxunge/FreePictureSplitter/total.svg?maxAge=2592001&style=flat-square)](https://github.com/zxunge/FreePictureSplitter/releases/)
+[![Welcome PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
+[![Stars](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)
+<img alt="GitHub Created At" src="https://img.shields.io/github/created-at/zxunge/FreePictureSplitter?style=flat-square" />
+<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/zxunge/FreePictureSplitter?style=flat-square" />
+<img alt="GitHub Release" src="https://img.shields.io/github/v/release/zxunge/FreePictureSplitter?style=flat-square" />
+<img alt="License" src="https://img.shields.io/github/license/zxunge/FreePictureSplitter?style=flat-square" />
 </div>
 
 # Introduction
@@ -28,3 +32,7 @@ Quality control | ❎
 
 ## Building
 See [Building](docs/build.md)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=zxunge/FreePictureSplitter&type=Date)](https://star-history.com/#zxunge/FreePictureSplitter&Date)

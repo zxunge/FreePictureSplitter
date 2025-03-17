@@ -79,7 +79,9 @@ bool fpsImage::Split(wxString outputDir)
     
     auto fileSuffix { wxFileName(m_fileName).GetExt() };
     auto cRows { m_rect.size() }, cCols { m_rect[0].size() };
-    wxArrayString outputList { GetOutputList(cRows, cCols) };
+    // This won't work on gcc.
+    // wxArrayString outputList { GetOutputList(cRows, cCols) };
+    wxArrayString outputList = GetOutputList(cRows, cCols);
     
     if (!wxFileName::Exists(outputDir))
         if (!wxFileName::Mkdir(outputDir))

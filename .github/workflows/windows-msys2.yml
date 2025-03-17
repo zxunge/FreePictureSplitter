@@ -13,13 +13,13 @@ jobs:
     - name: Setup MSYS2 Environment
       uses: msys2/setup-msys2@v2
       with:
-        msystem: clang64
+        msystem: mingw64
         update: true
         install: >-
-          mingw-w64-clang-x86_64-toolchain
-          mingw-w64-clang-x86_64-cmake
-          mingw-w64-clang-x86_64-wxwidgets3.2-common
-          mingw-w64-clang-x86_64-wxwidgets3.2-msw
+          mingw-w64-x86_64-toolchain
+          mingw-w64-x86_64-cmake
+          mingw-w64-x86_64-wxwidgets3.2-common
+          mingw-w64-x86_64-wxwidgets3.2-msw
           make
 
     - name: Checkout
@@ -33,8 +33,8 @@ jobs:
       run: |
         cd FreePictureSplitter/
         mkdir build && cd $_
-        cmake .. -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang
-        make -j$(nproc)
+        cmake ..
+        cmake --build . --parallel $(nproc)
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4

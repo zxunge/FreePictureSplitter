@@ -12,18 +12,15 @@ jobs:
     steps:
 
     # WxWidgets
-    - name: Install dependencies for wxWidgets, and Clang
+    - name: Install dependencies.
       run: |
-        wget https://apt.llvm.org/llvm.sh
-        chmod +x llvm.sh
-        sudo ./llvm.sh 18
-        sudo apt-get install build-essential cmake git libedit-dev libgtk-3-dev libhunspell-dev libsqlite3-dev libssh-dev pkg-config xterm
+        sudo apt-get update
+        sudo apt-get install gcc g++ build-essential cmake git libedit-dev libgtk-3-dev libhunspell-dev libsqlite3-dev libssh-dev pkg-config xterm
     
     - name: Checkout WxWidgets
       uses: actions/checkout@v4
       with:
         repository: wxWidgets/wxWidgets
-        ref: v3.2.6
         submodules: recursive
         path: wxWidgets
 
@@ -31,7 +28,7 @@ jobs:
       run: |
         mkdir -p wxWidgets/build-release
         cd wxWidgets/build-release
-        ../configure --disable-debug_flag --with-gtk=3 --enable-stl CC=clang-18 CXX=clang++-18
+        ../configure --disable-debug_flag --with-gtk=3 --enable-stl
         make -j$(nproc) && sudo make install
 
     - name: Checkout FreePictureSplitter
@@ -45,8 +42,8 @@ jobs:
       run: |
         cd FreePictureSplitter/
         mkdir build && cd $_
-        cmake .. -G "Unix Makefiles" -DCMAKE_CXX_COMPILER=clang++-18 -DCMAKE_C_COMPILER=clang-18
-        make -j$(nproc)
+        cmake ..
+        cmake --build . --parallel $(nproc)
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
