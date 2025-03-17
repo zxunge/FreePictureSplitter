@@ -13,5 +13,3 @@ FPSicon ICON "../res/FPS.ico"
 #if !defined(__llvm__)
 #include "wx/msw/wx.rc"
 #endif
-
-1 24 "xpmanifest.manifest"
