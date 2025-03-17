@@ -4,3 +4,6 @@
 [submodule "src/3rdparty/QJSONConfig"]
 	path = src/3rdparty/QJSONConfig
 	url = git@github.com:zxunge/QJSONConfig
+[submodule "src/3rdparty/qmsetup"]
+	path = src/3rdparty/qmsetup
+	url = git@github.com:stdware/qmsetup
