@@ -16,18 +16,20 @@ list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "src/ui")
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+if (Qt6_FOUND)
+    message("-- Found Qt " ${Qt6_VERSION})
+elseif(Qt5_FOUND)
+    message("-- Found Qt " ${Qt5_VERSION})
+else()
+    message(FATAL_ERROR "-- Could not find Qt!")
+endif()
 
 set(TS_FILES src/resources/FreePictureSplitter_zh_CN.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/fpscentralwidget.h
-        src/fpscentralwidget.cpp
-        src/ui/fpscentralwidget.ui
-        src/fpswindow.h
-        src/fpswindow.cpp
-        src/3rdparty/QJSONConfig/qjsonconfig.cpp
-        src/3rdparty/QJSONConfig/qjsonconfig.h
+        src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.cpp
+        src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.h
         ${TS_FILES}
 )
 
@@ -58,10 +60,10 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-include(src/3rdparty/QGoodWindow/QGoodWindow/QGoodWindow/QGoodWindow.cmake)
-include(src/3rdparty/QGoodWindow/QGoodWindow/QGoodCentralWidget/QGoodCentralWidget.cmake)
+include_directories(src/3rdparty/QJSONConfig/QJSONConfig)
 
-include_directories(src/3rdparty/QJSONConfig)
+add_subdirectory(src/3rdparty/qmsetup)
+add_subdirectory(src/3rdparty/qwindowkit)
 
 target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
