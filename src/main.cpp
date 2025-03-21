@@ -1,5 +1,4 @@
-#include "fpswindow.h"
-
+#include "fpsmainwindow.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -9,7 +8,7 @@ QJSONConfig cfg("conf.json");
 
 int main(int argc, char *argv[])
 {
-    QGoodWindow::setup();
+    QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 
     QApplication a(argc, argv);
 
@@ -34,9 +33,7 @@ int main(int argc, char *argv[])
         cfg.setValue("style/isDark", true);
     }
 
-    fpsWindow w;
-    if (cfg["style/isDark"].toBool())
-        w.setAppDarkTheme();
+    fpsMainWindow w;
     w.show();
 
     int ret = a.exec();
