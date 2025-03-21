@@ -17,11 +17,11 @@ list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "src/ui")
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 if (Qt6_FOUND)
-    message("-- Found Qt " ${Qt6_VERSION})
+    message(STATUS "Found Qt " ${Qt6_VERSION})
 elseif(Qt5_FOUND)
-    message("-- Found Qt " ${Qt5_VERSION})
+    message(STATUS "Found Qt " ${Qt5_VERSION})
 else()
-    message(FATAL_ERROR "-- Could not find Qt!")
+    message(FATAL_ERROR "Could not find Qt!")
 endif()
 
 set(TS_FILES src/resources/FreePictureSplitter_zh_CN.ts)
@@ -33,6 +33,7 @@ set(PROJECT_SOURCES
         src/fpsmainwindow.ui
         src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.cpp
         src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.h
+        src/resources/fps.qrc
         ${TS_FILES}
 )
 
@@ -68,14 +69,15 @@ include_directories(src/3rdparty/QJSONConfig/QJSONConfig)
 set(QWINDOWKIT_BUILD_EXAMPLES OFF CACHE BOOL "")
 set(QWINDOWKIT_BUILD_STATIC ON CACHE BOOL "")
 
-add_subdirectory(src/3rdparty/qmsetup)
+add_subdirectory(src/3rdparty/qwindowkit/qmsetup)
 add_subdirectory(src/3rdparty/qwindowkit)
+add_subdirectory(src/3rdparty/qwindowkit/examples/shared/widgetframe)
 
 # target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 qm_configure_target(${PROJECT_NAME}
     QT_LINKS Widgets
-    LINKS QWKCore QWKWidgets # WidgetFrame
+    LINKS QWKCore QWKWidgets WidgetFrame
 )
 
 

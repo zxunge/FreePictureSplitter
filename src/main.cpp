@@ -1,3 +1,9 @@
+//# This file is a part of FreePictureSplitter and is subject to the the terms of the GPLv3 license.
+//# Copyright (c) zxunge <3396563372@qq.com>
+//# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
+// SPDX-License-Identifier: GPLv3
+
+
 #include "fpsmainwindow.h"
 #include <QApplication>
 #include <QLocale>
@@ -8,12 +14,19 @@ QJSONConfig cfg("conf.json");
 
 int main(int argc, char *argv[])
 {
+    qputenv("QT_WIN_DEBUG_CONSOLE", "attach");
+    qputenv("QSG_INFO", "1");
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
+        Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+#endif
     QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 
     QApplication a(argc, argv);
 
-    QCoreApplication::setApplicationName("FreePictureSplitter");
-    QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
+    /* QCoreApplication::setApplicationName("FreePictureSplitter");
+    QCoreApplication::setOrganizationName("zxunge (Grit Clef)"); */
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -26,12 +39,12 @@ int main(int argc, char *argv[])
     }
 
     // First time?
-    if (cfg.empty())
+    /* if (cfg.empty())
     {
         cfg.setValue("app/name", "FreePictureSplitter");
         cfg.setValue("app/author", "zxunge (Grit Clef)");
         cfg.setValue("style/isDark", true);
-    }
+    } */
 
     fpsMainWindow w;
     w.show();
