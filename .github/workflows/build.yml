@@ -24,7 +24,6 @@ jobs:
           mingw-w64-x86_64-ninja
           mingw-w64-x86_64-${{ matrix.qt-version }}-base
           mingw-w64-x86_64-${{ matrix.qt-version }}-tools
-          make
 
     - name: Checkout
       uses: actions/checkout@v4
