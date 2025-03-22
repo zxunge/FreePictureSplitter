@@ -44,7 +44,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-msys2
+        name: FreePictureSplitter-msys2-${{ matrix.qt-version }}
         path: FreePictureSplitter/build/FreePictureSplitter.exe
         
   ubuntu:
@@ -58,7 +58,7 @@ jobs:
       if: matrix.qt-version == 'qt5'
       run: |
         sudo apt update
-        sudo apt install -y build-essential qtbase5-dev qttools5-dev
+        sudo apt install -y build-essential qtbase5-dev qttools5-dev-tools
 
     - name: Install dpendencies
       if: matrix.qt-version == 'qt6'
