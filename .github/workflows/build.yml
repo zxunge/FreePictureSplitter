@@ -58,13 +58,13 @@ jobs:
       if: matrix.qt-version == 'qt5'
       run: |
         sudo apt update
-        sudo apt install -y build-essential qtbase5-dev qttools5-dev-tools
+        sudo apt install -y build-essential qtbase5-dev qttools5-dev-tools qttools5-dev
 
     - name: Install dpendencies
       if: matrix.qt-version == 'qt6'
       run: |
         sudo apt update
-        sudo apt install -y build-essential qt6-base-dev linguist-qt6
+        sudo apt install -y build-essential qt6-base-dev linguist-qt6 qt6-tools-dev
 
     - name: Checkout
       uses: actions/checkout@v4
