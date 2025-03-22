@@ -91,3 +91,9 @@ jobs:
         mkdir build && cd $_
         cmake ..
         cmake --build . --parallel $(nproc)
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: FreePictureSplitter-ubuntu-${{ matrix.qt-version }}
+        path: FreePictureSplitter/build/FreePictureSplitter
