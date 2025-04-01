@@ -1,12 +1,12 @@
 /* Window bar */
 
 QWK--WindowBar[bar-active=true] {
-    background-color: #195ABE;
+    background-color: #FFFFFF;
     /* background-color: transparent; */
 }
 
 QWK--WindowBar[bar-active=false] {
-    background-color: #195ABE;
+    background-color: #FFFFFF;
     /* background-color: transparent; */
 }
 
@@ -16,7 +16,7 @@ QWK--WindowBar[bar-active=false] {
 QWK--WindowBar>QLabel#win-title-label {
     padding: 0;
     border: none;
-    color: #ECECEC;
+    color: #322e2e;
     background-color: transparent;
     min-height: 28px;
 }
@@ -101,7 +101,7 @@ QMenuBar>QToolButton#qt_menubar_ext_button:pressed {
 }
 
 QMenuBar::item {
-    color: #EEEEEE;
+    color: #322e2e;
     border: none;
     padding: 8px 12px;
 }

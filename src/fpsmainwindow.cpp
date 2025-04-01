@@ -72,13 +72,8 @@ void fpsMainWindow::installWindowAgent() {
 
         // Virtual menu
         auto file = new QMenu(tr("File(&F)"), menuBar);
-        file->addAction(new QAction(tr("New(&N)"), menuBar));
         file->addAction(new QAction(tr("Open(&O)"), menuBar));
         file->addSeparator();
-
-        auto edit = new QMenu(tr("Edit(&E)"), menuBar);
-        edit->addAction(new QAction(tr("Undo(&U)"), menuBar));
-        edit->addAction(new QAction(tr("Redo(&R)"), menuBar));
 
         // Theme action
         auto darkAction = new QAction(tr("Enable dark theme"), menuBar);
@@ -91,115 +86,11 @@ void fpsMainWindow::installWindowAgent() {
                     darkAction->setChecked(currentTheme == Dark); //
                 });
 
-#ifdef Q_OS_WIN
-        auto dwmBlurAction = new QAction(tr("Enable DWM blur"), menuBar);
-        dwmBlurAction->setCheckable(true);
-        connect(dwmBlurAction, &QAction::toggled, this, [this](bool checked) {
-            if (!windowAgent->setWindowAttribute(QStringLiteral("dwm-blur"),
-                                                 checked)) {
-                return;
-            }
-            setProperty("custom-style", checked);
-            style()->polish(this);
-        });
-
-        auto acrylicAction =
-            new QAction(tr("Enable acrylic material"), menuBar);
-        acrylicAction->setCheckable(true);
-        connect(acrylicAction, &QAction::toggled, this, [this](bool checked) {
-            if (!windowAgent->setWindowAttribute(
-                    QStringLiteral("acrylic-material"), true)) {
-                return;
-            }
-            setProperty("custom-style", checked);
-            style()->polish(this);
-        });
-
-        auto micaAction = new QAction(tr("Enable mica"), menuBar);
-        micaAction->setCheckable(true);
-        connect(micaAction, &QAction::toggled, this, [this](bool checked) {
-            if (!windowAgent->setWindowAttribute(QStringLiteral("mica"),
-                                                 checked)) {
-                return;
-            }
-            setProperty("custom-style", checked);
-            style()->polish(this);
-        });
-
-        auto micaAltAction = new QAction(tr("Enable mica alt"), menuBar);
-        micaAltAction->setCheckable(true);
-        connect(micaAltAction, &QAction::toggled, this, [this](bool checked) {
-            if (!windowAgent->setWindowAttribute(QStringLiteral("mica-alt"),
-                                                 checked)) {
-                return;
-            }
-            setProperty("custom-style", checked);
-            style()->polish(this);
-        });
-#elif defined(Q_OS_MAC)
-        auto darkBlurAction = new QAction(tr("Dark blur"), menuBar);
-        darkBlurAction->setCheckable(true);
-        connect(darkBlurAction, &QAction::toggled, this, [this](bool checked) {
-            if (!windowAgent->setWindowAttribute(QStringLiteral("blur-effect"),
-                                                 "dark")) {
-                return;
-            }
-            if (checked) {
-                setProperty("custom-style", true);
-                style()->polish(this);
-            }
-        });
-
-        auto lightBlurAction = new QAction(tr("Light blur"), menuBar);
-        lightBlurAction->setCheckable(true);
-        connect(lightBlurAction, &QAction::toggled, this, [this](bool checked) {
-            if (!windowAgent->setWindowAttribute(QStringLiteral("blur-effect"),
-                                                 "light")) {
-                return;
-            }
-            if (checked) {
-                setProperty("custom-style", true);
-                style()->polish(this);
-            }
-        });
-
-        auto noBlurAction = new QAction(tr("No blur"), menuBar);
-        noBlurAction->setCheckable(true);
-        connect(noBlurAction, &QAction::toggled, this, [this](bool checked) {
-            if (!windowAgent->setWindowAttribute(QStringLiteral("blur-effect"),
-                                                 "none")) {
-                return;
-            }
-            if (checked) {
-                setProperty("custom-style", false);
-                style()->polish(this);
-            }
-        });
-
-        auto macStyleGroup = new QActionGroup(menuBar);
-        macStyleGroup->addAction(darkBlurAction);
-        macStyleGroup->addAction(lightBlurAction);
-        macStyleGroup->addAction(noBlurAction);
-#endif
-
         // Real menu
         auto settings = new QMenu(tr("Settings(&S)"), menuBar);
         settings->addAction(darkAction);
 
-#ifdef Q_OS_WIN
-        settings->addSeparator();
-        settings->addAction(dwmBlurAction);
-        settings->addAction(acrylicAction);
-        settings->addAction(micaAction);
-        settings->addAction(micaAltAction);
-#elif defined(Q_OS_MAC)
-        settings->addAction(darkBlurAction);
-        settings->addAction(lightBlurAction);
-        settings->addAction(noBlurAction);
-#endif
-
         menuBar->addMenu(file);
-        menuBar->addMenu(edit);
         menuBar->addMenu(settings);
         return menuBar;
     }();
