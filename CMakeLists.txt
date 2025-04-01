@@ -30,7 +30,7 @@ set(PROJECT_SOURCES
         src/main.cpp
         src/fpsmainwindow.h
         src/fpsmainwindow.cpp
-        src/fpsmainwindow.ui
+        src/ui/fpsmainwindow.ui
         src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.cpp
         src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.h
         src/resources/fps.qrc

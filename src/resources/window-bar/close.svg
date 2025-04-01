@@ -1,10 +1,10 @@
-<svg id="图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg" width="10.88" height="10.88"
+﻿<svg id="close" data-name="close" xmlns="http://www.w3.org/2000/svg" width="10.88" height="10.88"
   viewBox="0 0 10.88 10.88">
   <defs>
     <style>
       .cls-1 {
         fill: none;
-        stroke: white;
+        stroke: black;
         stroke-miterlimit: 10;
         stroke-width: 1.25px;
       }
