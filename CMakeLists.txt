@@ -31,8 +31,6 @@ set(PROJECT_SOURCES
         src/fpsmainwindow.h
         src/fpsmainwindow.cpp
         src/ui/fpsmainwindow.ui
-        src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.cpp
-        src/3rdparty/QJSONConfig/QJSONConfig/qjsonconfig.h
         src/resources/fps.qrc
         ${TS_FILES}
 )
@@ -64,22 +62,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-include_directories(src/3rdparty/QJSONConfig/QJSONConfig)
-
-set(QWINDOWKIT_BUILD_EXAMPLES OFF CACHE BOOL "")
-set(QWINDOWKIT_BUILD_STATIC ON CACHE BOOL "")
-
-add_subdirectory(src/3rdparty/qwindowkit/qmsetup)
-add_subdirectory(src/3rdparty/qwindowkit)
-add_subdirectory(src/3rdparty/qwindowkit/examples/shared/widgetframe)
-
-# target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-qm_configure_target(${PROJECT_NAME}
-    QT_LINKS Widgets
-    LINKS QWKCore QWKWidgets WidgetFrame
-)
-
+target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 set_target_properties(FreePictureSplitter PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER com.freepicturesplitter

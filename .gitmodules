@@ -1,6 +1,0 @@
-[submodule "src/3rdparty/qwindowkit"]
-	path = src/3rdparty/qwindowkit
-	url = https://github.com/stdware/qwindowkit.git
-[submodule "src/3rdparty/QJSONConfig"]
-	path = src/3rdparty/QJSONConfig
-	url = https://github.com/zxunge/QJSONConfig.git
