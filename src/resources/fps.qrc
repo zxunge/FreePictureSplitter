@@ -1,16 +1,1 @@
-<RCC>
-    <qresource prefix="/qss">
-        <file>dark-style.qss</file>
-        <file>light-style.qss</file>
-    </qresource>
-    <qresource prefix="/window">
-        <file>window-bar/close.svg</file>
-        <file>window-bar/fullscreen.svg</file>
-        <file>window-bar/maximize.svg</file>
-        <file>window-bar/minimize.svg</file>
-        <file>window-bar/more-line.svg</file>
-        <file>window-bar/restore.svg</file>
-        <file>app/fps.ico</file>
-        <file>app/fps.png</file>
-    </qresource>
-</RCC>
+<RCC/>

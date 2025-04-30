@@ -4,10 +4,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsmainwindow.h"
+#include "qstringliteral.h"
 #include "ui_fpsmainwindow.h"
 
 #include <QFile>
 #include <QStyle>
+
+#include "lightstyle.h"
+#include "darkstyle.h"
 
 #include <QWKWidgets/widgetwindowagent.h>
 #include <widgetframe/windowbar.h>
@@ -20,10 +24,23 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
     // setAttribute(Qt::WA_DontCreateNativeAncestors);
 
     ui->setupUi(this);
+    ui->btnBatch->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    ui->btnOpen->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    ui->btnSave->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    ui->btnSettings->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+
+    ui->btnOpen->setObjectName("btnToolbar");
+    ui->btnOpen->setProperty("toolbar", "open");
+    ui->btnBatch->setObjectName("btnToolbar");
+    ui->btnBatch->setProperty("toolbar", "batch");
+    ui->btnSave->setObjectName("btnToolbar");
+    ui->btnSave->setProperty("toolbar", "save");
+    ui->btnSettings->setObjectName("btnToolbar");
+    ui->btnSettings->setProperty("toolbar", "settings");
 
     // After the initialization of 'ui'.
     installWindowAgent();
-    setWindowTitle(tr("FreePictureSplitter"));
+    setWindowTitle(QStringLiteral("FreePictureSplitter"));
     loadStyleSheet(Light);
 }
 
@@ -201,9 +218,12 @@ void fpsMainWindow::loadStyleSheet(Theme theme) {
 
     if (QFile qss(theme == Dark ? QStringLiteral(":/qss/dark-style.qss")
                                 : QStringLiteral(":/qss/light-style.qss"));
-        qss.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qss.open(QIODevice::ReadOnly | QIODevice::Text))
         setStyleSheet(QString::fromUtf8(qss.readAll()));
-        Q_EMIT themeChanged();
-    }
+    /*if (currentTheme == Dark)
+        qApp->setStyle(new DarkStyle());
+    else
+        qApp->setStyle(new LightStyle());
+    qApp->style()->setObjectName(QStringLiteral("fusion"));*/
+    Q_EMIT themeChanged();
 }
-
