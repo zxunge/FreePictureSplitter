@@ -8,6 +8,9 @@
 #include "qradiobutton.h"
 #include "ui_fpsmainwindow.h"
 
+#include "fpspixelpanel.h"
+#include "fpsaverpanel.h"
+
 #include <SARibbonCategory.h>
 #include <SARibbonBar.h>
 
@@ -19,7 +22,8 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     SARibbonBar *ribbonbar { ribbonBar() };
-    // ribbonbar->applicationButton()->setText("FreePictureSplitter");
+    ribbonbar->applicationButton()->setText("FreePictureSplitter");
+
     SARibbonCategory *categoryFile { ribbonbar->addCategoryPage(tr("File")) };
     SARibbonPannel* pannelFile { categoryFile->addPannel(tr("Picture")) };
 
@@ -38,9 +42,12 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
     pannelOther->addLargeAction(actOutput);
 
     SARibbonCategory *categoryConfig { ribbonbar->addCategoryPage(tr("Split Args")) };
+
     SARibbonPannel* pannelPixel { categoryConfig->addPannel(tr("By Pixel")) };
-    QRadioButton *rbtnPixel { new QRadioButton(tr("Split by pixel.")) };
-    pannelPixel->addWidget(rbtnPixel, SARibbonPannelItem::Small);
+    pannelPixel->addWidget(new fpsPixelPanel(this), SARibbonPannelItem::Large);
+
+    SARibbonPannel* pannelAver { categoryConfig->addPannel(tr("Averagely")) };
+    pannelAver->addWidget(new fpsAverPanel(this), SARibbonPannelItem::Large);
 
     initRightButtonGroup();
 }

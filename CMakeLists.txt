@@ -33,6 +33,12 @@ set(PROJECT_SOURCES
         src/fpsmainwindow.h
         src/fpsmainwindow.cpp
         src/ui/fpsmainwindow.ui
+        src/fpspixelpanel.h
+        src/fpspixelpanel.cpp
+        src/ui/fpspixelpanel.ui
+        src/fpsaverpanel.h
+        src/fpsaverpanel.cpp
+        src/ui/fpsaverpanel.ui
         src/resources/fps.qrc
         src/resources/resources.rc
         ${TS_FILES}
