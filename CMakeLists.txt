@@ -11,6 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 aux_source_directory(src SRC)
 list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "src/ui")
 
@@ -32,6 +34,7 @@ set(PROJECT_SOURCES
         src/fpsmainwindow.cpp
         src/ui/fpsmainwindow.ui
         src/resources/fps.qrc
+        src/resources/resources.rc
         ${TS_FILES}
 )
 
@@ -62,7 +65,13 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
+set(SARIBBON_BUILD_EXAMPLES OFF)
+
+add_subdirectory(src/3rdparty/SARibbon)
+include_directories(src/3rdparty/SARibbon/src src/3rdparty/SARibbon/src/SARibbonBar)
+
 target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(FreePictureSplitter PUBLIC SARibbonBar::SARibbonBar)
 
 set_target_properties(FreePictureSplitter PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER com.freepicturesplitter

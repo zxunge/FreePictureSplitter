@@ -3,22 +3,16 @@
 //# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-
 #ifndef FPSMAINWINDOW_H
 #define FPSMAINWINDOW_H
 
-#include <QMainWindow>
+#include <SARibbonMainWindow.h>
 
 namespace Ui {
 class fpsMainWindow;
 }
 
-namespace QWK {
-    class WidgetWindowAgent;
-    class StyleAgent;
-} // namespace QWK
-
-class fpsMainWindow : public QMainWindow
+class fpsMainWindow : public SARibbonMainWindow
 {
     Q_OBJECT
 
@@ -26,27 +20,10 @@ public:
     explicit fpsMainWindow(QWidget *parent = nullptr);
     ~fpsMainWindow();
 
-    enum Theme {
-        Dark,
-        Light,
-               };
-    Q_ENUM(Theme)
-
-Q_SIGNALS:
-    void themeChanged();
-
-protected:
-    bool event(QEvent *event) override;
-    void closeEvent(QCloseEvent *event) override;
+    QAction *createAction(const QString& text, const QString& iconurl, const QString& objName);
+    void initRightButtonGroup();
 
 private:
-    void installWindowAgent();
-    void loadStyleSheet(Theme theme);
-
-    Theme currentTheme{};
-
-    QWK::WidgetWindowAgent *windowAgent;
-
     Ui::fpsMainWindow *ui;
 };
 

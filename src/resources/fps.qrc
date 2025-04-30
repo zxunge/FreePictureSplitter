@@ -1,1 +1,14 @@
-<RCC/>
+<RCC>
+    <qresource prefix="/ribbonBar">
+        <file>ribbonBar/file-add.svg</file>
+        <file>ribbonBar/file-add-filled.svg</file>
+        <file>ribbonBar/file-batch.svg</file>
+        <file>ribbonBar/file-batch-filled.svg</file>
+        <file>ribbonBar/file-export.svg</file>
+        <file>ribbonBar/file-export-filled.svg</file>
+        <file>ribbonBar/settings.svg</file>
+    </qresource>
+    <qresource prefix="/app">
+        <file>fps.ico</file>
+    </qresource>
+</RCC>
