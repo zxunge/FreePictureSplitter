@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(FreePictureSplitter VERSION 3.0.0 LANGUAGES CXX)
+project(FreePictureSplitter
+        VERSION 3.0.0
+        LANGUAGES C CXX
+        HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter
+)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -8,7 +12,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -30,6 +34,9 @@ set(TS_FILES src/resources/FreePictureSplitter_zh_CN.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
+        src/fpsmainwindow.h
+        src/fpsmainwindow.cpp
+        src/ui/fpsmainwindow.ui
         src/resources/fps.qrc
         src/resources/resources.rc
         ${TS_FILES}

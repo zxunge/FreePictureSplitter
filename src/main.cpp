@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsmainwindow.h"
+#include "qapplication.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>

@@ -1,2 +1,8 @@
 <RCC>
+    <qresource prefix="/toolBar">
+        <file>toolBar/open.png</file>
+        <file>toolBar/save.png</file>
+        <file>toolBar/batch.jpg</file>
+        <file>toolBar/settings.png</file>
+    </qresource>
 </RCC>
