@@ -286,6 +286,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnReset">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Reset Split Lines</string>
        </property>
