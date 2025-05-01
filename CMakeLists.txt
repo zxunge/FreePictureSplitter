@@ -36,7 +36,12 @@ set(PROJECT_SOURCES
         src/main.cpp
         src/fpsmainwindow.h
         src/fpsmainwindow.cpp
+        src/fpsimagehandler.h
+        src/fpsimagehandler.cpp
         src/ui/fpsmainwindow.ui
+        src/fpsbatchdialog.h
+        src/fpsbatchdialog.cpp
+        src/ui/fpsbatchdialog.ui
         src/resources/fps.qrc
         src/resources/resources.rc
         ${TS_FILES}

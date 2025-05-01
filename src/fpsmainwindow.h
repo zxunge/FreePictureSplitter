@@ -6,7 +6,11 @@
 #ifndef FPSMAINWINDOW_H
 #define FPSMAINWINDOW_H
 
+#include "qobject.h"
 #include <QMainWindow>
+#include <QImage>
+#include <QRect>
+#include <QVector>
 
 namespace Ui {
 class fpsMainWindow;
@@ -23,8 +27,25 @@ public:
 private slots:
     void on_actionOpen_triggered();
 
+    void on_actionSave_triggered();
+
+    void on_actionExit_triggered();
+
+    void on_actionBatch_triggered();
+
+    void on_actionSettings_triggered();
+
+    void on_actionHomepage_triggered();
+
+    void on_actionAbout_triggered();
+
+    void on_btnReset_clicked();
+
 private:
     Ui::fpsMainWindow *ui;
+    QImage m_originalImage;
+    QVector<QVector<QRect>> m_rects;
+    QString m_fileName;
 };
 
 #endif // FPSMAINWINDOW_H

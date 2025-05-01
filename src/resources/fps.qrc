@@ -5,4 +5,7 @@
         <file>toolBar/batch.jpg</file>
         <file>toolBar/settings.png</file>
     </qresource>
+    <qresource prefix="/other">
+        <file>about.html</file>
+    </qresource>
 </RCC>
