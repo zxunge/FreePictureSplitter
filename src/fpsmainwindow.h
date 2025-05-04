@@ -6,7 +6,6 @@
 #ifndef FPSMAINWINDOW_H
 #define FPSMAINWINDOW_H
 
-#include "qobject.h"
 #include <QMainWindow>
 #include <QImage>
 #include <QRect>
@@ -40,6 +39,10 @@ private slots:
     void on_actionAbout_triggered();
 
     void on_btnReset_clicked();
+
+    void on_rbtnSize_toggled(bool checked);
+
+    void on_rbtnAver_toggled(bool checked);
 
 private:
     Ui::fpsMainWindow *ui;

@@ -6,21 +6,21 @@
 #ifndef FPSIMAGEHANDLER_H
 #define FPSIMAGEHANDLER_H
 
-#include <QHashFunctions>
 #include <QString>
 #include <QRect>
 #include <QImage>
 #include <QVector>
 #include <QObject>
-#include <QMetaObject>
 #include <cstddef>
 
 class fpsImageHandler : public QObject
 {
     Q_OBJECT
 public:
-    enum fpsSplitMode { Size, Average };
-    Q_ENUM(fpsSplitMode)
+    enum SplitMode { Size, Average };
+    enum SplitSequence { HoriLeft, HoriRight, VertLeft, VertRight };  // We need to support both modes and sequences.
+    Q_ENUM(SplitMode)
+    Q_ENUM(SplitSequence)
 
 public:
     static QVector<QVector<QRect>>
@@ -28,7 +28,8 @@ public:
                 int height,
                 int rowsOrHeight,
                 int colsOrWidth,
-                fpsSplitMode mode = Average);
+                SplitMode mode = Average,
+                SplitSequence seq = HoriLeft);
 
     static bool split(const QImage &img,
                       QVector<QImage> &output,

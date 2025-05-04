@@ -27,14 +27,17 @@ fpsImageHandler::getSubRects(int width,
                              int height,
                              int rowsOrHeight,
                              int colsOrWidth,
-                             fpsSplitMode mode)
+                             SplitMode mode,
+                             SplitSequence seq)
 {
     int rows, cols,                               // For rows and cols when splitting by pixel.
         s1rWidth, s1rHeight,                      // s1r: Step 1 Rectangles'
         s2rWidth, s2rHeight;                      // s2r: Step 2 Rectangles'
 
+    // TODO@25/05/04 Add algorithm for different splitting sequences.
+
     //------------Split averagely-----------
-    if (mode == fpsSplitMode::Average)
+    if (mode == SplitMode::Average)
     {
         s1rWidth  = width / colsOrWidth;
         s1rHeight = height / rowsOrHeight;
@@ -80,6 +83,9 @@ fpsImageHandler::getSubRects(int width,
                                                          QVector<QImage> &output,
                                                          const QVector<QVector<QRect>> &rects)
 {
+    if (rects.isEmpty())
+        return false;
+
     auto cRows { rects.size() }, cCols { rects[0].size() };
 
     for (int j {}; j < cRows; ++j)
