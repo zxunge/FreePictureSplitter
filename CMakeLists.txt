@@ -30,6 +30,11 @@ else()
     message(FATAL_ERROR "Could not find Qt!")
 endif()
 
+configure_file("${PROJECT_SOURCE_DIR}/src/fpsaboutdialog.cpp.in"
+               "${PROJECT_SOURCE_DIR}/src/fpsaboutdialog.cpp")
+configure_file("${PROJECT_SOURCE_DIR}/src/fpsmainwindow.cpp.in"
+               "${PROJECT_SOURCE_DIR}/src/fpsmainwindow.cpp")
+
 set(TS_FILES src/resources/FreePictureSplitter_zh_CN.ts)
 
 set(PROJECT_SOURCES
@@ -42,6 +47,11 @@ set(PROJECT_SOURCES
         src/fpsbatchdialog.h
         src/fpsbatchdialog.cpp
         src/ui/fpsbatchdialog.ui
+        src/fpsaboutdialog.h
+        src/fpsaboutdialog.cpp
+        src/fpssettingsdialog.h
+        src/fpssettingsdialog.cpp
+        src/ui/fpssettingsdialog.ui
         src/resources/fps.qrc
         src/resources/resources.rc
         ${TS_FILES}
