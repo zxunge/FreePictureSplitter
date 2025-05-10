@@ -27,8 +27,9 @@ fpsImageHandler::getSubRects(int width,
                              int rowsOrHeight,
                              int colsOrWidth,
                              SplitMode mode,
-                             SplitSequence seq)
+                             int32_t seq)
 {
+    // TODO@25/05/10 Improve algorithm.
     // There're 2 steps we should follow basically:
     // First, write rows info to `rects'
     // Then, cols info.
@@ -60,17 +61,31 @@ fpsImageHandler::getSubRects(int width,
         cols = colsOrWidth;
         break;
     }
-    legacyColWidth = width % basicColWidth;
-    legacyRowHeight = height % basicRowHeight;
+    legacyColWidth = width - basicColWidth * (cols - 1);
+    legacyRowHeight = height - basicRowHeight * (rows - 1);
+
     // Initialize sizes
     rects.resize(rows);
     for (auto &i : rects)
         i.resize(cols);
     
+    /* // ----- Rows: Down -> Up -----
+        for (int i { rows - 1 }; i != 0; --i)
+            for (int j {}; j != cols; ++j)
+            {
+                rects[i][j].setTop(i * basicRowHeight);
+                rects[i][j].setBottom((i + 1) * basicRowHeight);
+            }
+        // Legacy;
+        for (int j {}; j != cols; ++j)
+        {
+            rects[0][j].setTop(0);
+            rects[0][j].setHeight(legacyRowHeight);
+        }
+    */
     // Some codes are duplicated.
-    switch (seq)
+    if ((seq & Left) == Left)
     {
-    case TopLeft:
         // ----- Rows: Up -> Down -----
         for (int i {}; i != rows - 1; ++i)
             for (int j {}; j != cols; ++j)
@@ -97,92 +112,39 @@ fpsImageHandler::getSubRects(int width,
             rects[i][cols - 1].setLeft((cols - 1) * basicColWidth);
             rects[i][cols - 1].setWidth(legacyColWidth);
         }
-        break;
-    case TopRight:
-        // ----- Rows: Up -> Down -----
-        for (int i {}; i != rows - 1; ++i)
-            for (int j {}; j != cols; ++j)
-            {
-                rects[i][j].setTop(i * basicRowHeight);
-                rects[i][j].setBottom((i + 1) * basicRowHeight);
-            }
-        // Legacy;
-        for (int j {}; j != cols; ++j)
-        {
-            rects[rows - 1][j].setTop((rows - 1) * basicRowHeight);
-            rects[rows - 1][j].setHeight(legacyRowHeight);
-        }
-        // ----- Columns: R -> L -----
-        for (int i {}; i != rows; ++i)
-            for (int j { cols - 1 }; j != 0; --j)
-            {
-                rects[i][j].setLeft(j * basicColWidth);
-                rects[i][j].setRight((j + 1) * basicColWidth);
-            }
-        // Legacy;
-        for (int i {}; i != rows; ++i)
-        {
-            rects[i][0].setLeft(0);
-            rects[i][0].setWidth(legacyColWidth);
-        }
-        break;
-    case BottomLeft:
-        // ----- Rows: Down -> Up -----
-        for (int i { rows - 1 }; i != 0; --i)
-            for (int j {}; j != cols; ++j)
-            {
-                rects[i][j].setTop(i * basicRowHeight);
-                rects[i][j].setBottom((i + 1) * basicRowHeight);
-            }
-        // Legacy;
-        for (int j {}; j != cols; ++j)
-        {
-            rects[0][j].setTop(0);
-            rects[0][j].setHeight(legacyRowHeight);
-        }
-        // ----- Columns: L -> R -----
-        for (int i {}; i != rows; ++i)
-            for (int j {}; j != cols - 1; ++j)
-            {
-                rects[i][j].setLeft(j * basicColWidth);
-                rects[i][j].setRight((j + 1) * basicColWidth);
-            }
-        // Legacy;
-        for (int i {}; i != rows; ++i)
-        {
-            rects[i][cols - 1].setLeft((cols - 1) * basicColWidth);
-            rects[i][cols - 1].setWidth(legacyColWidth);
-        }
-        break;
-    case BottomRight:
-        // ----- Rows: Down -> Up -----
-        for (int i { rows - 1 }; i != 0; --i)
-            for (int j {}; j != cols; ++j)
-            {
-                rects[i][j].setTop(i * basicRowHeight);
-                rects[i][j].setBottom((i + 1) * basicRowHeight);
-            }
-        // Legacy;
-        for (int j {}; j != cols; ++j)
-        {
-            rects[0][j].setTop(0);
-            rects[0][j].setHeight(legacyRowHeight);
-        }
-        // ----- Columns: R -> L -----
-        for (int i {}; i != rows; ++i)
-            for (int j { cols - 1 }; j != 0; --j)
-            {
-                rects[i][j].setLeft(j * basicColWidth);
-                rects[i][j].setRight((j + 1) * basicColWidth);
-            }
-        // Legacy;
-        for (int i {}; i != rows; ++i)
-        {
-            rects[i][0].setLeft(0);
-            rects[i][0].setWidth(legacyColWidth);
-        }
-        break;
     }
+    else if ((seq & Right) == Right)
+    {
+        // ----- Rows: Up -> Down -----
+        for (int i {}; i != rows - 1; ++i)
+            for (int j {}; j != cols; ++j)
+            {
+                rects[i][j].setTop(i * basicRowHeight);
+                rects[i][j].setBottom((i + 1) * basicRowHeight);
+            }
+        // Legacy;
+        for (int j {}; j != cols; ++j)
+        {
+            rects[rows - 1][j].setTop((rows - 1) * basicRowHeight);
+            rects[rows - 1][j].setHeight(legacyRowHeight);
+        }
+        // ----- Columns: R -> L -----
+        for (int i {}; i != rows; ++i)
+            for (int j { cols - 1 }; j != 0; --j)
+            {
+                rects[i][j].setLeft(j * basicColWidth);
+                rects[i][j].setRight((j + 1) * basicColWidth);
+            }
+        // Legacy;
+        for (int i {}; i != rows; ++i)
+        {
+            rects[i][0].setLeft(0);
+            rects[i][0].setWidth(legacyColWidth);
+        }
+    }
+    else
+        return QVector<QVector<QRect>>();
+
     return rects;
 }
 

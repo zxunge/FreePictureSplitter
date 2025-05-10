@@ -4,13 +4,30 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsfloatingline.h"
+#include <QSizePolicy>
 
-fpsFloatingLine::fpsFloatingLine(QWidget *parent) : QPushButton(parent){}
+fpsFloatingLine::fpsFloatingLine(QWidget *parent, Orientation orientation)
+    : QPushButton(parent)
+{
+    setStyleSheet("background-color: rgb(0, 0, 0);");
+    if (orientation == Horizontal)
+    {
+        setMaximumHeight(3);
+        QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        setSizePolicy(policy);
+    }
+    else
+    {
+        setMaximumWidth(3);
+        QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+        setSizePolicy(policy);
+    }
+}
 
 void fpsFloatingLine::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton){
-        this->raise(); //将此按钮移动到顶层显示
+        this->raise(); // Move to top
         this->pressPoint = event->pos();
     }
 }
@@ -20,7 +37,7 @@ void fpsFloatingLine::mouseMoveEvent(QMouseEvent *event)
     if(event->buttons() == Qt::LeftButton){
         this->move(this->mapToParent(event->pos() - this->pressPoint));
 
-        //防止按钮移出父窗口
+        // Avoid being moved out of parent
         if(this->mapToParent(this->rect().topLeft()).x() <= 0){
             this->move(0, this->pos().y());
         }

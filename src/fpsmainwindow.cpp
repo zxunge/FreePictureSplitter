@@ -9,6 +9,7 @@
 #include "fpsbatchdialog.h"
 #include "fpsimagehandler.h"
 #include "fpsaboutdialog.h"
+#include "fpsfloatingline.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -39,11 +40,7 @@ void fpsMainWindow::on_actionOpen_triggered()
 
     if(m_originalImage.load(m_fileName))
     {
-        QPixmap pixmap { QPixmap::fromImage(m_originalImage.scaled(ui->graphicsView->width() - 10, ui->graphicsView->height() - 10, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)) };
-        QGraphicsScene *scene { new QGraphicsScene };
-        scene->addPixmap(pixmap);
-        ui->graphicsView->setScene(scene);
-        ui->graphicsView->show();
+        ui->wgtShow->setStyleSheet("border-image: url(\"" + m_fileName + "\");");
         ui->statusBar->showMessage(m_fileName);
         ui->btnReset->setEnabled(true);
     }
@@ -120,28 +117,28 @@ void fpsMainWindow::on_btnReset_clicked()
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::TopLeft);
+                                                   fpsImageHandler::Left | fpsImageHandler::Hori);
         else if (ui->rbtnHoriRight->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::TopRight);
+                                                   fpsImageHandler::Right | fpsImageHandler::Hori);
         else if (ui->rbtnVertLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::BottomLeft);
+                                                   fpsImageHandler::Left | fpsImageHandler::Vert);
         else
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::BottomRight);
+                                                   fpsImageHandler::Right | fpsImageHandler::Vert);
     else
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
@@ -149,30 +146,31 @@ void fpsMainWindow::on_btnReset_clicked()
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::TopLeft);
+                                                   fpsImageHandler::Left | fpsImageHandler::Hori);
         else if (ui->rbtnHoriRight->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::TopRight);
+                                                   fpsImageHandler::Right | fpsImageHandler::Hori);
         else if (ui->rbtnVertLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::BottomLeft);
+                                                   fpsImageHandler::Left | fpsImageHandler::Vert);
         else
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::BottomRight);
+                                                   fpsImageHandler::Right | fpsImageHandler::Vert);
     ui->actionSave->setEnabled(true);
     ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
+    fpsFloatingLine line(this, fpsFloatingLine::Horizontal);
 }
 
 

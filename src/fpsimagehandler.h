@@ -11,14 +11,17 @@
 #include <QImage>
 #include <QVector>
 #include <QObject>
-#include <cstddef>
 
 class fpsImageHandler : public QObject
 {
     Q_OBJECT
 public:
     enum SplitMode { Size, Average };
-    enum SplitSequence { TopLeft, TopRight, BottomLeft, BottomRight };  // We need to support both modes and sequences.
+    enum SplitSequence { Left = 0x0000000f,
+                         Right = 0x000000f0,
+                         Vert [[ deprecated ]] = 0x00000f00,
+                         Hori [[ deprecated ]] = 0x0000f000
+                       };
     Q_ENUM(SplitMode)
     Q_ENUM(SplitSequence)
 
@@ -30,7 +33,7 @@ public:
                 int rowsOrHeight,
                 int colsOrWidth,
                 SplitMode mode = Average,
-                SplitSequence seq = TopLeft);
+                int32_t seq = Left);
     
     static bool split(const QImage &img,
                       QVector<QImage> &output,
