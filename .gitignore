@@ -43,6 +43,3 @@
 # Resources
 *.res
 
-# Configured Files
-src/fpsaboutdialog.cpp
-src/fpsmainwindow.cpp

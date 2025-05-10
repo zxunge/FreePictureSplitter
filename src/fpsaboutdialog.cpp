@@ -3,6 +3,7 @@
 //# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+#include "config.h"
 #include "fpsaboutdialog.h"
 #include <QDialog>
 #include <QLabel>
@@ -23,7 +24,7 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent)
     QLabel *iconLabel = new QLabel(this);
     iconLabel->setPixmap(QPixmap(":/icons/fps.ico").scaled(64, 64, Qt::KeepAspectRatio));
 
-    QLabel *titleLabel = new QLabel("@PROJECT_NAME@", this);
+    QLabel *titleLabel = new QLabel(fpsAppName, this);
     QFont titleFont = titleLabel->font();
     titleFont.setPointSize(18);
     titleFont.setBold(true);
@@ -35,8 +36,9 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent)
     headerLayout->addStretch();
 
     QLabel *versionLabel = new QLabel(
-        tr("Version: @PROJECT_VERSION@\n\n") +
-        tr("An efficient, small but powerful picture splitting application.\n") +
+        tr("<strong>Version: ") +
+        fpsAppVersionFull +
+        tr("</strong><br />An efficient, small but powerful picture splitting application.<br />") +
         tr("Most common formats are supported."),
         this
     );
@@ -58,7 +60,7 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent)
     copyrightLabel->setWordWrap(true);
 
     QLabel *linkLabel = new QLabel(
-        tr("<a href=\"@PROJECT_HOMEPAGE_URL@\">GitHub Repository</a>"),
+        tr("<a href=\"") + fpsHomepageUrl + tr("\">GitHub Repository</a>"),
         this
     );
     linkLabel->setOpenExternalLinks(true);
