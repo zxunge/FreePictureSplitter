@@ -6,9 +6,6 @@
         <file>toolBar/settings.png</file>
         <file>toolBar/save-off.png</file>
     </qresource>
-    <qresource prefix="/other">
-        <file>about.html</file>
-    </qresource>
     <qresource prefix="/icons">
         <file>fps.ico</file>
     </qresource>
