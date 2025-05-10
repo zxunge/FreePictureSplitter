@@ -44,7 +44,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: FreePictureSplitter-msys2-${{ matrix.qt-version }}
-        path: FreePictureSplitter/build/FreePictureSplitter.exe
+        path: FreePictureSplitter/build/bin
         
   ubuntu:
     runs-on: ubuntu-latest
@@ -95,4 +95,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: FreePictureSplitter-ubuntu-${{ matrix.qt-version }}
-        path: FreePictureSplitter/build/FreePictureSplitter
+        path: FreePictureSplitter/build/bin
