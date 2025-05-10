@@ -10,6 +10,12 @@
     <height>648</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
   <property name="font">
    <font>
     <pointsize>10</pointsize>
@@ -28,17 +34,12 @@
         <verstretch>1</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QGraphicsView" name="graphicsView">
-         <property name="styleSheet">
-          <string notr="true">QGraphicsView {
+      <property name="styleSheet">
+       <string notr="true">QWidget {
     background-color: rgb(192, 192, 192);
 }</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3"/>
      </widget>
     </item>
    </layout>
