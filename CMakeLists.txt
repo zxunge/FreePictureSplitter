@@ -30,14 +30,12 @@ else()
     message(FATAL_ERROR "Could not find Qt!")
 endif()
 
-configure_file("${PROJECT_SOURCE_DIR}/src/fpsaboutdialog.cpp.in"
-               "${PROJECT_SOURCE_DIR}/src/fpsaboutdialog.cpp")
-configure_file("${PROJECT_SOURCE_DIR}/src/fpsmainwindow.cpp.in"
-               "${PROJECT_SOURCE_DIR}/src/fpsmainwindow.cpp")
+configure_file(config/config.h.in config.h)
 
 set(TS_FILES src/resources/FreePictureSplitter_zh_CN.ts)
 
 set(PROJECT_SOURCES
+        config/config.h.in
         src/main.cpp
         src/fpsmainwindow.h
         src/fpsmainwindow.cpp
@@ -52,6 +50,8 @@ set(PROJECT_SOURCES
         src/fpssettingsdialog.h
         src/fpssettingsdialog.cpp
         src/ui/fpssettingsdialog.ui
+        src/fpsfloatingline.h
+        src/fpsfloatingline.cpp
         src/resources/fps.qrc
         src/resources/resources.rc
         ${TS_FILES}
@@ -83,6 +83,8 @@ else()
 
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
+
+target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 

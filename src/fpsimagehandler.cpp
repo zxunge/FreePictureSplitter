@@ -9,7 +9,6 @@
 #include <QDir>
 #include <QImage>
 
-
 /* static */ QStringList fpsImageHandler::getOutputList(const QString &fileName, int rows, int cols)
 {
     QStringList outputList;
@@ -18,7 +17,7 @@
     QString baseName { fi.baseName() }, suffix { fi.suffix() };
 
     for (int i {1}; i != rows * cols + 1; ++i)
-        outputList << baseName + QStringLiteral("_") + QString::asprintf("%0*d", splitCount, i) + "." + suffix;
+        outputList << baseName + QStringLiteral("_") + QString::asprintf("%0*d", static_cast<int>(splitCount), i) + "." + suffix;
     return outputList;
 }
 
@@ -30,53 +29,161 @@ fpsImageHandler::getSubRects(int width,
                              SplitMode mode,
                              SplitSequence seq)
 {
-    int rows, cols,                               // For rows and cols when splitting by pixel.
-        s1rWidth, s1rHeight,                      // s1r: Step 1 Rectangles'
-        s2rWidth, s2rHeight;                      // s2r: Step 2 Rectangles'
-
-    // TODO@25/05/04 Add algorithm for different splitting sequences.
-
-    //------------Split averagely-----------
-    if (mode == SplitMode::Average)
+    // There're 2 steps we should follow basically:
+    // First, write rows info to `rects'
+    // Then, cols info.
+    if (width * height == 0 ||
+        (mode == Size && (rowsOrHeight > height || colsOrWidth > width)) || 
+        (mode == Average && rowsOrHeight * colsOrWidth == 0))
+        return QVector<QVector<QRect>>();
+        
+    int basicRowHeight, basicColWidth, legacyRowHeight, legacyColWidth;
+    int rows, cols;
+    QVector<QVector<QRect>> rects;
+    // We need info about how many rows and columns when splitting by sizes ourself.
+    switch (mode)
     {
-        s1rWidth  = width / colsOrWidth;
-        s1rHeight = height / rowsOrHeight;
-        s2rWidth  = width - (colsOrWidth - 1) * s1rWidth;
-        s2rHeight = height - (rowsOrHeight - 1) * s1rHeight;
-        rows      = rowsOrHeight;
-        cols      = colsOrWidth;
+    case Size:
+        basicColWidth = colsOrWidth;
+        basicRowHeight = rowsOrHeight;
+        rows = (height % rowsOrHeight == 0) ? height / rowsOrHeight
+                                            : height / rowsOrHeight + 1;
+        cols = (width % colsOrWidth == 0) ? width / colsOrWidth
+                                          : width / colsOrWidth + 1;
+        
+        break;
+    case Average:
+        // TODO@25/05/04 Use more smooth splitting differences.
+        basicRowHeight = height / rowsOrHeight;
+        basicColWidth = width / colsOrWidth;
+        rows = rowsOrHeight;
+        cols = colsOrWidth;
+        break;
     }
-    // ------------Split by sizes-----------
-    else
+    legacyColWidth = width % basicColWidth;
+    legacyRowHeight = height % basicRowHeight;
+    // Initialize sizes
+    rects.resize(rows);
+    for (auto &i : rects)
+        i.resize(cols);
+    
+    // Some codes are duplicated.
+    switch (seq)
     {
-        s1rHeight = rowsOrHeight;
-        s1rWidth  = colsOrWidth;
-        s2rWidth  = width - (colsOrWidth - 1) * s1rWidth;
-        s2rHeight = height - (rowsOrHeight - 1) * s1rHeight;
-        rows      = height / rowsOrHeight + 1;
-        cols      = width / colsOrWidth + 1;
+    case TopLeft:
+        // ----- Rows: Up -> Down -----
+        for (int i {}; i != rows - 1; ++i)
+            for (int j {}; j != cols; ++j)
+            {
+                rects[i][j].setTop(i * basicRowHeight);
+                rects[i][j].setBottom((i + 1) * basicRowHeight);
+            }
+        // Legacy;
+        for (int j {}; j != cols; ++j)
+        {
+            rects[rows - 1][j].setTop((rows - 1) * basicRowHeight);
+            rects[rows - 1][j].setHeight(legacyRowHeight);
+        }
+        // ----- Columns: L -> R -----
+        for (int i {}; i != rows; ++i)
+            for (int j {}; j != cols - 1; ++j)
+            {
+                rects[i][j].setLeft(j * basicColWidth);
+                rects[i][j].setRight((j + 1) * basicColWidth);
+            }
+        // Legacy;
+        for (int i {}; i != rows; ++i)
+        {
+            rects[i][cols - 1].setLeft((cols - 1) * basicColWidth);
+            rects[i][cols - 1].setWidth(legacyColWidth);
+        }
+        break;
+    case TopRight:
+        // ----- Rows: Up -> Down -----
+        for (int i {}; i != rows - 1; ++i)
+            for (int j {}; j != cols; ++j)
+            {
+                rects[i][j].setTop(i * basicRowHeight);
+                rects[i][j].setBottom((i + 1) * basicRowHeight);
+            }
+        // Legacy;
+        for (int j {}; j != cols; ++j)
+        {
+            rects[rows - 1][j].setTop((rows - 1) * basicRowHeight);
+            rects[rows - 1][j].setHeight(legacyRowHeight);
+        }
+        // ----- Columns: R -> L -----
+        for (int i {}; i != rows; ++i)
+            for (int j { cols - 1 }; j != 0; --j)
+            {
+                rects[i][j].setLeft(j * basicColWidth);
+                rects[i][j].setRight((j + 1) * basicColWidth);
+            }
+        // Legacy;
+        for (int i {}; i != rows; ++i)
+        {
+            rects[i][0].setLeft(0);
+            rects[i][0].setWidth(legacyColWidth);
+        }
+        break;
+    case BottomLeft:
+        // ----- Rows: Down -> Up -----
+        for (int i { rows - 1 }; i != 0; --i)
+            for (int j {}; j != cols; ++j)
+            {
+                rects[i][j].setTop(i * basicRowHeight);
+                rects[i][j].setBottom((i + 1) * basicRowHeight);
+            }
+        // Legacy;
+        for (int j {}; j != cols; ++j)
+        {
+            rects[0][j].setTop(0);
+            rects[0][j].setHeight(legacyRowHeight);
+        }
+        // ----- Columns: L -> R -----
+        for (int i {}; i != rows; ++i)
+            for (int j {}; j != cols - 1; ++j)
+            {
+                rects[i][j].setLeft(j * basicColWidth);
+                rects[i][j].setRight((j + 1) * basicColWidth);
+            }
+        // Legacy;
+        for (int i {}; i != rows; ++i)
+        {
+            rects[i][cols - 1].setLeft((cols - 1) * basicColWidth);
+            rects[i][cols - 1].setWidth(legacyColWidth);
+        }
+        break;
+    case BottomRight:
+        // ----- Rows: Down -> Up -----
+        for (int i { rows - 1 }; i != 0; --i)
+            for (int j {}; j != cols; ++j)
+            {
+                rects[i][j].setTop(i * basicRowHeight);
+                rects[i][j].setBottom((i + 1) * basicRowHeight);
+            }
+        // Legacy;
+        for (int j {}; j != cols; ++j)
+        {
+            rects[0][j].setTop(0);
+            rects[0][j].setHeight(legacyRowHeight);
+        }
+        // ----- Columns: R -> L -----
+        for (int i {}; i != rows; ++i)
+            for (int j { cols - 1 }; j != 0; --j)
+            {
+                rects[i][j].setLeft(j * basicColWidth);
+                rects[i][j].setRight((j + 1) * basicColWidth);
+            }
+        // Legacy;
+        for (int i {}; i != rows; ++i)
+        {
+            rects[i][0].setLeft(0);
+            rects[i][0].setWidth(legacyColWidth);
+        }
+        break;
     }
-
-    QVector<QVector<QRect>> subRects(rows, QVector<QRect>(cols));
-
-    if ((!s1rHeight) || (!s1rWidth))
-        return QVector<QVector<QRect>>(0);
-
-    // Step 1：Get (rows - 1)(cols - 1) parts splited.
-    for (int i {}; i < rows - 1; ++i)
-        for (int j {}; j < cols - 1; ++j)
-            subRects[i][j] = QRect(s1rWidth * j, s1rHeight * i, s1rWidth, s1rHeight);
-    // Step 2：Get the last column * the last row splited.
-    // In this case, we get the last row first (without the right-bottom part).
-    for (int j {}; j < cols - 1; ++j)
-        subRects[rows - 1][j] = QRect(s1rWidth * j, s1rHeight * (rows - 1), s1rWidth, s2rHeight);
-    // Then get the last column splited (without the right-bottom part).
-    for (int i {}; i < rows - 1; ++i)
-        subRects[i][cols - 1] = QRect(s1rWidth * (cols - 1), s1rHeight * i, s2rWidth, s1rHeight);
-    // Get the right-bottom part splited at last.
-    subRects[rows - 1][cols - 1] = QRect(s1rWidth * (cols - 1), s1rHeight * (rows - 1), s2rWidth, s2rHeight);
-    // OK! Task is finished. Return......
-    return subRects;
+    return rects;
 }
 
 [[ nodiscard ]] /* static */ bool fpsImageHandler::split(const QImage &img,
