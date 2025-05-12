@@ -10,6 +10,7 @@
 #include "fpsimagehandler.h"
 #include "fpsaboutdialog.h"
 #include "fpsfloatingline.h"
+#include "fpsprogressdialog.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -24,6 +25,7 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    ui->labPicture->lower();
 }
 
 fpsMainWindow::~fpsMainWindow()
@@ -40,9 +42,14 @@ void fpsMainWindow::on_actionOpen_triggered()
 
     if(m_originalImage.load(m_fileName))
     {
-        ui->wgtShow->setStyleSheet("border-image: url(\"" + m_fileName + "\");");
+        ui->labPicture->setPixmap(QPixmap::fromImage(m_originalImage));
+        ui->labPicture->setScaledContents(true);
         ui->statusBar->showMessage(m_fileName);
         ui->btnReset->setEnabled(true);
+        ui->sbxCols->setRange(1, m_originalImage.width());
+        ui->sbxRows->setRange(1, m_originalImage.height());
+        ui->sbxHeight->setRange(1, m_originalImage.height());
+        ui->sbxWidth->setRange(1, m_originalImage.width());
     }
     else
         QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
@@ -69,8 +76,15 @@ void fpsMainWindow::on_actionSave_triggered()
     else
     {
         outputList = fpsImageHandler::getOutputList(m_fileName, m_rects.size(), m_rects[0].size());
+        fpsProgressDialog *dlg { new fpsProgressDialog(this, outputList.size()) };
+        connect(this, SIGNAL(proceed(int)), dlg, SLOT(on_proceed(int)));
+        dlg->show();
         for (int i {}; i != imageList.size(); ++i)
+        {
             imageList[i].save(out + "/" + outputList[i]);
+            Q_EMIT proceed(i + 1);
+        }
+        dlg->close();
     }
 
 }
@@ -170,7 +184,8 @@ void fpsMainWindow::on_btnReset_clicked()
                                                    fpsImageHandler::Right | fpsImageHandler::Vert);
     ui->actionSave->setEnabled(true);
     ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
-    fpsFloatingLine line(this, fpsFloatingLine::Horizontal);
+    fpsFloatingLine *line { new fpsFloatingLine(ui->wgtShow, fpsFloatingLine::Horizontal) };
+    line->show();
 }
 
 
