@@ -7,7 +7,7 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-
+#include <QStyleFactory>
 
 int main(int argc, char *argv[])
 {
@@ -15,18 +15,18 @@ int main(int argc, char *argv[])
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
         Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
-    QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
 
     QApplication a(argc, argv);
+    a.setStyle(QStyleFactory::create("fusion"));
 
-    /* QCoreApplication::setApplicationName("FreePictureSplitter");
-    QCoreApplication::setOrganizationName("zxunge (Grit Clef)"); */
+    QCoreApplication::setApplicationName("FreePictureSplitter");
+    QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {
         const QString baseName = "FreePictureSplitter_" + QLocale(locale).name();
-        if (translator.load(":/i18n/" + baseName)) {
+        if (translator.load(":/i18n/i18n/" + baseName)) {
             a.installTranslator(&translator);
             break;
         }

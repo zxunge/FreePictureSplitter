@@ -9,4 +9,7 @@
     <qresource prefix="/icons">
         <file>fps.ico</file>
     </qresource>
+    <qresource prefix="/i18n">
+        <file>i18n/FreePictureSplitter_zh_CN.ts</file>
+    </qresource>
 </RCC>

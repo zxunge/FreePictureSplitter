@@ -10,26 +10,24 @@ fpsFloatingLine::fpsFloatingLine(QWidget *parent, Orientation orientation)
     : QPushButton(parent)
 {
     setStyleSheet("background-color: rgb(0, 0, 0);");
-    if (orientation == Horizontal)
+    m_orientation = orientation;
+    if (m_orientation == Horizontal)
     {
         setMaximumHeight(3);
-        QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        setSizePolicy(policy);
+        setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
     }
     else
     {
         setMaximumWidth(3);
-        QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-        setSizePolicy(policy);
+        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
     }
+    raise(); // Move to top
 }
 
 void fpsFloatingLine::mousePressEvent(QMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton){
-        this->raise(); // Move to top
+    if(event->button() == Qt::LeftButton)
         this->pressPoint = event->pos();
-    }
 }
 
 void fpsFloatingLine::mouseMoveEvent(QMouseEvent *event)
@@ -51,4 +49,13 @@ void fpsFloatingLine::mouseMoveEvent(QMouseEvent *event)
             this->move(this->pos().x(), this->parentWidget()->rect().height() - this->height());
         }
     }
+}
+
+void fpsFloatingLine::paintEvent(QPaintEvent *event)
+{
+    Q_UNUSED(event);
+    /* if (m_orientation == Horizontal)
+        setFixedSize(parentWidget()->width(), maximumHeight());
+    else
+        setFixedSize(maximumWidth(), parentWidget()->height()); */
 }

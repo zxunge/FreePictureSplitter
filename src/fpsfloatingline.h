@@ -20,11 +20,13 @@ public:
     explicit fpsFloatingLine(QWidget *parent = nullptr, Orientation orientation = Horizontal);
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QPoint pressPoint;
+    Orientation m_orientation;
 };
 
 #endif // FPSFLOATINGLINE_H

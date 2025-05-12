@@ -32,7 +32,7 @@ endif()
 
 configure_file(config/config.h.in config.h)
 
-set(TS_FILES src/resources/FreePictureSplitter_zh_CN.ts)
+set(TS_FILES src/resources/i18n/FreePictureSplitter_zh_CN.ts)
 
 set(PROJECT_SOURCES
         config/config.h.in
@@ -52,6 +52,9 @@ set(PROJECT_SOURCES
         src/ui/fpssettingsdialog.ui
         src/fpsfloatingline.h
         src/fpsfloatingline.cpp
+        src/fpsprogressdialog.h
+        src/fpsprogressdialog.cpp
+        src/ui/fpsprogressdialog.ui
         src/resources/fps.qrc
         src/resources/resources.rc
         ${TS_FILES}
