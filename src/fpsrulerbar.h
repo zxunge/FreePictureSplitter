@@ -8,6 +8,16 @@
 
 #include <QWidget>
 
+class fpsCornerBox : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit fpsCornerBox(QWidget * parent = nullptr);
+
+protected:
+    void paintEvent(QPaintEvent *event);
+};
+
 class fpsRulerBar : public QWidget
 {
     Q_OBJECT

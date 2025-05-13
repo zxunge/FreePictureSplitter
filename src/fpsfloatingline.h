@@ -14,10 +14,7 @@ class fpsFloatingLine : public QPushButton
 {
     Q_OBJECT
 public:
-    enum Orientation { Horizontal, Vertical };
-    Q_ENUM(Orientation)
-
-    explicit fpsFloatingLine(QWidget *parent = nullptr, Orientation orientation = Horizontal);
+    explicit fpsFloatingLine(QWidget *parent = nullptr, Qt::Orientation orientation = Qt::Horizontal);
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;
@@ -26,7 +23,7 @@ protected:
 
 private:
     QPoint pressPoint;
-    Orientation m_orientation;
+    Qt::Orientation m_orientation;
 };
 
 #endif // FPSFLOATINGLINE_H
