@@ -3,4 +3,10 @@
 //# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-IDI_ICON1 ICON "fps.ico"
+#include "fpsrulerbar.h"
+
+fpsRulerBar::fpsRulerBar(QWidget *parent)
+    : QWidget{parent}
+{
+
+}
