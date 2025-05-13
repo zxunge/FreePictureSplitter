@@ -55,6 +55,8 @@ set(PROJECT_SOURCES
         src/fpsprogressdialog.h
         src/fpsprogressdialog.cpp
         src/ui/fpsprogressdialog.ui
+        src/fpsrulerbar.h
+        src/fpsrulerbar.cpp
         src/resources/fps.qrc
         src/resources/resources.rc
         ${TS_FILES}

@@ -1,5 +1,5 @@
 //# This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
-//# Copyright (c) zxunge <3396563372@qq.com>
+//# Copyright (c) 2024 2025 zxunge
 //# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -14,12 +14,12 @@ fpsFloatingLine::fpsFloatingLine(QWidget *parent, Orientation orientation)
     if (m_orientation == Horizontal)
     {
         setMaximumHeight(3);
-        setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
+        setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed));
     }
     else
     {
         setMaximumWidth(3);
-        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
+        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Maximum));
     }
     raise(); // Move to top
 }
@@ -51,11 +51,11 @@ void fpsFloatingLine::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void fpsFloatingLine::paintEvent(QPaintEvent *event)
+/* void fpsFloatingLine::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
-    /* if (m_orientation == Horizontal)
+    if (m_orientation == Horizontal)
         setFixedSize(parentWidget()->width(), maximumHeight());
     else
-        setFixedSize(maximumWidth(), parentWidget()->height()); */
-}
+        setFixedSize(maximumWidth(), parentWidget()->height());
+} */

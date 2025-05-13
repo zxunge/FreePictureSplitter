@@ -3,25 +3,19 @@
 //# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#ifndef FPSBATCHDIALOG_H
-#define FPSBATCHDIALOG_H
+#ifndef FPSRULERBAR_H
+#define FPSRULERBAR_H
 
-#include <QDialog>
+#include <QWidget>
 
-namespace Ui {
-class fpsBatchDialog;
-}
-
-class fpsBatchDialog : public QDialog
+class fpsRulerBar : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit fpsBatchDialog(QWidget *parent = nullptr);
-    ~fpsBatchDialog();
+    explicit fpsRulerBar(QWidget *parent = nullptr);
 
-private:
-    Ui::fpsBatchDialog *ui;
+signals:
+
 };
 
-#endif // FPSBATCHDIALOG_H
+#endif // FPSRULERBAR_H
