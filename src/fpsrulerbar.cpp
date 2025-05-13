@@ -10,3 +10,8 @@ fpsRulerBar::fpsRulerBar(QWidget *parent)
 {
 
 }
+
+void fpsCornerBox::paintEvent(QPaintEvent *event)
+{
+
+}

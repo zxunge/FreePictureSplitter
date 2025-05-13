@@ -12,7 +12,7 @@ fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total) :
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    setStyleSheet("background-color: rgb(196,170,192);");
+    setStyleSheet("background-color: rgb(214, 227, 242);");
     m_total = total;
     ui->progressBar->setRange(0, total);
 }

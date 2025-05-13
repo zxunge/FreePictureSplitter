@@ -6,12 +6,12 @@
 #include "fpsfloatingline.h"
 #include <QSizePolicy>
 
-fpsFloatingLine::fpsFloatingLine(QWidget *parent, Orientation orientation)
+fpsFloatingLine::fpsFloatingLine(QWidget *parent, Qt::Orientation orientation)
     : QPushButton(parent)
 {
     setStyleSheet("background-color: rgb(0, 0, 0);");
     m_orientation = orientation;
-    if (m_orientation == Horizontal)
+    if (m_orientation == Qt::Horizontal)
     {
         setMaximumHeight(3);
         setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed));

@@ -131,28 +131,28 @@ void fpsMainWindow::on_btnReset_clicked()
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::Left | fpsImageHandler::Hori);
+                                                   fpsImageHandler::Left);
         else if (ui->rbtnHoriRight->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::Right | fpsImageHandler::Hori);
+                                                   fpsImageHandler::Right);
         else if (ui->rbtnVertLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::Left | fpsImageHandler::Vert);
+                                                   fpsImageHandler::Left);
         else
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxRows->value(),
                                                    ui->sbxCols->value(),
                                                    fpsImageHandler::Average,
-                                                   fpsImageHandler::Right | fpsImageHandler::Vert);
+                                                   fpsImageHandler::Right);
     else
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
@@ -160,31 +160,31 @@ void fpsMainWindow::on_btnReset_clicked()
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::Left | fpsImageHandler::Hori);
+                                                   fpsImageHandler::Left);
         else if (ui->rbtnHoriRight->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::Right | fpsImageHandler::Hori);
+                                                   fpsImageHandler::Right);
         else if (ui->rbtnVertLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::Left | fpsImageHandler::Vert);
+                                                   fpsImageHandler::Left);
         else
             m_rects = fpsImageHandler::getSubRects(m_originalImage.width(),
                                                    m_originalImage.height(),
                                                    ui->sbxHeight->value(),
                                                    ui->sbxWidth->value(),
                                                    fpsImageHandler::Size,
-                                                   fpsImageHandler::Right | fpsImageHandler::Vert);
+                                                   fpsImageHandler::Right);
     ui->actionSave->setEnabled(true);
     ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
-    fpsFloatingLine *line { new fpsFloatingLine(ui->wgtShow, fpsFloatingLine::Horizontal) };
+    fpsFloatingLine *line { new fpsFloatingLine(ui->wgtShow, Qt::Horizontal) };
     line->show();
 }
 
