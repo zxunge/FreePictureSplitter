@@ -10,6 +10,7 @@
 #include "fpsimagehandler.h"
 #include "fpsaboutdialog.h"
 #include "fpsfloatingline.h"
+#include "fpsrulerbar.h"
 #include "fpsprogressdialog.h"
 
 #include <QFileDialog>
@@ -26,6 +27,10 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     ui->labPicture->lower();
+    m_hruler = new fpsRulerBar(ui->wgtHRuler, Qt::Horizontal);
+    m_vruler = new fpsRulerBar(ui->wgtVRuler, Qt::Vertical);
+    m_hruler->setRange(0, 1000, 1000);
+    m_hruler->update();
 }
 
 fpsMainWindow::~fpsMainWindow()

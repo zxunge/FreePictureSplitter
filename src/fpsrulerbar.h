@@ -6,6 +6,8 @@
 #ifndef FPSRULERBAR_H
 #define FPSRULERBAR_H
 
+// Not used
+
 #include <QWidget>
 
 class fpsCornerBox : public QWidget
@@ -15,16 +17,32 @@ public:
     explicit fpsCornerBox(QWidget * parent = nullptr);
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event) override;
 };
 
 class fpsRulerBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit fpsRulerBar(QWidget *parent = nullptr);
+    explicit fpsRulerBar(QWidget *parent = nullptr, Qt::Orientation direction = Qt::Horizontal);
 
-signals:
+    void setOrientation(Qt::Orientation orientation);
+    void setRange(double lower, double upper, double max_size);
+    void updatePosition(const QPoint & pos);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void drawTicker(QPainter *painter);
+    void drawPos(QPainter *painter);
+
+protected:
+    Qt::Orientation m_direction;
+    QPoint m_lastPos;
+    QColor m_faceColor;
+
+    double m_lower;
+    double m_upper;
+    double m_maxsize;
 
 };
 
