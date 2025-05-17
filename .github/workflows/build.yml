@@ -59,8 +59,7 @@ jobs:
         sudo apt update
         sudo apt install -y          \
                  build-essential     \
-                 qtbase5-dev         \
-                 qtbase5-private-dev \
+                 qtbase5-dev         \ 
                  qttools5-dev-tools  \
                  qttools5-dev        \
                  libxkbcommon-dev
@@ -72,7 +71,6 @@ jobs:
         sudo apt install -y           \
                  build-essential      \
                  qt6-base-dev         \
-                 qt6-base-private-dev \
                  linguist-qt6         \
                  qt6-tools-dev        \
                  libxkbcommon-dev

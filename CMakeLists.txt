@@ -1,3 +1,8 @@
+# This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
+# Copyright (c) 2024 2025 zxunge
+# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 cmake_minimum_required(VERSION 3.20)
 
 project(FreePictureSplitter
@@ -89,7 +94,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_BINARY_DIR} src)
 
 target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
