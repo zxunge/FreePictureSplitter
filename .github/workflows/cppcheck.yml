@@ -29,6 +29,7 @@ jobs:
           cppcheck --project=compile_commands.json                     \
                    --check-library                                     \
                    --enable=all                                        \
+                   --platform=unix64                                   \
                    --output-file=cppcheck_report.txt                   \
                    --verbose
           
