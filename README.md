@@ -34,3 +34,7 @@ See [Building](docs/build.md)
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=zxunge/FreePictureSplitter&type=Date)](https://star-history.com/#zxunge/FreePictureSplitter&Date)
+
+## SAST Tools
+
+[PVS-Studio](https://pvs-studio.com/en/pvs-studio/?utm_source=website&utm_medium=github&utm_campaign=open_source) - static analyzer for C, C++, C#, and Java code.
