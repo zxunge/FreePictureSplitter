@@ -1,9 +1,0 @@
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/FreePictureSplitter.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/edit_cache.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/rebuild_cache.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/list_install_components.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/install.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/install/local.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/install/strip.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/FreePictureSplitter_autogen_timestamp_deps.dir
-/home/runner/work/FreePictureSplitter/FreePictureSplitter/build/CMakeFiles/FreePictureSplitter_autogen.dir

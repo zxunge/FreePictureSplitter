@@ -30,8 +30,10 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN}}
           check_library: enable
-          output_file: cppcheck/cppcheck_report.txt
           other_options: --project=build/compile_commands.json
+        
+      - name: Clean working directory
+        run: rm -rf build
         
       - name: Publish Report    
         uses: mikeal/publish-to-github-action@master
