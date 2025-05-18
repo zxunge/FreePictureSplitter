@@ -15,15 +15,16 @@ jobs:
           repository: zxunge/FreePictureSplitter
           submodules: recursive
           
-      - name: Install dpendencies for checking
+      - name: Install binaries
         run: |
           sudo apt update
           sudo apt install -y build-essential qt6-base-dev linguist-qt6 qt6-tools-dev libxkbcommon-dev cppcheck
           
-      - name: Generate build steps and check
+      - name: Build for checking
         run: |
           mkdir build && cd $_
           cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+          cmake --build . --parallel $(nproc)
           cppcheck --project=compile_commands.json --check-library --enable=all --output-file=cppcheck_report.txt --verbose
           
       - name: Print results
