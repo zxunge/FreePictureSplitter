@@ -1,4 +1,5 @@
 name: CppCheck
+
 on: 
   push:
   pull_request:
@@ -14,11 +15,23 @@ jobs:
           repository: zxunge/FreePictureSplitter
           submodules: recursive
           
+      - name: Install dpendencies for checking
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential qt6-base-dev linguist-qt6 qt6-tools-dev libxkbcommon-dev
+          
+      - name: Generate build steps
+        run: |
+          mkdir build && cd $_
+          cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+      
       - name: CppCheck
         uses: deep5050/cppcheck-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN}}
           check_library: enable
+          output_file: cppcheck/cppcheck_report.txt
+          other_options: --project=build/compile_commands.json
         
       - name: Publish Report    
         uses: mikeal/publish-to-github-action@master
