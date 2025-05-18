@@ -37,7 +37,7 @@ jobs:
           
       - name: Convert report
         run: |
-          plog-converter -d -t sarif -o pvs-report.sarif PVS-Studio.log
+          plog-converter -t sarif -o pvs-report.sarif PVS-Studio.log -d
           
       - name: Publish report
         uses: github/codeql-action/upload-sarif@v2
