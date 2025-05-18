@@ -18,25 +18,13 @@ jobs:
       - name: Install dpendencies for checking
         run: |
           sudo apt update
-          sudo apt install -y build-essential qt6-base-dev linguist-qt6 qt6-tools-dev libxkbcommon-dev
+          sudo apt install -y build-essential qt6-base-dev linguist-qt6 qt6-tools-dev libxkbcommon-dev cppcheck
           
-      - name: Generate build steps
+      - name: Generate build steps and check
         run: |
           mkdir build && cd $_
           cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-      
-      - name: CppCheck
-        uses: deep5050/cppcheck-action@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN}}
-          check_library: enable
-          other_options: --project=build/compile_commands.json
-        
-      - name: Clean working directory
-        run: rm -rf build
-        
-      - name: Publish Report    
-        uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: 'main'
+          cppcheck --project=compile_commands.json --check-library --enable=all --output-file=cppcheck_report.txt --verbose
+          
+      - name: Print results
+        run: cat build/cppcheck_report.txt
