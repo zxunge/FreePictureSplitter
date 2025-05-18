@@ -2,9 +2,9 @@ name: Static Analysis
 
 on:
   workflow_run:
-  workflows: [build]
-  types:
-    - completed
+    workflows: [build]
+    types:
+      - completed
 
 jobs:
   PVS-Studio:
