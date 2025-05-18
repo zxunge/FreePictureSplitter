@@ -25,7 +25,24 @@ jobs:
           mkdir build && cd $_
           cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
           cmake --build . --parallel $(nproc)
-          cppcheck --project=compile_commands.json --check-library --enable=all --output-file=cppcheck_report.txt --verbose
+          cppcheck --project=compile_commands.json                     \
+                   -DQT_CORE_LIB                                       \
+                   -DQT_GUI_LIB                                        \
+                   -DQT_NO_DEBUG                                       \
+                   -DQT_WIDGETS_LIB                                    \
+                   -I .                                                \
+                   -I ..                                               \
+                   -I FreePictureSplitter_autogen/include              \
+                   -I ../src                                           \
+                   -I /usr/include/x86_64-linux-gnu/qt6/QtCore         \
+                   -I /usr/include/x86_64-linux-gnu/qt6                \
+                   -I /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++  \
+                   -I /usr/include/x86_64-linux-gnu/qt6/QtWidgets      \
+                   -I /usr/include/x86_64-linux-gnu/qt6/QtGui          \
+                   --check-library                                     \
+                   --enable=all                                        \
+                   --output-file=cppcheck_report.txt                   \
+                   --verbose
           
       - name: Print results
         run: cat build/cppcheck_report.txt
