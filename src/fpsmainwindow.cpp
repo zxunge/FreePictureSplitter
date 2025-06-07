@@ -45,7 +45,7 @@ void fpsMainWindow::on_actionOpen_triggered()
         ui->graphicsView->setImage(m_originalImage);
 
         // Display image info on StatusBar; they are: file name, width * height, color depth, vertical DPI, horizontal DPI
-        std::string fn { m_filename.toStdString() };
+        std::string fn { m_fileName.toStdString() };
         ui->statusBar->showMessage(QString::asprintf("%s, %dx%d, ", fn.c_str(), m_originalImage.width(), m_originalImage.height()) + 
                                    tr("Depth: ") +
                                    QString::asprintf("%d, ", m_originalImage.depth()) +
