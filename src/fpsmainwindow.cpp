@@ -18,6 +18,7 @@
 #include <QTextBrowser>
 #include <QStringLiteral>
 #include <QDebug>
+#include <string>
 
 fpsMainWindow::fpsMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,7 +43,17 @@ void fpsMainWindow::on_actionOpen_triggered()
     if(m_originalImage.load(m_fileName))
     {
         ui->graphicsView->setImage(m_originalImage);
-        ui->statusBar->showMessage(QString::asprintf("%s, %dx%d, depth: %d", m_fileName.(), m_originalImage.width(), m_originalImage.height(), m_originalImage.depth()));
+
+        // Display image info on StatusBar; they are: file name, width * height, color depth, vertical DPI, horizontal DPI
+        std::string fn { m_filename.toStdString() };
+        ui->statusBar->showMessage(QString::asprintf("%s, %dx%d, ", fn.c_str(), m_originalImage.width(), m_originalImage.height()) + 
+                                   tr("Depth: ") +
+                                   QString::asprintf("%d, ", m_originalImage.depth()) +
+                                   tr("Vertical: ") +
+                                   QString::asprintf("%d dpi, ", static_cast<int>(m_originalImage.dotsPerMeterY() * 0.0254)) +
+                                   tr("Horizontal: ") +
+                                   QString::asprintf("%d dpi, ", static_cast<int>(m_originalImage.dotsPerMeterX() * 0.0254)));
+                                   
         ui->btnReset->setEnabled(true);
         ui->sbxCols->setRange(1, m_originalImage.width());
         ui->sbxRows->setRange(1, m_originalImage.height());
