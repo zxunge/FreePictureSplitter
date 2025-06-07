@@ -132,7 +132,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
         
     length = 0;
 
-    for (i { std::size(ruler_metric.subdivide) - 1 };
+    for (i = std::size(ruler_metric.subdivide) - 1;
          i >= 0; 
          --i)
     {
@@ -161,7 +161,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
         }
         
         int tick_index {};
-        for (cur { start }; cur <= end; cur += subd_incr)
+        for (cur = start; cur <= end; cur += subd_incr)
         {
             pos = static_cast<int>(qRound((cur - lower) * increment + 1e-12));
             if (m_direction == Qt::Horizontal)
