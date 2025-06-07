@@ -9,7 +9,7 @@
 #include <QWidget>
 
 #define MINIMUM_INCR   5
-#define RULER_SIZE     16
+#define RULER_SIZE     24
 
 class fpsCornerBox : public QWidget
 {

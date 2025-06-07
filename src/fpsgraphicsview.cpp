@@ -29,7 +29,7 @@ void fpsGraphicsView::setImage(QImage img)
 
 void fpsGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
-    QPointF pt = mapToScene(event->pos());
+    QPointF pt { mapToScene(event->pos()) };
     m_hruler->updatePosition(event->pos());
     m_vruler->updatePosition(event->pos());
     emit positionChanged(pt.x(), pt.y());
@@ -62,16 +62,16 @@ void fpsGraphicsView::updateRuler()
     if (!scene())
         return;
 
-    QRectF viewbox = this->rect();
-    QPointF offset = mapFromScene(scene()->sceneRect().topLeft());
-    double factor =  1.0 / transform().m11();
-    double lower_x = factor * (viewbox.left() - offset.x());
-    double upper_x = factor * (viewbox.right() - RULER_SIZE - offset.x());
+    QRectF viewbox { this->rect() };
+    QPointF offset { mapFromScene(scene()->sceneRect().topLeft()) };
+    double factor {  1.0 / transform().m11() };
+    double lower_x { factor * (viewbox.left() - offset.x()) };
+    double upper_x { factor * (viewbox.right() - RULER_SIZE - offset.x()) };
     m_hruler->setRange(lower_x, upper_x, upper_x - lower_x);
     m_hruler->update();
 
-    double lower_y = -factor * (viewbox.top() - offset.y());
-    double upper_y = -factor * (viewbox.bottom() - RULER_SIZE - offset.y());
+    double lower_y { -factor * (viewbox.top() - offset.y()) };
+    double upper_y { -factor * (viewbox.bottom() - RULER_SIZE - offset.y()) };
 
     m_vruler->setRange(lower_y, upper_y, upper_y - lower_y);
     m_vruler->update();

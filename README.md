@@ -3,7 +3,7 @@
 <h1>FreePictureSplitter</h1>
 
 [![All-platforms](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/build.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/build.yml)
-[![Static Analysis](https://github.com/zxunge/FreePictureSplitter/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/static-analysis.yml)
+[![Static Analysis](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/static-analysis.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/static-analysis.yml)
 [![Downloads](https://img.shields.io/github/downloads/zxunge/FreePictureSplitter/total.svg?maxAge=2592001&style=flat-square)](https://github.com/zxunge/FreePictureSplitter/releases/)
 [![Welcome PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
 [![Stars](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)
@@ -22,14 +22,9 @@ FreePictureSplitter has the following goals:
 Goals | Implementation
 ------|------
 Batch splitting | 1.x only; working in 2.x
-Multiple picture formats | ‚úÖ
-Splitting by columns and rows | ‚úÖ
-Single picture splitting | 2.x only
+Multiple picture formats | ‚ú?Splitting by columns and rows | ‚ú?Single picture splitting | 2.x only
 Splitting by pixels | 2.x only
-User configurations | ‚ùé
-HTML generation | ‚ùé
-Quality control | ‚ùé
-
+User configurations | ‚ù?HTML generation | ‚ù?Quality control | ‚ù?
 ## Releases
 The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
 <br /> We have bumped the version 3 there, which is a 'pre-release'. We don't gurantee the usability of that Preview package.
