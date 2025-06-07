@@ -9,8 +9,6 @@
 #include "fpsbatchdialog.h"
 #include "fpsimagehandler.h"
 #include "fpsaboutdialog.h"
-#include "fpsfloatingline.h"
-#include "fpsrulerbar.h"
 #include "fpsprogressdialog.h"
 
 #include <QFileDialog>
@@ -27,7 +25,6 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-
 }
 
 fpsMainWindow::~fpsMainWindow()
@@ -45,7 +42,7 @@ void fpsMainWindow::on_actionOpen_triggered()
     if(m_originalImage.load(m_fileName))
     {
         ui->graphicsView->setImage(m_originalImage);
-        ui->statusBar->showMessage(m_fileName);
+        ui->statusBar->showMessage(QString::asprintf("%s, %dx%d, depth: %d", m_fileName.(), m_originalImage.width(), m_originalImage.height(), m_originalImage.depth()));
         ui->btnReset->setEnabled(true);
         ui->sbxCols->setRange(1, m_originalImage.width());
         ui->sbxRows->setRange(1, m_originalImage.height());
@@ -57,7 +54,6 @@ void fpsMainWindow::on_actionOpen_triggered()
                              QString("Error loading picture file: %1.").arg(m_fileName),
                              QMessageBox::Close);
 }
-
 
 void fpsMainWindow::on_actionSave_triggered()
 {
@@ -90,7 +86,6 @@ void fpsMainWindow::on_actionSave_triggered()
 
 }
 
-
 void fpsMainWindow::on_actionExit_triggered()
 {
     close();
@@ -103,25 +98,21 @@ void fpsMainWindow::on_actionBatch_triggered()
     dlg->exec();
 }
 
-
 void fpsMainWindow::on_actionSettings_triggered()
 {
 
 }
-
 
 void fpsMainWindow::on_actionHomepage_triggered()
 {
     QDesktopServices::openUrl(QUrl(fpsHomepageUrl, QUrl::TolerantMode));
 }
 
-
 void fpsMainWindow::on_actionAbout_triggered()
 {
     fpsAboutDialog *dlg { new fpsAboutDialog(this) };
     dlg->exec();
 }
-
 
 void fpsMainWindow::on_btnReset_clicked()
 {
@@ -187,7 +178,6 @@ void fpsMainWindow::on_btnReset_clicked()
     ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
 }
 
-
 void fpsMainWindow::on_rbtnSize_toggled(bool checked)
 {
     if (checked)
@@ -198,7 +188,6 @@ void fpsMainWindow::on_rbtnSize_toggled(bool checked)
         ui->sbxWidth->setEnabled(true);
     }
 }
-
 
 void fpsMainWindow::on_rbtnAver_toggled(bool checked)
 {
