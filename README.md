@@ -17,14 +17,22 @@
 # Introduction
 FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
 
+> [!Note]
+> When we introduce something of FreePictureSplitter later, we refer to FPS version 3 and higher.
+
 ## Goals 
 FreePictureSplitter has the following goals:
 Goals | Implementation
 ------|------
-Batch splitting | 1.x only; working in 2.x
-Multiple picture formats | ‚ú?Splitting by columns and rows | ‚ú?Single picture splitting | 2.x only
-Splitting by pixels | 2.x only
-User configurations | ‚ù?HTML generation | ‚ù?Quality control | ‚ù?
+Batch splitting | 1.x only; working in 3.x
+Multiple picture formats | ‚úÖ
+Splitting by columns and rows | ‚úÖ
+Single picture splitting | ‚úÖ
+Splitting by pixels | ‚úÖ
+User configurations | ‚ùé
+HTML generation | ‚ùé
+Quality control | ‚ùé
+
 ## Releases
 The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
 <br /> We have bumped the version 3 there, which is a 'pre-release'. We don't gurantee the usability of that Preview package.
@@ -39,3 +47,4 @@ See [Building](docs/build.md)
 ## SAST Tools
 
 [PVS-Studio](https://pvs-studio.com/en/pvs-studio/?utm_source=website&utm_medium=github&utm_campaign=open_source) - static analyzer for C, C++, C#, and Java code.
+
