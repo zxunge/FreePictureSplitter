@@ -2,7 +2,7 @@
     <qresource prefix="/toolBar">
         <file>toolBar/open.png</file>
         <file>toolBar/save.png</file>
-        <file>toolBar/batch.jpg</file>
+        <file>toolBar/batch.png</file>
         <file>toolBar/settings.png</file>
         <file>toolBar/save-off.png</file>
     </qresource>

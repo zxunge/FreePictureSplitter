@@ -390,7 +390,7 @@
   <action name="actionBatch">
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/batch.jpg</normaloff>:/toolBar/toolBar/batch.jpg</iconset>
+     <normaloff>:/toolBar/toolBar/batch.png</normaloff>:/toolBar/toolBar/batch.png</iconset>
    </property>
    <property name="text">
     <string>Batch Splitting...</string>
