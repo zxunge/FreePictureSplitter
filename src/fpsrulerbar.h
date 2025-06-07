@@ -8,6 +8,9 @@
 
 #include <QWidget>
 
+#define MINIMUM_INCR   5
+#define RULER_SIZE     16
+
 class fpsCornerBox : public QWidget
 {
     Q_OBJECT

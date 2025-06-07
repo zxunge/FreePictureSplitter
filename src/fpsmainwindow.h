@@ -11,8 +11,6 @@
 #include <QRect>
 #include <QVector>
 
-class fpsRulerBar;
-
 namespace Ui {
 class fpsMainWindow;
 }
@@ -51,8 +49,6 @@ private slots:
 
 private:
     Ui::fpsMainWindow *ui;
-    fpsRulerBar *m_hruler;
-    fpsRulerBar *m_vruler;
 
     QImage m_originalImage;
     QVector<QVector<QRect>> m_rects;

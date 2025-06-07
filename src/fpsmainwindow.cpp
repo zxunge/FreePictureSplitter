@@ -19,6 +19,7 @@
 #include <QUrl>
 #include <QTextBrowser>
 #include <QStringLiteral>
+#include <QDebug>
 
 fpsMainWindow::fpsMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,11 +27,7 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    ui->labPicture->lower();
-    m_hruler = new fpsRulerBar(ui->wgtHRuler, Qt::Horizontal);
-    m_vruler = new fpsRulerBar(ui->wgtVRuler, Qt::Vertical);
-    m_hruler->setRange(0, 1000, 1000);
-    m_hruler->update();
+
 }
 
 fpsMainWindow::~fpsMainWindow()
@@ -47,8 +44,7 @@ void fpsMainWindow::on_actionOpen_triggered()
 
     if(m_originalImage.load(m_fileName))
     {
-        ui->labPicture->setPixmap(QPixmap::fromImage(m_originalImage));
-        ui->labPicture->setScaledContents(true);
+        ui->graphicsView->setImage(m_originalImage);
         ui->statusBar->showMessage(m_fileName);
         ui->btnReset->setEnabled(true);
         ui->sbxCols->setRange(1, m_originalImage.width());
@@ -189,8 +185,6 @@ void fpsMainWindow::on_btnReset_clicked()
                                                    fpsImageHandler::Right);
     ui->actionSave->setEnabled(true);
     ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
-    fpsFloatingLine *line { new fpsFloatingLine(ui->wgtShow, Qt::Horizontal) };
-    line->show();
 }
 
 
