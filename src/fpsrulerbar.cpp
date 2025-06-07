@@ -220,7 +220,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
                     int w { fm.horizontalAdvance(unit_str) };
                     QRect textRect(-w / 2, -RULER_SIZE / 2, w ,RULER_SIZE);
                     painter->save();
-                    painter->translate(4, pos + w / 2+2);
+                    painter->translate(4, pos + w / 2 + 2);
                     painter->rotate(90);
                     painter->drawText(textRect, Qt::AlignRight, unit_str);
                     painter->restore();
