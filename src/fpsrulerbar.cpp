@@ -10,9 +10,6 @@
 #include <cmath>
 #include <array>
 
-#define MINIMUM_INCR   5
-#define RULER_SIZE     16
-
 struct RulerMetric
 {
     double ruler_scale[16];
