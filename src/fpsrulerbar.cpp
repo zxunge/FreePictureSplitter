@@ -13,21 +13,21 @@
 #define MINIMUM_INCR   5
 #define RULER_SIZE     16
 
-typedef struct
+struct RulerMetric
 {
     double ruler_scale[16];
     int    subdivide[5];
-} RulerMetric;
+};
 
 // Ruler metric for general use.
-static RulerMetric const ruler_metric_general =
+static const RulerMetric ruler_metric_general
 {
     { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000 },
     { 1, 5, 10, 50, 100 }
 };
 
 // Ruler metric for inch scales.
-static RulerMetric const ruler_metric_inches =
+static const RulerMetric ruler_metric_inches
 {
     { 1, 2, 4,  8, 16, 32,  64, 128, 256,  512, 1024, 2048, 4096, 8192, 16384, 32768 },
     { 1, 2,  4,  8,  16 }
@@ -35,8 +35,8 @@ static RulerMetric const ruler_metric_inches =
 
 
 fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
-    :QWidget(parent),
-    m_faceColor(0xFF, 0xFF, 0xFF)
+    : QWidget(parent),
+      m_faceColor(0xFF, 0xFF, 0xFF)
 {
     m_lower = m_upper = m_maxsize = 0;
     m_lastPos = QPoint(0,0);
@@ -72,12 +72,10 @@ void fpsRulerBar::paintEvent(QPaintEvent *event)
     QRect rulerRect { rect() };
     painter.fillRect(rulerRect,m_faceColor);
 
-    if ( m_direction == Qt::Horizontal ){
-        painter.drawLine(rulerRect.bottomLeft(),rulerRect.bottomRight());
-    }
-    else{
-        painter.drawLine(rulerRect.topRight(),rulerRect.bottomRight());
-    }
+    if (m_direction == Qt::Horizontal)
+        painter.drawLine(rulerRect.bottomLeft(), rulerRect.bottomRight());
+    else
+        painter.drawLine(rulerRect.topRight(), rulerRect.bottomRight());
 
     drawTicker(&painter);
     drawPos(&painter);
@@ -142,7 +140,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
         else
             subd_incr = (static_cast<double>(ruler_metric.ruler_scale[scale]) / ruler_metric.subdivide[i]);
             
-        if (subd_incr * fabs (increment) <= MINIMUM_INCR)
+        if (subd_incr * fabs(increment) <= MINIMUM_INCR)
             continue;
 
         ideal_length = height / (i + 1) - 1;
@@ -151,13 +149,13 @@ void fpsRulerBar::drawTicker(QPainter *painter)
             length = ideal_length;
         if (lower < upper)
         {
-            start = floor (lower / subd_incr) * subd_incr;
-            end   = ceil  (upper / subd_incr) * subd_incr;
+            start = floor(lower / subd_incr) * subd_incr;
+            end   = ceil(upper / subd_incr) * subd_incr;
         }
         else
         {
-            start = floor (upper / subd_incr) * subd_incr;
-            end   = ceil  (lower / subd_incr) * subd_incr;
+            start = floor(upper / subd_incr) * subd_incr;
+            end   = ceil(lower / subd_incr) * subd_incr;
         }
         
         int tick_index {};
@@ -251,7 +249,9 @@ void fpsRulerBar::drawPos(QPainter *painter)
        bs_width |= 1;                        /* make sure it's odd */
        bs_height = bs_width / 2 + 1;
        position = lower + (upper - lower) * m_lastPos.x() / allocation.width();
-   }else{
+   }
+   else
+   {
        width = allocation.height();
        height = allocation.width();
        bs_height = width / 2 + 2 ;
@@ -261,7 +261,7 @@ void fpsRulerBar::drawPos(QPainter *painter)
    }
    if ((bs_width > 0) && (bs_height > 0))
    {
-       double increment;
+       double increment {};
        if (m_direction == Qt::Horizontal)
        {
            increment = static_cast<double>(width) / (upper - lower);
