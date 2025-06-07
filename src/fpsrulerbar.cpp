@@ -8,6 +8,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <cmath>
+#include <array>
 
 #define MINIMUM_INCR   5
 #define RULER_SIZE     16
@@ -88,11 +89,12 @@ void fpsRulerBar::drawTicker(QPainter *painter)
     int             width, height;
     int             length, ideal_length;
     double          lower { m_lower }, upper { m_upper }; /* Upper and lower limits, in ruler units */
-    double          increment;    /* Number of pixels per unit */
-    uint            scale;        /* Number of units per major unit */
+    double          increment;                            /* Number of pixels per unit */
+    uint            scale;                                /* Number of units per major unit */
     double          start, end, cur;
     char            unit_str[32];
     char            digit_str[2] { '\0', '\0' };
+    QFontMetrics    fm(font());
     int             digit_height { fm.height() };
     int             digit_offset {};
     int             text_size;
@@ -100,9 +102,9 @@ void fpsRulerBar::drawTicker(QPainter *painter)
     double          max_size { m_maxsize };
     RulerMetric     ruler_metric { ruler_metric_general }; /* The metric to use for this unit system */
     QRect           allocation { this->rect() };
-    QFontMetrics    fm(font());
     
-    if (m_direction == Qt::Horizontal){
+    if (m_direction == Qt::Horizontal)
+    {
         width = allocation.width();
         height = allocation.height();
     }
@@ -118,10 +120,10 @@ void fpsRulerBar::drawTicker(QPainter *painter)
     increment = static_cast<double>(width) / (upper - lower);
 
     scale = ceil(max_size);
-    sprintf (unit_str, "%d", scale);
-    text_size = strlen (unit_str) * digit_height + 1;
+    sprintf(unit_str, "%d", scale);
+    text_size = strlen(unit_str) * digit_height + 1;
     for (scale {}; 
-         scale < sizeof (ruler_metric.ruler_scale) / sizeof(ruler_metric.ruler_scale[0]); 
+         scale < std::size(ruler_metric.subdivide); 
          scale++)
         if (ruler_metric.ruler_scale[scale] * fabs (increment) > 2 * text_size)
             break;
@@ -130,7 +132,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
         
     length = 0;
 
-    for (i { sizeof (ruler_metric.subdivide) / sizeof( ruler_metric.subdivide[0] ) - 1 };
+    for (i { std::size(ruler_metric.subdivide) - 1 };
          i >= 0; 
          --i)
     {
@@ -161,16 +163,16 @@ void fpsRulerBar::drawTicker(QPainter *painter)
         int tick_index {};
         for (cur { start }; cur <= end; cur += subd_incr)
         {
-            pos = int(qRound((cur - lower) * increment + 1e-12));
+            pos = static_cast<int>(qRound((cur - lower) * increment + 1e-12));
             if (m_direction == Qt::Horizontal)
             {
-                QRect rt(pos,height-length,1,length);
-                painter->drawLine(rt.topLeft(),rt.bottomLeft());
+                QRect rt(pos, height-length, 1, length);
+                painter->drawLine(rt.topLeft(), rt.bottomLeft());
             }
             else
             {
-                QRect rt(height-length,pos,length,1);
-                painter->drawLine(rt.topLeft(),rt.topRight());
+                QRect rt(height-length, pos, length, 1);
+                painter->drawLine(rt.topLeft(), rt.topRight());
             }
             
             double label_spacing_px { fabs(increment * static_cast<double>(ruler_metric.ruler_scale[scale]) / ruler_metric.subdivide[i]) };
