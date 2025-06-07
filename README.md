@@ -7,6 +7,7 @@
 [![Downloads](https://img.shields.io/github/downloads/zxunge/FreePictureSplitter/total.svg?maxAge=2592001&style=flat-square)](https://github.com/zxunge/FreePictureSplitter/releases/)
 [![Welcome PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
 [![Stars](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)
+[![Repository Size](https://img.shields.io/github/repo-size/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter)
 <img alt="GitHub Created At" src="https://img.shields.io/github/created-at/zxunge/FreePictureSplitter?style=flat-square" />
 <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/zxunge/FreePictureSplitter?style=flat-square" />
 <img alt="GitHub Release" src="https://img.shields.io/github/v/release/zxunge/FreePictureSplitter?style=flat-square" />
@@ -28,6 +29,10 @@ Splitting by pixels | 2.x only
 User configurations | ❎
 HTML generation | ❎
 Quality control | ❎
+
+## Releases
+The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
+<br /> We have bumped the version 3 there, which is a 'pre-release'. We don't gurantee the usability of that Preview package.
 
 ## Building
 See [Building](docs/build.md)
