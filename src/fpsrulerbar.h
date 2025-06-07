@@ -6,8 +6,6 @@
 #ifndef FPSRULERBAR_H
 #define FPSRULERBAR_H
 
-// Not used
-
 #include <QWidget>
 
 class fpsCornerBox : public QWidget
