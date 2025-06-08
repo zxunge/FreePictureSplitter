@@ -32,7 +32,7 @@ void fpsGraphicsView::mouseMoveEvent(QMouseEvent *event)
     QPointF pt { mapToScene(event->pos()) };
     m_hruler->updatePosition(event->pos());
     m_vruler->updatePosition(event->pos());
-    emit positionChanged(pt.x(), pt.y());
+    Q_EMIT positionChanged(pt.x(), pt.y());
     QGraphicsView::mouseMoveEvent(event);
 }
 
@@ -77,4 +77,14 @@ void fpsGraphicsView::updateRuler()
     m_vruler->update();
 }
 
+void fpsGraphicsView::zoomIn()
+{
+    scale(1.2, 1.2);
+    updateRuler();
+}
 
+void fpsGraphicsView::zoomOut()
+{
+    scale(1 / 1.2, 1 / 1.2);
+    updateRuler();
+}
