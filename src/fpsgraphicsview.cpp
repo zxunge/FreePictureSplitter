@@ -6,6 +6,7 @@
 
 #include "fpsgraphicsview.h"
 #include "fpsrulerbar.h"
+#include "fpsfloatingline.h"
 
 #include <QMouseEvent>
 
@@ -87,4 +88,10 @@ void fpsGraphicsView::zoomOut()
 {
     scale(1 / 1.2, 1 / 1.2);
     updateRuler();
+}
+
+void fpsGraphicsView::addFloatingLine()
+{
+    fpsFloatingLine *line { new fpsFloatingLine(this) };
+    line->show();
 }
