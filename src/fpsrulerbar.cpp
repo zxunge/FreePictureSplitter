@@ -153,7 +153,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
             }
             else
             {
-                QRect rt(height-length, pos, length, 1);
+                QRect rt(height - length, pos, length, 1);
                 painter->drawLine(rt.topLeft(), rt.topRight());
             }
             
@@ -163,23 +163,21 @@ void fpsRulerBar::drawTicker(QPainter *painter)
                 (label_spacing_px > 6*digit_height || tick_index%2 == 0 || cur == 0) &&
                 (label_spacing_px > 3*digit_height || tick_index%4 == 0 || cur == 0))
             {
-                if (qAbs(static_cast<int>(cur)) >= 2000 && (static_cast<int>(cur) / 1000) * 1000 == static_cast<int>(cur))
-                    sprintf (unit_str, "%dk", static_cast<int>(cur) / 1000);
+                if (qAbs(static_cast<int>(cur)) >= 2000 && 
+                    (static_cast<int>(cur) / 1000) * 1000 == static_cast<int>(cur))
+                    sprintf(unit_str, "%dk", static_cast<int>(cur) / 1000);
                 else
-                    sprintf (unit_str, "%d", static_cast<int>(cur));
-                    
+                    sprintf(unit_str, "%d", static_cast<int>(cur));
+                
+                int w { fm.horizontalAdvance(unit_str) };
                 if (m_direction == Qt::Horizontal)
-                {
-                   int w { fm.horizontalAdvance(unit_str) };
                    painter->drawText(pos + 2,
                                      allocation.top(),
                                      w,
                                      RULER_SIZE,
                                      Qt::AlignLeft|Qt::AlignTop,unit_str);
-                } 
                 else
                 {
-                    int w { fm.horizontalAdvance(unit_str) };
                     QRect textRect(-w / 2, -RULER_SIZE / 2, w, RULER_SIZE);
                     painter->save();
                     painter->translate(4, pos + w / 2 + 2);
@@ -227,7 +225,7 @@ void fpsRulerBar::drawPos(QPainter *painter)
        if (m_direction == Qt::Horizontal)
        {
            increment = static_cast<double>(width) / (upper - lower);
-           x = qRound ((position - lower) * increment) + bs_width / 2 - 1;
+           x = qRound((position - lower) * increment) + bs_width / 2 - 1;
            y = (height + bs_height) / 2 ;
            painter->drawLine(m_lastPos.x(), 0, m_lastPos.x(), height);
        }
@@ -235,7 +233,7 @@ void fpsRulerBar::drawPos(QPainter *painter)
        {
            increment = static_cast<double>(height) / (upper - lower);
            x = (width + bs_width) / 2 ;
-           y = qRound ((position - lower) * increment) + (bs_height) / 2 - 1;
+           y = qRound((position - lower) * increment) + (bs_height) / 2 - 1;
            painter->drawLine(0, m_lastPos.y(), width, m_lastPos.y());
        }
    }
@@ -244,19 +242,19 @@ void fpsRulerBar::drawPos(QPainter *painter)
 fpsCornerBox::fpsCornerBox(QWidget *parent)
     : QWidget(parent)
 {
-    // ctot
+    // ctor
 }
 
 void fpsCornerBox::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
     QPainter painter(this);
-    painter.fillRect(rect(),QColor(0xFF, 0xFF, 0xFF));
+    painter.fillRect(rect(), QColor(0xFF, 0xFF, 0xFF));
 
     painter.setPen(Qt::DashLine);
     painter.drawLine(rect().center().x(),rect().top(),rect().center().x(),rect().bottom());
     painter.drawLine(rect().left(),rect().center().y(),rect().right(),rect().center().y());
 
-    painter.drawLine(rect().topRight(),rect().bottomRight());
-    painter.drawLine(rect().bottomLeft(),rect().bottomRight());
+    painter.drawLine(rect().topRight(), rect().bottomRight());
+    painter.drawLine(rect().bottomLeft(), rect().bottomRight());
 }

@@ -25,6 +25,7 @@ public:
     void zoomOut();
 
     void setImage(QImage img);
+    void addFloatingLine();
 
 signals:
     void positionChanged(int x, int y);
