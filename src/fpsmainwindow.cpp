@@ -52,7 +52,7 @@ void fpsMainWindow::on_actionOpen_triggered()
                                    tr("Vertical: ") +
                                    QString::asprintf("%d dpi, ", static_cast<int>(m_originalImage.dotsPerMeterY() * 0.0254)) +
                                    tr("Horizontal: ") +
-                                   QString::asprintf("%d dpi, ", static_cast<int>(m_originalImage.dotsPerMeterX() * 0.0254)));
+                                   QString::asprintf("%d dpi", static_cast<int>(m_originalImage.dotsPerMeterX() * 0.0254)));
                                    
         ui->btnReset->setEnabled(true);
         ui->sbxCols->setRange(1, m_originalImage.width());

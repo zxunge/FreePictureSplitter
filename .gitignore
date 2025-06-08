@@ -25,6 +25,7 @@
 *.la
 *.a
 *.lib
+build/
 
 # Executables
 *.exe
@@ -42,4 +43,3 @@
 
 # Resources
 *.res
-
