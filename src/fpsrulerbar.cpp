@@ -111,7 +111,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
          scale++)
         if (ruler_metric.ruler_scale[scale] * fabs (increment) > 2 * text_size)
             break;
-    if (scale == std::size(ruler_metric.ruler_scale)
+    if (scale == std::size(ruler_metric.ruler_scale))
         scale = std::size(ruler_metric.ruler_scale) - 1;
 
     for (int i { std::size(ruler_metric.subdivide) - 1 };
