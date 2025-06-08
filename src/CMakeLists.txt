@@ -63,7 +63,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_BINARY_DIR} .)
+target_include_directories(FreePictureSplitter PRIVATE .)
 
 target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 

@@ -1,7 +1,7 @@
 # Building FreePictureSplitter from Source
 
 > [!NOTE] 
-> The 1.x and 2.x versions need wxWidgets, while the incoming 3.x and later versions need Qt 5+.
+> The 1.x and 2.x versions need wxWidgets, while the 3.x and later versions need Qt 5+.
 > The build docs included in the main branch and the tarballs(version >= 3.0.0) are for building with Qt specifically.
 
 ## Windows
