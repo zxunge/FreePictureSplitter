@@ -80,9 +80,10 @@ void fpsRulerBar::paintEvent(QPaintEvent *event)
 
 void fpsRulerBar::drawTicker(QPainter *painter)
 {
-    int             i;
-    int             width, height;
-    int             length, ideal_length;
+    QRect           allocation { this->rect() };
+    int             width { (m_direction == Qt::Horizontal) ? allocation.width() : allocation.height() }, 
+                    height { (m_direction == Qt::Horizontal) ? allocation.height() : allocation.width() };
+    int             length {}, ideal_length {};
     double          lower { m_lower }, upper { m_upper }; /* Upper and lower limits, in ruler units */
     double          increment;                            /* Number of pixels per unit */
     uint            scale;                                /* Number of units per major unit */
@@ -96,18 +97,6 @@ void fpsRulerBar::drawTicker(QPainter *painter)
     int             pos;
     double          max_size { m_maxsize };
     RulerMetric     ruler_metric { ruler_metric_general }; /* The metric to use for this unit system */
-    QRect           allocation { this->rect() };
-    
-    if (m_direction == Qt::Horizontal)
-    {
-        width = allocation.width();
-        height = allocation.height();
-    }
-    else
-    {
-        width = allocation.height();
-        height = allocation.width();
-    }
     
     if ((upper - lower) == 0) 
         return;
@@ -118,16 +107,14 @@ void fpsRulerBar::drawTicker(QPainter *painter)
     sprintf(unit_str, "%d", scale);
     text_size = strlen(unit_str) * digit_height + 1;
     for (scale = 0; 
-         scale < std::size(ruler_metric.subdivide); 
+         scale != std::size(ruler_metric.subdivide); 
          scale++)
         if (ruler_metric.ruler_scale[scale] * fabs (increment) > 2 * text_size)
             break;
     if (scale == sizeof (ruler_metric.ruler_scale))
         scale = sizeof (ruler_metric.ruler_scale) - 1;
-        
-    length = 0;
 
-    for (i = std::size(ruler_metric.subdivide) - 1;
+    for (int i { std::size(ruler_metric.subdivide) - 1 };
          i >= 0; 
          --i)
     {
@@ -135,7 +122,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
         if (scale == 1 && i == 1 )
             subd_incr = 1.0 ;
         else
-            subd_incr = (static_cast<double>(ruler_metric.ruler_scale[scale]) / ruler_metric.subdivide[i]);
+            subd_incr = static_cast<double>(ruler_metric.ruler_scale[scale]) / ruler_metric.subdivide[i];
             
         if (subd_incr * fabs(increment) <= MINIMUM_INCR)
             continue;
@@ -192,30 +179,8 @@ void fpsRulerBar::drawTicker(QPainter *painter)
                 } 
                 else
                 {
-                    /* int w { fm.width("u") + 2 };
-                    int start { cur < 0 ? 1 : 0 };
-                    if ( start == 1 )
-                    {
-                        QRect textRect(-w / 2, -digit_height / 2, w, digit_height);
-                        painter->save();
-                        painter->translate(4, pos + w / 2 + 2 );
-                        painter->rotate(90);
-                        painter->drawText(textRect,
-                                          Qt::AlignRight,
-                                          QString(unit_str[0]));
-                        painter->restore();
-                    }
-                    for (int j { start }; j < static_cast<int>(strlen(unit_str)); ++j){
-                        digit_str[0] = unit_str[j];
-                        painter->drawText(1,
-                                          pos + digit_height * j,
-                                          w,
-                                          digit_height,
-                                          Qt::AlignLeft | Qt::AlignTop, 
-                                          QString(digit_str[0]));
-                    } */
                     int w { fm.horizontalAdvance(unit_str) };
-                    QRect textRect(-w / 2, -RULER_SIZE / 2, w ,RULER_SIZE);
+                    QRect textRect(-w / 2, -RULER_SIZE / 2, w, RULER_SIZE);
                     painter->save();
                     painter->translate(4, pos + w / 2 + 2);
                     painter->rotate(90);
@@ -277,8 +242,9 @@ void fpsRulerBar::drawPos(QPainter *painter)
 }
 
 fpsCornerBox::fpsCornerBox(QWidget *parent)
-    :QWidget(parent)
+    : QWidget(parent)
 {
+    // ctot
 }
 
 void fpsCornerBox::paintEvent(QPaintEvent *e)
