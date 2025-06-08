@@ -36,6 +36,8 @@ endif()
 
 configure_file(config/config.h.in config.h)
 
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 if(BUILD_QT_GUI)
     message(STATUS "Qt GUI is enabled.")
     add_subdirectory(src)

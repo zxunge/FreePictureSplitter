@@ -19,12 +19,13 @@
 # 简介
 FreePictureSplitter是一款快速、小巧且易用的图片分割软件。
 
-> [!注意]
+> [!NOTE]
 > 当我们以后提到FreePictureSplitter时，我们指的是FreePictureSplitter版本3及以上版本。
 
 ## 目标
 我们希望FreePictureSplitter实现下列功能：
 功能 | 实现情况
+------|------
 批量分割 | 仅1.x，正在添加至3.x
 单图片分割 | ✅
 多种图片格式 | ✅
