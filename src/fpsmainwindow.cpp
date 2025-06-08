@@ -73,7 +73,7 @@ void fpsMainWindow::on_actionSave_triggered()
 
     QVector<QImage> imageList;
     QStringList outputList;
-    QString out = QFileDialog::getExistingDirectory(this, tr("Choose the output directory."));
+    QString out { QFileDialog::getExistingDirectory(this, tr("Choose the output directory.")) };
     if (!fpsImageHandler::split(m_originalImage, imageList, m_rects))
     {
         QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),

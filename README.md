@@ -14,6 +14,8 @@
 <img alt="License" src="https://img.shields.io/github/license/zxunge/FreePictureSplitter?style=flat-square" />
 </div>
 
+English | [简体中文](docs/zh/index.md)
+
 # Introduction
 FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
 
@@ -26,9 +28,9 @@ Goals | Implementation
 ------|------
 Batch splitting | 1.x only; working in 3.x
 Multiple picture formats | ✅
-Splitting by columns and rows | ✅
+Splitting averagely | ✅
 Single picture splitting | ✅
-Splitting by pixels | ✅
+Splitting by sizes | ✅
 User configurations | ❎
 HTML generation | ❎
 Quality control | ❎
@@ -38,7 +40,7 @@ The latest release can be found at [Github Releases](https://github.com/zxunge/F
 <br /> We have bumped the version 3 there, which is a 'pre-release'. We don't gurantee the usability of that Preview package.
 
 ## Building
-See [Building](docs/build.md)
+See [Building](docs/en/build.md)
 
 ## Star History
 
