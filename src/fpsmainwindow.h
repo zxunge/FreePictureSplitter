@@ -15,6 +15,7 @@ namespace Ui {
 class fpsMainWindow;
 }
 class fpsBatchDialog;
+class fpsAboutDialog;
 
 class fpsMainWindow : public QMainWindow
 {
@@ -51,6 +52,7 @@ private slots:
 private:
     Ui::fpsMainWindow *ui;
     fpsBatchDialog *m_batchDlg;
+    fpsAboutDialog *m_aboutDlg;
 
     QImage m_originalImage;
     QVector<QVector<QRect>> m_rects;
