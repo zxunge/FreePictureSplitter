@@ -22,7 +22,9 @@
 
 fpsMainWindow::fpsMainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::fpsMainWindow)
+    ui(new Ui::fpsMainWindow),
+    m_aboutDlg(nullptr),
+    m_batchDlg(nullptr)
 {
     ui->setupUi(this);
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -39,6 +41,11 @@ fpsMainWindow::~fpsMainWindow()
     {
         delete m_batchDlg;
         m_batchDlg = nullptr;
+    }
+    if (m_aboutDlg)
+    {
+        delete m_aboutDlg;
+        m_aboutDlg = nullptr;
     }
 }
 
@@ -94,15 +101,15 @@ void fpsMainWindow::on_actionSave_triggered()
     else
     {
         outputList = fpsImageHandler::getOutputList(m_fileName, m_rects.size(), m_rects[0].size());
-        fpsProgressDialog *dlg { new fpsProgressDialog(this, outputList.size()) };
-        connect(this, SIGNAL(proceed(int)), dlg, SLOT(on_proceed(int)));
-        dlg->show();
+        fpsProgressDialog dlg(this, outputList.size());
+        connect(this, SIGNAL(proceed(int)), &dlg, SLOT(on_proceed(int)));
+        dlg.show();
         for (int i {}; i != imageList.size(); ++i)
         {
             imageList[i].save(out + "/" + outputList[i]);
             Q_EMIT proceed(i + 1);
         }
-        dlg->close();
+        dlg.close();
     }
 
 }
@@ -131,8 +138,8 @@ void fpsMainWindow::on_actionHomepage_triggered()
 
 void fpsMainWindow::on_actionAbout_triggered()
 {
-    fpsAboutDialog *dlg { new fpsAboutDialog(this) };
-    dlg->exec();
+    m_aboutDlg = new fpsAboutDialog(this);
+    m_aboutDlg->exec();
 }
 
 void fpsMainWindow::on_btnReset_clicked()
