@@ -11,7 +11,12 @@ project(FreePictureSplitter
         HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter
 )
 
-option(BUILD_QT_GUI "Build FreePictureSplitter's Qt GUI (Default)." ON)
+option(WITH_QT_GUI "Build FreePictureSplitter's Qt GUI (Default)." ON)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    option(WITH_UBSAN "Build with UBSAN" OFF)
+    option(WITH_TSAN "Build with TSAN" OFF)
+    option(WITH_ASAN "Build with ASAN" OFF)
+endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -38,7 +43,25 @@ configure_file(config/config.h.in config.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
-if(BUILD_QT_GUI)
+if(WITH_ASAN)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address")
+endif()
+
+if(WITH_TSAN)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=thread -Wl,-pie")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=thread -fPIC")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=thread -fPIC")
+endif()
+
+if(WITH_UBSAN)
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=undefined")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=undefined")
+endif()
+
+if(WITH_QT_GUI)
     message(STATUS "Qt GUI is enabled.")
     add_subdirectory(src)
 endif()
