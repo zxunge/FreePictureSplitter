@@ -30,7 +30,16 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) :
 
 fpsMainWindow::~fpsMainWindow()
 {
-    delete ui;
+    if (ui)
+    {
+        delete ui;
+        ui = nullptr;
+    }
+    if (m_batchDlg)
+    {
+        delete m_batchDlg;
+        m_batchDlg = nullptr;
+    }
 }
 
 void fpsMainWindow::on_actionOpen_triggered()
@@ -45,14 +54,15 @@ void fpsMainWindow::on_actionOpen_triggered()
         ui->graphicsView->setImage(m_originalImage);
 
         // Display image info on StatusBar; they are: file name, width * height, color depth, vertical DPI, horizontal DPI
-        std::string fn { m_fileName.toStdString() };
-        ui->statusBar->showMessage(QString::asprintf("%s, %dx%d, ", fn.c_str(), m_originalImage.width(), m_originalImage.height()) + 
-                                   tr("Depth: ") +
-                                   QString::asprintf("%d, ", m_originalImage.depth()) +
-                                   tr("Vertical: ") +
-                                   QString::asprintf("%d dpi, ", static_cast<int>(m_originalImage.dotsPerMeterY() * 0.0254)) +
-                                   tr("Horizontal: ") +
-                                   QString::asprintf("%d dpi", static_cast<int>(m_originalImage.dotsPerMeterX() * 0.0254)));
+        ui->statusBar->showMessage(m_fileName + ", " +
+                                   QString::number(m_originalImage.width()) + "x" +
+                                   QString::number(m_originalImage.height()) +
+                                   tr(", Depth: ") +
+                                   QString::number(m_originalImage.depth()) +
+                                   tr(", Vertical: ") +
+                                   QString::number(static_cast<int>(m_originalImage.dotsPerMeterY() * 0.0254)) +
+                                   tr(" dpi, Horizontal: ") +
+                                   QString::number(static_cast<int>(m_originalImage.dotsPerMeterX() * 0.0254)) + " dpi");
                                    
         ui->btnReset->setEnabled(true);
         ui->sbxCols->setRange(1, m_originalImage.width());
@@ -105,8 +115,8 @@ void fpsMainWindow::on_actionExit_triggered()
 
 void fpsMainWindow::on_actionBatch_triggered()
 {
-    fpsBatchDialog *dlg { new fpsBatchDialog(this) };
-    dlg->exec();
+    m_batchDlg = new fpsBatchDialog(this);
+    m_batchDlg->exec();
 }
 
 void fpsMainWindow::on_actionSettings_triggered()
