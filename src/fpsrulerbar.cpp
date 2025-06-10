@@ -33,11 +33,13 @@ static const RulerMetric ruler_metric_inches
 
 fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
     : QWidget(parent),
-      m_faceColor(0xFF, 0xFF, 0xFF)
+      m_faceColor(0xFF, 0xFF, 0xFF),
+      m_lower {},
+      m_upper {},
+      m_maxsize {},
+      m_lastPos { QPoint(0,0) },
+      m_direction { direction }
 {
-    m_lower = m_upper = m_maxsize = 0;
-    m_lastPos = QPoint(0,0);
-    m_direction = direction;
     QFont f(font());
     f.setBold(false);
     f.setPixelSize(10);
