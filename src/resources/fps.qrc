@@ -5,6 +5,10 @@
         <file>toolBar/batch.png</file>
         <file>toolBar/settings.png</file>
         <file>toolBar/save-off.png</file>
+        <file>toolBar/zoom-in.png</file>
+        <file>toolBar/zoom-out.png</file>
+        <file>toolBar/zoom-out-off.png</file>
+        <file>toolBar/zoom-in-off.png</file>
     </qresource>
     <qresource prefix="/icons">
         <file>fps.ico</file>
