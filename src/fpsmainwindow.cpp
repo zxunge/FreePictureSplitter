@@ -72,6 +72,10 @@ void fpsMainWindow::on_actionOpen_triggered()
                                    QString::number(static_cast<int>(m_originalImage.dotsPerMeterX() * 0.0254)) + " dpi");
                                    
         ui->btnReset->setEnabled(true);
+        ui->actionZoomIn->setEnabled(true);
+        ui->actionZoomIn->setIcon(QIcon(":/toolBar/toolBar/zoom-in.png"));
+        ui->actionZoomOut->setEnabled(true);
+        ui->actionZoomOut->setIcon(QIcon(":/toolBar/toolBar/zoom-out.png"));
         ui->sbxCols->setRange(1, m_originalImage.width());
         ui->sbxRows->setRange(1, m_originalImage.height());
         ui->sbxHeight->setRange(1, m_originalImage.height());
@@ -226,5 +230,17 @@ void fpsMainWindow::on_rbtnAver_toggled(bool checked)
         ui->sbxHeight->setEnabled(false);
         ui->sbxWidth->setEnabled(false);
     }
+}
+
+
+void fpsMainWindow::on_actionZoomIn_triggered()
+{
+    ui->graphicsView->zoomIn();
+}
+
+
+void fpsMainWindow::on_actionZoomOut_triggered()
+{
+    ui->graphicsView->zoomOut();
 }
 
