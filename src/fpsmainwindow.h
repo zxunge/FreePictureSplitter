@@ -1,7 +1,8 @@
-//# This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
-//# Copyright (c) 2024 2025 zxunge
-//# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
+// # This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
+// # Copyright (c) 2024 2025 zxunge
+// # See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
+// clang-format Language: Cpp
 
 #ifndef FPSMAINWINDOW_H
 #define FPSMAINWINDOW_H
@@ -11,7 +12,8 @@
 #include <QRect>
 #include <QVector>
 
-namespace Ui {
+namespace Ui
+{
 class fpsMainWindow;
 }
 class fpsBatchDialog;
@@ -55,12 +57,12 @@ private slots:
 
 private:
     Ui::fpsMainWindow *ui;
-    fpsBatchDialog *m_batchDlg;
-    fpsAboutDialog *m_aboutDlg;
+    fpsBatchDialog    *m_batchDlg;
+    fpsAboutDialog    *m_aboutDlg;
 
-    QImage m_originalImage;
+    QImage                  m_originalImage;
     QVector<QVector<QRect>> m_rects;
-    QString m_fileName;
+    QString                 m_fileName;
 };
 
-#endif // FPSMAINWINDOW_H
+#endif      // FPSMAINWINDOW_H

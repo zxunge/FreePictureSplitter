@@ -1,8 +1,7 @@
-//# This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
-//# Copyright (c) 2024 2025 zxunge
-//# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
+// # This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
+// # Copyright (c) 2024 2025 zxunge
+// # See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
-
 
 #include "fpsgraphicsview.h"
 #include "fpsrulerbar.h"
@@ -10,12 +9,11 @@
 
 #include <QMouseEvent>
 
-fpsGraphicsView::fpsGraphicsView(QWidget *parent)
-    : QGraphicsView(parent)
+fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
     m_hruler = new fpsRulerBar(this, Qt::Horizontal);
     m_vruler = new fpsRulerBar(this, Qt::Vertical);
-    m_box = new fpsCornerBox(this);
+    m_box    = new fpsCornerBox(this);
     setViewport(new QWidget);
 
     setAttribute(Qt::WA_DeleteOnClose);
@@ -48,26 +46,25 @@ void fpsGraphicsView::resizeEvent(QResizeEvent *event)
     m_vruler->move(0, RULER_SIZE);
 
     m_box->resize(RULER_SIZE, RULER_SIZE);
-    m_box->move(0,0);
+    m_box->move(0, 0);
     updateRuler();
 }
 
 void fpsGraphicsView::scrollContentsBy(int dx, int dy)
 {
-    QGraphicsView::scrollContentsBy(dx,dy);
+    QGraphicsView::scrollContentsBy(dx, dy);
     updateRuler();
 }
 
 void fpsGraphicsView::updateRuler()
 {
-    if (!scene())
-        return;
+    if (!scene()) return;
 
-    QRectF viewbox { this->rect() };
+    QRectF  viewbox { this->rect() };
     QPointF offset { mapFromScene(scene()->sceneRect().topLeft()) };
-    double factor {  1.0 / transform().m11() };
-    double lower_x { factor * (viewbox.left() - offset.x()) };
-    double upper_x { factor * (viewbox.right() - RULER_SIZE - offset.x()) };
+    double  factor { 1.0 / transform().m11() };
+    double  lower_x { factor * (viewbox.left() - offset.x()) };
+    double  upper_x { factor * (viewbox.right() - RULER_SIZE - offset.x()) };
     m_hruler->setRange(lower_x, upper_x, upper_x - lower_x);
     m_hruler->update();
 
