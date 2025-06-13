@@ -53,13 +53,13 @@ jobs:
         qt-version: [qt5, qt6]
         
     steps:
-    - name: Install dpendencies
+    - name: Install dependencies
       if: matrix.qt-version == 'qt5'
       run: |
         sudo apt update
         sudo apt install -y build-essential qtbase5-dev qttools5-dev-tools qttools5-dev libxkbcommon-dev
 
-    - name: Install dpendencies
+    - name: Install dependencies
       if: matrix.qt-version == 'qt6'
       run: |
         sudo apt update
