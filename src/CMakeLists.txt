@@ -31,6 +31,7 @@ set(QTGUI_SOURCES
         fpsrulerbar.cpp
         fpsgraphicsview.h
         fpsgraphicsview.cpp
+        debugutil.h
         resources/fps.qrc
         resources/resources.rc
         ${TS_FILES}

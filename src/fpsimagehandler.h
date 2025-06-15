@@ -13,6 +13,10 @@
 #include <QVector>
 #include <QObject>
 
+class fpsGraphicsView;
+
+typedef QVector<QVector<QRect>> RectList;
+
 class fpsImageHandler : public QObject
 {
     Q_OBJECT
@@ -34,18 +38,18 @@ public:
     Q_ENUM(SplitSequence)
 
 public:
-    // It's important to know that both our `QVector<QVector<QRect>> rect' and `QStringList list' have an 'accessing' sequence of TopLeft -> BottomRight.
-    static QVector<QVector<QRect>> getSubRects(int width, int height,
-                                               int       rowsOrHeight,
-                                               int       colsOrWidth,
-                                               SplitMode mode = Average,
-                                               int32_t seq    = Left);
+    // It's important to know that both our `SizeRect rect' and `QStringList list' have an 'accessing' sequence of TopLeft -> BottomRight.
+    static RectList getSubRects(int width, int height, int rowsOrHeight,
+                                int colsOrWidth, SplitMode mode = Average,
+                                int32_t seq = Left);
 
     static bool split(const QImage &img, QVector<QImage> &output,
-                      const QVector<QVector<QRect>> &rects);
+                      const RectList &rects);
 
     static QStringList getOutputList(const QString &fileName, int rows,
                                      int cols);
+
+    static void rectsToLines(const RectList &rects, fpsGraphicsView *parent);
 
 signals:
     void proceed(int progress);

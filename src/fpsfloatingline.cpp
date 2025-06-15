@@ -4,66 +4,168 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsfloatingline.h"
+#include "debugutil.h"
 #include <QSizePolicy>
+#include <QMouseEvent>
+#include <QCursor>
+#include <QGraphicsView>
 
-fpsFloatingLine::fpsFloatingLine(QWidget *parent, Qt::Orientation orientation)
+fpsFloatingLine::fpsFloatingLine(QGraphicsView  *parent,
+                                 Qt::Orientation orientation, const QPoint &pos)
     : QPushButton(parent)
 {
-    setStyleSheet("background-color: rgb(0, 0, 0);");
+    setStyleSheet("background-color: rgb(50, 205, 50);");
     m_orientation = orientation;
     if (m_orientation == Qt::Horizontal)
     {
-        setMaximumHeight(3);
-        setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed));
+        setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
+        resize(parent->width(), LINE_SIZE);
+        move(0, pos.y());
+        m_scenePos =
+            parent->mapToScene(parent->viewport()->mapFrom(parent, pos))
+                .toPoint()
+                .y();
     }
     else
     {
-        setMaximumWidth(3);
-        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Maximum));
+        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
+        resize(LINE_SIZE, parent->height());
+        move(pos.x(), 0);
+        m_scenePos =
+            parent->mapToScene(parent->viewport()->mapFrom(parent, pos))
+                .toPoint()
+                .x();
     }
     raise();      // Move to top
+    fpsDebug(m_scenePos);
+}
+
+void fpsFloatingLine::updateLine(const QPoint &pos)
+{
+    QGraphicsView *parent { qobject_cast<QGraphicsView *>(parentWidget()) };
+    if (m_orientation == Qt::Horizontal)
+    {
+        resize(parentWidget()->width(), LINE_SIZE);
+        m_scenePos =
+            parent->mapToScene(parent->viewport()->mapFrom(parent, pos))
+                .toPoint()
+                .y();
+        move(0, pos.y());
+    }
+    else
+    {
+        resize(LINE_SIZE, parentWidget()->height());
+        m_scenePos =
+            parent->mapToScene(parent->viewport()->mapFrom(parent, pos))
+                .toPoint()
+                .x();
+        move(pos.x(), 0);
+    }
+    fpsDebug(m_scenePos);
+}
+
+void fpsFloatingLine::updateLine()
+{
+    QGraphicsView *parent { qobject_cast<QGraphicsView *>(parentWidget()) };
+    // Moving through the stored scenePos
+    if (m_orientation == Qt::Horizontal)
+    {
+        resize(parentWidget()->width(), LINE_SIZE);
+        move(0, parent->viewport()
+                    ->mapTo(parent, parent->mapFromScene(0, m_scenePos))
+                    .y());
+    }
+    else
+    {
+        resize(LINE_SIZE, parentWidget()->height());
+        move(parent->viewport()
+                 ->mapTo(parent, parent->mapFromScene(m_scenePos, 0))
+                 .x(),
+             0);
+    }
+}
+
+void fpsFloatingLine::setScenePos(int pos)
+{
+    m_scenePos = pos;
+    updateLine();
 }
 
 void fpsFloatingLine::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton) this->pressPoint = event->pos();
+    if (event->button() == Qt::LeftButton) m_pressed = true;
+    QPushButton::mousePressEvent(event);
 }
 
 void fpsFloatingLine::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton)
     {
-        this->move(this->mapToParent(event->pos() - this->pressPoint));
-
-        // Avoid being moved out of parent
-        if (this->mapToParent(this->rect().topLeft()).x() <= 0)
+        QGraphicsView *parent { qobject_cast<QGraphicsView *>(parentWidget()) };
+        if (m_pressed && m_orientation == Qt::Horizontal)
         {
-            this->move(0, this->pos().y());
+            move(0, mapToParent(event->pos()).y());
+            m_scenePos = parent
+                             ->mapToScene(parent->viewport()->mapFromParent(
+                                 mapToParent(event->pos())))
+                             .y();
         }
-        if (this->mapToParent(this->rect().bottomRight()).x() >=
-            this->parentWidget()->rect().width())
+        else if (m_pressed && m_orientation == Qt::Vertical)
         {
-            this->move(this->parentWidget()->rect().width() - this->width(),
-                       this->pos().y());
-        }
-        if (this->mapToParent(this->rect().topLeft()).y() <= 0)
-        {
-            this->move(this->pos().x(), 0);
-        }
-        if (this->mapToParent(this->rect().bottomRight()).y() >=
-            this->parentWidget()->rect().height())
-        {
-            this->move(this->pos().x(),
-                       this->parentWidget()->rect().height() - this->height());
+            move(mapToParent(event->pos()).x(), 0);
+            m_scenePos = parent
+                             ->mapToScene(parent->viewport()->mapFromParent(
+                                 mapToParent(event->pos())))
+                             .x();
         }
     }
+    QPushButton::mouseMoveEvent(event);
+    fpsDebug(m_scenePos);
 }
 
-/* void fpsFloatingLine::paintEvent(QPaintEvent *event)
+void fpsFloatingLine::mouseReleaseEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event);
-    if (m_orientation == Horizontal)
-        setFixedSize(parentWidget()->width(), maximumHeight());
-    else
-        setFixedSize(maximumWidth(), parentWidget()->height());
-} */
+    if (event->buttons() == Qt::LeftButton)
+    {
+        QGraphicsView *parent { qobject_cast<QGraphicsView *>(parentWidget()) };
+        if (m_pressed && m_orientation == Qt::Horizontal)
+        {
+            move(0, mapToParent(event->pos()).y());
+            m_scenePos = parent
+                             ->mapToScene(parent->viewport()->mapFromParent(
+                                 mapToParent(event->pos())))
+                             .y();
+            m_pressed = false;
+        }
+        else if (m_pressed && m_orientation == Qt::Vertical)
+        {
+            move(mapToParent(event->pos()).x(), 0);
+            m_scenePos = parent
+                             ->mapToScene(parent->viewport()->mapFromParent(
+                                 mapToParent(event->pos())))
+                             .x();
+            m_pressed = false;
+        }
+    }
+    QPushButton::mouseReleaseEvent(event);
+    fpsDebug(m_scenePos);
+}
+
+bool fpsFloatingLine::event(QEvent *event)
+{
+    switch (event->type())
+    {
+    case QEvent::Enter:
+        setStyleSheet(
+            "background-color: rgba(50, 205, 50, 0.5);");      // Highlighting
+        setCursor(QCursor(m_orientation == Qt::Horizontal ? Qt::SizeVerCursor
+                                                          : Qt::SizeHorCursor));
+        break;
+    case QEvent::Leave:
+        setCursor(QCursor(Qt::ArrowCursor));
+        setStyleSheet("background-color: rgb(50, 205, 50);");
+        break;
+    default: break;
+    }
+    return QPushButton::event(event);
+}

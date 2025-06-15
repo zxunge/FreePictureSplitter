@@ -4,6 +4,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsimagehandler.h"
+#include "fpsgraphicsview.h"
+#include "fpsfloatingline.h"
 #include <QRect>
 #include <QFileInfo>
 #include <QDir>
@@ -25,9 +27,10 @@
     return outputList;
 }
 
-/* static */ QVector<QVector<QRect>> fpsImageHandler::getSubRects(
-    int width, int height, int rowsOrHeight, int colsOrWidth, SplitMode mode,
-    int32_t seq)
+/* static */ RectList fpsImageHandler::getSubRects(int width, int height,
+                                                   int       rowsOrHeight,
+                                                   int       colsOrWidth,
+                                                   SplitMode mode, int32_t seq)
 {
     // TODO@25/05/10 Improve algorithm.
     // There're 2 steps we should follow basically:
@@ -36,11 +39,11 @@
     if (width * height == 0 ||
         (mode == Size && (rowsOrHeight > height || colsOrWidth > width)) ||
         (mode == Average && rowsOrHeight * colsOrWidth == 0))
-        return QVector<QVector<QRect>>();
+        return RectList();
 
-    int basicRowHeight, basicColWidth, legacyRowHeight, legacyColWidth;
-    int rows, cols;
-    QVector<QVector<QRect>> rects;
+    int      basicRowHeight, basicColWidth, legacyRowHeight, legacyColWidth;
+    int      rows, cols;
+    RectList rects;
     // We need info about how many rows and columns when splitting by sizes ourself.
     switch (mode)
     {
@@ -142,14 +145,14 @@
         }
     }
     else
-        return QVector<QVector<QRect>>();
+        return RectList();
 
     return rects;
 }
 
-[[nodiscard]] /* static */ bool fpsImageHandler::split(
-    const QImage &img, QVector<QImage> &output,
-    const QVector<QVector<QRect>> &rects)
+[[nodiscard]] /* static */ bool fpsImageHandler::split(const QImage    &img,
+                                                       QVector<QImage> &output,
+                                                       const RectList  &rects)
 {
     if (rects.isEmpty()) return false;
 
@@ -159,4 +162,28 @@
         for (int k {}; k < cCols; ++k) output.push_back(img.copy(rects[j][k]));
 
     return true;
+}
+
+/* static */ void fpsImageHandler::rectsToLines(const RectList  &rects,
+                                                fpsGraphicsView *parent)
+{
+    if (0 == rects.size() || 0 == rects[0].size()) return;
+
+    fpsFloatingLine *line {};
+    for (int i {}; i != rects.size() - 1; ++i)
+    {
+        line = new fpsFloatingLine(parent);
+        line->setScenePos(rects[i][0].bottom());
+        line->show();
+        parent->addFloatingLine(line);
+        line = nullptr;
+    }
+    for (int i {}; i != rects[0].size() - 1; ++i)
+    {
+        line = new fpsFloatingLine(parent, Qt::Vertical);
+        line->setScenePos(rects[0][i].right());
+        line->show();
+        parent->addFloatingLine(line);
+        line = nullptr;
+    }
 }
