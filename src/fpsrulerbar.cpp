@@ -37,11 +37,7 @@ fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
     f.setBold(false);
     f.setPixelSize(10);
     setFont(f);
-}
-
-void fpsRulerBar::setOrientation(Qt::Orientation orientation)
-{
-    m_direction = orientation;
+    setMouseTracking(true);
 }
 
 void fpsRulerBar::setRange(double lower, double upper, double max_size)
@@ -87,10 +83,8 @@ void fpsRulerBar::drawTicker(QPainter *painter)
     uint         scale;     /* Number of units per major unit */
     double       start, end, cur;
     char         unit_str[32];
-    char         digit_str[2] { '\0', '\0' };
     QFontMetrics fm(font());
     int          digit_height { fm.height() };
-    int          digit_offset {};
     int          text_size;
     int          pos;
     double       max_size { m_maxsize };
@@ -237,6 +231,47 @@ void fpsRulerBar::drawPos(QPainter *painter)
     }
 }
 
+void fpsRulerBar::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        m_dragging     = true;
+        m_dragStartPos = event->pos();         // Coordinate in fpsRulerBar
+        Q_EMIT dragStarted(
+            mapToParent(m_dragStartPos));      // Convert to the parent window
+    }
+    QWidget::mousePressEvent(event);
+}
+
+void fpsRulerBar::mouseMoveEvent(QMouseEvent *event)
+{
+    if (m_dragging)
+    {
+        Q_EMIT dragMoved(
+            mapToParent(event->pos()));      // Convert to the parent
+        m_moved = true;                      // Avoid clicking only
+    }
+
+    QWidget::mouseMoveEvent(event);
+}
+
+void fpsRulerBar::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (m_dragging && m_moved && event->button() == Qt::LeftButton)
+    {
+        m_dragging = false;
+        if ((m_direction == Qt::Horizontal && event->pos().y() > height()) ||
+            (m_direction == Qt::Vertical && event->pos().x() > width()))
+            Q_EMIT dragFinished(mapToParent(event->pos()),
+                                true);      // Convert to the parent
+        else
+            Q_EMIT dragFinished(mapToParent(event->pos()), false);
+    }
+    else
+        Q_EMIT dragFinished(mapToParent(event->pos()), false);
+    QWidget::mouseReleaseEvent(event);
+}
+
 fpsCornerBox::fpsCornerBox(QWidget *parent) : QWidget(parent)
 {
     // ctor
@@ -246,7 +281,7 @@ void fpsCornerBox::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
     QPainter painter(this);
-    painter.fillRect(rect(), QColor(0xFF, 0xFF, 0xFF));
+    painter.fillRect(rect(), QColor(192, 192, 192));
 
     painter.setPen(Qt::DashLine);
     painter.drawLine(rect().center().x(), rect().top(), rect().center().x(),

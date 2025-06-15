@@ -7,10 +7,8 @@
 #ifndef FPSMAINWINDOW_H
 #define FPSMAINWINDOW_H
 
+#include "fpsimagehandler.h"
 #include <QMainWindow>
-#include <QImage>
-#include <QRect>
-#include <QVector>
 
 namespace Ui
 {
@@ -60,9 +58,9 @@ private:
     fpsBatchDialog    *m_batchDlg;
     fpsAboutDialog    *m_aboutDlg;
 
-    QImage                  m_originalImage;
-    QVector<QVector<QRect>> m_rects;
-    QString                 m_fileName;
+    QImage   m_originalImage;
+    RectList m_rects;
+    QString  m_fileName;
 };
 
 #endif      // FPSMAINWINDOW_H

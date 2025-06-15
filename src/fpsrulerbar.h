@@ -29,7 +29,13 @@ public:
     explicit fpsRulerBar(QWidget *parent           = nullptr,
                          Qt::Orientation direction = Qt::Horizontal);
 
-    void setOrientation(Qt::Orientation orientation);
+    void setOrientation(Qt::Orientation orientation)
+    {
+        m_direction = orientation;
+    }
+
+    Qt::Orientation getOritation() const { return m_direction; }
+
     void setRange(double lower, double upper, double max_size);
     void updatePosition(const QPoint &pos);
 
@@ -37,6 +43,23 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     void drawTicker(QPainter *painter);
     void drawPos(QPainter *painter);
+
+signals:
+    // Definitions of dragging signals:
+    // Starting, moving and ending
+    void dragStarted(const QPoint &startPos);
+    void dragMoved(const QPoint &currentPos);
+    void dragFinished(const QPoint &endPos, bool isReal);
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
+private:
+    bool   m_dragging { false };
+    bool   m_moved { false };
+    QPoint m_dragStartPos;
 
 protected:
     Qt::Orientation m_direction;

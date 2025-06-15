@@ -7,25 +7,52 @@
 #ifndef FPSFLOATINGLINE_H
 #define FPSFLOATINGLINE_H
 
-#include <QWidget>
 #include <QPushButton>
-#include <QMouseEvent>
+#include "fpsrulerbar.h"
+
+class QMouseEvent;
+class QEvent;
+class QGraphicsView;
+
+constexpr int LINE_SIZE { 2 };
 
 class fpsFloatingLine : public QPushButton
 {
     Q_OBJECT
 public:
-    explicit fpsFloatingLine(QWidget *parent             = nullptr,
-                             Qt::Orientation orientation = Qt::Horizontal);
+    // According to Qt documentation, the following 2 'pos'es
+    // refers to the position in whole GraphicsView.
+    explicit fpsFloatingLine(QGraphicsView *parent       = nullptr,
+                             Qt::Orientation orientation = Qt::Horizontal,
+                             const QPoint &pos = QPoint(0, RULER_SIZE));
+
+    void updateLine(
+        const QPoint &
+            pos);      // Move on GraphicsView and update scenePos; pos -> whole GraphicsView
+
+    void updateLine(int x, int y)
+    {
+        updateLine(QPoint(x, y));
+    }                       // Overloaded for convenience
+
+    void updateLine();      // Update itself through existing scenePos
+
+    int getScenePos() const { return m_scenePos; }
+
+    // We assume that you specify the correct value for different directions. pos -> scene
+    void setScenePos(int pos);
 
 protected:
+    // event->pos() -> fpsFloatingLine itself
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    // void paintEvent(QPaintEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    bool event(QEvent *event) override;
 
 private:
-    QPoint          pressPoint;
+    bool            m_pressed { false };
     Qt::Orientation m_orientation;
+    int             m_scenePos;      // Position in a scene (V:x or H:y)
 };
 
 #endif      // FPSFLOATINGLINE_H

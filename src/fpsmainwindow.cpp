@@ -7,9 +7,9 @@
 #include "fpsmainwindow.h"
 #include "ui_fpsmainwindow.h"
 #include "fpsbatchdialog.h"
-#include "fpsimagehandler.h"
 #include "fpsaboutdialog.h"
 #include "fpsprogressdialog.h"
+#include "debugutil.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -17,8 +17,6 @@
 #include <QUrl>
 #include <QTextBrowser>
 #include <QStringLiteral>
-#include <QDebug>
-#include <string>
 
 fpsMainWindow::fpsMainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::fpsMainWindow), m_aboutDlg(nullptr),
@@ -208,6 +206,8 @@ void fpsMainWindow::on_btnReset_clicked()
                                                fpsImageHandler::Right);
     ui->actionSave->setEnabled(true);
     ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
+    ui->graphicsView->removeAllFloatingLines();
+    fpsImageHandler::rectsToLines(m_rects, ui->graphicsView);
 }
 
 void fpsMainWindow::on_rbtnSize_toggled(bool checked)
