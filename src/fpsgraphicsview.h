@@ -38,6 +38,11 @@ public:
         fpsFloatingLine *fl);      // Add an existing line to list.
     void removeAllFloatingLines();
 
+    QVector<QPointer<fpsFloatingLine>> getFloatingLines() const
+    {
+        return m_plines;
+    }
+
 signals:
     void positionChanged(int x, int y);
 

@@ -6,6 +6,7 @@
 #include "fpsrulerbar.h"
 #include <QFrame>
 #include <QPaintEvent>
+#include <QGraphicsView>
 #include <QPainter>
 #include <cmath>
 #include <array>
@@ -257,11 +258,12 @@ void fpsRulerBar::mouseMoveEvent(QMouseEvent *event)
 
 void fpsRulerBar::mouseReleaseEvent(QMouseEvent *event)
 {
+    // Ensure that the line is moved out of ruler bar
     if (m_dragging && m_moved && event->button() == Qt::LeftButton)
     {
         m_dragging = false;
-        if ((m_direction == Qt::Horizontal && event->pos().y() > height()) ||
-            (m_direction == Qt::Vertical && event->pos().x() > width()))
+        if ((m_direction == Qt::Horizontal && event->pos().y() >= height()) ||
+            (m_direction == Qt::Vertical && event->pos().x() >= width()))
             Q_EMIT dragFinished(mapToParent(event->pos()),
                                 true);      // Convert to the parent
         else

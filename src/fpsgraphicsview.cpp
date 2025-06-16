@@ -16,7 +16,11 @@ fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
     setViewport(new QWidget);
     setMouseTracking(true);
     setAttribute(Qt::WA_DeleteOnClose);
-    setStyleSheet("background-color: rgb(192, 192, 192);");
+
+    // Set background color
+    QPalette palette { viewport()->palette() };
+    palette.setColor(QPalette::Base, QColor(192, 192, 192));
+    viewport()->setPalette(palette);
 
     // Connected for dragging support
     connect(m_hruler, &fpsRulerBar::dragStarted, this,
@@ -115,15 +119,33 @@ void fpsGraphicsView::zoomOut()
 void fpsGraphicsView::addFloatingLine(Qt::Orientation orientation,
                                       const QPoint   &pos)
 {
-    QPointer<fpsFloatingLine> line { new fpsFloatingLine(this, orientation) };
-    line->updateLine(pos);
-    line->show();
-    m_plines.push_back(line);
+    if (!scene()) return;
+
+    QPointer<fpsFloatingLine> fl { new fpsFloatingLine(this, orientation) };
+    fl->updateLine(pos);
+    fl->show();
+    m_plines.push_back(fl);
+    int i { m_plines.size() - 1 };
+    connect(fl, &fpsFloatingLine::lineDestroyed, this,
+            [fl, this, i]()
+            {
+                fl->deleteLater();
+                this->m_plines.remove(i);
+            });
 }
 
 void fpsGraphicsView::addFloatingLine(fpsFloatingLine *fl)
 {
+    if (!scene()) return;
+
     m_plines.push_back(fl);
+    int i { m_plines.size() - 1 };
+    connect(fl, &fpsFloatingLine::lineDestroyed, this,
+            [fl, this, i]()
+            {
+                fl->deleteLater();
+                this->m_plines.remove(i);
+            });
 }
 
 void fpsGraphicsView::removeAllFloatingLines()
@@ -134,6 +156,8 @@ void fpsGraphicsView::removeAllFloatingLines()
 
 void fpsGraphicsView::handleDragStarted(const QPoint &startPos)
 {
+    if (!scene()) return;
+
     m_dragStartPos = startPos;
     setCursor(QCursor(Qt::CrossCursor));
 
@@ -170,7 +194,10 @@ void fpsGraphicsView::handleDragFinished(const QPoint &endPos, bool isReal)
 {
     if (!m_tempLine) return;
 
-    if (!isReal)
+    // In the receiver, ensure the line
+    // is not moved out of the visualized part of the scene.
+    if (!isReal || !scene()->sceneRect().contains(
+                       mapToScene(viewport()->mapFromParent(endPos))))
     {
         // Clear temporary widget
         delete m_tempLine;
@@ -185,3 +212,15 @@ void fpsGraphicsView::handleDragFinished(const QPoint &endPos, bool isReal)
     m_tempLine = nullptr;
     setCursor(QCursor(Qt::ArrowCursor));
 }
+
+/* void fpsGraphicsView::handleLineDestroyed()
+{
+    fpsDebugStr("Destroyed slot!");
+    for (int i {}; i != m_plines.size(); ++i)
+        if (qobject_cast<fpsFloatingLine *>(sender()) == m_plines[i])
+        {
+            delete m_plines[i];
+            m_plines.remove(i);
+            return;
+        }
+} */

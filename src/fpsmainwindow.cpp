@@ -78,6 +78,11 @@ void fpsMainWindow::on_actionOpen_triggered()
         ui->sbxRows->setRange(1, m_originalImage.height());
         ui->sbxHeight->setRange(1, m_originalImage.height());
         ui->sbxWidth->setRange(1, m_originalImage.width());
+        if (ui->rbtnManual->isChecked())
+        {
+            ui->actionSave->setEnabled(true);
+            ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
+        }
     }
     else
         QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
@@ -88,7 +93,7 @@ void fpsMainWindow::on_actionOpen_triggered()
 
 void fpsMainWindow::on_actionSave_triggered()
 {
-    if (m_originalImage.isNull() || m_rects.isEmpty()) return;
+    if (m_originalImage.isNull()) return;
 
     QVector<QImage> imageList;
     QStringList     outputList;
@@ -96,17 +101,31 @@ void fpsMainWindow::on_actionSave_triggered()
         QFileDialog::getExistingDirectory(this,
                                                   tr("Choose the output directory."))
     };
-    if (!fpsImageHandler::split(m_originalImage, imageList, m_rects))
+
+    if (ui->rbtnManual->isChecked())
+        m_rects = fpsImageHandler::linesToRects(ui->graphicsView);
+    else if (m_rects.isEmpty())
     {
-        QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                             QString("Error splitting picture."),
-                             QMessageBox::Close);
+        QMessageBox::
+            warning(this, QStringLiteral("FreePictureSplitter"),
+                    QString("Please at least choose one splitting mode, offer "
+                            "useful data then reset the splitting lines."),
+                    QMessageBox::Close);
         return;
     }
-    else
+
+    if (!m_rects.isEmpty())
     {
+        if (!fpsImageHandler::split(m_originalImage, imageList, m_rects))
+        {
+            QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
+                                 QString("Error splitting picture."),
+                                 QMessageBox::Close);
+            return;
+        }
         outputList = fpsImageHandler::getOutputList(m_fileName, m_rects.size(),
                                                     m_rects[0].size());
+        fpsDebug(outputList);
         fpsProgressDialog dlg(this, outputList.size());
         connect(this, SIGNAL(proceed(int)), &dlg, SLOT(on_proceed(int)));
         dlg.show();
@@ -116,6 +135,13 @@ void fpsMainWindow::on_actionSave_triggered()
             Q_EMIT proceed(i + 1);
         }
         dlg.close();
+    }
+    else
+    {
+        QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
+                             QString("No rule to split this picture"),
+                             QMessageBox::Close);
+        return;
     }
 }
 
@@ -218,6 +244,11 @@ void fpsMainWindow::on_rbtnSize_toggled(bool checked)
         ui->sbxRows->setEnabled(false);
         ui->sbxHeight->setEnabled(true);
         ui->sbxWidth->setEnabled(true);
+        ui->btnReset->setEnabled(true);
+        ui->rbtnHoriLeft->setEnabled(true);
+        ui->rbtnHoriRight->setEnabled(true);
+        ui->rbtnVertLeft->setEnabled(true);
+        ui->rbtnVertRight->setEnabled(true);
     }
 }
 
@@ -229,6 +260,11 @@ void fpsMainWindow::on_rbtnAver_toggled(bool checked)
         ui->sbxRows->setEnabled(true);
         ui->sbxHeight->setEnabled(false);
         ui->sbxWidth->setEnabled(false);
+        ui->btnReset->setEnabled(true);
+        ui->rbtnHoriLeft->setEnabled(true);
+        ui->rbtnHoriRight->setEnabled(true);
+        ui->rbtnVertLeft->setEnabled(true);
+        ui->rbtnVertRight->setEnabled(true);
     }
 }
 
@@ -240,4 +276,25 @@ void fpsMainWindow::on_actionZoomIn_triggered()
 void fpsMainWindow::on_actionZoomOut_triggered()
 {
     ui->graphicsView->zoomOut();
+}
+
+void fpsMainWindow::on_rbtnManual_toggled(bool checked)
+{
+    if (checked)
+    {
+        ui->sbxCols->setEnabled(false);
+        ui->sbxRows->setEnabled(false);
+        ui->sbxHeight->setEnabled(false);
+        ui->sbxWidth->setEnabled(false);
+        ui->btnReset->setEnabled(false);
+        ui->rbtnHoriLeft->setEnabled(false);
+        ui->rbtnHoriRight->setEnabled(false);
+        ui->rbtnVertLeft->setEnabled(false);
+        ui->rbtnVertRight->setEnabled(false);
+        if (!m_originalImage.isNull())
+        {
+            ui->actionSave->setEnabled(true);
+            ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
+        }
+    }
 }

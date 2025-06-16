@@ -17,6 +17,15 @@ class fpsGraphicsView;
 
 typedef QVector<QVector<QRect>> RectList;
 
+/*
+ * fpsImageHandler: Handles all the stuff for all-purpose image splitting and file generation.
+ * The general workflow is:
+ *  1. Users specify their wants, and we use `getSubRects' or `linesToRects' to capture them.
+ *  2. Display our result using `rectsToLines'.
+ *  3. Obtain all the sub-images using `split'.
+ *  4. Obtain all the names of the files to save using `getOutputList'.
+ *  5. Save files.
+ */
 class fpsImageHandler : public QObject
 {
     Q_OBJECT
@@ -50,6 +59,7 @@ public:
                                      int cols);
 
     static void rectsToLines(const RectList &rects, fpsGraphicsView *parent);
+    static RectList linesToRects(fpsGraphicsView *parent);
 
 signals:
     void proceed(int progress);
