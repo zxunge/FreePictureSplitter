@@ -203,9 +203,6 @@
     std::sort(vx.begin(), vx.end());
     std::sort(vy.begin(), vy.end());
 
-    fpsDebug(vx);
-    fpsDebug(vy);
-
     RectList rects;
     rects.resize(vy.size() + 1);
     for (auto &r : rects) r.resize(vx.size() + 1);
@@ -232,6 +229,5 @@
             rects[i + 1][j].setTop(vy[i]);
         }
 
-    fpsDebug(rects);
     return rects;
 }
