@@ -6,10 +6,13 @@
 #include "fpsimagehandler.h"
 #include "fpsgraphicsview.h"
 #include "fpsfloatingline.h"
+#include "debugutil.h"
+
 #include <QRect>
 #include <QFileInfo>
 #include <QDir>
 #include <QImage>
+#include <algorithm>
 
 /* static */ QStringList fpsImageHandler::getOutputList(const QString &fileName,
                                                         int rows, int cols)
@@ -186,4 +189,49 @@
         parent->addFloatingLine(line);
         line = nullptr;
     }
+}
+
+/* static */ RectList fpsImageHandler::linesToRects(fpsGraphicsView *parent)
+{
+    QVector<int> vx, vy;
+
+    for (auto l : parent->getFloatingLines())
+        if (l->getOrientation() == Qt::Horizontal)
+            vy.push_back(l->getScenePos());
+        else
+            vx.push_back(l->getScenePos());
+    std::sort(vx.begin(), vx.end());
+    std::sort(vy.begin(), vy.end());
+
+    fpsDebug(vx);
+    fpsDebug(vy);
+
+    RectList rects;
+    rects.resize(vy.size() + 1);
+    for (auto &r : rects) r.resize(vx.size() + 1);
+
+    // Axis X
+    for (int i {}; i <= vy.size(); ++i) rects[i][0].setLeft(0);
+    for (int i {}; i <= vy.size(); ++i)
+        rects[i][vx.size()].setRight(parent->scene()->width() - 1);
+    for (int i {}; i <= vy.size(); ++i)
+        for (int j {}; j != vx.size(); ++j)
+        {
+            rects[i][j].setRight(vx[j]);
+            rects[i][j + 1].setLeft(vx[j]);
+        }
+
+    // Axis Y
+    for (int j {}; j <= vx.size(); ++j) rects[0][j].setTop(0);
+    for (int j {}; j <= vx.size(); ++j)
+        rects[vy.size()][j].setBottom(parent->scene()->height() - 1);
+    for (int i {}; i != vy.size(); ++i)
+        for (int j {}; j <= vx.size(); ++j)
+        {
+            rects[i][j].setBottom(vy[i]);
+            rects[i + 1][j].setTop(vy[i]);
+        }
+
+    fpsDebug(rects);
+    return rects;
 }

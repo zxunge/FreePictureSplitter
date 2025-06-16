@@ -53,6 +53,8 @@ private slots:
 
     void on_actionZoomOut_triggered();
 
+    void on_rbtnManual_toggled(bool checked);
+
 private:
     Ui::fpsMainWindow *ui;
     fpsBatchDialog    *m_batchDlg;

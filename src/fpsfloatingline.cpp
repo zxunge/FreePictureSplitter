@@ -125,25 +125,35 @@ void fpsFloatingLine::mouseMoveEvent(QMouseEvent *event)
 
 void fpsFloatingLine::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (event->buttons() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton)
     {
         QGraphicsView *parent { qobject_cast<QGraphicsView *>(parentWidget()) };
         if (m_pressed && m_orientation == Qt::Horizontal)
         {
-            move(0, mapToParent(event->pos()).y());
             m_scenePos = parent
                              ->mapToScene(parent->viewport()->mapFromParent(
                                  mapToParent(event->pos())))
                              .y();
+            if (m_scenePos >= parent->scene()->height() || m_scenePos <= 0)
+            {
+                fpsDebugStr("Destroyed signal!");
+                Q_EMIT lineDestroyed();
+            }
+            move(0, mapToParent(event->pos()).y());
             m_pressed = false;
         }
         else if (m_pressed && m_orientation == Qt::Vertical)
         {
-            move(mapToParent(event->pos()).x(), 0);
             m_scenePos = parent
                              ->mapToScene(parent->viewport()->mapFromParent(
                                  mapToParent(event->pos())))
                              .x();
+            if (m_scenePos >= parent->scene()->width() || m_scenePos <= 0)
+            {
+                fpsDebugStr("Destroyed signal!");
+                Q_EMIT lineDestroyed();
+            }
+            move(mapToParent(event->pos()).x(), 0);
             m_pressed = false;
         }
     }

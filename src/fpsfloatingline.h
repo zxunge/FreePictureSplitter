@@ -33,7 +33,7 @@ public:
     void updateLine(int x, int y)
     {
         updateLine(QPoint(x, y));
-    }                       // Overloaded for convenience
+    }      // Overloaded for convenience
 
     void updateLine();      // Update itself through existing scenePos
 
@@ -42,12 +42,17 @@ public:
     // We assume that you specify the correct value for different directions. pos -> scene
     void setScenePos(int pos);
 
+    Qt::Orientation getOrientation() const { return m_orientation; }
+
 protected:
     // event->pos() -> fpsFloatingLine itself
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     bool event(QEvent *event) override;
+
+signals:
+    void lineDestroyed();
 
 private:
     bool            m_pressed { false };
