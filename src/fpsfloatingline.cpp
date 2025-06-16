@@ -37,7 +37,6 @@ fpsFloatingLine::fpsFloatingLine(QGraphicsView  *parent,
                 .x();
     }
     raise();      // Move to top
-    fpsDebug(m_scenePos);
 }
 
 void fpsFloatingLine::updateLine(const QPoint &pos)
@@ -61,7 +60,6 @@ void fpsFloatingLine::updateLine(const QPoint &pos)
                 .x();
         move(pos.x(), 0);
     }
-    fpsDebug(m_scenePos);
 }
 
 void fpsFloatingLine::updateLine()
@@ -120,7 +118,6 @@ void fpsFloatingLine::mouseMoveEvent(QMouseEvent *event)
         }
     }
     QPushButton::mouseMoveEvent(event);
-    fpsDebug(m_scenePos);
 }
 
 void fpsFloatingLine::mouseReleaseEvent(QMouseEvent *event)
@@ -135,10 +132,7 @@ void fpsFloatingLine::mouseReleaseEvent(QMouseEvent *event)
                                  mapToParent(event->pos())))
                              .y();
             if (m_scenePos >= parent->scene()->height() || m_scenePos <= 0)
-            {
-                fpsDebugStr("Destroyed signal!");
                 Q_EMIT lineDestroyed();
-            }
             move(0, mapToParent(event->pos()).y());
             m_pressed = false;
         }
@@ -149,16 +143,12 @@ void fpsFloatingLine::mouseReleaseEvent(QMouseEvent *event)
                                  mapToParent(event->pos())))
                              .x();
             if (m_scenePos >= parent->scene()->width() || m_scenePos <= 0)
-            {
-                fpsDebugStr("Destroyed signal!");
                 Q_EMIT lineDestroyed();
-            }
             move(mapToParent(event->pos()).x(), 0);
             m_pressed = false;
         }
     }
     QPushButton::mouseReleaseEvent(event);
-    fpsDebug(m_scenePos);
 }
 
 bool fpsFloatingLine::event(QEvent *event)

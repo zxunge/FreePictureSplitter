@@ -212,15 +212,3 @@ void fpsGraphicsView::handleDragFinished(const QPoint &endPos, bool isReal)
     m_tempLine = nullptr;
     setCursor(QCursor(Qt::ArrowCursor));
 }
-
-/* void fpsGraphicsView::handleLineDestroyed()
-{
-    fpsDebugStr("Destroyed slot!");
-    for (int i {}; i != m_plines.size(); ++i)
-        if (qobject_cast<fpsFloatingLine *>(sender()) == m_plines[i])
-        {
-            delete m_plines[i];
-            m_plines.remove(i);
-            return;
-        }
-} */

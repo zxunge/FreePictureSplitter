@@ -125,7 +125,6 @@ void fpsMainWindow::on_actionSave_triggered()
         }
         outputList = fpsImageHandler::getOutputList(m_fileName, m_rects.size(),
                                                     m_rects[0].size());
-        fpsDebug(outputList);
         fpsProgressDialog dlg(this, outputList.size());
         connect(this, SIGNAL(proceed(int)), &dlg, SLOT(on_proceed(int)));
         dlg.show();
