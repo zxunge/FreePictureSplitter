@@ -20,7 +20,7 @@ English | [简体中文](docs/zh/index.md)
 FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
 
 ## Screenshot
-<iframe src="docs/assets/Screenshot2.mp4" width="640" height="360" frameborder="0" allowfullscreen></iframe>
+<video src="https://github.com/zxunge/FreePictureSplitter/raw/refs/heads/main/docs/assets/Screenshot2.mp4" controls="controls" muted="muted" autoplay="autoplay" style="max-height:640px; min-height: 200px"></video>
 
 > [!Note]
 > When we introduce something of FreePictureSplitter later, we refer to FPS version 3 and higher.
