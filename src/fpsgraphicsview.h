@@ -7,12 +7,12 @@
 #ifndef FPSGRAPHICSVIEW_H
 #define FPSGRAPHICSVIEW_H
 
+#include "fpsfloatingline.h"
+
 #include <QGraphicsView>
 #include <QImage>
-#include <QVector>
-#include <QPointer>
-#include "fpsfloatingline.h"
-#include "fpsrulerbar.h"
+#include <QtCore/qvector.h>
+#include <QtCore/qpointer.h>
 
 class fpsRulerBar;
 class fpsCornerBox;

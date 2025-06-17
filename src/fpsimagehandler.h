@@ -7,11 +7,11 @@
 #ifndef FPSIMAGEHANDLER_H
 #define FPSIMAGEHANDLER_H
 
-#include <QString>
-#include <QRect>
+#include <QtCore/qstring.h>
+#include <QtCore/qrect.h>
+#include <QtCore/qvector.h>
+#include <QtCore/qobject.h>
 #include <QImage>
-#include <QVector>
-#include <QObject>
 
 class fpsGraphicsView;
 

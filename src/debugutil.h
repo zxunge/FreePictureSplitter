@@ -7,7 +7,7 @@
 #ifndef DEBUGUTIL_H
 #define DEBUGUTIL_H
 
-#include <QDebug>
+#include <QtCore/qdebug.h>
 
 #define fpsDebug(X)                                                                           \
     qDebug() << "[" << __FILE_NAME__ << ": " << __LINE__ << ": " << __FUNCTION__ << "]" << #X \

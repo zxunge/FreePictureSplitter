@@ -3,10 +3,10 @@
 // # See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+#include "debugutil.h"
 #include "fpsgraphicsview.h"
 
 #include <QMouseEvent>
-#include "debugutil.h"
 
 fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
