@@ -12,6 +12,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QImage>
+
 #include <algorithm>
 
 /* static */ QStringList fpsImageHandler::getOutputList(const QString &fileName, int rows, int cols)

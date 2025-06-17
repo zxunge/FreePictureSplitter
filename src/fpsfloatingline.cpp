@@ -5,6 +5,7 @@
 
 #include "fpsfloatingline.h"
 #include "debugutil.h"
+
 #include <QSizePolicy>
 #include <QMouseEvent>
 #include <QCursor>

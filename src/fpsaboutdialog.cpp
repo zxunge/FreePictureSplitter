@@ -5,6 +5,7 @@
 
 #include "config.h"
 #include "fpsaboutdialog.h"
+
 #include <QDialog>
 #include <QLabel>
 #include <QPushButton>

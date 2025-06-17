@@ -7,8 +7,8 @@
 #ifndef FPSFLOATINGLINE_H
 #define FPSFLOATINGLINE_H
 
-#include <QPushButton>
 #include "fpsrulerbar.h"
+#include <QPushButton>
 
 class QMouseEvent;
 class QEvent;
