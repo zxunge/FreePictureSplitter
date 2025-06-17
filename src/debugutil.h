@@ -9,12 +9,11 @@
 
 #include <QDebug>
 
-#define fpsDebug(X)                                                            \
-    qDebug() << "[" << __FILE_NAME__ << ": " << __LINE__ << ": "               \
-             << __FUNCTION__ << "]" << #X << " = " << X
+#define fpsDebug(X)                                                                           \
+    qDebug() << "[" << __FILE_NAME__ << ": " << __LINE__ << ": " << __FUNCTION__ << "]" << #X \
+             << " = " << X
 
-#define fpsDebugStr(X)                                                         \
-    qDebug() << "[" << __FILE_NAME__ << ": " << __LINE__ << ": "               \
-             << __FUNCTION__ << "]" << X
+#define fpsDebugStr(X) \
+    qDebug() << "[" << __FILE_NAME__ << ": " << __LINE__ << ": " << __FUNCTION__ << "]" << X
 
-#endif      // DEBUGUTIL_H
+#endif // DEBUGUTIL_H

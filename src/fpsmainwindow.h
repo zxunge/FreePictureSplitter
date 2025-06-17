@@ -10,8 +10,7 @@
 #include "fpsimagehandler.h"
 #include <QMainWindow>
 
-namespace Ui
-{
+namespace Ui {
 class fpsMainWindow;
 }
 class fpsBatchDialog;
@@ -57,12 +56,12 @@ private slots:
 
 private:
     Ui::fpsMainWindow *ui;
-    fpsBatchDialog    *m_batchDlg;
-    fpsAboutDialog    *m_aboutDlg;
+    fpsBatchDialog *m_batchDlg;
+    fpsAboutDialog *m_aboutDlg;
 
-    QImage   m_originalImage;
+    QImage m_originalImage;
     RectList m_rects;
-    QString  m_fileName;
+    QString m_fileName;
 };
 
-#endif      // FPSMAINWINDOW_H
+#endif // FPSMAINWINDOW_H

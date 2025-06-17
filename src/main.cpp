@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
-        Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+            Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
 
     QApplication a(argc, argv);
@@ -22,14 +22,11 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("FreePictureSplitter");
     QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
 
-    QTranslator       translator;
+    QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
-    for (const QString &locale : uiLanguages)
-    {
-        const QString baseName =
-            "FreePictureSplitter_" + QLocale(locale).name();
-        if (translator.load(":/i18n/i18n/" + baseName))
-        {
+    for (const QString &locale : uiLanguages) {
+        const QString baseName = "FreePictureSplitter_" + QLocale(locale).name();
+        if (translator.load(":/i18n/i18n/" + baseName)) {
             a.installTranslator(&translator);
             break;
         }

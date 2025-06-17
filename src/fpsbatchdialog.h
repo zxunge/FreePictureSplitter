@@ -9,8 +9,7 @@
 
 #include <QDialog>
 
-namespace Ui
-{
+namespace Ui {
 class fpsBatchDialog;
 }
 
@@ -26,4 +25,4 @@ private:
     Ui::fpsBatchDialog *ui;
 };
 
-#endif      // FPSBATCHDIALOG_H
+#endif // FPSBATCHDIALOG_H

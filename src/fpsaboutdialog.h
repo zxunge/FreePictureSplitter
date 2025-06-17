@@ -18,4 +18,4 @@ public:
 signals:
 };
 
-#endif      // FPSABOUTDIALOG_H
+#endif // FPSABOUTDIALOG_H

@@ -14,7 +14,7 @@ class QMouseEvent;
 class QEvent;
 class QGraphicsView;
 
-constexpr int LINE_SIZE { 2 };
+constexpr int LINE_SIZE{ 2 };
 
 class fpsFloatingLine : public QPushButton
 {
@@ -22,20 +22,16 @@ class fpsFloatingLine : public QPushButton
 public:
     // According to Qt documentation, the following 2 'pos'es
     // refers to the position in whole GraphicsView.
-    explicit fpsFloatingLine(QGraphicsView *parent       = nullptr,
+    explicit fpsFloatingLine(QGraphicsView *parent = nullptr,
                              Qt::Orientation orientation = Qt::Horizontal,
                              const QPoint &pos = QPoint(0, RULER_SIZE));
 
-    void updateLine(
-        const QPoint &
-            pos);      // Move on GraphicsView and update scenePos; pos -> whole GraphicsView
+    void updateLine(const QPoint &pos); // Move on GraphicsView and update scenePos; pos -> whole
+                                        // GraphicsView
 
-    void updateLine(int x, int y)
-    {
-        updateLine(QPoint(x, y));
-    }      // Overloaded for convenience
+    void updateLine(int x, int y) { updateLine(QPoint(x, y)); } // Overloaded for convenience
 
-    void updateLine();      // Update itself through existing scenePos
+    void updateLine(); // Update itself through existing scenePos
 
     int getScenePos() const { return m_scenePos; }
 
@@ -55,9 +51,9 @@ signals:
     void lineDestroyed();
 
 private:
-    bool            m_pressed { false };
+    bool m_pressed{ false };
     Qt::Orientation m_orientation;
-    int             m_scenePos;      // Position in a scene (V:x or H:y)
+    int m_scenePos; // Position in a scene (V:x or H:y)
 };
 
-#endif      // FPSFLOATINGLINE_H
+#endif // FPSFLOATINGLINE_H
