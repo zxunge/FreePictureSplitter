@@ -9,8 +9,7 @@
 
 #include <QDialog>
 
-namespace Ui
-{
+namespace Ui {
 class fpsSettingsDialog;
 }
 
@@ -26,4 +25,4 @@ private:
     Ui::fpsSettingsDialog *ui;
 };
 
-#endif      // FPSSETTINGSDIALOG_H
+#endif // FPSSETTINGSDIALOG_H

@@ -6,8 +6,7 @@
 #include "fpsbatchdialog.h"
 #include "ui_fpsbatchdialog.h"
 
-fpsBatchDialog::fpsBatchDialog(QWidget *parent)
-    : QDialog(parent), ui(new Ui::fpsBatchDialog)
+fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fpsBatchDialog)
 {
     ui->setupUi(this);
 }

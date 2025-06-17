@@ -18,7 +18,7 @@ class fpsRulerBar;
 class fpsCornerBox;
 class QMouseEvent;
 
-constexpr double ZOOM_RATIO { 1.2 };      // Ratio used when zooming in/out.
+constexpr double ZOOM_RATIO{ 1.2 }; // Ratio used when zooming in/out.
 
 class fpsGraphicsView : public QGraphicsView
 {
@@ -31,17 +31,13 @@ public:
     void zoomIn();
     void zoomOut();
 
-    void setImage(QImage img);      // Show an image on the GraphicsView.
+    void setImage(QImage img); // Show an image on the GraphicsView.
     // Create a line using direction and initial position. pos -> whole GraphicsView
     void addFloatingLine(Qt::Orientation ori, const QPoint &pos);
-    void addFloatingLine(
-        fpsFloatingLine *fl);      // Add an existing line to list.
+    void addFloatingLine(fpsFloatingLine *fl); // Add an existing line to list.
     void removeAllFloatingLines();
 
-    QVector<QPointer<fpsFloatingLine>> getFloatingLines() const
-    {
-        return m_plines;
-    }
+    QVector<QPointer<fpsFloatingLine>> getFloatingLines() const { return m_plines; }
 
 signals:
     void positionChanged(int x, int y);
@@ -53,9 +49,9 @@ protected:
     void updateRuler();
 
 private:
-    fpsRulerBar                       *m_hruler;
-    fpsRulerBar                       *m_vruler;
-    fpsCornerBox                      *m_box;
+    fpsRulerBar *m_hruler;
+    fpsRulerBar *m_vruler;
+    fpsCornerBox *m_box;
     QVector<QPointer<fpsFloatingLine>> m_plines;
 
 private slots:
@@ -64,8 +60,8 @@ private slots:
     void handleDragFinished(const QPoint &endPos, bool isReal);
 
 private:
-    fpsFloatingLine *m_tempLine { nullptr };      // Temporary line widget
-    QPoint           m_dragStartPos;      // Position where dragging starts
+    fpsFloatingLine *m_tempLine{ nullptr }; // Temporary line widget
+    QPoint m_dragStartPos; // Position where dragging starts
 };
 
-#endif      // FPSGRAPHICSVIEW_H
+#endif // FPSGRAPHICSVIEW_H

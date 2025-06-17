@@ -30,16 +30,11 @@ class fpsImageHandler : public QObject
 {
     Q_OBJECT
 public:
-    enum SplitMode
-    {
-        Size,
-        Average
-    };
+    enum SplitMode { Size, Average };
 
-    enum SplitSequence
-    {
-        Left                = 0x0000000f,
-        Right               = 0x000000f0,
+    enum SplitSequence {
+        Left = 0x0000000f,
+        Right = 0x000000f0,
         Vert [[deprecated]] = 0x00000f00,
         Hori [[deprecated]] = 0x0000f000
     };
@@ -47,16 +42,14 @@ public:
     Q_ENUM(SplitSequence)
 
 public:
-    // It's important to know that both our `SizeRect rect' and `QStringList list' have an 'accessing' sequence of TopLeft -> BottomRight.
-    static RectList getSubRects(int width, int height, int rowsOrHeight,
-                                int colsOrWidth, SplitMode mode = Average,
-                                int32_t seq = Left);
+    // It's important to know that both our `SizeRect rect' and `QStringList list' have an
+    // 'accessing' sequence of TopLeft -> BottomRight.
+    static RectList getSubRects(int width, int height, int rowsOrHeight, int colsOrWidth,
+                                SplitMode mode = Average, int32_t seq = Left);
 
-    static bool split(const QImage &img, QVector<QImage> &output,
-                      const RectList &rects);
+    static bool split(const QImage &img, QVector<QImage> &output, const RectList &rects);
 
-    static QStringList getOutputList(const QString &fileName, int rows,
-                                     int cols);
+    static QStringList getOutputList(const QString &fileName, int rows, int cols);
 
     static void rectsToLines(const RectList &rects, fpsGraphicsView *parent);
     static RectList linesToRects(fpsGraphicsView *parent);
@@ -65,4 +58,4 @@ signals:
     void proceed(int progress);
 };
 
-#endif      // FPSIMAGEHANDLER_H
+#endif // FPSIMAGEHANDLER_H

@@ -9,8 +9,7 @@
 
 #include <QDialog>
 
-namespace Ui
-{
+namespace Ui {
 class fpsProgressDialog;
 }
 
@@ -27,7 +26,7 @@ public slots:
 
 private:
     Ui::fpsProgressDialog *ui;
-    int                    m_total;
+    int m_total;
 };
 
-#endif      // FPSPROGRESSDIALOG_H
+#endif // FPSPROGRESSDIALOG_H

@@ -9,8 +9,8 @@
 
 #include <QWidget>
 
-constexpr int MINIMUM_INCR { 5 };
-constexpr int RULER_SIZE { 24 };
+constexpr int MINIMUM_INCR{ 5 };
+constexpr int RULER_SIZE{ 24 };
 
 class fpsCornerBox : public QWidget
 {
@@ -26,13 +26,9 @@ class fpsRulerBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit fpsRulerBar(QWidget *parent           = nullptr,
-                         Qt::Orientation direction = Qt::Horizontal);
+    explicit fpsRulerBar(QWidget *parent = nullptr, Qt::Orientation direction = Qt::Horizontal);
 
-    void setOrientation(Qt::Orientation orientation)
-    {
-        m_direction = orientation;
-    }
+    void setOrientation(Qt::Orientation orientation) { m_direction = orientation; }
 
     Qt::Orientation getOritation() const { return m_direction; }
 
@@ -57,18 +53,18 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    bool   m_dragging { false };
-    bool   m_moved { false };
+    bool m_dragging{ false };
+    bool m_moved{ false };
     QPoint m_dragStartPos;
 
 protected:
     Qt::Orientation m_direction;
-    QPoint          m_lastPos;
-    QColor          m_faceColor;
+    QPoint m_lastPos;
+    QColor m_faceColor;
 
     double m_lower;
     double m_upper;
     double m_maxsize;
 };
 
-#endif      // FPSRULERBAR_H
+#endif // FPSRULERBAR_H

@@ -12,46 +12,41 @@ fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
     m_hruler = new fpsRulerBar(this, Qt::Horizontal);
     m_vruler = new fpsRulerBar(this, Qt::Vertical);
-    m_box    = new fpsCornerBox(this);
+    m_box = new fpsCornerBox(this);
     setViewport(new QWidget);
     setMouseTracking(true);
     setAttribute(Qt::WA_DeleteOnClose);
 
     // Set background color
-    QPalette palette { viewport()->palette() };
+    QPalette palette{ viewport()->palette() };
     palette.setColor(QPalette::Base, QColor(192, 192, 192));
     viewport()->setPalette(palette);
 
     // Connected for dragging support
-    connect(m_hruler, &fpsRulerBar::dragStarted, this,
-            &fpsGraphicsView::handleDragStarted);
-    connect(m_hruler, &fpsRulerBar::dragMoved, this,
-            &fpsGraphicsView::handleDragMoved);
-    connect(m_hruler, &fpsRulerBar::dragFinished, this,
-            &fpsGraphicsView::handleDragFinished);
-    connect(m_vruler, &fpsRulerBar::dragStarted, this,
-            &fpsGraphicsView::handleDragStarted);
-    connect(m_vruler, &fpsRulerBar::dragMoved, this,
-            &fpsGraphicsView::handleDragMoved);
-    connect(m_vruler, &fpsRulerBar::dragFinished, this,
-            &fpsGraphicsView::handleDragFinished);
+    connect(m_hruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::handleDragStarted);
+    connect(m_hruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::handleDragMoved);
+    connect(m_hruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::handleDragFinished);
+    connect(m_vruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::handleDragStarted);
+    connect(m_vruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::handleDragMoved);
+    connect(m_vruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::handleDragFinished);
 }
 
 fpsGraphicsView::~fpsGraphicsView()
 {
-    for (auto l : m_plines) delete l;
+    for (auto l : m_plines)
+        delete l;
 }
 
 void fpsGraphicsView::setImage(QImage img)
 {
-    QGraphicsScene *scene { new QGraphicsScene };
+    QGraphicsScene *scene{ new QGraphicsScene };
     scene->addPixmap(QPixmap::fromImage(img));
     setScene(scene);
 }
 
 void fpsGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
-    QPointF pt { mapToScene(event->pos()) };
+    QPointF pt{ mapToScene(event->pos()) };
     m_hruler->updatePosition(event->pos());
     m_vruler->updatePosition(event->pos());
     Q_EMIT positionChanged(pt.x(), pt.y());
@@ -73,30 +68,33 @@ void fpsGraphicsView::resizeEvent(QResizeEvent *event)
     m_box->move(0, 0);
     updateRuler();
 
-    for (auto l : m_plines) l->updateLine();
+    for (auto l : m_plines)
+        l->updateLine();
 }
 
 void fpsGraphicsView::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
     updateRuler();
-    for (auto l : m_plines) l->updateLine();
+    for (auto l : m_plines)
+        l->updateLine();
 }
 
 void fpsGraphicsView::updateRuler()
 {
-    if (!scene()) return;
+    if (!scene())
+        return;
 
-    QRectF  viewbox { this->rect() };
-    QPointF offset { mapFromScene(scene()->sceneRect().topLeft()) };
-    double  factor { 1.0 / transform().m11() };
-    double  lower_x { factor * (viewbox.left() - offset.x()) };
-    double  upper_x { factor * (viewbox.right() - RULER_SIZE - offset.x()) };
+    QRectF viewbox{ this->rect() };
+    QPointF offset{ mapFromScene(scene()->sceneRect().topLeft()) };
+    double factor{ 1.0 / transform().m11() };
+    double lower_x{ factor * (viewbox.left() - offset.x()) };
+    double upper_x{ factor * (viewbox.right() - RULER_SIZE - offset.x()) };
     m_hruler->setRange(lower_x, upper_x, upper_x - lower_x);
     m_hruler->update();
 
-    double lower_y { -factor * (viewbox.top() - offset.y()) };
-    double upper_y { -factor * (viewbox.bottom() - RULER_SIZE - offset.y()) };
+    double lower_y{ -factor * (viewbox.top() - offset.y()) };
+    double upper_y{ -factor * (viewbox.bottom() - RULER_SIZE - offset.y()) };
 
     m_vruler->setRange(lower_y, upper_y, upper_y - lower_y);
     m_vruler->update();
@@ -106,69 +104,67 @@ void fpsGraphicsView::zoomIn()
 {
     scale(ZOOM_RATIO, ZOOM_RATIO);
     updateRuler();
-    for (auto l : m_plines) l->updateLine();
+    for (auto l : m_plines)
+        l->updateLine();
 }
 
 void fpsGraphicsView::zoomOut()
 {
     scale(1 / ZOOM_RATIO, 1 / ZOOM_RATIO);
     updateRuler();
-    for (auto l : m_plines) l->updateLine();
+    for (auto l : m_plines)
+        l->updateLine();
 }
 
-void fpsGraphicsView::addFloatingLine(Qt::Orientation orientation,
-                                      const QPoint   &pos)
+void fpsGraphicsView::addFloatingLine(Qt::Orientation orientation, const QPoint &pos)
 {
-    if (!scene()) return;
+    if (!scene())
+        return;
 
-    QPointer<fpsFloatingLine> fl { new fpsFloatingLine(this, orientation) };
+    QPointer<fpsFloatingLine> fl{ new fpsFloatingLine(this, orientation) };
     fl->updateLine(pos);
     fl->show();
     m_plines.push_back(fl);
-    int i { m_plines.size() - 1 };
-    connect(fl, &fpsFloatingLine::lineDestroyed, this,
-            [fl, this, i]()
-            {
-                fl->deleteLater();
-                this->m_plines.remove(i);
-            });
+    int i{ m_plines.size() - 1 };
+    connect(fl, &fpsFloatingLine::lineDestroyed, this, [fl, this, i]() {
+        fl->deleteLater();
+        this->m_plines.remove(i);
+    });
 }
 
 void fpsGraphicsView::addFloatingLine(fpsFloatingLine *fl)
 {
-    if (!scene()) return;
+    if (!scene())
+        return;
 
     m_plines.push_back(fl);
-    int i { m_plines.size() - 1 };
-    connect(fl, &fpsFloatingLine::lineDestroyed, this,
-            [fl, this, i]()
-            {
-                fl->deleteLater();
-                this->m_plines.remove(i);
-            });
+    int i{ m_plines.size() - 1 };
+    connect(fl, &fpsFloatingLine::lineDestroyed, this, [fl, this, i]() {
+        fl->deleteLater();
+        this->m_plines.remove(i);
+    });
 }
 
 void fpsGraphicsView::removeAllFloatingLines()
 {
-    for (auto l : m_plines) delete l;
+    for (auto l : m_plines)
+        delete l;
     m_plines.clear();
 }
 
 void fpsGraphicsView::handleDragStarted(const QPoint &startPos)
 {
-    if (!scene()) return;
+    if (!scene())
+        return;
 
     m_dragStartPos = startPos;
     setCursor(QCursor(Qt::CrossCursor));
 
     // Create a temporary line
-    if (qobject_cast<fpsRulerBar *>(sender())->getOritation() == Qt::Horizontal)
-    {
+    if (qobject_cast<fpsRulerBar *>(sender())->getOritation() == Qt::Horizontal) {
         m_tempLine = new fpsFloatingLine(this, Qt::Horizontal);
         m_tempLine->updateLine(0, startPos.y());
-    }
-    else
-    {
+    } else {
         m_tempLine = new fpsFloatingLine(this, Qt::Vertical);
         m_tempLine->updateLine(startPos.x(), 0);
     }
@@ -178,11 +174,12 @@ void fpsGraphicsView::handleDragStarted(const QPoint &startPos)
 
 void fpsGraphicsView::handleDragMoved(const QPoint &currentPos)
 {
-    if (!m_tempLine) return;
+    if (!m_tempLine)
+        return;
 
     // Avoid being moved out of its parent
-    int x { qBound(0, currentPos.x(), width() - LINE_SIZE) };
-    int y { qBound(0, currentPos.y(), height() - LINE_SIZE) };
+    int x{ qBound(0, currentPos.x(), width() - LINE_SIZE) };
+    int y{ qBound(0, currentPos.y(), height() - LINE_SIZE) };
 
     if (qobject_cast<fpsRulerBar *>(sender())->getOritation() == Qt::Horizontal)
         m_tempLine->updateLine(0, y);
@@ -192,13 +189,12 @@ void fpsGraphicsView::handleDragMoved(const QPoint &currentPos)
 
 void fpsGraphicsView::handleDragFinished(const QPoint &endPos, bool isReal)
 {
-    if (!m_tempLine) return;
+    if (!m_tempLine)
+        return;
 
     // In the receiver, ensure the line
     // is not moved out of the visualized part of the scene.
-    if (!isReal || !scene()->sceneRect().contains(
-                       mapToScene(viewport()->mapFromParent(endPos))))
-    {
+    if (!isReal || !scene()->sceneRect().contains(mapToScene(viewport()->mapFromParent(endPos)))) {
         // Clear temporary widget
         delete m_tempLine;
         m_tempLine = nullptr;
