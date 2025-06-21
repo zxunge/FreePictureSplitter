@@ -6,14 +6,8 @@
 #include "config.h"
 #include "fpsaboutdialog.h"
 
-#include <QDialog>
-#include <QLabel>
-#include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QPixmap>
-#include <QDesktopServices>
-#include <QUrl>
 #include <QFont>
 #include <QPropertyAnimation>
 

@@ -7,8 +7,6 @@
 #ifndef FPSBATCHDIALOG_H
 #define FPSBATCHDIALOG_H
 
-#include <QDialog>
-
 namespace Ui {
 class fpsBatchDialog;
 }

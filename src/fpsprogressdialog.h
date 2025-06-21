@@ -7,8 +7,6 @@
 #ifndef FPSPROGRESSDIALOG_H
 #define FPSPROGRESSDIALOG_H
 
-#include <QDialog>
-
 namespace Ui {
 class fpsProgressDialog;
 }

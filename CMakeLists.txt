@@ -39,7 +39,7 @@ else()
     message(FATAL_ERROR "Could not find Qt!")
 endif()
 
-configure_file(config/config.h.in config.h)
+configure_file(config/config.h.in config.h @ONLY)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 

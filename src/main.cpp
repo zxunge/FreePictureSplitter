@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsmainwindow.h"
-#include <QApplication>
+
 #include <QLocale>
 #include <QTranslator>
 #include <QStyleFactory>
@@ -18,14 +18,24 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     a.setStyle(QStyleFactory::create("fusion"));
+    QFile styleFile(QStringLiteral(":/skins/skins/default.qss"));
+    styleFile.open(QFile::ReadOnly);
+    if (styleFile.isOpen()) {
+        a.setStyleSheet(QLatin1String(styleFile.readAll()));
+        styleFile.close();
+    } else {
+        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+                             QStringLiteral("Error loading skin."), QMessageBox::Close);
+        QApplication::exit(1);
+    }
 
     QCoreApplication::setApplicationName("FreePictureSplitter");
     QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
 
     QTranslator translator;
-    const QStringList uiLanguages = QLocale::system().uiLanguages();
+    const QStringList uiLanguages{ QLocale::system().uiLanguages() };
     for (const QString &locale : uiLanguages) {
-        const QString baseName = "FreePictureSplitter_" + QLocale(locale).name();
+        const QString baseName{ "FreePictureSplitter_" + QLocale(locale).name() };
         if (translator.load(":/i18n/i18n/" + baseName)) {
             a.installTranslator(&translator);
             break;

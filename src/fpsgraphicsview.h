@@ -9,11 +9,6 @@
 
 #include "fpsfloatingline.h"
 
-#include <QGraphicsView>
-#include <QImage>
-#include <QtCore/qvector.h>
-#include <QtCore/qpointer.h>
-
 class fpsRulerBar;
 class fpsCornerBox;
 class QMouseEvent;
@@ -31,7 +26,7 @@ public:
     void zoomIn();
     void zoomOut();
 
-    void setImage(QImage img); // Show an image on the GraphicsView.
+    void showPixmap(const QPixmap &pixmap); // Show an image on the GraphicsView.
     // Create a line using direction and initial position. pos -> whole GraphicsView
     void addFloatingLine(Qt::Orientation ori, const QPoint &pos);
     void addFloatingLine(fpsFloatingLine *fl); // Add an existing line to list.

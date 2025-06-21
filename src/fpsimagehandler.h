@@ -7,12 +7,6 @@
 #ifndef FPSIMAGEHANDLER_H
 #define FPSIMAGEHANDLER_H
 
-#include <QtCore/qstring.h>
-#include <QtCore/qrect.h>
-#include <QtCore/qvector.h>
-#include <QtCore/qobject.h>
-#include <QImage>
-
 class fpsGraphicsView;
 
 typedef QVector<QVector<QRect>> RectList;
@@ -47,7 +41,7 @@ public:
     static RectList getSubRects(int width, int height, int rowsOrHeight, int colsOrWidth,
                                 SplitMode mode = Average, int32_t seq = Left);
 
-    static bool split(const QImage &img, QVector<QImage> &output, const RectList &rects);
+    static bool split(QImageReader &imgReader, QVector<QImage> &output, const RectList &rects);
 
     static QStringList getOutputList(const QString &fileName, int rows, int cols);
 

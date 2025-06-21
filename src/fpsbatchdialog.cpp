@@ -9,6 +9,7 @@
 fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fpsBatchDialog)
 {
     ui->setupUi(this);
+    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
 fpsBatchDialog::~fpsBatchDialog()

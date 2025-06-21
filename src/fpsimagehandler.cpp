@@ -6,14 +6,9 @@
 #include "fpsimagehandler.h"
 #include "fpsgraphicsview.h"
 #include "fpsfloatingline.h"
-#include "debugutil.h"
 
-#include <QRect>
 #include <QFileInfo>
 #include <QDir>
-#include <QImage>
-
-#include <algorithm>
 
 /* static */ QStringList fpsImageHandler::getOutputList(const QString &fileName, int rows, int cols)
 {
@@ -134,16 +129,27 @@
     return rects;
 }
 
-[[nodiscard]] /* static */ bool fpsImageHandler::split(const QImage &img, QVector<QImage> &output,
-                                                       const RectList &rects)
+[[nodiscard]] /* static */ bool
+fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const RectList &rects)
 {
     if (rects.isEmpty())
         return false;
 
     auto cRows{ rects.size() }, cCols{ rects[0].size() };
+    // Avoid has been read
+    imgReader.setFileName(imgReader.fileName());
+    const QImage img{ imgReader.read() };
 
-    for (int j{}; j < cRows; ++j)
-        for (int k{}; k < cCols; ++k)
+    if (img.isNull())
+        return false;
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    for (qsizetype j{}; j != cRows; ++j)
+        for (qsizetype k{}; k != cCols; ++k)
+#else
+    for (int j{}; j != cRows; ++j)
+        for (int k{}; k != cCols; ++k)
+#endif
             output.push_back(img.copy(rects[j][k]));
 
     return true;
@@ -155,7 +161,11 @@
         return;
 
     fpsFloatingLine *line{};
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    for (qsizetype i{}; i != rects.size() - 1; ++i) {
+#else
     for (int i{}; i != rects.size() - 1; ++i) {
+#endif
         line = new fpsFloatingLine(parent);
         line->setScenePos(rects[i][0].bottom());
         line->show();

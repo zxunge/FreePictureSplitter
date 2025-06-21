@@ -4,12 +4,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsrulerbar.h"
-#include <QFrame>
-#include <QPaintEvent>
-#include <QGraphicsView>
-#include <QPainter>
-#include <cmath>
-#include <array>
 
 struct RulerMetric
 {

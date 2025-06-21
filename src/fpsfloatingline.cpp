@@ -4,12 +4,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsfloatingline.h"
-#include "debugutil.h"
 
 #include <QSizePolicy>
-#include <QMouseEvent>
 #include <QCursor>
-#include <QGraphicsView>
 
 fpsFloatingLine::fpsFloatingLine(QGraphicsView *parent, Qt::Orientation orientation,
                                  const QPoint &pos)

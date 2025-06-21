@@ -7,8 +7,6 @@
 #ifndef FPSSETTINGSDIALOG_H
 #define FPSSETTINGSDIALOG_H
 
-#include <QDialog>
-
 namespace Ui {
 class fpsSettingsDialog;
 }
