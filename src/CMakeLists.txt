@@ -37,7 +37,7 @@ set(QTGUI_SOURCES
         ${TS_FILES}
 )
 
-if(TRUE)
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(FreePictureSplitter
         MANUAL_FINALIZATION
         ${QTGUI_SOURCES}
@@ -64,8 +64,9 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_include_directories(FreePictureSplitter PRIVATE .)
 target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
+
+target_include_directories(FreePictureSplitter PRIVATE .)
 
 target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui)
 
