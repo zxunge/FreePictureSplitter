@@ -3,10 +3,7 @@
 // # See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "debugutil.h"
 #include "fpsgraphicsview.h"
-
-#include <QMouseEvent>
 
 fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
@@ -18,9 +15,7 @@ fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
     setAttribute(Qt::WA_DeleteOnClose);
 
     // Set background color
-    QPalette palette{ viewport()->palette() };
-    palette.setColor(QPalette::Base, QColor(192, 192, 192));
-    viewport()->setPalette(palette);
+    viewport()->setStyleSheet("background-color: rgb(192, 192, 192);");
 
     // Connected for dragging support
     connect(m_hruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::handleDragStarted);
@@ -37,10 +32,10 @@ fpsGraphicsView::~fpsGraphicsView()
         delete l;
 }
 
-void fpsGraphicsView::setImage(QImage img)
+void fpsGraphicsView::showPixmap(const QPixmap &pixmap)
 {
     QGraphicsScene *scene{ new QGraphicsScene };
-    scene->addPixmap(QPixmap::fromImage(img));
+    scene->addPixmap(pixmap);
     setScene(scene);
 }
 
@@ -125,7 +120,11 @@ void fpsGraphicsView::addFloatingLine(Qt::Orientation orientation, const QPoint 
     fl->updateLine(pos);
     fl->show();
     m_plines.push_back(fl);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    qsizetype i{ m_plines.size() - 1 };
+#else
     int i{ m_plines.size() - 1 };
+#endif
     connect(fl, &fpsFloatingLine::lineDestroyed, this, [fl, this, i]() {
         fl->deleteLater();
         this->m_plines.remove(i);
@@ -138,7 +137,11 @@ void fpsGraphicsView::addFloatingLine(fpsFloatingLine *fl)
         return;
 
     m_plines.push_back(fl);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    qsizetype i{ m_plines.size() - 1 };
+#else
     int i{ m_plines.size() - 1 };
+#endif
     connect(fl, &fpsFloatingLine::lineDestroyed, this, [fl, this, i]() {
         fl->deleteLater();
         this->m_plines.remove(i);

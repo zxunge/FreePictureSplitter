@@ -8,13 +8,13 @@
 #define FPSMAINWINDOW_H
 
 #include "fpsimagehandler.h"
-#include <QMainWindow>
 
 namespace Ui {
 class fpsMainWindow;
 }
 class fpsBatchDialog;
 class fpsAboutDialog;
+class fpsSettingsDialog;
 
 class fpsMainWindow : public QMainWindow
 {
@@ -58,10 +58,10 @@ private:
     Ui::fpsMainWindow *ui;
     fpsBatchDialog *m_batchDlg;
     fpsAboutDialog *m_aboutDlg;
+    fpsSettingsDialog *m_settingsDlg;
 
-    QImage m_originalImage;
+    QImageReader m_imgReader;
     RectList m_rects;
-    QString m_fileName;
 };
 
 #endif // FPSMAINWINDOW_H

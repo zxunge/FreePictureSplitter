@@ -7,8 +7,6 @@
 #ifndef FPSRULERBAR_H
 #define FPSRULERBAR_H
 
-#include <QWidget>
-
 constexpr int MINIMUM_INCR{ 5 };
 constexpr int RULER_SIZE{ 24 };
 

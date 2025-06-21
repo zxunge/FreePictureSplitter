@@ -7,8 +7,6 @@
 #ifndef FPSABOUTDIALOG_H
 #define FPSABOUTDIALOG_H
 
-#include <QDialog>
-
 class fpsAboutDialog : public QDialog
 {
     Q_OBJECT

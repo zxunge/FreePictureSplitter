@@ -37,7 +37,7 @@ set(QTGUI_SOURCES
         ${TS_FILES}
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if(TRUE)
     qt_add_executable(FreePictureSplitter
         MANUAL_FINALIZATION
         ${QTGUI_SOURCES}
@@ -65,8 +65,9 @@ else()
 endif()
 
 target_include_directories(FreePictureSplitter PRIVATE .)
+target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
 
-target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui)
 
 set_target_properties(FreePictureSplitter PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER com.freepicturesplitter

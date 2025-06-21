@@ -1,0 +1,24 @@
+/* This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
+ * Copyright (c) 2024 2025 zxunge
+ * See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
+ */
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+QMenuBar {
+    background-color: rgb(214, 227, 242);
+    color: rgb(0, 0, 0);
+}
+
+QStatusBar {
+    background-color: rgb(214, 227, 242);
+    color: rgb(0, 0, 0);
+}
+
+QToolBar {
+    border: none;
+    background-color: qlineargradient(x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgb(222, 234, 249), stop:1 rgb(206, 221, 240));
+}
+
+/* QToolButton:hover {
+    background-color: rgb(255, 255, 61);
+} */

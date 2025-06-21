@@ -7,19 +7,16 @@
 #include "fpsmainwindow.h"
 #include "ui_fpsmainwindow.h"
 #include "fpsbatchdialog.h"
+#include "fpssettingsdialog.h"
 #include "fpsaboutdialog.h"
 #include "fpsprogressdialog.h"
-#include "debugutil.h"
-
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QDesktopServices>
-#include <QUrl>
-#include <QTextBrowser>
-#include <QStringLiteral>
 
 fpsMainWindow::fpsMainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::fpsMainWindow), m_aboutDlg(nullptr), m_batchDlg(nullptr)
+    : QMainWindow(parent),
+      ui(new Ui::fpsMainWindow),
+      m_aboutDlg(nullptr),
+      m_batchDlg(nullptr),
+      m_settingsDlg(nullptr)
 {
     ui->setupUi(this);
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -39,55 +36,59 @@ fpsMainWindow::~fpsMainWindow()
         delete m_aboutDlg;
         m_aboutDlg = nullptr;
     }
+    if (m_settingsDlg) {
+        delete m_settingsDlg;
+        m_settingsDlg = nullptr;
+    }
 }
 
 void fpsMainWindow::on_actionOpen_triggered()
 {
-    m_fileName = QFileDialog::getOpenFileName(this, tr("Open a picture..."), QStringLiteral("/"),
-                                              tr("Image files (*.jpg *.png *.jpeg *.gif *.bmp)"));
+    m_imgReader.setFileName(
+            QFileDialog::getOpenFileName(this, tr("Open a picture..."), QStringLiteral("/"),
+                                         tr("Image files (*.jpg *.png *.jpeg *.gif *.bmp)")));
 
-    if (m_fileName.isEmpty())
+    if (m_imgReader.fileName().isEmpty())
         return;
 
-    if (m_originalImage.load(m_fileName)) {
-        ui->graphicsView->setImage(m_originalImage);
+    m_imgReader.setAutoTransform(true);
+
+    if (m_imgReader.canRead()) {
+        ui->graphicsView->showPixmap(QPixmap::fromImageReader(&m_imgReader));
+
+        // Because we have previously read the image, we need to re-setFileName.
+        m_imgReader.setFileName(m_imgReader.fileName());
+        QImage tempImg{ m_imgReader.read() };
 
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
         ui->statusBar->showMessage(
-                m_fileName + ", " + QString::number(m_originalImage.width()) + "x"
-                + QString::number(m_originalImage.height()) + tr(", Depth: ")
-                + QString::number(m_originalImage.depth()) + tr(", Vertical: ")
-                + QString::number(static_cast<int>(m_originalImage.dotsPerMeterY() * 0.0254))
+                m_imgReader.fileName() + ", " + QString::number(m_imgReader.size().width()) + "x"
+                + QString::number(m_imgReader.size().height()) + tr(", Depth: ")
+                + QString::number(tempImg.depth()) + tr(", Vertical: ")
+                + QString::number(static_cast<int>(tempImg.dotsPerMeterY() * 0.0254))
                 + tr(" dpi, Horizontal: ")
-                + QString::number(static_cast<int>(m_originalImage.dotsPerMeterX() * 0.0254))
-                + " dpi");
+                + QString::number(static_cast<int>(tempImg.dotsPerMeterX() * 0.0254)) + " dpi");
 
         ui->btnReset->setEnabled(true);
         ui->actionZoomIn->setEnabled(true);
-        ui->actionZoomIn->setIcon(QIcon(":/toolBar/toolBar/zoom-in.png"));
         ui->actionZoomOut->setEnabled(true);
-        ui->actionZoomOut->setIcon(QIcon(":/toolBar/toolBar/zoom-out.png"));
-        ui->sbxCols->setRange(1, m_originalImage.width());
-        ui->sbxRows->setRange(1, m_originalImage.height());
-        ui->sbxHeight->setRange(1, m_originalImage.height());
-        ui->sbxWidth->setRange(1, m_originalImage.width());
-        if (ui->rbtnManual->isChecked()) {
+        ui->sbxCols->setRange(1, m_imgReader.size().width());
+        ui->sbxRows->setRange(1, m_imgReader.size().height());
+        ui->sbxHeight->setRange(1, m_imgReader.size().height());
+        ui->sbxWidth->setRange(1, m_imgReader.size().width());
+        if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
-            ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
-        }
     } else
         QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                             QString("Error loading picture file: %1.").arg(m_fileName),
+                             QString("Error loading picture file: %1.").arg(m_imgReader.fileName()),
                              QMessageBox::Close);
 }
 
 void fpsMainWindow::on_actionSave_triggered()
 {
-    if (m_originalImage.isNull())
-        return;
-
     QVector<QImage> imageList;
+    QImageWriter writer;
     QStringList outputList;
     QString out{ QFileDialog::getExistingDirectory(this, tr("Choose the output directory.")) };
 
@@ -102,17 +103,25 @@ void fpsMainWindow::on_actionSave_triggered()
     }
 
     if (!m_rects.isEmpty()) {
-        if (!fpsImageHandler::split(m_originalImage, imageList, m_rects)) {
+        if (!fpsImageHandler::split(m_imgReader, imageList, m_rects)) {
             QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
                                  QString("Error splitting picture."), QMessageBox::Close);
             return;
         }
-        outputList = fpsImageHandler::getOutputList(m_fileName, m_rects.size(), m_rects[0].size());
+        outputList = fpsImageHandler::getOutputList(m_imgReader.fileName(), m_rects.size(),
+                                                    m_rects[0].size());
         fpsProgressDialog dlg(this, outputList.size());
-        connect(this, SIGNAL(proceed(int)), &dlg, SLOT(on_proceed(int)));
+        connect(this, &fpsMainWindow::proceed, &dlg, &fpsProgressDialog::on_proceed);
         dlg.show();
         for (int i{}; i != imageList.size(); ++i) {
-            imageList[i].save(out + "/" + outputList[i]);
+            writer.setFileName(out + "/" + outputList[i]);
+            if (!writer.write(imageList[i])) {
+                QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
+                                     QStringLiteral("Error writing to file \'") + writer.fileName()
+                                             + QStringLiteral("\', ") + writer.errorString(),
+                                     QMessageBox::Close);
+                break;
+            }
             Q_EMIT proceed(i + 1);
         }
         dlg.close();
@@ -134,7 +143,11 @@ void fpsMainWindow::on_actionBatch_triggered()
     m_batchDlg->exec();
 }
 
-void fpsMainWindow::on_actionSettings_triggered() { }
+void fpsMainWindow::on_actionSettings_triggered()
+{
+    m_settingsDlg = new fpsSettingsDialog(this);
+    m_settingsDlg->exec();
+}
 
 void fpsMainWindow::on_actionHomepage_triggered()
 {
@@ -152,38 +165,37 @@ void fpsMainWindow::on_btnReset_clicked()
     if (ui->rbtnAver->isChecked())
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
-                    m_originalImage.width(), m_originalImage.height(), ui->sbxRows->value(),
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
                     ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Left);
         else if (ui->rbtnHoriRight->isChecked())
             m_rects = fpsImageHandler::getSubRects(
-                    m_originalImage.width(), m_originalImage.height(), ui->sbxRows->value(),
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
                     ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Right);
         else if (ui->rbtnVertLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
-                    m_originalImage.width(), m_originalImage.height(), ui->sbxRows->value(),
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
                     ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Left);
         else
             m_rects = fpsImageHandler::getSubRects(
-                    m_originalImage.width(), m_originalImage.height(), ui->sbxRows->value(),
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
                     ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Right);
     else if (ui->rbtnHoriLeft->isChecked())
-        m_rects = fpsImageHandler::getSubRects(m_originalImage.width(), m_originalImage.height(),
-                                               ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                               fpsImageHandler::Size, fpsImageHandler::Left);
+        m_rects = fpsImageHandler::getSubRects(
+                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
     else if (ui->rbtnHoriRight->isChecked())
-        m_rects = fpsImageHandler::getSubRects(m_originalImage.width(), m_originalImage.height(),
-                                               ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                               fpsImageHandler::Size, fpsImageHandler::Right);
+        m_rects = fpsImageHandler::getSubRects(
+                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
     else if (ui->rbtnVertLeft->isChecked())
-        m_rects = fpsImageHandler::getSubRects(m_originalImage.width(), m_originalImage.height(),
-                                               ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                               fpsImageHandler::Size, fpsImageHandler::Left);
+        m_rects = fpsImageHandler::getSubRects(
+                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
     else
-        m_rects = fpsImageHandler::getSubRects(m_originalImage.width(), m_originalImage.height(),
-                                               ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                               fpsImageHandler::Size, fpsImageHandler::Right);
+        m_rects = fpsImageHandler::getSubRects(
+                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
     ui->actionSave->setEnabled(true);
-    ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
     ui->graphicsView->removeAllFloatingLines();
     fpsImageHandler::rectsToLines(m_rects, ui->graphicsView);
 }
@@ -240,9 +252,7 @@ void fpsMainWindow::on_rbtnManual_toggled(bool checked)
         ui->rbtnHoriRight->setEnabled(false);
         ui->rbtnVertLeft->setEnabled(false);
         ui->rbtnVertRight->setEnabled(false);
-        if (!m_originalImage.isNull()) {
+        if (ui->graphicsView->scene())
             ui->actionSave->setEnabled(true);
-            ui->actionSave->setIcon(QIcon(":/toolBar/toolBar/save.png"));
-        }
     }
 }
