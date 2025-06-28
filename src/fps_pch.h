@@ -14,6 +14,7 @@
 #  include <cmath>
 #  include <algorithm>
 #  include <array>
+#  include <string>
 
 // Qt includes
 #  include <QWidget>
@@ -45,6 +46,9 @@
 
 // Project includes
 #  include "debugutil.h"
+
+// Third-party includes
+#  include <rfl/json.hpp>
 #endif // __cplusplus
 
 #endif // FPS_PCH_H
