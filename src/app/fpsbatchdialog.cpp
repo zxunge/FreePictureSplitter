@@ -5,12 +5,15 @@
 
 #include "fpsbatchdialog.h"
 #include "ui_fpsbatchdialog.h"
+#include "jsonconfigitems.h"
 
 #include <QButtonGroup>
 #include <QActionGroup>
 #include <QFileDialog>
 #include <QImageReader>
 #include <QtCore/qfileinfo.h>
+
+extern Util::Config appConfig;
 
 fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fpsBatchDialog)
 {
@@ -24,6 +27,8 @@ fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fp
     ui->wgtTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     ui->wgtTable->setHorizontalHeaderLabels(QStringList{ "File Name", "File Path", "File Size" });
     ui->wgtTable->verticalHeader()->setVisible(false);
+    ui->wgtTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->wgtTable->horizontalHeader()->setStretchLastSection(true);
 
     QActionGroup *ag{ new QActionGroup(this) };
     ag->addAction(ui->actionShowDetailInfo);
@@ -63,10 +68,14 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
 
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
-    fdlg.setDirectory("/");
+    fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
+                              ? "/"
+                              : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);
     if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles()[0].isEmpty()) {
+        appConfig.dialog.lastOpenedDir = QFileInfo(fdlg.selectedFiles()[0]).path().toStdString();
+
         QListWidgetItem *listItem{ new QListWidgetItem(ui->wgtList) };
         listItem->setIcon(QIcon(fdlg.selectedFiles()[0]));
         listItem->setText(fdlg.selectedFiles()[0]);

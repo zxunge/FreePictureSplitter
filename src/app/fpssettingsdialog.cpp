@@ -10,6 +10,8 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     : QDialog(parent), ui(new Ui::fpsSettingsDialog)
 {
     ui->setupUi(this);
+    ui->frColor->setAutoFillBackground(true);
+    ui->frColor->setPalette(QPalette(Qt::green));
 }
 
 fpsSettingsDialog::~fpsSettingsDialog()
