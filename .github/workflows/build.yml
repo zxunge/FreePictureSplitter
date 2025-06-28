@@ -36,9 +36,9 @@ jobs:
       shell: msys2 {0}
       run: |
         cd FreePictureSplitter/
-        mkdir build && cd $_
-        cmake ..
-        cmake --build . --parallel $(nproc)
+        # We do not want PCH to be enabled when building on GitHub Action
+        cmake -DWITH_PCH=OFF -B build .
+        cmake --build build --parallel $(nproc)
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -75,9 +75,9 @@ jobs:
     - name: Build
       run: |
         cd FreePictureSplitter/
-        mkdir build && cd $_
-        cmake ..
-        cmake --build . --parallel $(nproc)
+        # We do not want PCH to be enabled when building on GitHub Action
+        cmake -DWITH_PCH=OFF -B build .
+        cmake --build build --parallel $(nproc)
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4

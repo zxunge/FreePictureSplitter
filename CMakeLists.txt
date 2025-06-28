@@ -12,6 +12,7 @@ project(FreePictureSplitter
 )
 
 option(WITH_QT_GUI "Build FreePictureSplitter's Qt GUI (Default)." ON)
+option(WITH_PCH "Using Pre-compiled Headers(PCH)." ON)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     option(WITH_UBSAN "Build with UBSAN" OFF)
     option(WITH_TSAN "Build with TSAN" OFF)
@@ -29,8 +30,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Widgets LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Widgets LinguistTools)
 if (Qt6_FOUND)
     message(STATUS "Found Qt " ${Qt6_VERSION})
 elseif(Qt5_FOUND)
@@ -39,7 +40,7 @@ else()
     message(FATAL_ERROR "Could not find Qt!")
 endif()
 
-configure_file(config/config.h.in config.h @ONLY)
+configure_file(config/config.h.in config.h)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 

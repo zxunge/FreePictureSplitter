@@ -28,7 +28,8 @@ jobs:
           
       - name: Build
         run: |
-          cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=On -B build .
+          # We do not want PCH to be enabled when building on GitHub Action
+          cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DWITH_PCH=OFF -B build .
           cmake --build build -j
           
       - name: Analyze

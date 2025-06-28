@@ -4,6 +4,8 @@
  */
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
+/* FreePictureSplitter Default Skin Style */
+
 QMenuBar {
     background-color: rgb(214, 227, 242);
     color: rgb(0, 0, 0);
@@ -18,7 +20,3 @@ QToolBar {
     border: none;
     background-color: qlineargradient(x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgb(222, 234, 249), stop:1 rgb(206, 221, 240));
 }
-
-/* QToolButton:hover {
-    background-color: rgb(255, 255, 61);
-} */

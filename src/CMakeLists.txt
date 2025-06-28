@@ -5,37 +5,56 @@
 
 list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_LIST_DIR}/ui")
 
-set(TS_FILES resources/i18n/FreePictureSplitter_zh_CN.ts)
-
-set(QTGUI_SOURCES
-        main.cpp
-        fpsmainwindow.h
-        fpsmainwindow.cpp
-        fpsimagehandler.h
-        fpsimagehandler.cpp
-        ui/fpsmainwindow.ui
-        fpsbatchdialog.h
-        fpsbatchdialog.cpp
-        ui/fpsbatchdialog.ui
-        fpsaboutdialog.h
-        fpsaboutdialog.cpp
-        fpssettingsdialog.h
-        fpssettingsdialog.cpp
-        ui/fpssettingsdialog.ui
-        fpsfloatingline.h
-        fpsfloatingline.cpp
-        fpsprogressdialog.h
-        fpsprogressdialog.cpp
-        ui/fpsprogressdialog.ui
-        fpsrulerbar.h
-        fpsrulerbar.cpp
-        fpsgraphicsview.h
-        fpsgraphicsview.cpp
-        debugutil.h
-        resources/fps.qrc
-        resources/resources.rc
-        ${TS_FILES}
+set(TS_FILES
+    resources/i18n/FreePictureSplitter_zh_CN.ts
 )
+
+set(UI_FILES
+    ui/fpsmainwindow.ui
+    ui/fpsbatchdialog.ui
+    ui/fpssettingsdialog.ui
+    ui/fpsprogressdialog.ui
+)
+
+set(RC_FILES
+    resources/fps.qrc
+    resources/resources.rc
+)
+
+set(APP_SRCS
+    app/fpsaboutdialog.cpp
+    app/fpsaboutdialog.h
+    app/fpsbatchdialog.cpp
+    app/fpsbatchdialog.h
+    app/fpsfloatingline.cpp
+    app/fpsfloatingline.h
+    app/fpsgraphicsview.cpp
+    app/fpsgraphicsview.h
+    app/fpsimagehandler.cpp
+    app/fpsimagehandler.h
+    app/fpsmainwindow.cpp
+    app/fpsmainwindow.h
+    app/fpsprogressdialog.cpp
+    app/fpsprogressdialog.h
+    app/fpsrulerbar.cpp
+    app/fpsrulerbar.h
+    app/fpssettingsdialog.cpp
+    app/fpssettingsdialog.h
+    app/main.cpp
+)
+
+set(UTILS_SRCS
+    utils/jsonconfigitems.h
+    utils/debugutil.h
+)
+
+set(THIRD_PARTY_SRCS
+    3rdparty/reflect-cpp/src/reflectcpp.cpp
+    3rdparty/reflect-cpp/src/reflectcpp_json.cpp
+    3rdparty/reflect-cpp/src/yyjson.c
+)
+
+set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${THIRD_PARTY_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(FreePictureSplitter
@@ -64,9 +83,15 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
+if(WITH_PCH)
+    target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
+endif()
 
-target_include_directories(FreePictureSplitter PRIVATE .)
+target_include_directories(FreePictureSplitter PRIVATE
+    app
+    utils
+    3rdparty/reflect-cpp/include
+)
 
 target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui)
 
