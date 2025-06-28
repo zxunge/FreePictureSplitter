@@ -59,7 +59,6 @@ private slots:
 
 private:
     Ui::fpsMainWindow *ui;
-    fpsSettingsDialog *m_settingsDlg;
 
     QImageReader m_imgReader;
     RectList m_rects;

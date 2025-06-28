@@ -14,6 +14,8 @@
 #include <QMessageBox>
 #include <QtCore/qfile.h>
 
+#include <rfl/json.hpp>
+
 Util::Config appConfig;
 
 int main(int argc, char *argv[])
@@ -23,12 +25,11 @@ int main(int argc, char *argv[])
             Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
 
+    QApplication a(argc, argv);
     QCoreApplication::setApplicationName(fpsAppName);
     QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(":/icons/fps.ico"));
-
-    QApplication a(argc, argv);
 
     // Load configuration
     QFile cfgFile("conf.json");
@@ -46,13 +47,24 @@ int main(int argc, char *argv[])
     // First run?
     if (jsonCfgStr.isEmpty())
         appConfig = Util::Config{ .app = { .name = fpsAppName,
-                                           .full_version = fpsVersionFull,
-                                           .major_version = fpsVersionMajor,
-                                           .minor_version = fpsVersionMinor,
-                                           .micro_version = fpsVersionMinor,
+                                           .fullVersion = fpsVersionFull,
+                                           .majorVersion = fpsVersionMajor,
+                                           .minorVersion = fpsVersionMinor,
+                                           .microVersion = fpsVersionMicro,
                                            .style = "default" } };
-    else
+    else {
         appConfig = rfl::json::read<Util::Config>(jsonCfgStr.toStdString()).value();
+        // Check for version differences, as they will cause weird compatibility problems.
+        // We promise not to change the interfaces when updating the micro version.
+        if (appConfig.app.majorVersion != fpsVersionMajor
+            || appConfig.app.minorVersion != fpsVersionMinor) {
+            QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+                                 QStringLiteral("Configuration file\'s version doesn\'t match, try "
+                                                "deleting it after backuping."),
+                                 QMessageBox::Close);
+            QApplication::exit(1);
+        }
+    }
 
     // Load styles
     QFile styleFile;

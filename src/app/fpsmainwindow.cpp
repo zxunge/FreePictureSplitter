@@ -10,6 +10,7 @@
 #include "fpssettingsdialog.h"
 #include "fpsaboutdialog.h"
 #include "fpsprogressdialog.h"
+#include "jsonconfigitems.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -17,9 +18,11 @@
 #include <QUrl>
 #include <QTextBrowser>
 #include <QStringLiteral>
+#include <QFileInfo>
 
-fpsMainWindow::fpsMainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::fpsMainWindow), m_settingsDlg(nullptr)
+extern Util::Config appConfig;
+
+fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
 {
     ui->setupUi(this);
     ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -30,10 +33,6 @@ fpsMainWindow::~fpsMainWindow()
     if (ui) {
         delete ui;
         ui = nullptr;
-    }
-    if (m_settingsDlg) {
-        delete m_settingsDlg;
-        m_settingsDlg = nullptr;
     }
 }
 
@@ -48,12 +47,15 @@ void fpsMainWindow::on_actionOpen_triggered()
 
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
-    fdlg.setDirectory("/");
+    fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
+                              ? "/"
+                              : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);
-    if (QDialog::Accepted == fdlg.exec())
+    if (QDialog::Accepted == fdlg.exec()) {
         m_imgReader.setFileName(fdlg.selectedFiles()[0]);
-    else
+        appConfig.dialog.lastOpenedDir = QFileInfo(fdlg.selectedFiles()[0]).path().toStdString();
+    } else
         return;
 
     if (m_imgReader.fileName().isEmpty())
@@ -98,7 +100,16 @@ void fpsMainWindow::on_actionSave_triggered()
     QVector<QImage> imageList;
     QImageWriter writer;
     QStringList outputList;
-    QString out{ QFileDialog::getExistingDirectory(this, tr("Choose the output directory.")) };
+    QString out{ QFileDialog::getExistingDirectory(
+            this, tr("Choose the output directory."),
+            appConfig.dialog.lastSavedToDir.empty()
+                    ? "/"
+                    : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
+
+    if (out.isEmpty())
+        return;
+    else
+        appConfig.dialog.lastSavedToDir = out.toStdString();
 
     if (ui->rbtnManual->isChecked())
         m_rects = fpsImageHandler::linesToRects(ui->graphicsView);
@@ -148,13 +159,15 @@ void fpsMainWindow::on_actionExit_triggered()
 void fpsMainWindow::on_actionBatch_triggered()
 {
     fpsBatchDialog *batchDlg{ new fpsBatchDialog(this) };
+    batchDlg->setAttribute(Qt::WA_DeleteOnClose, true);
     batchDlg->exec();
 }
 
 void fpsMainWindow::on_actionSettings_triggered()
 {
-    m_settingsDlg = new fpsSettingsDialog(this);
-    m_settingsDlg->exec();
+    fpsSettingsDialog *settingsDlg{ new fpsSettingsDialog(this) };
+    settingsDlg->setAttribute(Qt::WA_DeleteOnClose, true);
+    settingsDlg->exec();
 }
 
 void fpsMainWindow::on_actionHomepage_triggered()
@@ -165,6 +178,7 @@ void fpsMainWindow::on_actionHomepage_triggered()
 void fpsMainWindow::on_actionAbout_triggered()
 {
     fpsAboutDialog *aboutDlg{ new fpsAboutDialog(this) };
+    aboutDlg->setAttribute(Qt::WA_DeleteOnClose, true);
     aboutDlg->exec();
 }
 

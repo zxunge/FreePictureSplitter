@@ -8,25 +8,26 @@
 #define JSONCONFIGITEMS_H
 
 #include <string>
-#include <rfl/json.hpp>
 
 namespace Util {
 
 struct Config
 {
+    // We intrinsically use camelCase, thus reducing the header's size.
     struct
     {
         std::string name;
-        rfl::Rename<"fullVersion", std::string> full_version;
-        rfl::Rename<"majorVersion", int> major_version;
-        rfl::Rename<"minorVersion", int> minor_version;
-        rfl::Rename<"microVersion", int> micro_version;
+        std::string fullVersion;
+        int majorVersion;
+        int minorVersion;
+        int microVersion;
         std::string style;
     } app;
 
     struct
     {
-        rfl::Rename<"lastOpenedDir", std::string> last_opened_dir;
+        std::string lastOpenedDir;
+        std::string lastSavedToDir;
     } dialog;
 
     struct
