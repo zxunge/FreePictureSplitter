@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        qt-version: [5, 6]
+        qt: [qt5, qt6]
         msystem: [mingw64, clang64]
 
     steps:
@@ -23,8 +23,8 @@ jobs:
           toolchain:p
           cmake:p
           ninja:p
-          qt${{ matrix.qt-version }}-base:p
-          qt${{ matrix.qt-version }}-tools:p
+          ${{ matrix.qt }}-base:p
+          ${{ matrix.qt }}-tools:p
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -44,24 +44,24 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-${{ matrix.msystem }}-qt${{ matrix.qt-version }}
+        name: FreePictureSplitter-${{ matrix.msystem }}-${{ matrix.qt }}
         path: FreePictureSplitter/build/bin
         
   ubuntu:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        qt-version: [5, 6]
+        qt: [qt5, qt6]
         
     steps:
     - name: Install dependencies
-      if: matrix.qt-version == 5
+      if: matrix.qt == 'qt5'
       run: |
         sudo apt update
         sudo apt install -y build-essential qtbase5-dev qttools5-dev-tools qttools5-dev libxkbcommon-dev
 
     - name: Install dependencies
-      if: matrix.qt-version == 6
+      if: matrix.qt == 'qt6'
       run: |
         sudo apt update
         sudo apt install -y build-essential qt6-base-dev linguist-qt6 qt6-tools-dev libxkbcommon-dev
@@ -83,5 +83,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-ubuntu-qt${{ matrix.qt-version }}
+        name: FreePictureSplitter-ubuntu-${{ matrix.qt }}
         path: FreePictureSplitter/build/bin
