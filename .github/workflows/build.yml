@@ -10,20 +10,21 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        qt-version: [qt5, qt6]
+        qt-version: [5, 6]
+        msystem: [mingw64, clang64]
 
     steps:
     - name: Setup MSYS2 Environment
       uses: msys2/setup-msys2@v2
       with:
-        msystem: mingw64
+        msystem: ${{ matrix.msystem }}
         update: true
-        install: >-
-          mingw-w64-x86_64-toolchain
-          mingw-w64-x86_64-cmake
-          mingw-w64-x86_64-ninja
-          mingw-w64-x86_64-${{ matrix.qt-version }}-base
-          mingw-w64-x86_64-${{ matrix.qt-version }}-tools
+        pacboy: >-
+          toolchain:p
+          cmake:p
+          ninja:p
+          qt${{ matrix.qt-version }}-base:p
+          qt${{ matrix.qt-version }}-tools:p
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -43,24 +44,24 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-msys2-${{ matrix.qt-version }}
+        name: FreePictureSplitter-${{ matrix.msystem }}-qt${{ matrix.qt-version }}
         path: FreePictureSplitter/build/bin
         
   ubuntu:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        qt-version: [qt5, qt6]
+        qt-version: [5, 6]
         
     steps:
     - name: Install dependencies
-      if: matrix.qt-version == 'qt5'
+      if: matrix.qt-version == 5
       run: |
         sudo apt update
         sudo apt install -y build-essential qtbase5-dev qttools5-dev-tools qttools5-dev libxkbcommon-dev
 
     - name: Install dependencies
-      if: matrix.qt-version == 'qt6'
+      if: matrix.qt-version == 6
       run: |
         sudo apt update
         sudo apt install -y build-essential qt6-base-dev linguist-qt6 qt6-tools-dev libxkbcommon-dev
@@ -82,5 +83,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-ubuntu-${{ matrix.qt-version }}
+        name: FreePictureSplitter-ubuntu-qt${{ matrix.qt-version }}
         path: FreePictureSplitter/build/bin
