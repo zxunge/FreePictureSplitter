@@ -8,6 +8,7 @@
 #include "jsonconfigitems.h"
 
 #include <QImageWriter>
+#include <QColorDialog>
 
 extern Util::Config appConfig;
 
@@ -39,7 +40,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     }
     ui->chbSubDir->setChecked(appConfig.options.outputOpt.subDir);
     ui->lePath->setText(QString::fromStdString(appConfig.options.outputOpt.outPath));
-    const QByteArrayList supportedImageFormats{ QImageReader::supportedImageFormats() };
+    const QByteArrayList supportedImageFormats{ QImageWriter::supportedImageFormats() };
     foreach (const QByteArray &imageFormat, supportedImageFormats) {
         ui->cbxFormats->addItem(QString(imageFormat));
     }
@@ -51,7 +52,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
 
     // ----- Grid Figure -----
     ui->frColor->setAutoFillBackground(true);
-    m_color = QColor::fromString(QString::fromStdString(appConfig.options.gridOpt.colorRgb));
+    m_color = QColor(QString::fromStdString(appConfig.options.gridOpt.colorRgb));
     ui->frColor->setPalette(QPalette(m_color));
     ui->sbxLineSize->setValue(appConfig.options.gridOpt.lineSize);
     ui->chbGrid->setChecked(appConfig.options.gridOpt.enabled);
