@@ -228,35 +228,25 @@ void fpsMainWindow::on_btnReset_clicked()
 
 void fpsMainWindow::on_rbtnSize_toggled(bool checked)
 {
+    ui->sbxHeight->setEnabled(checked);
+    ui->sbxWidth->setEnabled(checked);
+    
     if (checked) {
-        ui->sbxCols->setEnabled(false);
-        ui->sbxRows->setEnabled(false);
-        ui->sbxHeight->setEnabled(true);
-        ui->sbxWidth->setEnabled(true);
-        ui->btnReset->setEnabled(true);
-        ui->rbtnHoriLeft->setEnabled(true);
-        ui->rbtnHoriRight->setEnabled(true);
-        ui->rbtnVertLeft->setEnabled(true);
-        ui->rbtnVertRight->setEnabled(true);
-        if (!ui->graphicsView->scene())
-            ui->btnReset->setEnabled(false);
+        ui->gbxSplitSeq->setEnabled(true);
+        if (ui->graphicsView->scene())
+            ui->btnReset->setEnabled(true);
     }
 }
 
 void fpsMainWindow::on_rbtnAver_toggled(bool checked)
 {
+    ui->sbxCols->setEnabled(checked);
+    ui->sbxRows->setEnabled(checked);
+        
     if (checked) {
-        ui->sbxCols->setEnabled(true);
-        ui->sbxRows->setEnabled(true);
-        ui->sbxHeight->setEnabled(false);
-        ui->sbxWidth->setEnabled(false);
-        ui->btnReset->setEnabled(true);
-        ui->rbtnHoriLeft->setEnabled(true);
-        ui->rbtnHoriRight->setEnabled(true);
-        ui->rbtnVertLeft->setEnabled(true);
-        ui->rbtnVertRight->setEnabled(true);
-        if (!ui->graphicsView->scene())
-            ui->btnReset->setEnabled(false);
+        ui->gbxSplitSeq->setEnabled(true);
+        if (ui->graphicsView->scene())
+            ui->btnReset->setEnabled(true);
     }
 }
 
@@ -278,10 +268,7 @@ void fpsMainWindow::on_rbtnManual_toggled(bool checked)
         ui->sbxHeight->setEnabled(false);
         ui->sbxWidth->setEnabled(false);
         ui->btnReset->setEnabled(false);
-        ui->rbtnHoriLeft->setEnabled(false);
-        ui->rbtnHoriRight->setEnabled(false);
-        ui->rbtnVertLeft->setEnabled(false);
-        ui->rbtnVertRight->setEnabled(false);
+        ui->gbxSplitSeq->setEnabled(false);
         if (ui->graphicsView->scene())
             ui->actionSave->setEnabled(true);
     }
