@@ -134,27 +134,13 @@ void fpsSettingsDialog::on_buttonBox_rejected()
 
 void fpsSettingsDialog::on_rbtnSpecified_toggled(bool checked)
 {
-    if (checked)
-        ui->lePrefix->setEnabled(true);
-}
-
-void fpsSettingsDialog::on_rbtnOriName_toggled(bool checked)
-{
-    if (checked)
-        ui->lePrefix->setEnabled(false);
+    ui->lePrefix->setEnabled(checked);
 }
 
 void fpsSettingsDialog::on_chbGrid_toggled(bool checked)
 {
-    if (checked) {
-        ui->chbGrid->setChecked(true);
-        ui->frColor->setVisible(true);
-        ui->btnSelectColor->setEnabled(true);
-        ui->sbxLineSize->setEnabled(true);
-    } else {
-        ui->chbGrid->setChecked(false);
-        ui->frColor->setVisible(false);
-        ui->btnSelectColor->setEnabled(false);
-        ui->sbxLineSize->setEnabled(false);
-    }
+    ui->chbGrid->setChecked(checked);
+    ui->frColor->setVisible(checked);
+    ui->btnSelectColor->setEnabled(checked);
+    ui->sbxLineSize->setEnabled(checked);
 }

@@ -35,8 +35,6 @@ private slots:
 
     void on_rbtnSpecified_toggled(bool checked);
 
-    void on_rbtnOriName_toggled(bool checked);
-
     void on_chbGrid_toggled(bool checked);
 
 private:
