@@ -28,7 +28,7 @@ public:
     ~fpsMainWindow();
 
 signals:
-    void proceed(int elapsed);
+    void splitProceed(int elapsed);
 
 private slots:
     void on_actionOpen_triggered();

@@ -8,6 +8,7 @@
 #define FPSSETTINGSDIALOG_H
 
 #include <QDialog>
+#include <QColor>
 
 namespace Ui {
 class fpsSettingsDialog;
@@ -21,8 +22,27 @@ public:
     explicit fpsSettingsDialog(QWidget *parent = nullptr);
     ~fpsSettingsDialog();
 
+private slots:
+    void on_buttonBox_accepted();
+
+    void on_cbxLocation_currentIndexChanged(int index);
+
+    void on_cbxFormats_currentTextChanged(const QString &text);
+
+    void on_btnSelectColor_clicked();
+
+    void on_buttonBox_rejected();
+
+    void on_rbtnSpecified_toggled(bool checked);
+
+    void on_rbtnOriName_toggled(bool checked);
+
+    void on_chbGrid_toggled(bool checked);
+
 private:
     Ui::fpsSettingsDialog *ui;
+
+    QColor m_color;
 };
 
 #endif // FPSSETTINGSDIALOG_H

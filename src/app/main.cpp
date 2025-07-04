@@ -4,7 +4,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsmainwindow.h"
-#include "config.h"
 #include "jsonconfigitems.h"
 
 #include <QApplication>
@@ -12,7 +11,8 @@
 #include <QTranslator>
 #include <QStyleFactory>
 #include <QMessageBox>
-#include <QtCore/qfile.h>
+#include <QFile>
+#include <QObject>
 
 #include <rfl/json.hpp>
 
@@ -26,41 +26,55 @@ int main(int argc, char *argv[])
 #endif
 
     QApplication a(argc, argv);
+
     QCoreApplication::setApplicationName(fpsAppName);
     QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(":/icons/fps.ico"));
+    QTranslator translator;
+    const QStringList uiLanguages{ QLocale::system().uiLanguages() };
+    for (const QString &locale : uiLanguages) {
+        const QString baseName{ "FreePictureSplitter_" + QLocale(locale).name() };
+        if (translator.load(":/i18n/i18n/" + baseName)) {
+            a.installTranslator(&translator);
+            break;
+        }
+    }
 
     // Load configuration
     QFile cfgFile("conf.json");
     QString jsonCfgStr;
-    QTextStream ts(&cfgFile);
-    if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text))
+    if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QTextStream ts(&cfgFile);
         jsonCfgStr = ts.readAll();
-    else {
+    } else {
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                             QStringLiteral("Error creating/opening configuration file."),
+                             QObject::tr("Error creating/opening configuration file."),
                              QMessageBox::Close);
         QApplication::exit(1);
     }
 
     // First run?
     if (jsonCfgStr.isEmpty())
-        appConfig = Util::Config{ .app = { .name = fpsAppName,
-                                           .fullVersion = fpsVersionFull,
-                                           .majorVersion = fpsVersionMajor,
-                                           .minorVersion = fpsVersionMinor,
-                                           .microVersion = fpsVersionMicro,
-                                           .style = "default" } };
+        Util::setDefConf(appConfig);
     else {
-        appConfig = rfl::json::read<Util::Config>(jsonCfgStr.toStdString()).value();
+        const auto result{ rfl::json::read<Util::Config>(jsonCfgStr.toStdString()) };
+        if (!result) {
+            QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+                                 QObject::tr("Error parsing configuration file: ")
+                                         + QString::fromStdString(result.error().what()),
+                                 QMessageBox::Close);
+            QApplication::exit(1);
+        }
+        appConfig = result.value();
+
         // Check for version differences, as they will cause weird compatibility problems.
         // We promise not to change the interfaces when updating the micro version.
         if (appConfig.app.majorVersion != fpsVersionMajor
             || appConfig.app.minorVersion != fpsVersionMinor) {
             QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                                 QStringLiteral("Configuration file\'s version doesn\'t match, try "
-                                                "deleting it after backuping."),
+                                 QObject::tr("Configuration file\'s version doesn\'t match, try "
+                                             "deleting it after backuping."),
                                  QMessageBox::Close);
             QApplication::exit(1);
         }
@@ -84,18 +98,8 @@ int main(int argc, char *argv[])
         styleFile.close();
     } else {
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                             QStringLiteral("Error loading skin."), QMessageBox::Close);
+                             QObject::tr("Error loading skin."), QMessageBox::Close);
         QApplication::exit(1);
-    }
-
-    QTranslator translator;
-    const QStringList uiLanguages{ QLocale::system().uiLanguages() };
-    for (const QString &locale : uiLanguages) {
-        const QString baseName{ "FreePictureSplitter_" + QLocale(locale).name() };
-        if (translator.load(":/i18n/i18n/" + baseName)) {
-            a.installTranslator(&translator);
-            break;
-        }
     }
 
     fpsMainWindow w;
@@ -105,7 +109,14 @@ int main(int argc, char *argv[])
 
     // Save configuration changes to file
     jsonCfgStr = QString::fromStdString(rfl::json::write(appConfig));
-    ts.flush();
+    cfgFile.close();
+    if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
+        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+                             QObject::tr("Error writing to configuration file."),
+                             QMessageBox::Close);
+        QApplication::exit(1);
+    }
+    QTextStream ts(&cfgFile);
     ts << jsonCfgStr;
     cfgFile.close();
 

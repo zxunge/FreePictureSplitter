@@ -98,7 +98,7 @@ void fpsFloatingLine::mouseReleaseEvent(QMouseEvent *event)
                     parent->mapToScene(parent->viewport()->mapFromParent(mapToParent(event->pos())))
                             .y();
             if (m_scenePos >= parent->scene()->height() || m_scenePos <= 0)
-                Q_EMIT lineDestroyed();
+                Q_EMIT userDestruction();
             move(0, mapToParent(event->pos()).y());
             m_pressed = false;
         } else if (m_pressed && m_orientation == Qt::Vertical) {
@@ -106,7 +106,7 @@ void fpsFloatingLine::mouseReleaseEvent(QMouseEvent *event)
                     parent->mapToScene(parent->viewport()->mapFromParent(mapToParent(event->pos())))
                             .x();
             if (m_scenePos >= parent->scene()->width() || m_scenePos <= 0)
-                Q_EMIT lineDestroyed();
+                Q_EMIT userDestruction();
             move(mapToParent(event->pos()).x(), 0);
             m_pressed = false;
         }

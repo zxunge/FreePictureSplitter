@@ -22,7 +22,7 @@ public:
     ~fpsProgressDialog();
 
 public slots:
-    void on_proceed(int elapsed);
+    void proceed(int elapsed);
 
 private:
     Ui::fpsProgressDialog *ui;

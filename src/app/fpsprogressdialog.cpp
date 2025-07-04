@@ -11,7 +11,8 @@ fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
-    setStyleSheet("background-color: rgb(214, 227, 242);");
+    setStyleSheet("background-color: qlineargradient(x1:0, y1:0.5, x2:1, y2:0.5, stop:0 #c5f3ff, "
+                  "stop:1 #77b7fe); border-radius: 15%;");
     m_total = total;
     ui->progressBar->setRange(0, total);
 }
@@ -21,7 +22,7 @@ fpsProgressDialog::~fpsProgressDialog()
     delete ui;
 }
 
-void fpsProgressDialog::on_proceed(int elapsed)
+void fpsProgressDialog::proceed(int elapsed)
 {
     ui->progressBar->setValue(elapsed);
     ui->labRemaining->setText(QString::number(m_total - elapsed));

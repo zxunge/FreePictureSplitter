@@ -39,45 +39,13 @@
       <string>Output File Options</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <item row="2" column="4">
+       <widget class="QToolButton" name="tbtnBrowse">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
-       </widget>
-      </item>
-      <item row="4" column="2" colspan="3">
-       <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <widget class="QCheckBox" name="chbSubDir">
-        <property name="text">
-         <string>Create sub-directories under the output path.</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1" colspan="2">
-       <widget class="QCheckBox" name="chbAutoScale">
-        <property name="text">
-         <string>Auto-scale the splited pictures using factor:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>...</string>
         </property>
        </widget>
       </item>
@@ -88,7 +56,49 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="3" colspan="2">
+      <item row="2" column="1" colspan="3">
+       <widget class="QLineEdit" name="lePath">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="3">
+       <widget class="QComboBox" name="cbxLocation">
+        <property name="currentText">
+         <string>The path specified when clicking &quot;Save pictures&quot;</string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <property name="maxVisibleItems">
+         <number>3</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>The path specified when clicking &quot;Save pictures&quot;</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>The same location as the source picture</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>The following path:</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="5" column="1">
        <widget class="QDoubleSpinBox" name="dsbxFactor">
         <property name="maximum">
          <double>200.000000000000000</double>
@@ -98,11 +108,18 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1" colspan="3">
+       <widget class="QComboBox" name="cbxFormats"/>
+      </item>
       <item row="4" column="1">
        <widget class="QSpinBox" name="sbxQuality"/>
-      </item>
-      <item row="0" column="1" colspan="3">
-       <widget class="QComboBox" name="cbxLocation"/>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="label_5">
@@ -111,18 +128,33 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1" colspan="3">
-       <widget class="QLineEdit" name="lePath"/>
-      </item>
-      <item row="2" column="4">
-       <widget class="QToolButton" name="tbtnBrowse">
+      <item row="0" column="4">
+       <widget class="QCheckBox" name="chbSubDir">
         <property name="text">
-         <string>...</string>
+         <string>Create sub-directories under the output path.</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1" colspan="3">
-       <widget class="QComboBox" name="cbxFormats"/>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2" colspan="3">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2" colspan="2">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;(Default is 100.00%, that is, no scaling.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -234,6 +266,13 @@
      </layout>
     </widget>
    </item>
+   <item row="3" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0" colspan="3">
     <widget class="QGroupBox" name="gbxFileNames">
      <property name="title">
@@ -255,7 +294,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="lePrefix"/>
       </item>
       <item row="2" column="0" colspan="2">
        <widget class="QCheckBox" name="chbNumberContained">
@@ -265,13 +304,6 @@
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="3" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
     </widget>
    </item>
   </layout>

@@ -55,9 +55,9 @@ private:
     QVector<QPointer<fpsFloatingLine>> m_plines;
 
 private slots:
-    void handleDragStarted(const QPoint &startPos);
-    void handleDragMoved(const QPoint &currentPos);
-    void handleDragFinished(const QPoint &endPos, bool isReal);
+    void dragStarted(const QPoint &startPos);
+    void dragMoved(const QPoint &currentPos);
+    void dragFinished(const QPoint &endPos, bool isReal);
 
 private:
     fpsFloatingLine *m_tempLine{ nullptr }; // Temporary line widget
