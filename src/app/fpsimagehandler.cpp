@@ -8,22 +8,25 @@
 #include "fpsfloatingline.h"
 
 #include <QImage>
-#include <QtCore/qfileinfo.h>
-#include <QtCore/qrect.h>
-#include <QtCore/qdir.h>
+#include <QRect>
 
 #include <algorithm>
 
-/* static */ QStringList fpsImageHandler::getOutputList(const QString &fileName, int rows, int cols)
+/* static */ QStringList fpsImageHandler::getOutputList(const QString &prefix,
+                                                        const QString &suffix, int rows, int cols,
+                                                        bool rcContained)
 {
     QStringList outputList;
-    QFileInfo fi(fileName);
     auto splitCount{ QString::asprintf("%d", rows * cols).size() };
-    QString baseName{ fi.baseName() }, suffix{ fi.suffix() };
 
-    for (int i{ 1 }; i != rows * cols + 1; ++i)
-        outputList << baseName + QStringLiteral("_")
-                        + QString::asprintf("%0*d", static_cast<int>(splitCount), i) + "." + suffix;
+    for (int i{ 1 }; i != rows + 1; ++i)
+        for (int j{ 1 }; j != cols + 1; ++j)
+            outputList << prefix + QStringLiteral("_")
+                            + QString::asprintf("%0*d", static_cast<int>(splitCount),
+                                                (i - 1) * cols + j)
+                            + (rcContained ? QString::asprintf("_%dx%d.", i, j)
+                                           : QStringLiteral("."))
+                            + suffix;
     return outputList;
 }
 

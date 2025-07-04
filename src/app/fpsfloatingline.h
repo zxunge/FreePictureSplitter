@@ -40,15 +40,15 @@ public:
 
     Qt::Orientation getOrientation() const { return m_orientation; }
 
+signals:
+    void userDestruction();
+
 protected:
     // event->pos() -> fpsFloatingLine itself
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     bool event(QEvent *event) override;
-
-signals:
-    void lineDestroyed();
 
 private:
     bool m_pressed{ false };

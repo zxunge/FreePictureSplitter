@@ -17,18 +17,17 @@ fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
     setAttribute(Qt::WA_DeleteOnClose);
 
     // Connected for dragging support
-    connect(m_hruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::handleDragStarted);
-    connect(m_hruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::handleDragMoved);
-    connect(m_hruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::handleDragFinished);
-    connect(m_vruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::handleDragStarted);
-    connect(m_vruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::handleDragMoved);
-    connect(m_vruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::handleDragFinished);
+    connect(m_hruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::dragStarted);
+    connect(m_hruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::dragMoved);
+    connect(m_hruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::dragFinished);
+    connect(m_vruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::dragStarted);
+    connect(m_vruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::dragMoved);
+    connect(m_vruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::dragFinished);
 }
 
 fpsGraphicsView::~fpsGraphicsView()
 {
-    for (auto l : m_plines)
-        delete l;
+    // dtor
 }
 
 void fpsGraphicsView::showPixmap(const QPixmap &pixmap)
@@ -40,12 +39,12 @@ void fpsGraphicsView::showPixmap(const QPixmap &pixmap)
 
 void fpsGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
+    QGraphicsView::mouseMoveEvent(event);
+
     QPointF pt{ mapToScene(event->pos()) };
     m_hruler->updatePosition(event->pos());
     m_vruler->updatePosition(event->pos());
     Q_EMIT positionChanged(pt.x(), pt.y());
-
-    QGraphicsView::mouseMoveEvent(event);
 }
 
 void fpsGraphicsView::resizeEvent(QResizeEvent *event)
@@ -124,7 +123,7 @@ void fpsGraphicsView::addFloatingLine(Qt::Orientation orientation, const QPoint 
 #else
     int i{ m_plines.size() - 1 };
 #endif
-    connect(fl, &fpsFloatingLine::lineDestroyed, this, [fl, this, i]() {
+    connect(fl, &fpsFloatingLine::userDestruction, this, [this, fl, i]() {
         fl->deleteLater();
         this->m_plines.remove(i);
     });
@@ -141,7 +140,7 @@ void fpsGraphicsView::addFloatingLine(fpsFloatingLine *fl)
 #else
     int i{ m_plines.size() - 1 };
 #endif
-    connect(fl, &fpsFloatingLine::lineDestroyed, this, [fl, this, i]() {
+    connect(fl, &fpsFloatingLine::userDestruction, this, [this, fl, i]() {
         fl->deleteLater();
         this->m_plines.remove(i);
     });
@@ -154,7 +153,7 @@ void fpsGraphicsView::removeAllFloatingLines()
     m_plines.clear();
 }
 
-void fpsGraphicsView::handleDragStarted(const QPoint &startPos)
+void fpsGraphicsView::dragStarted(const QPoint &startPos)
 {
     if (!scene())
         return;
@@ -174,7 +173,7 @@ void fpsGraphicsView::handleDragStarted(const QPoint &startPos)
     m_tempLine->show();
 }
 
-void fpsGraphicsView::handleDragMoved(const QPoint &currentPos)
+void fpsGraphicsView::dragMoved(const QPoint &currentPos)
 {
     if (!m_tempLine)
         return;
@@ -189,7 +188,7 @@ void fpsGraphicsView::handleDragMoved(const QPoint &currentPos)
         m_tempLine->updateLine(x, 0);
 }
 
-void fpsGraphicsView::handleDragFinished(const QPoint &endPos, bool isReal)
+void fpsGraphicsView::dragFinished(const QPoint &endPos, bool isReal)
 {
     if (!m_tempLine)
         return;

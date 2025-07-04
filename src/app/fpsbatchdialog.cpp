@@ -25,7 +25,8 @@ fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fp
     ui->wgtList->setMovement(QListWidget::Static);
     ui->wgtTable->setColumnCount(3);
     ui->wgtTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->wgtTable->setHorizontalHeaderLabels(QStringList{ "File Name", "File Path", "File Size" });
+    ui->wgtTable->setHorizontalHeaderLabels(QStringList{
+            QT_TR_NOOP("File Name"), QT_TR_NOOP("File Path"), QT_TR_NOOP("File Size") });
     ui->wgtTable->verticalHeader()->setVisible(false);
     ui->wgtTable->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->wgtTable->horizontalHeader()->setStretchLastSection(true);
@@ -61,15 +62,15 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    foreach (const QByteArray &mimeTypeName, supportedMimeTypes) {
+    for (const QByteArray &mimeTypeName : supportedMimeTypes)
         mimeTypeFilters.append(mimeTypeName);
-    }
+
     mimeTypeFilters.sort();
 
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
-                              ? "/"
+                              ? "."
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);

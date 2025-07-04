@@ -3,7 +3,6 @@
 // # See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "config.h"
 #include "fpsmainwindow.h"
 #include "ui_fpsmainwindow.h"
 #include "fpsbatchdialog.h"
@@ -40,15 +39,15 @@ void fpsMainWindow::on_actionOpen_triggered()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    foreach (const QByteArray &mimeTypeName, supportedMimeTypes) {
+    for (const QByteArray &mimeTypeName : supportedMimeTypes)
         mimeTypeFilters.append(mimeTypeName);
-    }
+
     mimeTypeFilters.sort();
 
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
-                              ? "/"
+                              ? "."
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);
@@ -64,21 +63,18 @@ void fpsMainWindow::on_actionOpen_triggered()
     m_imgReader.setAutoTransform(true);
 
     if (m_imgReader.canRead()) {
-        ui->graphicsView->showPixmap(QPixmap::fromImageReader(&m_imgReader));
-
-        // Because we have previously read the image, we need to re-setFileName.
-        m_imgReader.setFileName(m_imgReader.fileName());
-        QImage tempImg{ m_imgReader.read() };
+        QPixmap pixmap{ QPixmap::fromImageReader(&m_imgReader) };
+        ui->graphicsView->showPixmap(pixmap);
 
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
-        ui->statusBar->showMessage(
-                m_imgReader.fileName() + ", " + QString::number(m_imgReader.size().width()) + "x"
-                + QString::number(m_imgReader.size().height()) + tr(", Depth: ")
-                + QString::number(tempImg.depth()) + tr(", Vertical: ")
-                + QString::number(static_cast<int>(tempImg.dotsPerMeterY() * 0.0254))
-                + tr(" dpi, Horizontal: ")
-                + QString::number(static_cast<int>(tempImg.dotsPerMeterX() * 0.0254)) + " dpi");
+        ui->statusBar->showMessage(tr("%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
+                                           .arg(m_imgReader.fileName())
+                                           .arg(m_imgReader.size().width())
+                                           .arg(m_imgReader.size().height())
+                                           .arg(pixmap.depth())
+                                           .arg(pixmap.logicalDpiY())
+                                           .arg(pixmap.logicalDpiX()));
 
         ui->btnReset->setEnabled(true);
         ui->actionZoomIn->setEnabled(true);
@@ -91,7 +87,7 @@ void fpsMainWindow::on_actionOpen_triggered()
             ui->actionSave->setEnabled(true);
     } else
         QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                             QString("Error loading picture file: %1.").arg(m_imgReader.fileName()),
+                             tr("Error loading picture file: %1.").arg(m_imgReader.fileName()),
                              QMessageBox::Close);
 }
 
@@ -115,8 +111,8 @@ void fpsMainWindow::on_actionSave_triggered()
         m_rects = fpsImageHandler::linesToRects(ui->graphicsView);
     else if (m_rects.isEmpty()) {
         QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                             QString("Please at least choose one splitting mode, offer "
-                                     "useful data then reset the splitting lines."),
+                             tr("Please at least choose one splitting mode, offer "
+                                "useful data then reset the splitting lines."),
                              QMessageBox::Close);
         return;
     }
@@ -124,29 +120,37 @@ void fpsMainWindow::on_actionSave_triggered()
     if (!m_rects.isEmpty()) {
         if (!fpsImageHandler::split(m_imgReader, imageList, m_rects)) {
             QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                                 QString("Error splitting picture."), QMessageBox::Close);
+                                 tr("Error splitting picture."), QMessageBox::Close);
             return;
         }
-        outputList = fpsImageHandler::getOutputList(m_imgReader.fileName(), m_rects.size(),
-                                                    m_rects[0].size());
+        outputList = fpsImageHandler::getOutputList(
+                appConfig.options.nameOpt.prefMode == Util::Prefix::same
+                        ? QFileInfo(m_imgReader.fileName()).baseName()
+                        : QString::fromStdString(appConfig.options.nameOpt.prefix),
+                QString::fromStdString(appConfig.options.outputOpt.outFormat), m_rects.size(),
+                m_rects[0].size(), appConfig.options.nameOpt.rcContained);
         fpsProgressDialog dlg(this, outputList.size());
-        connect(this, &fpsMainWindow::proceed, &dlg, &fpsProgressDialog::on_proceed);
+        connect(this, &fpsMainWindow::splitProceed, &dlg, &fpsProgressDialog::proceed);
         dlg.show();
         for (int i{}; i != imageList.size(); ++i) {
             writer.setFileName(out + "/" + outputList[i]);
+            writer.setFormat(
+                    QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
+            writer.setQuality(appConfig.options.outputOpt.jpgQuality);
             if (!writer.write(imageList[i])) {
                 QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                                     QStringLiteral("Error writing to file \'") + writer.fileName()
-                                             + QStringLiteral("\', ") + writer.errorString(),
+                                     tr("Error writing to file \'%1\': %2.")
+                                             .arg(writer.fileName())
+                                             .arg(writer.errorString()),
                                      QMessageBox::Close);
                 break;
             }
-            Q_EMIT proceed(i + 1);
+            Q_EMIT splitProceed(i + 1);
         }
         dlg.close();
     } else {
         QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                             QString("No rule to split this picture"), QMessageBox::Close);
+                             tr("No rule to split this picture"), QMessageBox::Close);
         return;
     }
 }

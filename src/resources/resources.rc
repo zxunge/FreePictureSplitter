@@ -3,4 +3,45 @@
 //# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-IDI_ICON1 ICON "fps.ico"
+#include "config.h"
+#if defined(UNDER_CE)
+#   include <winbase.h>
+#else
+#   include <windows.h>
+#endif // UNDER_CE
+
+IDI_APPICON ICON "fps.ico"
+
+VS_VERSION_INFO VERSIONINFO
+    FILEVERSION fpsVersionMajor,fpsVersionMinor,fpsVersionMicro,0
+    PRODUCTVERSION fpsVersionMajor,fpsVersionMinor,fpsVersionMicro,0
+    FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+    FILEFLAGS VS_FF_DEBUG
+#else
+    FILEFLAGS 0x0L
+#endif
+    FILEOS VOS__WINDOWS32
+    FILETYPE VFT_APP
+    FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Developed By zxunge(Grit Clef), https://github.com/zxunge"
+            VALUE "CompanyName", "zxunge"
+            VALUE "FileDescription", "A fast, small, and easy-to-use picture splitter!"
+            VALUE "FileVersion", fpsVersionFull
+            VALUE "InternalName", "FreePictureSplitter.exe"
+            VALUE "LegalCopyright", "Copyright (C) 2024-2025 zxunge"
+            VALUE "OriginalFilename", "FreePictureSplitter.exe"
+            VALUE "ProductName", fpsAppName
+            VALUE "ProductVersion", fpsVersionFull
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END

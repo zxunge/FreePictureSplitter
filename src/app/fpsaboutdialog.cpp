@@ -19,53 +19,52 @@
 
 fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QVBoxLayout *mainLayout{ new QVBoxLayout(this) };
 
-    QLabel *iconLabel = new QLabel(this);
+    QLabel *iconLabel{ new QLabel(this) };
     iconLabel->setPixmap(QPixmap(":/icons/fps.ico").scaled(64, 64, Qt::KeepAspectRatio));
 
-    QLabel *titleLabel = new QLabel(fpsAppName, this);
-    QFont titleFont = titleLabel->font();
+    QLabel *titleLabel{ new QLabel(fpsAppName, this) };
+    QFont titleFont{ titleLabel->font() };
     titleFont.setPointSize(18);
     titleFont.setBold(true);
     titleLabel->setFont(titleFont);
 
-    QHBoxLayout *headerLayout = new QHBoxLayout();
+    QHBoxLayout *headerLayout{ new QHBoxLayout() };
     headerLayout->addWidget(iconLabel);
     headerLayout->addWidget(titleLabel);
     headerLayout->addStretch();
 
-    QLabel *versionLabel =
-            new QLabel(tr("<strong>Version: ") + fpsVersionFull
-                               + tr("</strong><br />An efficient, small but powerful "
-                                    "picture splitting application.<br />")
-                               + tr("Most common formats are supported."),
-                       this);
+    QLabel *versionLabel{ new QLabel(
+            tr("<strong>Version: %1</strong><br />An efficient, small but powerful picture "
+               "splitting application.<br />Most common formats are supported.")
+                    .arg(fpsVersionFull),
+            this) };
     versionLabel->setAlignment(Qt::AlignCenter);
 
-    QLabel *copyrightLabel =
-            new QLabel(tr("© 2024, 2025 zxunge\n") + tr("Licensed under: GPLv3\n")
-                               + tr("This program is free software: you can redistribute "
-                                    "it and/or modify it under "
-                                    "the terms of the GNU General Public License as "
-                                    "published by the Free Software "
-                                    "Foundation, either version 3 of the License, or (at "
-                                    "your option) any later version.\n")
-                               + tr("This program is distributed in the hope that it "
-                                    "will be useful, but WITHOUT ANY "
-                                    "WARRANTY; without even the implied warranty of "
-                                    "MERCHANTABILITY or FITNESS FOR A "
-                                    "PARTICULAR PURPOSE.  See the GNU General Public "
-                                    "License for more details.\n")
-                               + tr("You should have received a copy of the GNU General "
-                                    "Public License along with this program.  If not, "
-                                    "see <https://www.gnu.org/licenses/>.\n"),
-                       this);
+    QLabel *copyrightLabel{ new QLabel(
+            tr("© 2024, 2025 zxunge\n") + tr("Licensed under: GPLv3\n")
+                    + tr("This program is free software: you can redistribute "
+                         "it and/or modify it under "
+                         "the terms of the GNU General Public License as "
+                         "published by the Free Software "
+                         "Foundation, either version 3 of the License, or (at "
+                         "your option) any later version.\n")
+                    + tr("This program is distributed in the hope that it "
+                         "will be useful, but WITHOUT ANY "
+                         "WARRANTY; without even the implied warranty of "
+                         "MERCHANTABILITY or FITNESS FOR A "
+                         "PARTICULAR PURPOSE.  See the GNU General Public "
+                         "License for more details.\n")
+                    + tr("You should have received a copy of the GNU General "
+                         "Public License along with this program.  If not, "
+                         "see <https://www.gnu.org/licenses/>.\n"),
+            this) };
     copyrightLabel->setAlignment(Qt::AlignCenter);
     copyrightLabel->setWordWrap(true);
 
-    QLabel *linkLabel =
-            new QLabel(tr("<a href=\"") + fpsHomepageUrl + tr("\">GitHub Repository</a>"), this);
+    QLabel *linkLabel{ new QLabel(tr("<a href=\"%1\">GitHub Repository</a>").arg(fpsHomepageUrl),
+                                  this) };
     linkLabel->setOpenExternalLinks(true);
     linkLabel->setAlignment(Qt::AlignCenter);
 
@@ -82,7 +81,7 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
                   "QLabel#title { color: #2c3e50; }");
     setFixedSize(600, 400);
 
-    QPropertyAnimation *animation = new QPropertyAnimation(this, "windowOpacity");
+    QPropertyAnimation *animation{ new QPropertyAnimation(this, "windowOpacity") };
     animation->setDuration(300);
     animation->setStartValue(0.0);
     animation->setEndValue(1.0);
