@@ -19,6 +19,8 @@
 #include <QMessageBox>
 #include <QVector>
 #include <QImage>
+#include <QTableWidgetItem>
+#include <QListWidgetItem>
 
 #include <limits>
 
