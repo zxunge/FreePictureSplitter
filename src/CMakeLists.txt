@@ -48,13 +48,7 @@ set(UTILS_SRCS
     utils/debugutil.h
 )
 
-set(THIRD_PARTY_SRCS
-    3rdparty/reflect-cpp/src/reflectcpp.cpp
-    3rdparty/reflect-cpp/src/reflectcpp_json.cpp
-    3rdparty/reflect-cpp/src/yyjson.c
-)
-
-set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${THIRD_PARTY_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
+set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(FreePictureSplitter
@@ -83,6 +77,8 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
+add_subdirectory(3rdparty/reflect-cpp)
+
 if(WITH_PCH)
     target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
 endif()
@@ -90,10 +86,13 @@ endif()
 target_include_directories(FreePictureSplitter PRIVATE
     app
     utils
-    3rdparty/reflect-cpp/include
 )
 
-target_link_libraries(FreePictureSplitter PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Gui)
+target_link_libraries(FreePictureSplitter PRIVATE 
+    Qt${QT_VERSION_MAJOR}::Widgets 
+    Qt${QT_VERSION_MAJOR}::Gui 
+    reflectcpp
+)
 
 set_target_properties(FreePictureSplitter PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER com.freepicturesplitter
