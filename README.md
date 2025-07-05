@@ -34,9 +34,9 @@ Multiple picture formats | ✅
 Splitting averagely | ✅
 Single picture splitting | ✅
 Splitting by sizes | ✅
-User configurations | ❎
+User configurations | ✅
 HTML generation | ❎
-Quality control | ❎
+Quality control | ✅
 
 ## Releases
 The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
