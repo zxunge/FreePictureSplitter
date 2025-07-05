@@ -2,16 +2,16 @@
 //# Copyright (c) 2024 2025 zxunge
 //# See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 // SPDX-License-Identifier: GPL-3.0-or-later
-// clang-format Language: C
+// clang-format off
 
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define fpsAppName "@PROJECT_NAME@"
-#define fpsVersionFull "@PROJECT_VERSION@"
-#define fpsHomepageUrl "@PROJECT_HOMEPAGE_URL@"
-#define fpsVersionMajor @PROJECT_VERSION_MAJOR @
-#define fpsVersionMinor @PROJECT_VERSION_MINOR @
-#define fpsVersionMicro @PROJECT_VERSION_PATCH @
+#define fpsAppName      "@PROJECT_NAME@"
+#define fpsVersionFull  "@PROJECT_VERSION@"
+#define fpsHomepageUrl  "@PROJECT_HOMEPAGE_URL@"
+#define fpsVersionMajor @PROJECT_VERSION_MAJOR@
+#define fpsVersionMinor @PROJECT_VERSION_MINOR@
+#define fpsVersionMicro @PROJECT_VERSION_PATCH@
 
 #endif // CONFIG_H
