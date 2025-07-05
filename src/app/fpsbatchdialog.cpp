@@ -386,7 +386,7 @@ void fpsBatchDialog::on_wgtList_itemSelectionChanged()
 void fpsBatchDialog::on_actionRemoveFromList_triggered()
 {
     if (!ui->wgtTable->selectedItems().isEmpty()) { // Selected in table
-        m_filesList.remove(ui->wgtTable->selectedItems()[0]->row());
+        m_filesList.removeAt(ui->wgtTable->selectedItems()[0]->row());
         delete ui->wgtList->takeItem(ui->wgtTable->selectedItems()[0]->row());
         ui->wgtTable->removeRow(ui->wgtTable->selectedItems()[0]->row());
     } else {
@@ -395,7 +395,7 @@ void fpsBatchDialog::on_actionRemoveFromList_triggered()
 #else
         int index{ m_filesList.indexOf(ui->wgtList->selectedItems()[0]->text()) };
 #endif
-        m_filesList.remove(index);
+        m_filesList.removeAt(index);
         delete ui->wgtList->takeItem(index);
         ui->wgtTable->removeRow(index);
     }
