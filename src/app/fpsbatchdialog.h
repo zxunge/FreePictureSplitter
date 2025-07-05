@@ -8,6 +8,7 @@
 #define FPSBATCHDIALOG_H
 
 #include <QDialog>
+#include <QMenu>
 #include <QtCore/qstringlist.h>
 
 namespace Ui {
@@ -45,6 +46,20 @@ private slots:
 
     void on_btnSplit_clicked();
 
+    void on_wgtTable_customContextMenuRequested(const QPoint &pos);
+
+    void on_wgtTable_itemClicked(QTableWidgetItem *item);
+
+    void on_wgtTable_itemSelectionChanged();
+
+    void on_wgtList_customContextMenuRequested(const QPoint &pos);
+
+    void on_wgtList_itemClicked(QListWidgetItem *item);
+
+    void on_wgtList_itemSelectionChanged();
+
+    void on_actionRemoveFromList_triggered();
+
 signals:
     void splitProceed(int elapsed);
 
@@ -58,6 +73,7 @@ private:
     Ui::fpsBatchDialog *ui;
 
     QStringList m_filesList;
+    QMenu *m_contextMenu;
 };
 
 #endif // FPSBATCHDIALOG_H

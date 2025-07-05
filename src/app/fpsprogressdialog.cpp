@@ -7,7 +7,7 @@
 #include "ui_fpsprogressdialog.h"
 
 fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total)
-    : QDialog(parent), ui(new Ui::fpsProgressDialog)
+    : QDialog(parent), ui(new Ui::fpsProgressDialog), m_cancelled(false)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
@@ -17,6 +17,7 @@ fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total)
 
     m_total = total;
     ui->progressBar->setRange(0, total);
+    ui->labRemaining->setText(QString::number(m_total));
 }
 
 fpsProgressDialog::~fpsProgressDialog()
@@ -32,5 +33,6 @@ void fpsProgressDialog::proceed(int elapsed)
 
 void fpsProgressDialog::on_btnCancel_clicked()
 {
+    m_cancelled = true;
     Q_EMIT cancelled();
 }

@@ -43,6 +43,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonTextUnderIcon</enum>
+     </property>
+     <property name="floatable">
+      <bool>false</bool>
+     </property>
      <addaction name="actionAddPicture"/>
      <addaction name="actionAddDirectory"/>
      <addaction name="separator"/>
@@ -280,6 +286,33 @@
               <verstretch>1</verstretch>
              </sizepolicy>
             </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
+            </property>
+            <property name="statusTip">
+             <string>A list of pictures added.</string>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectItems</enum>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>80</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="movement">
+             <enum>QListView::Static</enum>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Adjust</enum>
+            </property>
+            <property name="spacing">
+             <number>10</number>
+            </property>
+            <property name="viewMode">
+             <enum>QListView::IconMode</enum>
+            </property>
            </widget>
           </item>
          </layout>
@@ -315,6 +348,39 @@
               <verstretch>1</verstretch>
              </sizepolicy>
             </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
+            </property>
+            <property name="columnCount">
+             <number>3</number>
+            </property>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
+            <column>
+             <property name="text">
+              <string>File Name</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>File Path</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>File Size</string>
+             </property>
+            </column>
            </widget>
           </item>
          </layout>

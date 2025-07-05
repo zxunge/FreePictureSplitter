@@ -23,7 +23,6 @@ extern Util::Config appConfig;
 fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
 {
     ui->setupUi(this);
-    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
 fpsMainWindow::~fpsMainWindow()
@@ -130,14 +129,12 @@ void fpsMainWindow::on_actionSave_triggered()
                 m_rects[0].size(), appConfig.options.nameOpt.rcContained);
 
         fpsProgressDialog dlg(this, outputList.size());
-        bool cancelled{ false };
 
         connect(this, &fpsMainWindow::splitProceed, &dlg, &fpsProgressDialog::proceed);
-        connect(&dlg, &fpsProgressDialog::cancelled, this, [&cancelled]() { cancelled = true; });
 
         dlg.show();
         for (int i{}; i != imageList.size(); ++i) {
-            if (cancelled)
+            if (dlg.isCancelled())
                 break;
 
             writer.setFileName(out + "/" + outputList[i]);
