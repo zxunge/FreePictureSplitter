@@ -15,7 +15,6 @@
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QTextBrowser>
 #include <QStringLiteral>
 #include <QFileInfo>
 
@@ -99,7 +98,7 @@ void fpsMainWindow::on_actionSave_triggered()
     QString out{ QFileDialog::getExistingDirectory(
             this, tr("Choose the output directory."),
             appConfig.dialog.lastSavedToDir.empty()
-                    ? "/"
+                    ? "."
                     : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
 
     if (out.isEmpty())
@@ -129,10 +128,18 @@ void fpsMainWindow::on_actionSave_triggered()
                         : QString::fromStdString(appConfig.options.nameOpt.prefix),
                 QString::fromStdString(appConfig.options.outputOpt.outFormat), m_rects.size(),
                 m_rects[0].size(), appConfig.options.nameOpt.rcContained);
+
         fpsProgressDialog dlg(this, outputList.size());
+        bool cancelled{ false };
+
         connect(this, &fpsMainWindow::splitProceed, &dlg, &fpsProgressDialog::proceed);
+        connect(&dlg, &fpsProgressDialog::cancelled, this, [&cancelled]() { cancelled = true; });
+
         dlg.show();
         for (int i{}; i != imageList.size(); ++i) {
+            if (cancelled)
+                break;
+
             writer.setFileName(out + "/" + outputList[i]);
             writer.setFormat(
                     QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
@@ -188,7 +195,7 @@ void fpsMainWindow::on_actionAbout_triggered()
 
 void fpsMainWindow::on_btnReset_clicked()
 {
-    if (ui->rbtnAver->isChecked())
+    if (ui->rbtnAver->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
@@ -205,22 +212,24 @@ void fpsMainWindow::on_btnReset_clicked()
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
                     ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Right);
-    else if (ui->rbtnHoriLeft->isChecked())
-        m_rects = fpsImageHandler::getSubRects(
-                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
-    else if (ui->rbtnHoriRight->isChecked())
-        m_rects = fpsImageHandler::getSubRects(
-                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
-    else if (ui->rbtnVertLeft->isChecked())
-        m_rects = fpsImageHandler::getSubRects(
-                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
-    else
-        m_rects = fpsImageHandler::getSubRects(
-                m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
+    } else if (ui->rbtnSize->isChecked()) {
+        if (ui->rbtnHoriLeft->isChecked())
+            m_rects = fpsImageHandler::getSubRects(
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
+        else if (ui->rbtnHoriRight->isChecked())
+            m_rects = fpsImageHandler::getSubRects(
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
+        else if (ui->rbtnVertLeft->isChecked())
+            m_rects = fpsImageHandler::getSubRects(
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
+        else
+            m_rects = fpsImageHandler::getSubRects(
+                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
+                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
+    }
     ui->actionSave->setEnabled(true);
     ui->graphicsView->removeAllFloatingLines();
     fpsImageHandler::rectsToLines(m_rects, ui->graphicsView);
@@ -230,7 +239,7 @@ void fpsMainWindow::on_rbtnSize_toggled(bool checked)
 {
     ui->sbxHeight->setEnabled(checked);
     ui->sbxWidth->setEnabled(checked);
-    
+
     if (checked) {
         ui->gbxSplitSeq->setEnabled(true);
         if (ui->graphicsView->scene())
@@ -242,7 +251,7 @@ void fpsMainWindow::on_rbtnAver_toggled(bool checked)
 {
     ui->sbxCols->setEnabled(checked);
     ui->sbxRows->setEnabled(checked);
-        
+
     if (checked) {
         ui->gbxSplitSeq->setEnabled(true);
         if (ui->graphicsView->scene())

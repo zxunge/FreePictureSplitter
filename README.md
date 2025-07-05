@@ -29,7 +29,7 @@ FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
 FreePictureSplitter has the following goals:
 Goals | Implementation
 ------|------
-Batch splitting | 1.x only; working in 3.x
+Batch splitting | ✅
 Multiple picture formats | ✅
 Splitting averagely | ✅
 Single picture splitting | ✅

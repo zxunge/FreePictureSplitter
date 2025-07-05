@@ -3,7 +3,19 @@ name: Build
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
+    paths-ignore:
+      - '*.md'
+      - '.clang-format'
+      - 'docs/**'
   pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '*.md'
+      - '.clang-format'
+      - 'docs/**'
 
 jobs:
   msys2:

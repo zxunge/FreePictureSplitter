@@ -105,8 +105,14 @@
           </item>
           <item row="4" column="1">
            <widget class="QSpinBox" name="sbxHeight">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
             <property name="maximum">
-             <number>0</number>
+             <number>1</number>
             </property>
            </widget>
           </item>
@@ -122,8 +128,14 @@
           </item>
           <item row="5" column="1">
            <widget class="QSpinBox" name="sbxWidth">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
             <property name="maximum">
-             <number>0</number>
+             <number>1</number>
             </property>
            </widget>
           </item>
@@ -139,8 +151,11 @@
           </item>
           <item row="2" column="1">
            <widget class="QSpinBox" name="sbxCols">
+            <property name="minimum">
+             <number>1</number>
+            </property>
             <property name="maximum">
-             <number>0</number>
+             <number>1</number>
             </property>
            </widget>
           </item>
@@ -156,26 +171,32 @@
           </item>
           <item row="1" column="1">
            <widget class="QSpinBox" name="sbxRows">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
             <property name="maximum">
-             <number>0</number>
+             <number>1</number>
             </property>
            </widget>
           </item>
           <item row="6" column="0" colspan="2">
-           <widget class="QGroupBox" name="groupBox">
+           <widget class="QGroupBox" name="gbxSplitSeq">
             <property name="title">
              <string>Splitting Sequence</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="1">
-              <widget class="QRadioButton" name="rbtnLeftVert">
+              <widget class="QRadioButton" name="rbtnVertLeft">
                <property name="text">
                 <string>Left vertically</string>
                </property>
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QRadioButton" name="rbtnLeftHori">
+              <widget class="QRadioButton" name="rbtnHoriLeft">
                <property name="text">
                 <string>Left horizontally</string>
                </property>
@@ -185,14 +206,14 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QRadioButton" name="rbtnRightVert">
+              <widget class="QRadioButton" name="rbtnVertRight">
                <property name="text">
                 <string>Right vertically</string>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QRadioButton" name="rbtnRightHori">
+              <widget class="QRadioButton" name="rbtnHoriRight">
                <property name="text">
                 <string>Right horizontally</string>
                </property>
@@ -209,7 +230,11 @@
            </widget>
           </item>
           <item row="8" column="0" colspan="2">
-           <widget class="QComboBox" name="cbxTemplate"/>
+           <widget class="QComboBox" name="cbxTemplate">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
           <item row="7" column="0" colspan="2">
            <widget class="QRadioButton" name="rbtnTemplate">
@@ -330,6 +355,19 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="maxVisibleItems">
+         <number>2</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>The same location as each source picture</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>The following path:</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="1" column="3">
@@ -353,7 +391,7 @@
        </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="ledPath">
+       <widget class="QLineEdit" name="lePath">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -398,7 +436,7 @@
      <normaloff>:/toolBar/toolBar/add-pic.png</normaloff>:/toolBar/toolBar/add-pic.png</iconset>
    </property>
    <property name="text">
-    <string>Add picture</string>
+    <string>Add pictures</string>
    </property>
    <property name="toolTip">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a picture to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

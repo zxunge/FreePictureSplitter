@@ -8,6 +8,7 @@
 #define FPSBATCHDIALOG_H
 
 #include <QDialog>
+#include <QtCore/qstringlist.h>
 
 namespace Ui {
 class fpsBatchDialog;
@@ -28,8 +29,35 @@ private slots:
 
     void on_actionAddPicture_triggered();
 
+    void on_actionAddDirectory_triggered();
+
+    void on_cbxLocation_currentIndexChanged(int index);
+
+    void on_rbtnAverage_toggled(bool checked);
+
+    void on_rbtnSize_toggled(bool checked);
+
+    void on_rbtnTemplate_toggled(bool checked);
+
+    void on_btnChange_clicked();
+
+    void on_btnOpen_clicked();
+
+    void on_btnSplit_clicked();
+
+signals:
+    void splitProceed(int elapsed);
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
+private:
+    void addPicture(const QString &fileName);
+
 private:
     Ui::fpsBatchDialog *ui;
+
+    QStringList m_filesList;
 };
 
 #endif // FPSBATCHDIALOG_H
