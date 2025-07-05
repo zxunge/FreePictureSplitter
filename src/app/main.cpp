@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
                              QObject::tr("Error creating/opening configuration file."),
                              QMessageBox::Close);
-        QApplication::exit(1);
+        QCoreApplication::quit();
     }
 
     // First run?
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
                                  QObject::tr("Error parsing configuration file: ")
                                          + QString::fromStdString(result.error().what()),
                                  QMessageBox::Close);
-            QApplication::exit(1);
+            QCoreApplication::quit();
         }
         appConfig = result.value();
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
                                  QObject::tr("Configuration file\'s version doesn\'t match, try "
                                              "deleting it after backuping."),
                                  QMessageBox::Close);
-            QApplication::exit(1);
+            QCoreApplication::quit();
         }
     }
 
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     } else {
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
                              QObject::tr("Error loading skin."), QMessageBox::Close);
-        QApplication::exit(1);
+        QCoreApplication::quit();
     }
 
     fpsMainWindow w;
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
                              QObject::tr("Error writing to configuration file."),
                              QMessageBox::Close);
-        QApplication::exit(1);
+        QCoreApplication::quit();
     }
     QTextStream ts(&cfgFile);
     ts << jsonCfgStr;

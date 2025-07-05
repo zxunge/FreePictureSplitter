@@ -21,6 +21,8 @@ public:
     explicit fpsProgressDialog(QWidget *parent = nullptr, int total = 0);
     ~fpsProgressDialog();
 
+    bool isCancelled() const { return m_cancelled; }
+
 signals:
     void cancelled();
 
@@ -32,7 +34,9 @@ private slots:
 
 private:
     Ui::fpsProgressDialog *ui;
+
     int m_total;
+    bool m_cancelled;
 };
 
 #endif // FPSPROGRESSDIALOG_H

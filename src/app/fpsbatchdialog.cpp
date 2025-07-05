@@ -27,18 +27,7 @@ extern Util::Config appConfig;
 fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fpsBatchDialog)
 {
     ui->setupUi(this);
-    ui->toolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    ui->wgtList->setViewMode(QListView::IconMode);
-    ui->wgtList->setSpacing(10);
-    ui->wgtList->setResizeMode(QListView::Adjust);
-    ui->wgtList->setMovement(QListWidget::Static);
-    ui->wgtTable->setColumnCount(3);
     ui->wgtTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->wgtTable->setHorizontalHeaderLabels(QStringList{
-            QT_TR_NOOP("File Name"), QT_TR_NOOP("File Path"), QT_TR_NOOP("File Size") });
-    ui->wgtTable->verticalHeader()->setVisible(false);
-    ui->wgtTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->wgtTable->horizontalHeader()->setStretchLastSection(true);
     ui->sbxCols->setMaximum(std::numeric_limits<int>::max());
     ui->sbxRows->setMaximum(std::numeric_limits<int>::max());
     ui->sbxWidth->setMaximum(std::numeric_limits<int>::max());
@@ -52,6 +41,15 @@ fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fp
     bg->addButton(ui->rbtnAverage);
     bg->addButton(ui->rbtnSize);
     bg->addButton(ui->rbtnTemplate);
+
+    m_contextMenu = new QMenu(this);
+    m_contextMenu->addAction(ui->actionAddDirectory);
+    m_contextMenu->addAction(ui->actionAddPicture);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(ui->actionRemoveFromList);
+    m_contextMenu->addSeparator();
+    m_contextMenu->addAction(ui->actionShowDetailInfo);
+    m_contextMenu->addAction(ui->actionShowThumbnails);
 
     // Load configurations
     ui->cbxLocation->setCurrentIndex(
@@ -233,15 +231,13 @@ void fpsBatchDialog::on_btnSplit_clicked()
     int count{};
 
     fpsProgressDialog dlg(this, m_filesList.size());
-    bool cancelled{ false };
 
     connect(this, &fpsBatchDialog::splitProceed, &dlg, &fpsProgressDialog::proceed);
-    connect(&dlg, &fpsProgressDialog::cancelled, this, [&cancelled]() { cancelled = true; });
 
     dlg.show();
 
     for (const auto file : m_filesList) {
-        if (cancelled)
+        if (dlg.isCancelled())
             break;
 
         reader.setFileName(file);
@@ -343,4 +339,62 @@ void fpsBatchDialog::on_btnSplit_clicked()
         Q_EMIT splitProceed(++count);
     }
     dlg.close();
+}
+
+void fpsBatchDialog::on_wgtTable_customContextMenuRequested(const QPoint &pos)
+{
+    if (ui->wgtTable->selectedItems().isEmpty())
+        ui->actionRemoveFromList->setEnabled(true);
+    else
+        ui->actionRemoveFromList->setEnabled(false);
+    m_contextMenu->exec(QCursor::pos());
+}
+
+void fpsBatchDialog::on_wgtTable_itemClicked(QTableWidgetItem *item)
+{
+    ui->actionRemoveFromList->setEnabled(true);
+}
+
+void fpsBatchDialog::on_wgtTable_itemSelectionChanged()
+{
+    if (ui->wgtTable->selectedItems().isEmpty())
+        ui->actionRemoveFromList->setEnabled(false);
+}
+
+void fpsBatchDialog::on_wgtList_customContextMenuRequested(const QPoint &pos)
+{
+    if (!ui->wgtList->selectedItems().isEmpty())
+        ui->actionRemoveFromList->setEnabled(true);
+    else
+        ui->actionRemoveFromList->setEnabled(false);
+    m_contextMenu->exec(QCursor::pos());
+}
+
+void fpsBatchDialog::on_wgtList_itemClicked(QListWidgetItem *item)
+{
+    ui->actionRemoveFromList->setEnabled(true);
+}
+
+void fpsBatchDialog::on_wgtList_itemSelectionChanged()
+{
+    if (ui->wgtList->selectedItems().isEmpty())
+        ui->actionRemoveFromList->setEnabled(false);
+}
+
+void fpsBatchDialog::on_actionRemoveFromList_triggered()
+{
+    if (!ui->wgtTable->selectedItems().isEmpty()) { // Selected in table
+        m_filesList.remove(ui->wgtTable->selectedItems()[0]->row());
+        delete ui->wgtList->takeItem(ui->wgtTable->selectedItems()[0]->row());
+        ui->wgtTable->removeRow(ui->wgtTable->selectedItems()[0]->row());
+    } else {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        qsizetype index{ m_filesList.indexOf(ui->wgtList->selectedItems()[0]->text()) };
+#else
+        int index{ m_filesList.indexOf(ui->wgtList->selectedItems()[0]->text()) };
+#endif
+        m_filesList.remove(index);
+        delete ui->wgtList->takeItem(index);
+        ui->wgtTable->removeRow(index);
+    }
 }
