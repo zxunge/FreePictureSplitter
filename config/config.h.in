@@ -10,8 +10,8 @@
 #define fpsAppName "@PROJECT_NAME@"
 #define fpsVersionFull "@PROJECT_VERSION@"
 #define fpsHomepageUrl "@PROJECT_HOMEPAGE_URL@"
-#define fpsVersionMajor @PROJECT_VERSION_MAJOR@
-#define fpsVersionMinor @PROJECT_VERSION_MINOR@
-#define fpsVersionMicro @PROJECT_VERSION_PATCH@
+#define fpsVersionMajor @PROJECT_VERSION_MAJOR @
+#define fpsVersionMinor @PROJECT_VERSION_MINOR @
+#define fpsVersionMicro @PROJECT_VERSION_PATCH @
 
 #endif // CONFIG_H

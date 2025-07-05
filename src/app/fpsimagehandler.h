@@ -51,7 +51,7 @@ public:
     static bool split(QImageReader &imgReader, QVector<QImage> &output, const RectList &rects);
 
     static QStringList getOutputList(const QString &prefix, const QString &suffix, int rows,
-                                     int cols, bool rcContained);
+                                     int cols, bool rcContained = false);
 
     static void rectsToLines(const RectList &rects, fpsGraphicsView *parent);
     static RectList linesToRects(fpsGraphicsView *parent);

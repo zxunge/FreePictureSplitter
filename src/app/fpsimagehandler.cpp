@@ -150,6 +150,7 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
     if (img.isNull())
         return false;
 
+    output.clear();
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     for (qsizetype j{}; j != cRows; ++j)
         for (qsizetype k{}; k != cCols; ++k)

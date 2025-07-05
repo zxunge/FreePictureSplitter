@@ -21,8 +21,14 @@ public:
     explicit fpsProgressDialog(QWidget *parent = nullptr, int total = 0);
     ~fpsProgressDialog();
 
+signals:
+    void cancelled();
+
 public slots:
     void proceed(int elapsed);
+
+private slots:
+    void on_btnCancel_clicked();
 
 private:
     Ui::fpsProgressDialog *ui;
