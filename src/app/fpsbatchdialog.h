@@ -14,6 +14,8 @@
 namespace Ui {
 class fpsBatchDialog;
 }
+class QTableWidgetItem;
+class QListWidgetItem;
 
 class fpsBatchDialog : public QDialog
 {
