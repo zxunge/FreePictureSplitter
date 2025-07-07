@@ -19,8 +19,8 @@ English | [简体中文](docs/zh/index.md)
 # Introduction
 FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
 
-## Screenshot
-![Screenshot](docs/assets/Screenshot2.gif "FPS Screenshot")
+## Project Demo
+<video src="https://github.com/user-attachments/assets/c95170e7-2305-48a0-abdf-48664f2a67ac" data-canonical-src="https://github.com/user-attachments/assets/c95170e7-2305-48a0-abdf-48664f2a67ac" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
 
 > [!Note]
 > When we introduce something of FreePictureSplitter later, we refer to FPS version 3 and higher.
