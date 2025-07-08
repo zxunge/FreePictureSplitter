@@ -77,7 +77,7 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-add_subdirectory(3rdparty/reflect-cpp)
+add_subdirectory(3rdparty)
 
 if(WITH_PCH)
     target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
