@@ -76,7 +76,7 @@ jobs:
         setup-python: false
 
     - name: Install Qt
-      if: matrix.qt == 'qt6'
+      if: matrix.qt == 'qt5'
       uses: jurplel/install-qt-action@v4
       with:
         version: 5.*
