@@ -18,8 +18,18 @@ class fpsCornerBox : public QWidget
 public:
     explicit fpsCornerBox(QWidget *parent = nullptr);
 
+    void setFaceColor(const QColor &color)
+    {
+        m_faceColor = color;
+        update();
+    }
+    QColor getFaceColor() const { return m_faceColor; }
+
 protected:
     void paintEvent(QPaintEvent *event) override;
+
+private:
+    QColor m_faceColor;
 };
 
 class fpsRulerBar : public QWidget
@@ -28,8 +38,14 @@ class fpsRulerBar : public QWidget
 public:
     explicit fpsRulerBar(QWidget *parent = nullptr, Qt::Orientation direction = Qt::Horizontal);
 
-    void setOrientation(Qt::Orientation orientation) { m_direction = orientation; }
+    void setFaceColor(const QColor &color)
+    {
+        m_faceColor = color;
+        update();
+    }
+    QColor getFaceColor() const { return m_faceColor; }
 
+    void setOrientation(Qt::Orientation orientation) { m_direction = orientation; }
     Qt::Orientation getOritation() const { return m_direction; }
 
     void setRange(double lower, double upper, double max_size);

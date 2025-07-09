@@ -6,12 +6,20 @@
 #include "fpsgraphicsview.h"
 
 #include <QMouseEvent>
+#include <QPixmap>
+#include <QColor>
+
+#include <cstdint>
 
 fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
     m_hruler = new fpsRulerBar(this, Qt::Horizontal);
     m_vruler = new fpsRulerBar(this, Qt::Vertical);
     m_box = new fpsCornerBox(this);
+    m_hruler->setVisible(false);
+    m_vruler->setVisible(false);
+    m_box->setVisible(false);
+
     setViewport(new QWidget);
     setMouseTracking(true);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -30,11 +38,48 @@ fpsGraphicsView::~fpsGraphicsView()
     // dtor
 }
 
-void fpsGraphicsView::showPixmap(const QPixmap &pixmap)
+void fpsGraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
 {
+    if (scene())
+        delete scene();
     QGraphicsScene *scene{ new QGraphicsScene };
     scene->addPixmap(pixmap);
     setScene(scene);
+
+    m_hruler->setVisible(true);
+    m_vruler->setVisible(true);
+    m_box->setVisible(true);
+
+    if (adaptive) { // Set an adaptive background for GraphicsView based on the image's color
+        // Reduce calculation
+        const QImage scaled{
+            pixmap.scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).toImage()
+        };
+        // Average color
+        int64_t r{}, g{}, b{};
+        int count{};
+        QColor dominant;
+        for (int y{}; y < scaled.height(); ++y) {
+            for (int x{}; x < scaled.width(); ++x) {
+                QColor color{ scaled.pixelColor(x, y) };
+                if (color.alpha() > 128) { // Ignore transparent pixels
+                    r += color.red();
+                    g += color.green();
+                    b += color.blue();
+                    count++;
+                }
+            }
+        }
+        if (count == 0)
+            dominant = Qt::gray; // Default
+        dominant.setRgb(r / count, g / count, b / count);
+
+        // See https://www.w3.org/TR/WCAG20/#relativeluminancedef
+        double luminance{ 0.2126 * dominant.redF() + 0.7152 * dominant.greenF()
+                          + 0.0722 * dominant.blueF() };
+        viewport()->setStyleSheet(
+                QString("background-color: %1;").arg((luminance > 0.5) ? "#c0c0c0" : "#ffffff"));
+    }
 }
 
 void fpsGraphicsView::mouseMoveEvent(QMouseEvent *event)

@@ -49,4 +49,10 @@
         <file>skins/lightblue/radiobutton_unchecked.png</file>
         <file>skins/lightblue/radiobutton_unchecked_disable.png</file>
     </qresource>
+    <qresource prefix="/preferences">
+        <file>preferences/appearance.png</file>
+        <file>preferences/appearance-off.png</file>
+        <file>preferences/output.png</file>
+        <file>preferences/output-off.png</file>
+    </qresource>
 </RCC>

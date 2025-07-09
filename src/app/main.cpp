@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
                              QObject::tr("Error creating/opening configuration file."),
                              QMessageBox::Close);
-        QCoreApplication::quit();
+        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
     }
 
     // First run?
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
                                  QObject::tr("Error parsing configuration file: ")
                                          + QString::fromStdString(result.error().what()),
                                  QMessageBox::Close);
-            QCoreApplication::quit();
+            QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
         }
         appConfig = result.value();
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
                                  QObject::tr("Configuration file\'s version doesn\'t match, try "
                                              "deleting it after backuping."),
                                  QMessageBox::Close);
-            QCoreApplication::quit();
+            QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
         }
     }
 
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
     } else {
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
                              QObject::tr("Error loading skin."), QMessageBox::Close);
-        QCoreApplication::quit();
+        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
     }
 
     fpsMainWindow w;
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
         QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
                              QObject::tr("Error writing to configuration file."),
                              QMessageBox::Close);
-        QCoreApplication::quit();
+        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
     }
     QTextStream ts(&cfgFile);
     ts << jsonCfgStr;

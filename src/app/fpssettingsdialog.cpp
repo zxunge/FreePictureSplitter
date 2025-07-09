@@ -144,3 +144,8 @@ void fpsSettingsDialog::on_chbGrid_toggled(bool checked)
     ui->btnSelectColor->setEnabled(checked);
     ui->sbxLineSize->setEnabled(checked);
 }
+
+void fpsSettingsDialog::on_listOptions_currentRowChanged(int currentRow)
+{
+    ui->wgtOptions->setCurrentIndex(currentRow);
+}

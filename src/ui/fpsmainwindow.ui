@@ -124,9 +124,6 @@
    <addaction name="actionZoomOut"/>
    <addaction name="separator"/>
    <addaction name="actionBatch"/>
-   <addaction name="separator"/>
-   <addaction name="actionSettings"/>
-   <addaction name="separator"/>
   </widget>
   <widget class="QDockWidget" name="dkOptions">
    <property name="sizePolicy">
@@ -373,10 +370,10 @@
      <normaloff>:/toolBar/toolBar/settings.png</normaloff>:/toolBar/toolBar/settings.png</iconset>
    </property>
    <property name="text">
-    <string>Output Settings</string>
+    <string>Preferences</string>
    </property>
    <property name="toolTip">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Settings for output files.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;App preferences, including the app's appearance and the splitting policies.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </action>
   <action name="actionHomepage">

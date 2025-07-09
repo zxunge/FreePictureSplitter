@@ -31,7 +31,8 @@ public:
     void zoomIn();
     void zoomOut();
 
-    void showPixmap(const QPixmap &pixmap); // Show an image on the GraphicsView.
+    void showPixmap(const QPixmap &pixmap,
+                    bool adaptive = true); // Show an image on the GraphicsView.
     // Create a line using direction and initial position. pos -> whole GraphicsView
     void addFloatingLine(Qt::Orientation ori, const QPoint &pos);
     void addFloatingLine(fpsFloatingLine *fl); // Add an existing line to list.

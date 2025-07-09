@@ -30,8 +30,8 @@ static const RulerMetric ruler_metric_inches{ { 1, 2, 4, 8, 16, 32, 64, 128, 256
                                               { 1, 2, 4, 8, 16 } };
 
 fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
-    : QWidget(parent),
-      m_faceColor(0xFF, 0xFF, 0xFF),
+    : QWidget{ parent },
+      m_faceColor{ parent->palette().color(QPalette::Window) },
       m_lower{},
       m_upper{},
       m_maxsize{},
@@ -63,14 +63,16 @@ void fpsRulerBar::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
     QPainter painter(this);
     QRect rulerRect{ rect() };
-    // painter.fillRect(rulerRect, m_faceColor);
+    painter.fillRect(rulerRect, m_faceColor);
 
     if (m_direction == Qt::Horizontal) {
         painter.drawLine(rulerRect.bottomLeft(), rulerRect.bottomRight());
         painter.drawLine(rulerRect.topLeft(), rulerRect.topRight());
+        painter.drawLine(rulerRect.topLeft(), rulerRect.bottomLeft());
     } else {
         painter.drawLine(rulerRect.topRight(), rulerRect.bottomRight());
         painter.drawLine(rulerRect.topLeft(), rulerRect.bottomLeft());
+        painter.drawLine(rulerRect.topLeft(), rulerRect.topRight());
     }
 
     drawTicker(&painter);
@@ -250,7 +252,8 @@ void fpsRulerBar::mouseReleaseEvent(QMouseEvent *event)
     QWidget::mouseReleaseEvent(event);
 }
 
-fpsCornerBox::fpsCornerBox(QWidget *parent) : QWidget(parent)
+fpsCornerBox::fpsCornerBox(QWidget *parent)
+    : QWidget{ parent }, m_faceColor{ parent->palette().color(QPalette::Window) }
 {
     // ctor
 }
@@ -259,12 +262,9 @@ void fpsCornerBox::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
     QPainter painter(this);
-    painter.setBrush(parentWidget()->palette().base());
+    painter.fillRect(rect(), m_faceColor);
 
     painter.setPen(Qt::DashLine);
     painter.drawLine(rect().center().x(), rect().top(), rect().center().x(), rect().bottom());
     painter.drawLine(rect().left(), rect().center().y(), rect().right(), rect().center().y());
-
-    painter.drawLine(rect().topRight(), rect().bottomRight());
-    painter.drawLine(rect().bottomLeft(), rect().bottomRight());
 }

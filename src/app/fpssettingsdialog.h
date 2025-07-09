@@ -37,6 +37,8 @@ private slots:
 
     void on_chbGrid_toggled(bool checked);
 
+    void on_listOptions_currentRowChanged(int currentRow);
+
 private:
     Ui::fpsSettingsDialog *ui;
 
