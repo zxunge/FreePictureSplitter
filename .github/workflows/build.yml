@@ -79,7 +79,7 @@ jobs:
       if: matrix.qt == 'qt5'
       uses: jurplel/install-qt-action@v4
       with:
-        version: 5.*
+        version: 5.15.*
         arch: linux_gcc_64
         install-deps: true
         modules: "qtimageformats"
