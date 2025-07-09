@@ -23,8 +23,16 @@ jobs:
           sudo wget -O /etc/apt/sources.list.d/viva64.list \
             https://files.pvs-studio.com/etc/viva64.list
           sudo apt update
-          sudo apt install -y pvs-studio build-essential qt6-base-dev linguist-qt6 qt6-tools-dev libxkbcommon-dev
+          sudo apt install -y pvs-studio build-essential
           pvs-studio-analyzer credentials ${{ secrets.PVS_STUDIO_CREDENTIALS }}
+          
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          arch: linux_gcc_64
+          install-deps: true
+          modules: "qtimageformats"
+          setup-python: false
           
       - name: Build
         run: |

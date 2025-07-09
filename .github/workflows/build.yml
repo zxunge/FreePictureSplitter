@@ -60,28 +60,15 @@ jobs:
         path: FreePictureSplitter/build/bin
         
   ubuntu:
+    # We only support Qt6 on Linux.
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        qt: [qt5, qt6]
-        
     steps:
     - name: Install Qt
-      if: matrix.qt == 'qt6'
       uses: jurplel/install-qt-action@v4
       with:
         arch: linux_gcc_64
         install-deps: true
         modules: "qtimageformats"
-        setup-python: false
-
-    - name: Install Qt
-      if: matrix.qt == 'qt5'
-      uses: jurplel/install-qt-action@v4
-      with:
-        version: 5.15.*
-        arch: linux_gcc_64
-        install-deps: true
         setup-python: false
 
     - name: Checkout
@@ -101,5 +88,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-ubuntu-${{ matrix.qt }}
+        name: FreePictureSplitter-ubuntu-qt6
         path: FreePictureSplitter/build/bin
