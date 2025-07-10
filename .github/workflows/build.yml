@@ -59,6 +59,42 @@ jobs:
         name: FreePictureSplitter-${{ matrix.msystem }}-${{ matrix.qt }}
         path: FreePictureSplitter/build/bin
         
+  msvc:
+    # We only support Qt6 when building using MSVC.
+    runs-on: windows-latest
+    steps:
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        arch: win64_msvc2022_64
+        install-deps: true
+        modules: "qtimageformats"
+        setup-python: false
+        
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v2
+      
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        repository: zxunge/FreePictureSplitter
+        path: FreePictureSplitter
+        submodules: recursive
+      
+    - name: Build
+      shell: pwsh
+      run: |
+        cd FreePictureSplitter/
+        # We do not want PCH to be enabled when building on GitHub Action
+        cmake -DWITH_PCH=OFF -B build .
+        cmake --build build --parallel $(nproc)
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: FreePictureSplitter-msvc2022-win64-qt6
+        path: FreePictureSplitter/build/bin
+      
   ubuntu:
     # We only support Qt6 on Linux.
     runs-on: ubuntu-latest
