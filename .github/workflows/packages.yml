@@ -36,7 +36,7 @@ jobs:
       run: |
         LATEST_VERSION=$(curl -s https://api.github.com/repos/brechtsanders/pedeps/releases/latest | jq -r .tag_name)
         echo "Latest version is $LATEST_VERSION"
-        DOWNLOAD_URL="https://github.com/brechtsanders/pedeps/releases/download/${LATEST_VERSION}/pedeps-${LATEST_VERSION}-win64.zip
+        DOWNLOAD_URL="https://github.com/brechtsanders/pedeps/releases/download/${LATEST_VERSION}/pedeps-${LATEST_VERSION}-win64.zip"
         wget $DOWNLOAD_URL -O pedeps-latest.zip
         unzip pedeps-latest.zip -d pedeps
         export PATH=$PATH:$(pwd)/pedeps/bin
