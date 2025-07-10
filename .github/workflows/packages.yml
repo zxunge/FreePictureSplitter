@@ -94,7 +94,7 @@ jobs:
         cmake -DWITH_PCH=OFF -B build .
         cmake --build build --parallel $(nproc) --config Release
         windeployqt6 --dir build/bin --compiler-runtime build/bin/FreePictureSplitter.exe
-        '${{ github.workspace }}/pedeps/bin/copypedeps.exe' -r -n -v build/bin/FreePictureSplitter.exe build/bin/
+        ${{ github.workspace }}\pedeps\bin\copypedeps.exe -r -n -v build/bin/FreePictureSplitter.exe build/bin/
         
     - name: Upload artifact
       uses: actions/upload-artifact@v4
