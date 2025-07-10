@@ -18,9 +18,9 @@ jobs:
           toolchain:p
           cmake:p
           ninja:p
-          jp:p
-          ${{ matrix.qt }}-base:p
-          ${{ matrix.qt }}-tools:p
+          jq:p
+          qt6-base:p
+          qt6-tools:p
           unzip
 
     - name: Checkout
