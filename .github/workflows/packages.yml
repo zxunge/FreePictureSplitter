@@ -21,6 +21,7 @@ jobs:
           jq:p
           qt6-base:p
           qt6-tools:p
+        install: >-
           unzip
 
     - name: Checkout
