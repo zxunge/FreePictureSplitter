@@ -1,4 +1,4 @@
-name: Build
+name: Test Build
 
 on:
   workflow_dispatch:
@@ -52,12 +52,6 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
         cmake --build build --parallel $(nproc)
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: FreePictureSplitter-${{ matrix.msystem }}-${{ matrix.qt }}
-        path: FreePictureSplitter/build/bin
         
   msvc:
     # We only support Qt6 when building using MSVC.
@@ -88,12 +82,6 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -B build .
         cmake --build build --parallel $(nproc) --config Release
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: FreePictureSplitter-msvc2022-win64-qt6
-        path: FreePictureSplitter/build/bin
       
   ubuntu:
     # We only support Qt6 on Linux.
@@ -120,9 +108,3 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
         cmake --build build --parallel $(nproc)
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: FreePictureSplitter-ubuntu-qt6
-        path: FreePictureSplitter/build/bin

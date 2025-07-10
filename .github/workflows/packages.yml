@@ -1,0 +1,57 @@
+name: Pack Packages
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  msys2:
+    # We pack an archive using Qt6 in clang64 environment.
+    runs-on: windows-latest
+
+    steps:
+    - name: Setup MSYS2 Environment
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: clang64
+        update: true
+        pacboy: >-
+          toolchain:p
+          cmake:p
+          ninja:p
+          jp:p
+          ${{ matrix.qt }}-base:p
+          ${{ matrix.qt }}-tools:p
+          unzip
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        repository: zxunge/FreePictureSplitter
+        path: FreePictureSplitter
+        submodules: recursive
+        
+    - name: Download and extract pedeps
+      shell: msys2 {0}
+      run: |
+        LATEST_VERSION=$(curl -s https://api.github.com/repos/brechtsanders/pedeps/releases/latest | jq -r .tag_name)
+        echo "Latest version is $LATEST_VERSION"
+        DOWNLOAD_URL="https://github.com/brechtsanders/pedeps/releases/download/${LATEST_VERSION}/pedeps-${LATEST_VERSION}-win64.zip
+        wget $DOWNLOAD_URL -O pedeps-latest.zip
+        unzip pedeps-latest.zip -d pedeps
+        export PATH=$PATH:$(pwd)/pedeps/bin
+        
+    - name: Build, deploy and copy dependencies
+      shell: msys2 {0}
+      run: |
+        cd FreePictureSplitter/
+        # We do not want PCH to be enabled when building on GitHub Action
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
+        cmake --build build --parallel $(nproc)
+        windeployqt6 --dir build/bin --compiler-runtime
+        copydeps -r -n -v build/bin/FreePictureSplitter.exe build/bin/
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: FreePictureSplitter-clang64-qt6-all
+        path: FreePictureSplitter/build/bin
