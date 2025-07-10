@@ -86,8 +86,8 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
-        cmake --build build --parallel $(nproc)
+        cmake -DWITH_PCH=OFF -B build .
+        cmake --build build --parallel $(nproc) --config Release
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
