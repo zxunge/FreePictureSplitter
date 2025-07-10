@@ -48,7 +48,7 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
         cmake --build build --parallel $(nproc)
-        windeployqt6 --dir build/bin --compiler-runtime
+        windeployqt6 --dir build/bin --compiler-runtime build/bin/FreePictureSplitter.exe
         copypedeps -r -n -v build/bin/FreePictureSplitter.exe build/bin/
         
     - name: Upload artifact
