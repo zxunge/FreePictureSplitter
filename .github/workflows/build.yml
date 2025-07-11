@@ -9,6 +9,7 @@ on:
       - '*.md'
       - '.clang-format'
       - 'docs/**'
+      - '.github/workflows/*.yml'
   pull_request:
     branches:
       - main
@@ -16,6 +17,7 @@ on:
       - '*.md'
       - '.clang-format'
       - 'docs/**'
+      - '.github/workflows/*.yml'
 
 jobs:
   msys2:
