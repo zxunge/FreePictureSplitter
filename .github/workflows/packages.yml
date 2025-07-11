@@ -55,7 +55,7 @@ jobs:
         if [ "${{ matrix.qt }}" = "qt6" ]; then
           windeployqt6 --dir build/bin --compiler-runtime build/bin/FreePictureSplitter.exe
         else
-          windeployqt --dir build/bin --compiler-runtime build/bin/FreePictureSplitter.exe
+          windeployqt --dir build/bin build/bin/FreePictureSplitter.exe
         fi
         '${{ github.workspace }}/pedeps/bin/copypedeps.exe' -r -n -v build/bin/FreePictureSplitter.exe build/bin/
         
