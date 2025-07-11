@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  msys2:
+  clang:
     # We pack an archive using Qt 5/6 in clang64 environment.
     runs-on: windows-latest
     strategy:
@@ -22,6 +22,7 @@ jobs:
           cmake:p
           ninja:p
           jq:p
+          angleproject:p
           ${{ matrix.qt }}-base:p
           ${{ matrix.qt }}-tools:p
           ${{ matrix.qt }}-translations:p
