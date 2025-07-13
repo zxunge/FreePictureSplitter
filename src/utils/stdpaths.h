@@ -4,23 +4,27 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef SKINS_H
-#define SKINS_H
+#ifndef STDPATHS_H
+#define STDPATHS_H
 
 #include <QString>
-#include <QStringList>
-
-class QApplication;
 
 namespace Util {
-/********** Skins Helper **********/
-// Get available .qss files under DATADIR/skins directory
-QStringList getAvailableSkins();
 
-// Set application's stylesheet to skin.qss
-void setAppSkin(QApplication *app, const QString &skin);
-/**********************************/
+/*********** Standard Paths Helper ***********/
+// Get the app's install prefix
+QString getInstallPrefix();
+
+// Get the app's DATADIR
+QString getDataDir();
+
+// Get the app's LIBDIR
+QString getLibDir();
+
+// Get the app's BINDIR
+QString getBinDir();
+/*********************************************/
 
 } // namespace Util
 
-#endif // SKINS_H
+#endif // STDPATHS_H

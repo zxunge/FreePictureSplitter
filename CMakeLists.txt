@@ -44,8 +44,9 @@ else()
 endif()
 
 configure_file(config/config.h.in config.h)
-
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+include(GNUInstallDirs)
 
 if(WITH_ASAN)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")

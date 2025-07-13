@@ -4,27 +4,27 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="49"/>
+        <location filename="../../app/main.cpp" line="48"/>
         <source>Error creating/opening configuration file.</source>
         <translation>创建或打开配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="61"/>
+        <location filename="../../app/main.cpp" line="60"/>
         <source>Error parsing configuration file: </source>
         <translation>解析配置文件出错： </translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="73"/>
+        <location filename="../../app/main.cpp" line="72"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>配置文件的版本不匹配，尝试备份后把文件删除。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="93"/>
+        <location filename="../../app/main.cpp" line="92"/>
         <source>Error writing to configuration file.</source>
         <translation>写入配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../utils/skins.cpp" line="43"/>
+        <location filename="../../utils/skins.cpp" line="45"/>
         <source>Error loading skin.</source>
         <translation>加载皮肤出错。</translation>
     </message>
@@ -305,217 +305,217 @@
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="26"/>
         <source>FreePictureSplitter</source>
-        <translation type="unfinished"></translation>
+        <translation>FreePictureSplitter</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="62"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>文件(&amp;F)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="71"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>视图(&amp;V)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="78"/>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>工具(&amp;T)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="86"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>帮助(&amp;H)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="106"/>
         <source>toolBar</source>
-        <translation type="unfinished"></translation>
+        <translation>toolBar</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="136"/>
         <source>Splitting Settings..</source>
-        <translation type="unfinished">分割设置..</translation>
+        <translation>分割设置..</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="152"/>
         <source>Splitting Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>分割模式</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="161"/>
         <source>Height (Pixel):</source>
-        <translation type="unfinished">高度（像素）：</translation>
+        <translation>高度（像素）：</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="181"/>
         <source>Split by Fixed Sizes</source>
-        <translation type="unfinished"></translation>
+        <translation>按固定尺寸分割</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="211"/>
         <source>Width (Pixel):</source>
-        <translation type="unfinished">宽度（像素）：</translation>
+        <translation>宽度（像素）：</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="221"/>
         <source>Split Averagely</source>
-        <translation type="unfinished">平均分割</translation>
+        <translation>平均分割</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="228"/>
         <source>Columns:</source>
-        <translation type="unfinished">列数：</translation>
+        <translation>列数：</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="238"/>
         <source>Rows:</source>
-        <translation type="unfinished">行数：</translation>
+        <translation>行数：</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="248"/>
         <source>Split Manually</source>
-        <translation type="unfinished"></translation>
+        <translation>手动调整分割线</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="258"/>
         <source>Splitting Sequence</source>
-        <translation type="unfinished">分割顺序</translation>
+        <translation>分割顺序</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="264"/>
         <source>Left horizontally</source>
-        <translation type="unfinished">左起</translation>
+        <translation>左起</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="274"/>
         <source>Left vertically</source>
-        <translation type="unfinished">左起（相同）</translation>
+        <translation>左起（相同）</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="281"/>
         <source>Right horizontally</source>
-        <translation type="unfinished">右起</translation>
+        <translation>右起</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="288"/>
         <source>Right vertically</source>
-        <translation type="unfinished">右起（相同）</translation>
+        <translation>右起（相同）</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="301"/>
         <source>Reset Split Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>重置分割线</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="314"/>
         <source>Open Picture File</source>
-        <translation type="unfinished"></translation>
+        <translation>打开图片文件</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="317"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open a picture file to split.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;打开欲分割的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="320"/>
         <source>Ctrl+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="332"/>
         <source>Save Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>保存图片</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="335"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save the splitted pictures.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存已分割的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="338"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="343"/>
         <source>&amp;Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>退出(&amp;E)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="346"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退出FreePictureSplitter。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="349"/>
         <source>Alt+X</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+X</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="358"/>
         <source>Batch Splitting...</source>
-        <translation type="unfinished"></translation>
+        <translation>批量分割...</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="361"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Batch split pictures.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;批量分割图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="364"/>
         <source>Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+B</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="373"/>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>首选项</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="376"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;App preferences, including the app&apos;s appearance and the splitting policies.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;应用程序首选项，包括外观和分割策略。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="381"/>
         <source>&amp;Homepage...</source>
-        <translation type="unfinished"></translation>
+        <translation>应用主页(&amp;H)...</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="386"/>
         <source>&amp;About</source>
-        <translation type="unfinished"></translation>
+        <translation>关于(&amp;A)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="399"/>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished"></translation>
+        <translation>放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="402"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed in.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;放大显示的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="405"/>
         <source>Ctrl+Alt+I</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+I</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="417"/>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished"></translation>
+        <translation>缩小(&amp;O)</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="420"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed out.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;缩小显示的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpsmainwindow.ui" line="423"/>
         <source>Ctrl+Alt+O</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Alt+O</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="46"/>

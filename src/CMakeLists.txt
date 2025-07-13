@@ -50,6 +50,8 @@ set(UTILS_SRCS
     utils/colors.cpp
     utils/skins.h
     utils/skins.cpp
+    utils/stdpaths.h
+    utils/stdpaths.cpp
 )
 
 set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
@@ -68,7 +70,7 @@ if(Qt6_FOUND)
         TARGETS FreePictureSplitter
         SOURCE_TARGETS FreePictureSplitter
         TS_FILES ${TS_FILES}
-        LUPDATE_OPTIONS -no-obsolete -silent
+        LUPDATE_OPTIONS -no-obsolete
         QM_FILES_OUTPUT_VARIABLE QM_FILES
     )
 else()
@@ -116,12 +118,12 @@ set_target_properties(FreePictureSplitter PROPERTIES
 
 install(TARGETS FreePictureSplitter
     BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 # Install resources
-install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${QM_FILES} DESTINATION "translations")
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR})
+install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/translations)
 
 if(Qt6_FOUND)
     qt_finalize_executable(FreePictureSplitter)

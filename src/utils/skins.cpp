@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "skins.h"
+#include "stdpaths.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -18,26 +19,35 @@ namespace Util {
 QStringList getAvailableSkins()
 {
     QStringList list;
-    QDir skinDir(QCoreApplication::applicationDirPath() + "/skins");
-    for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files))
-        list.push_back(QFileInfo(skin).baseName());
+    QDir skinDir(Util::getDataDir() + "/skins");
+    for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files)) {
+        const QString baseName{ QFileInfo(skin).baseName() };
+        // Capitalize the first letter
+        list.push_back(baseName.left(1).toUpper()
+                       + baseName.mid(1, baseName.length() - 1).toLower());
+    }
     return list;
 }
 
-void setAppSkin(QApplication *app, const QString &skin)
+void setAppSkin(QApplication *app, const QString &skinName)
 {
     QFile styleFile;
+    // Normalize the skin name
+    const QString skin{ skinName.toLower() };
+
     if (skin == "default") {
         // The default style includes a fusion style
         app->setStyle(QStyleFactory::create("fusion"));
-        styleFile.setFileName(QCoreApplication::applicationDirPath() + "/skins/default.qss");
+        styleFile.setFileName(Util::getDataDir() + "/skins/default.qss");
     } else
-        styleFile.setFileName(QCoreApplication::applicationDirPath() + "/skins/" + skin + ".qss");
+        styleFile.setFileName(Util::getDataDir() + "/skins/" + skin + ".qss");
 
     styleFile.open(QFile::ReadOnly);
     if (styleFile.isOpen()) {
         if (skin == "lightblue") // "lightblue" requires changing the palette
             app->setPalette(QPalette("#eaf7ff"));
+        else
+            app->setPalette(QPalette());
         app->setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {

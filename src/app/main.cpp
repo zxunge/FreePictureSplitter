@@ -6,6 +6,7 @@
 #include "fpsmainwindow.h"
 #include "jsonconfigitems.h"
 #include "skins.h"
+#include "stdpaths.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -32,8 +33,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(":/icons/fps.ico"));
     QTranslator translator;
-    if (translator.load(QLocale::system(), fpsAppName, "_",
-                        QCoreApplication::applicationDirPath() + "/translations")) {
+    if (translator.load(QLocale::system(), fpsAppName, "_", Util::getDataDir() + "/translations")) {
         a.installTranslator(&translator);
     }
 
