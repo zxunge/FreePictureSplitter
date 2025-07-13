@@ -6,6 +6,7 @@
 #include "stdpaths.h"
 
 #include <QDir>
+#include <QCoreApplication>
 
 namespace Util {
 
