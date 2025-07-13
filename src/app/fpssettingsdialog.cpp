@@ -6,10 +6,10 @@
 #include "fpssettingsdialog.h"
 #include "ui_fpssettingsdialog.h"
 #include "jsonconfigitems.h"
+#include "skins.h"
 
 #include <QImageWriter>
 #include <QColorDialog>
-#include <QDir>
 #include <QFileInfo>
 
 extern Util::Config appConfig;
@@ -21,10 +21,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
 
     // Load configurations
     /****************** Appearance ******************/
-    // Get the available skins
-    QDir skinDir("skins");
-    for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files))
-        ui->cbxStyle->addItem(QFileInfo(skin).baseName());
+    ui->cbxStyle->addItems(Util::getAvailableSkins());
     /************************************************/
 
     /******************** Output ********************/
@@ -87,6 +84,10 @@ fpsSettingsDialog::~fpsSettingsDialog()
 void fpsSettingsDialog::on_buttonBox_accepted()
 {
     // Save configurations
+    appConfig.app.style = ui->cbxStyle->currentText().toStdString();
+    // Change theme
+    Util::setAppSkin(qApp, QString::fromStdString(appConfig.app.style));
+
     switch (ui->cbxLocation->currentIndex()) {
     case 0:
         appConfig.options.outputOpt.savingTo = Util::SavingTo::inPlace;

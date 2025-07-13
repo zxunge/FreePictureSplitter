@@ -90,7 +90,7 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
     mimeTypeFilters.sort();
 
     QFileDialog fdlg;
-    fdlg.setWindowTitle(tr("Open a picture..."));
+    fdlg.setWindowTitle(tr("Add pictures..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
                               ? "."
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));

@@ -48,6 +48,8 @@ set(UTILS_SRCS
     utils/debugutil.h
     utils/colors.h
     utils/colors.cpp
+    utils/skins.h
+    utils/skins.cpp
 )
 
 set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})

@@ -5,6 +5,7 @@
 
 #include "fpsmainwindow.h"
 #include "jsonconfigitems.h"
+#include "skins.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -81,26 +82,7 @@ int main(int argc, char *argv[])
     }
 
     // Load styles
-    QFile styleFile;
-    if (appConfig.app.style == "default") {
-        // The default style includes a fusion style
-        a.setStyle(QStyleFactory::create("fusion"));
-        styleFile.setFileName(QStringLiteral(":/skins/skins/default.qss"));
-    } else
-        styleFile.setFileName(QStringLiteral(":/skins/skins/")
-                              + QString::fromStdString(appConfig.app.style) + ".qss");
-
-    styleFile.open(QFile::ReadOnly);
-    if (styleFile.isOpen()) {
-        if (appConfig.app.style == "lightblue") // "lightblue" requires changing the palette
-            a.setPalette(QPalette("#eaf7ff"));
-        a.setStyleSheet(QLatin1String(styleFile.readAll()));
-        styleFile.close();
-    } else {
-        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                             QObject::tr("Error loading skin."), QMessageBox::Close);
-        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
-    }
+    Util::setAppSkin(&a, QString::fromStdString(appConfig.app.style));
 
     fpsMainWindow w;
     w.show();
