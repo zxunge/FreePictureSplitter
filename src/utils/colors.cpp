@@ -4,6 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "colors.h"
+#include <cmath>
 
 namespace Util {
 
@@ -25,9 +26,15 @@ QColor getDominantColorHSVWeighted(const QPixmap &pixmap)
                 continue;
 
             color.toHsv();
-            double h{ color.hueF() };
-            double s{ color.saturationF() };
-            double v{ color.valueF() };
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+            float h{ color.hueF() };
+            float s{ color.saturationF() };
+            float v{ color.valueF() };
+#else
+            qreal h{ color.hueF() };
+            qreal s{ color.saturationF() };
+            qreal v{ color.valueF() };
+#endif
 
             if (h < 0)
                 continue; // Skip invalid hue
