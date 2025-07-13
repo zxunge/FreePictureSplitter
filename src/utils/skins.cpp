@@ -22,7 +22,7 @@ QStringList getAvailableSkins()
     return list;
 }
 
-void setAppSkin(QApplication *const app, const QString &skin)
+void setAppSkin(QApplication *app, const QString &skin)
 {
     QFile styleFile;
     if (skin == "default") {
