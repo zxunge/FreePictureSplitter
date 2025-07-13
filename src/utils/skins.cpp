@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QMetaObject>
 #include <QCoreApplication>
+#include <QApplication>
 #include <QDir>
 
 namespace Util {
