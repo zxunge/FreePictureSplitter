@@ -11,6 +11,7 @@
 #include <QCoreApplication>
 #include <QApplication>
 #include <QDir>
+#include <QStyleFactory>
 
 namespace Util {
 

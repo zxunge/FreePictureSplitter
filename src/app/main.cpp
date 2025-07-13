@@ -10,7 +10,6 @@
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
-#include <QStyleFactory>
 #include <QMessageBox>
 #include <QFile>
 #include <QObject>
