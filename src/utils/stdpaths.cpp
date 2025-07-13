@@ -5,6 +5,8 @@
 
 #include "stdpaths.h"
 
+#include <QDir>
+
 namespace Util {
 
 QString getInstallPrefix()
