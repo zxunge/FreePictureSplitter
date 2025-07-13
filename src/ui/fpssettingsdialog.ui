@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1145</width>
-    <height>632</height>
+    <width>1219</width>
+    <height>676</height>
    </rect>
   </property>
   <property name="font">
@@ -35,96 +35,165 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
-        <widget class="QListWidget" name="listOptions">
-         <property name="editTriggers">
-          <set>QAbstractItemView::NoEditTriggers</set>
+        <widget class="QFrame" name="frButtons">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectRows</enum>
+         <property name="styleSheet">
+          <string notr="true">QToolButton:checked {
+    background: #cdcdcd;
+}</string>
          </property>
-         <property name="movement">
-          <enum>QListView::Static</enum>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="flow">
-          <enum>QListView::TopToBottom</enum>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
          </property>
-         <property name="viewMode">
-          <enum>QListView::IconMode</enum>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-         <property name="selectionRectVisible">
-          <bool>false</bool>
-         </property>
-         <property name="itemAlignment">
-          <set>Qt::AlignHCenter</set>
-         </property>
-         <property name="currentRow">
-          <number>0</number>
-         </property>
-         <property name="sortingEnabled">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Appearance</string>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <property name="font">
-           <font>
-            <family>Segoe UI</family>
-            <pointsize>10</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
+          <property name="leftMargin">
+           <number>0</number>
           </property>
-          <property name="icon">
-           <iconset resource="../resources/fps.qrc">
-            <normaloff>:/preferences/preferences/appearance-off.png</normaloff>
-            <normalon>:/preferences/preferences/appearance-off.png</normalon>
-            <disabledoff>:/preferences/preferences/appearance-off.png</disabledoff>
-            <disabledon>:/preferences/preferences/appearance-off.png</disabledon>
-            <activeoff>:/preferences/preferences/appearance-off.png</activeoff>
-            <activeon>:/preferences/preferences/appearance-off.png</activeon>
-            <selectedoff>:/preferences/preferences/appearance.png</selectedoff>
-            <selectedon>:/preferences/preferences/appearance.png</selectedon>:/preferences/preferences/appearance-off.png</iconset>
+          <property name="topMargin">
+           <number>0</number>
           </property>
-          <property name="flags">
-           <set>ItemIsEnabled</set>
+          <property name="rightMargin">
+           <number>0</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Output Settings</string>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
-          <property name="font">
-           <font>
-            <family>Segoe UI</family>
-            <pointsize>10</pointsize>
-            <weight>50</weight>
-            <italic>false</italic>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="icon">
-           <iconset resource="../resources/fps.qrc">
-            <normaloff>:/preferences/preferences/output-off.png</normaloff>
-            <normalon>:/preferences/preferences/output-off.png</normalon>
-            <disabledoff>:/preferences/preferences/output-off.png</disabledoff>
-            <disabledon>:/preferences/preferences/output-off.png</disabledon>
-            <activeoff>:/preferences/preferences/output-off.png</activeoff>
-            <activeon>:/preferences/preferences/output-off.png</activeon>
-            <selectedoff>:/preferences/preferences/output.png</selectedoff>
-            <selectedon>:/preferences/preferences/output.png</selectedon>:/preferences/preferences/output-off.png</iconset>
-          </property>
-          <property name="flags">
-           <set>ItemIsEnabled</set>
-          </property>
-         </item>
+          <item>
+           <widget class="QToolButton" name="tbtnAppearance">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Appearance</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/fps.qrc">
+              <normaloff>:/preferences/preferences/appearance-off.png</normaloff>
+              <selectedoff>:/preferences/preferences/appearance.png</selectedoff>:/preferences/preferences/appearance-off.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="tbtnOutput">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Output</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/fps.qrc">
+              <normaloff>:/preferences/preferences/output-off.png</normaloff>
+              <selectedoff>:/preferences/preferences/output.png</selectedoff>:/preferences/preferences/output-off.png</iconset>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </widget>
         <widget class="QStackedWidget" name="wgtOptions">
-         <widget class="QWidget" name="pgAppearance"/>
+         <widget class="QWidget" name="pgAppearance">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QGroupBox" name="gbxUi">
+             <property name="title">
+              <string>User Interface</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_11">
+                <property name="text">
+                 <string>Language:</string>
+                </property>
+                <property name="buddy">
+                 <cstring>cbxLang</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="cbxLang"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>App Skin:</string>
+                </property>
+                <property name="buddy">
+                 <cstring>cbxStyle</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cbxStyle"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="pgOutput">
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>

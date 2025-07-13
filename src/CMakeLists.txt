@@ -46,11 +46,13 @@ set(APP_SRCS
 set(UTILS_SRCS
     utils/jsonconfigitems.h
     utils/debugutil.h
+    utils/colors.h
+    utils/colors.cpp
 )
 
 set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if(Qt6_FOUND)
     qt_add_executable(FreePictureSplitter
         MANUAL_FINALIZATION
         ${QTGUI_SOURCES}
@@ -88,9 +90,9 @@ target_include_directories(FreePictureSplitter PRIVATE
     utils
 )
 
-target_link_libraries(FreePictureSplitter PRIVATE 
-    Qt${QT_VERSION_MAJOR}::Widgets 
-    Qt${QT_VERSION_MAJOR}::Gui 
+target_link_libraries(FreePictureSplitter PRIVATE
+    Qt::Core
+    Qt::Widgets
     reflectcpp
 )
 
@@ -104,8 +106,13 @@ set_target_properties(FreePictureSplitter PROPERTIES
 
 install(TARGETS FreePictureSplitter
     BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
+)
 
-if(QT_VERSION_MAJOR EQUAL 6)
+# Install resources
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+if(Qt6_FOUND)
     qt_finalize_executable(FreePictureSplitter)
 endif()

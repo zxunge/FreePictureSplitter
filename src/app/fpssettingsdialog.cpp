@@ -9,6 +9,8 @@
 
 #include <QImageWriter>
 #include <QColorDialog>
+#include <QDir>
+#include <QFileInfo>
 
 extern Util::Config appConfig;
 
@@ -18,6 +20,14 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     ui->setupUi(this);
 
     // Load configurations
+    /****************** Appearance ******************/
+    // Get the available skins
+    QDir skinDir("skins");
+    for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files))
+        ui->cbxStyle->addItem(QFileInfo(skin).baseName());
+    /************************************************/
+
+    /******************** Output ********************/
     // ----- Output File Options -----
     switch (appConfig.options.outputOpt.savingTo) {
     case Util::SavingTo::inPlace:
@@ -66,6 +76,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     ui->lePrefix->setText(QString::fromStdString(appConfig.options.nameOpt.prefix));
     ui->rbtnOriName->setChecked(appConfig.options.nameOpt.prefMode == Util::Prefix::same);
     ui->chbNumberContained->setChecked(appConfig.options.nameOpt.rcContained);
+    /************************************************/
 }
 
 fpsSettingsDialog::~fpsSettingsDialog()
@@ -145,7 +156,14 @@ void fpsSettingsDialog::on_chbGrid_toggled(bool checked)
     ui->sbxLineSize->setEnabled(checked);
 }
 
-void fpsSettingsDialog::on_listOptions_currentRowChanged(int currentRow)
+void fpsSettingsDialog::on_tbtnAppearance_toggled(bool checked)
 {
-    ui->wgtOptions->setCurrentIndex(currentRow);
+    if (checked)
+        ui->wgtOptions->setCurrentIndex(0); // "Appearance"
+}
+
+void fpsSettingsDialog::on_tbtnOutput_toggled(bool checked)
+{
+    if (checked)
+        ui->wgtOptions->setCurrentIndex(1); // "Output"
 }

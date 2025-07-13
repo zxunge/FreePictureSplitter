@@ -4,12 +4,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpsgraphicsview.h"
+#include "colors.h"
 
 #include <QMouseEvent>
 #include <QPixmap>
 #include <QColor>
-
-#include <cstdint>
 
 fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
@@ -51,34 +50,10 @@ void fpsGraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
     m_box->setVisible(true);
 
     if (adaptive) { // Set an adaptive background for GraphicsView based on the image's color
-        // Reduce calculation
-        const QImage scaled{
-            pixmap.scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).toImage()
-        };
-        // Average color
-        int64_t r{}, g{}, b{};
-        int count{};
-        QColor dominant;
-        for (int y{}; y < scaled.height(); ++y) {
-            for (int x{}; x < scaled.width(); ++x) {
-                QColor color{ scaled.pixelColor(x, y) };
-                if (color.alpha() > 128) { // Ignore transparent pixels
-                    r += color.red();
-                    g += color.green();
-                    b += color.blue();
-                    count++;
-                }
-            }
-        }
-        if (count == 0)
-            dominant = Qt::gray; // Default
-        dominant.setRgb(r / count, g / count, b / count);
+        const QColor dominant{ getDominantColorHSVWeighted(pixmap) };
+        const QColor bgColor{ getContrastColor(dominant) };
 
-        // See https://www.w3.org/TR/WCAG20/#relativeluminancedef
-        double luminance{ 0.2126 * dominant.redF() + 0.7152 * dominant.greenF()
-                          + 0.0722 * dominant.blueF() };
-        viewport()->setStyleSheet(
-                QString("background-color: %1;").arg((luminance > 0.5) ? "#c0c0c0" : "#ffffff"));
+        viewport()->setStyleSheet(QString("background-color: %1;").arg(bgColor.name()));
     }
 }
 
@@ -194,7 +169,7 @@ void fpsGraphicsView::addFloatingLine(fpsFloatingLine *fl)
 void fpsGraphicsView::removeAllFloatingLines()
 {
     for (auto l : m_plines)
-        delete l;
+        l->deleteLater();
     m_plines.clear();
 }
 
