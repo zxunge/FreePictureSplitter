@@ -10,10 +10,14 @@
 #include <QColor>
 #include <QPixmap>
 
+namespace Util {
+
 // Extract a primary hue using HSV color space
 QColor getDominantColorHSVWeighted(const QPixmap &pixmap);
 
 // Calculate the contrast color through perceived brightness
 QColor getContrastColor(const QColor &color);
+
+} // namespace Util
 
 #endif // COLORS_H

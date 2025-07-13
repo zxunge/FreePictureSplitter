@@ -5,6 +5,8 @@
 
 #include "colors.h"
 
+namespace Util {
+
 QColor getDominantColorHSVWeighted(const QPixmap &pixmap)
 {
     // Reduce the pixmap's size
@@ -23,9 +25,9 @@ QColor getDominantColorHSVWeighted(const QPixmap &pixmap)
                 continue;
 
             color.toHsv();
-            float h{ color.hueF() };
-            float s{ color.saturationF() };
-            float v{ color.valueF() };
+            double h{ color.hueF() };
+            double s{ color.saturationF() };
+            double v{ color.valueF() };
 
             if (h < 0)
                 continue; // Skip invalid hue
@@ -77,3 +79,5 @@ QColor getContrastColor(const QColor &color)
 
     return (value > threshold) ? QColor(182, 182, 192) : QColor(240, 240, 245);
 }
+
+} // namespace Util
