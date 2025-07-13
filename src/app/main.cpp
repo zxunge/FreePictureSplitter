@@ -33,13 +33,9 @@ int main(int argc, char *argv[])
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(":/icons/fps.ico"));
     QTranslator translator;
-    const QStringList uiLanguages{ QLocale::system().uiLanguages() };
-    for (const QString &locale : uiLanguages) {
-        const QString baseName{ "FreePictureSplitter_" + QLocale(locale).name() };
-        if (translator.load(":/i18n/i18n/" + baseName)) {
-            a.installTranslator(&translator);
-            break;
-        }
+    if (translator.load(QLocale::system(), fpsAppName, "_",
+                        QCoreApplication::applicationDirPath() + "/translations")) {
+        a.installTranslator(&translator);
     }
 
     // Load configuration

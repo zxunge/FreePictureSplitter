@@ -64,21 +64,29 @@ if(Qt6_FOUND)
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+    qt_add_translations(
+        TARGETS FreePictureSplitter
+        SOURCE_TARGETS FreePictureSplitter
+        TS_FILES ${TS_FILES}
+        LUPDATE_OPTIONS -no-obsolete -silent
+        QM_FILES_OUTPUT_VARIABLE QM_FILES
+    )
 else()
+    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+
     if(ANDROID)
         add_library(FreePictureSplitter SHARED
             ${QTGUI_SOURCES}
+            ${QM_FILES}
         )
 # Define properties for Android with Qt 5 after find_package() calls as:
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(FreePictureSplitter
             ${QTGUI_SOURCES}
+            ${QM_FILES}
         )
     endif()
-
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
 add_subdirectory(3rdparty)
@@ -111,9 +119,9 @@ install(TARGETS FreePictureSplitter
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
 )
-
 # Install resources
 install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(FILES ${QM_FILES} DESTINATION "translations")
 
 if(Qt6_FOUND)
     qt_finalize_executable(FreePictureSplitter)

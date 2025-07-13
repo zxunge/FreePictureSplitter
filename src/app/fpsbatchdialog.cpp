@@ -345,10 +345,7 @@ void fpsBatchDialog::on_btnSplit_clicked()
 
 void fpsBatchDialog::on_wgtTable_customContextMenuRequested(const QPoint &pos)
 {
-    if (ui->wgtTable->selectedItems().isEmpty())
-        ui->actionRemoveFromList->setEnabled(true);
-    else
-        ui->actionRemoveFromList->setEnabled(false);
+    ui->actionRemoveFromList->setEnabled(!ui->wgtTable->selectedItems().isEmpty());
     m_contextMenu->exec(QCursor::pos());
 }
 
@@ -359,16 +356,12 @@ void fpsBatchDialog::on_wgtTable_itemClicked(QTableWidgetItem *item)
 
 void fpsBatchDialog::on_wgtTable_itemSelectionChanged()
 {
-    if (ui->wgtTable->selectedItems().isEmpty())
-        ui->actionRemoveFromList->setEnabled(false);
+    ui->actionRemoveFromList->setEnabled(!ui->wgtTable->selectedItems().isEmpty());
 }
 
 void fpsBatchDialog::on_wgtList_customContextMenuRequested(const QPoint &pos)
 {
-    if (!ui->wgtList->selectedItems().isEmpty())
-        ui->actionRemoveFromList->setEnabled(true);
-    else
-        ui->actionRemoveFromList->setEnabled(false);
+    ui->actionRemoveFromList->setEnabled(!ui->wgtList->selectedItems().isEmpty());
     m_contextMenu->exec(QCursor::pos());
 }
 
@@ -379,8 +372,7 @@ void fpsBatchDialog::on_wgtList_itemClicked(QListWidgetItem *item)
 
 void fpsBatchDialog::on_wgtList_itemSelectionChanged()
 {
-    if (ui->wgtList->selectedItems().isEmpty())
-        ui->actionRemoveFromList->setEnabled(false);
+    ui->actionRemoveFromList->setEnabled(!ui->wgtList->selectedItems().isEmpty());
 }
 
 void fpsBatchDialog::on_actionRemoveFromList_triggered()
