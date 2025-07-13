@@ -17,7 +17,7 @@ jobs:
       with:
         msystem: clang64
         update: true
-	location: D:\
+        location: D:\
         pacboy: >-
           toolchain:p
           cmake:p
@@ -54,8 +54,8 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/FreePictureSplitter -B build .
         cmake --build build --parallel $(nproc)
-	cmake --install .
-	pushd /opt/FreePictureSplitter/
+        cmake --install .
+        pushd /opt/FreePictureSplitter/
         if [ "${{ matrix.qt }}" = "qt6" ]; then
           windeployqt6 --compiler-runtime ./FreePictureSplitter.exe
         else
@@ -103,7 +103,7 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\FreePictureSplitter -B build .
         cmake --build build --parallel $(nproc) --config Release
-	cd FreePictureSplitter\
+        cd FreePictureSplitter\
         windeployqt6 --compiler-runtime .\FreePictureSplitter.exe
         ${{ github.workspace }}\pedeps\bin\copypedeps.exe -r -n -v .\FreePictureSplitter.exe .\
         

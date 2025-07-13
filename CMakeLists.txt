@@ -30,7 +30,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(Qt6 QUIET REQUIRED COMPONENTS Core Widgets LinguistTools)
+find_package(Qt6 QUIET COMPONENTS Core Widgets LinguistTools)
 if (NOT Qt6_FOUND)
     # We need at least Qt 5.15 to enable some CMake and App features.
     find_package(Qt5 5.15 REQUIRED COMPONENTS Core Widgets LinguistTools)
