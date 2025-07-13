@@ -17,6 +17,7 @@ jobs:
       with:
         msystem: clang64
         update: true
+	location: D:\
         pacboy: >-
           toolchain:p
           cmake:p
@@ -51,20 +52,23 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/FreePictureSplitter -B build .
         cmake --build build --parallel $(nproc)
+	cmake --install .
+	pushd /opt/FreePictureSplitter/
         if [ "${{ matrix.qt }}" = "qt6" ]; then
-          windeployqt6 --dir build/bin --compiler-runtime build/bin/FreePictureSplitter.exe
+          windeployqt6 --compiler-runtime ./FreePictureSplitter.exe
         else
-          windeployqt --dir build/bin build/bin/FreePictureSplitter.exe
+          windeployqt ./FreePictureSplitter.exe
         fi
-        '${{ github.workspace }}/pedeps/bin/copypedeps.exe' -r -n -v build/bin/FreePictureSplitter.exe build/bin/
-        
+        '${{ github.workspace }}/pedeps/bin/copypedeps.exe' -r -n -v ./FreePictureSplitter.exe ./
+        popd
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: FreePictureSplitter-clang64-${{ matrix.qt }}-all
-        path: FreePictureSplitter/build/bin
+        path: D:/msys64/opt/FreePictureSplitter
         
   msvc:
     # We pack an archive using Qt6 built with MSVC.
@@ -85,7 +89,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         repository: zxunge/FreePictureSplitter
-        path: FreePictureSplitter
         submodules: recursive
       
     - name: Download and extract pedeps
@@ -97,15 +100,15 @@ jobs:
     - name: Build, deploy and copy dependencies
       shell: pwsh
       run: |
-        cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\FreePictureSplitter -B build .
         cmake --build build --parallel $(nproc) --config Release
-        windeployqt6 --dir build\bin\Release --compiler-runtime build\bin\Release\FreePictureSplitter.exe
-        ${{ github.workspace }}\pedeps\bin\copypedeps.exe -r -n -v build\bin\Release\FreePictureSplitter.exe build\bin\Release
+	cd FreePictureSplitter\
+        windeployqt6 --compiler-runtime .\FreePictureSplitter.exe
+        ${{ github.workspace }}\pedeps\bin\copypedeps.exe -r -n -v .\FreePictureSplitter.exe .\
         
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: FreePictureSplitter-msvc2022-qt6-all
-        path: FreePictureSplitter/build/bin/Release
+        path: FreePictureSplitter
