@@ -11,6 +11,10 @@ project(FreePictureSplitter
         HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter
 )
 
+if((NOT UNIX) AND (NOT WIN32))
+    message(FATAL_ERROR "Could not recognize the platform!")
+endif()
+
 option(WITH_QT_GUI "Build FreePictureSplitter's Qt GUI (Default)." ON)
 option(WITH_PCH "Using Pre-compiled Headers(PCH)." ON)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")

@@ -13,7 +13,9 @@ namespace Util {
 QString getInstallPrefix()
 {
     QDir binDir(QCoreApplication::applicationDirPath());
+#if defined(Q_OS_UNIX)
     binDir.cdUp();
+#endif
     return binDir.absolutePath();
 }
 
@@ -21,10 +23,7 @@ QString getDataDir()
 {
     QDir binDir(QCoreApplication::applicationDirPath());
 
-#if defined(Q_OS_MAC)
-    binDir.cdUp();
-    binDir.cd("Resources");
-#else
+#if defined(Q_OS_UNIX)
     binDir.cdUp();
     binDir.cd("share"); // The DATADIR of GNUInstallDirs is usually share
 #endif
@@ -36,10 +35,7 @@ QString getLibDir()
 {
     QDir binDir(QCoreApplication::applicationDirPath());
 
-#if defined(Q_OS_MAC)
-    binDir.cdUp();
-    binDir.cd("Library");
-#else
+#if defined(Q_OS_UNIX)
     binDir.cdUp();
     binDir.cd("lib"); // The LIBDIR of GNUInstallDirs is usually lib
 #endif

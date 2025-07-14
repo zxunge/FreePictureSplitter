@@ -520,42 +520,42 @@
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="46"/>
         <source>Open a picture...</source>
-        <translation type="unfinished"></translation>
+        <translation>打开一张图片...</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="69"/>
         <source>%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>%1，%2x%3，色深：%4，竖直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="88"/>
         <source>Error loading picture file: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="98"/>
         <source>Choose the output directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择输出文件夹。</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="112"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
-        <translation type="unfinished"></translation>
+        <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="121"/>
         <source>Error splitting picture.</source>
-        <translation type="unfinished">分割图片出错。</translation>
+        <translation>分割图片出错。</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="146"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
-        <translation type="unfinished">写入到文件&apos;%1&apos;出错: %2。</translation>
+        <translation>写入到文件&apos;%1&apos;出错: %2。</translation>
     </message>
     <message>
         <location filename="../../app/fpsmainwindow.cpp" line="157"/>
         <source>No rule to split this picture</source>
-        <translation type="unfinished">没有指定如何分割该图片</translation>
+        <translation>没有指定如何分割该图片</translation>
     </message>
 </context>
 <context>
@@ -563,22 +563,22 @@
     <message>
         <location filename="../../ui/fpsprogressdialog.ui" line="20"/>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>进度</translation>
     </message>
     <message>
         <location filename="../../ui/fpsprogressdialog.ui" line="54"/>
         <source>Remaining Files:</source>
-        <translation type="unfinished"></translation>
+        <translation>剩余文件数：</translation>
     </message>
     <message>
         <location filename="../../ui/fpsprogressdialog.ui" line="70"/>
         <source>0</source>
-        <translation type="unfinished"></translation>
+        <translation>0</translation>
     </message>
     <message>
         <location filename="../../ui/fpsprogressdialog.ui" line="102"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -586,148 +586,148 @@
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="20"/>
         <source>FreePictureSplitter Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>FreePictureSplitter首选项</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="81"/>
         <source>Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>外观</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="111"/>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>输出</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="150"/>
         <source>User Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>用户界面</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="156"/>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>语言：</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="169"/>
         <source>App Skin:</source>
-        <translation type="unfinished"></translation>
+        <translation>应用皮肤：</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="202"/>
         <source>Output File Options</source>
-        <translation type="unfinished"></translation>
+        <translation>输出文件选项</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="208"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify output path:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;指定输出路径：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="215"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;对于JPG图片，取值为0 ~ 100，越大的值会使输出具有越高的质量。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="225"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;输出图片格式：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="242"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Picture scaling:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图片缩放：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="249"/>
         <source>Create sub-directories under the output path.</source>
-        <translation type="unfinished"></translation>
+        <translation>在输出目录下创建子文件夹。</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="259"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;(Default is 100.00%, that is, no scaling.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;（默认为100.00%，即没有缩放。）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="266"/>
         <location filename="../../ui/fpssettingsdialog.ui" line="276"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>点击“保存图片”时指定的目录</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="281"/>
         <source>The same location as the source picture</source>
-        <translation type="unfinished"></translation>
+        <translation>与每个源图片目录相同</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="286"/>
         <source>The following path:</source>
-        <translation type="unfinished">下列目录：</translation>
+        <translation>下列目录：</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="301"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG质量：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="318"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存至：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="328"/>
         <source>Grid Figure</source>
-        <translation type="unfinished"></translation>
+        <translation>网格图</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="337"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;分割线宽：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="344"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;网格线颜色：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="364"/>
         <source>Select Color...</source>
-        <translation type="unfinished"></translation>
+        <translation>选择颜色...</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="412"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;像素&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="425"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
-        <translation type="unfinished"></translation>
+        <translation>自动生成一份带网格图标明图片分割情况的图片。</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="435"/>
         <source>File Name Conventions</source>
-        <translation type="unfinished"></translation>
+        <translation>文件命名规则</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="441"/>
         <source>Use the original file name as the prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>使用源文件名作为前缀</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="448"/>
         <source>Use the specified prefix:</source>
-        <translation type="unfinished"></translation>
+        <translation>使用指定前缀：</translation>
     </message>
     <message>
         <location filename="../../ui/fpssettingsdialog.ui" line="458"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
-        <translation type="unfinished"></translation>
+        <translation>在文件名中包含[行数 * 列数]。</translation>
     </message>
 </context>
 </TS>

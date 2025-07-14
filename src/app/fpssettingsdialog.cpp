@@ -23,6 +23,9 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     /****************** Appearance ******************/
     ui->cbxStyle->addItems(Util::getAvailableSkins());
     ui->cbxStyle->setCurrentText(QString::fromStdString(appConfig.app.style));
+    // `Language' is now fixed
+    ui->cbxLang->addItem("System");
+    ui->cbxLang->setCurrentIndex(0);
     /************************************************/
 
     /******************** Output ********************/

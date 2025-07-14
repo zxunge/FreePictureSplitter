@@ -9,12 +9,15 @@
 
 #include <QImage>
 #include <QRect>
+#include <QPixmap>
+#include <QPainter>
+#include <QPen>
 
 #include <algorithm>
 
 /* static */ QStringList fpsImageHandler::getOutputList(const QString &prefix,
                                                         const QString &suffix, int rows, int cols,
-                                                        bool rcContained)
+                                                        bool rcContained, bool grid)
 {
     QStringList outputList;
     auto splitCount{ QString::asprintf("%d", rows * cols).size() };
@@ -27,18 +30,22 @@
                             + (rcContained ? QString::asprintf("_%dx%d.", i, j)
                                            : QStringLiteral("."))
                             + suffix;
+    if (grid)
+        outputList << prefix + QStringLiteral("_grid.") + suffix;
     return outputList;
 }
 
 /* static */ RectList fpsImageHandler::getSubRects(int width, int height, int rowsOrHeight,
-                                                   int colsOrWidth, SplitMode mode, int32_t seq)
+                                                   int colsOrWidth, SplitMode mode,
+                                                   SplitSequence seq)
 {
     // TODO@25/05/10 Improve algorithm.
     // There're 2 steps we should follow basically:
     // First, write rows info to `rects'
     // Then, cols info.
-    if (width * height == 0 || (mode == Size && (rowsOrHeight > height || colsOrWidth > width))
-        || (mode == Average && rowsOrHeight * colsOrWidth == 0))
+    if (width * height == 0
+        || (mode == SplitMode::Size && (rowsOrHeight > height || colsOrWidth > width))
+        || (mode == SplitMode::Average && rowsOrHeight * colsOrWidth == 0))
         return RectList();
 
     int basicRowHeight, basicColWidth, legacyRowHeight, legacyColWidth;
@@ -46,14 +53,14 @@
     RectList rects;
     // We need info about how many rows and columns when splitting by sizes ourself.
     switch (mode) {
-    case Size:
+    case SplitMode::Size:
         basicColWidth = colsOrWidth;
         basicRowHeight = rowsOrHeight;
         rows = (height % rowsOrHeight == 0) ? height / rowsOrHeight : height / rowsOrHeight + 1;
         cols = (width % colsOrWidth == 0) ? width / colsOrWidth : width / colsOrWidth + 1;
 
         break;
-    case Average:
+    case SplitMode::Average:
         // TODO@25/05/04 Use more smooth splitting differences.
         basicRowHeight = height / rowsOrHeight;
         basicColWidth = width / colsOrWidth;
@@ -84,7 +91,7 @@
         }
     */
     // Some codes are duplicated.
-    if ((seq & Left) == Left) {
+    if ((seq & SplitSequence::Left) == SplitSequence::Left) {
         // ----- Rows: Up -> Down -----
         for (int i{}; i != rows - 1; ++i)
             for (int j{}; j != cols; ++j) {
@@ -107,7 +114,7 @@
             rects[i][cols - 1].setLeft((cols - 1) * basicColWidth);
             rects[i][cols - 1].setWidth(legacyColWidth);
         }
-    } else if ((seq & Right) == Right) {
+    } else if ((seq & SplitSequence::Right) == SplitSequence::Right) {
         // ----- Rows: Up -> Down -----
         for (int i{}; i != rows - 1; ++i)
             for (int j{}; j != cols; ++j) {
@@ -229,4 +236,22 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
         }
 
     return rects;
+}
+
+/* static */ void fpsImageHandler::drawGridLines(QPixmap *pixmap, const RectList &rects,
+                                                 const QColor &color, int size)
+{
+    if (rects.empty() || pixmap->isNull())
+        return;
+
+    QPainter p(pixmap);
+    QPen pen;
+    pen.setColor(color);
+    pen.setWidth(size);
+    p.setPen(pen);
+
+    for (int i{}; i != rects.size() - 1; ++i)
+        p.drawLine(0, rects[i][0].bottom(), pixmap->width() - 1, rects[i][0].bottom());
+    for (int j{}; j != rects[0].size() - 1; ++j)
+        p.drawLine(rects[0][j].right(), 0, rects[0][j].right(), pixmap->height() - 1);
 }

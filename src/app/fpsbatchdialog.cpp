@@ -246,38 +246,46 @@ void fpsBatchDialog::on_btnSplit_clicked()
 
         if (ui->rbtnAverage->isChecked()) {
             if (ui->rbtnHoriLeft->isChecked())
-                rects = fpsImageHandler::getSubRects(
-                        reader.size().width(), reader.size().height(), ui->sbxRows->value(),
-                        ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Left);
+                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
+                                                     ui->sbxRows->value(), ui->sbxCols->value(),
+                                                     fpsImageHandler::SplitMode::Average,
+                                                     fpsImageHandler::SplitSequence::Left);
             else if (ui->rbtnHoriRight->isChecked())
-                rects = fpsImageHandler::getSubRects(
-                        reader.size().width(), reader.size().height(), ui->sbxRows->value(),
-                        ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Right);
+                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
+                                                     ui->sbxRows->value(), ui->sbxCols->value(),
+                                                     fpsImageHandler::SplitMode::Average,
+                                                     fpsImageHandler::SplitSequence::Right);
             else if (ui->rbtnVertLeft->isChecked())
-                rects = fpsImageHandler::getSubRects(
-                        reader.size().width(), reader.size().height(), ui->sbxRows->value(),
-                        ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Left);
+                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
+                                                     ui->sbxRows->value(), ui->sbxCols->value(),
+                                                     fpsImageHandler::SplitMode::Average,
+                                                     fpsImageHandler::SplitSequence::Left);
             else
-                rects = fpsImageHandler::getSubRects(
-                        reader.size().width(), reader.size().height(), ui->sbxRows->value(),
-                        ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Right);
+                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
+                                                     ui->sbxRows->value(), ui->sbxCols->value(),
+                                                     fpsImageHandler::SplitMode::Average,
+                                                     fpsImageHandler::SplitSequence::Right);
         } else if (ui->rbtnSize->isChecked()) {
             if (ui->rbtnHoriLeft->isChecked())
                 rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
                                                      ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::Size, fpsImageHandler::Left);
+                                                     fpsImageHandler::SplitMode::Size,
+                                                     fpsImageHandler::SplitSequence::Left);
             else if (ui->rbtnHoriRight->isChecked())
                 rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
                                                      ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::Size, fpsImageHandler::Right);
+                                                     fpsImageHandler::SplitMode::Size,
+                                                     fpsImageHandler::SplitSequence::Right);
             else if (ui->rbtnVertLeft->isChecked())
                 rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
                                                      ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::Size, fpsImageHandler::Left);
+                                                     fpsImageHandler::SplitMode::Size,
+                                                     fpsImageHandler::SplitSequence::Left);
             else
                 rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
                                                      ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::Size, fpsImageHandler::Right);
+                                                     fpsImageHandler::SplitMode::Size,
+                                                     fpsImageHandler::SplitSequence::Right);
         }
 
         if (!rects.isEmpty()) {

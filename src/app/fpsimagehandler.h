@@ -9,29 +9,30 @@
 
 #include <QImage>
 #include <QImageReader>
+#include <QColor>
 #include <QtCore/qstring.h>
 #include <QtCore/qrect.h>
 #include <QtCore/qvector.h>
-#include <QtCore/qobject.h>
 
 class fpsGraphicsView;
+class QPixmap;
 
 typedef QVector<QVector<QRect>> RectList;
 
 /*
- * fpsImageHandler: Handles all the stuff for all-purpose image splitting and file generation.
- * The general workflow is:
+ * fpsImageHandler: Handles all the stuff for all-purpose image splitting and file generation
+ * (Single picture). The general workflow is:
  *  1. Users specify their wants, and we use `getSubRects' or `linesToRects' to capture them.
  *  2. Display our result using `rectsToLines'.
  *  3. Obtain all the sub-images using `split'.
  *  4. Obtain all the names of the files to save using `getOutputList'.
- *  5. Save files.
+ *  5. [Optional] Draw a grid figure for the picture using `darwGridLines' with related arguments.
+ *  6. Save files.
  */
-class fpsImageHandler : public QObject
+class fpsImageHandler
 {
-    Q_OBJECT
 public:
-    enum SplitMode { Size, Average };
+    enum class SplitMode { Size, Average };
 
     enum SplitSequence {
         Left = 0x0000000f,
@@ -39,25 +40,24 @@ public:
         Vert [[deprecated]] = 0x00000f00,
         Hori [[deprecated]] = 0x0000f000
     };
-    Q_ENUM(SplitMode)
-    Q_ENUM(SplitSequence)
 
 public:
     // It's important to know that both our `SizeRect rect' and `QStringList list' have an
     // 'accessing' sequence of TopLeft -> BottomRight.
     static RectList getSubRects(int width, int height, int rowsOrHeight, int colsOrWidth,
-                                SplitMode mode = Average, int32_t seq = Left);
+                                SplitMode mode = SplitMode::Average,
+                                SplitSequence seq = SplitSequence::Left);
 
     static bool split(QImageReader &imgReader, QVector<QImage> &output, const RectList &rects);
 
     static QStringList getOutputList(const QString &prefix, const QString &suffix, int rows,
-                                     int cols, bool rcContained = false);
+                                     int cols, bool rcContained = false, bool grid = false);
 
     static void rectsToLines(const RectList &rects, fpsGraphicsView *parent);
     static RectList linesToRects(fpsGraphicsView *parent);
 
-signals:
-    void proceed(int progress);
+    static void drawGridLines(QPixmap *pixmap, const RectList &rects, const QColor &color,
+                              int size);
 };
 
 #endif // FPSIMAGEHANDLER_H

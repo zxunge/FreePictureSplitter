@@ -29,18 +29,18 @@ FreePictureSplitter是一款快速、小巧且易用的图片分割软件。
 我们希望FreePictureSplitter实现下列功能：
 功能 | 实现情况
 ------|------
-批量分割 | 仅1.x，正在添加至3.x
+批量分割 | ✅
 单图片分割 | ✅
 多种图片格式 | ✅
 平均分割 | ✅
 按固定尺寸分割 | ✅
+网格图 | ✅
 用户配置 | ❎
 HTML生成 | ❎
 质量控制 | ❎
 
 ## 下载
 最新版本可在[Github Releases](https://github.com/zxunge/FreePictureSplitter/releases)上找到。
-<br />我们已经发布了版本3（尽管目前是预览版），希望大家试用，但是请注意我们并不保证目前版本3没有问题。
 
 ## 从源码构建
 这部分内容见[Building](build.md)。

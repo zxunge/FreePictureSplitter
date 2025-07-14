@@ -116,14 +116,26 @@ set_target_properties(FreePictureSplitter PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-install(TARGETS FreePictureSplitter
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-# Install resources
-install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR})
-install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/translations)
+if(UNIX)
+    install(TARGETS FreePictureSplitter
+        BUNDLE DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+    # Install resources
+    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR})
+    install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/translations)
+elseif(WIN32)
+    # A traditional Win32-like installation directory structure
+    install(TARGETS FreePictureSplitter
+        BUNDLE DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
+    )
+    # Install resources
+    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_PREFIX})
+    install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/translations)
+endif()
 
 if(Qt6_FOUND)
     qt_finalize_executable(FreePictureSplitter)

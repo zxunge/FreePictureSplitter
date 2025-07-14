@@ -38,13 +38,13 @@ Multiple picture formats | ✅
 Splitting averagely | ✅
 Single picture splitting | ✅
 Splitting by sizes | ✅
+Grid Figures | ✅
 User configurations | ✅
 HTML generation | ❎
 Quality control | ✅
 
 ## Releases
 The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
-<br /> We have bumped the version 3 there, which is a 'pre-release'. We don't gurantee the usability of that Preview package.
 
 ## Building
 See [Building](docs/en/build.md)

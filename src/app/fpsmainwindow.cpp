@@ -10,13 +10,14 @@
 #include "fpsaboutdialog.h"
 #include "fpsprogressdialog.h"
 #include "jsonconfigitems.h"
+#include "config.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QStringLiteral>
 #include <QFileInfo>
+#include <QColor>
 
 extern Util::Config appConfig;
 
@@ -73,7 +74,6 @@ void fpsMainWindow::on_actionOpen_triggered()
                                            .arg(pixmap.depth())
                                            .arg(pixmap.logicalDpiY())
                                            .arg(pixmap.logicalDpiX()));
-
         ui->btnReset->setEnabled(true);
         ui->actionZoomIn->setEnabled(true);
         ui->actionZoomOut->setEnabled(true);
@@ -84,7 +84,7 @@ void fpsMainWindow::on_actionOpen_triggered()
         if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
     } else
-        QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
+        QMessageBox::warning(this, fpsAppName,
                              tr("Error loading picture file: %1.").arg(m_imgReader.fileName()),
                              QMessageBox::Close);
 }
@@ -108,7 +108,7 @@ void fpsMainWindow::on_actionSave_triggered()
     if (ui->rbtnManual->isChecked())
         m_rects = fpsImageHandler::linesToRects(ui->graphicsView);
     else if (m_rects.isEmpty()) {
-        QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
+        QMessageBox::warning(this, fpsAppName,
                              tr("Please at least choose one splitting mode, offer "
                                 "useful data then reset the splitting lines."),
                              QMessageBox::Close);
@@ -117,16 +117,28 @@ void fpsMainWindow::on_actionSave_triggered()
 
     if (!m_rects.isEmpty()) {
         if (!fpsImageHandler::split(m_imgReader, imageList, m_rects)) {
-            QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                                 tr("Error splitting picture."), QMessageBox::Close);
+            QMessageBox::warning(this, fpsAppName, tr("Error splitting picture."),
+                                 QMessageBox::Close);
             return;
         }
+
+        // Grid Figure
+        if (appConfig.options.gridOpt.enabled) {
+            m_imgReader.setFileName(m_imgReader.fileName());
+            QPixmap p{ QPixmap::fromImageReader(&m_imgReader) };
+            fpsImageHandler::drawGridLines(
+                    &p, m_rects, QColor(QString::fromStdString(appConfig.options.gridOpt.colorRgb)),
+                    appConfig.options.gridOpt.lineSize);
+            imageList.push_back(p.toImage());
+        }
+
         outputList = fpsImageHandler::getOutputList(
                 appConfig.options.nameOpt.prefMode == Util::Prefix::same
                         ? QFileInfo(m_imgReader.fileName()).baseName()
                         : QString::fromStdString(appConfig.options.nameOpt.prefix),
                 QString::fromStdString(appConfig.options.outputOpt.outFormat), m_rects.size(),
-                m_rects[0].size(), appConfig.options.nameOpt.rcContained);
+                m_rects[0].size(), appConfig.options.nameOpt.rcContained,
+                appConfig.options.gridOpt.enabled);
 
         fpsProgressDialog dlg(this, outputList.size());
 
@@ -142,7 +154,7 @@ void fpsMainWindow::on_actionSave_triggered()
                     QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
             writer.setQuality(appConfig.options.outputOpt.jpgQuality);
             if (!writer.write(imageList[i])) {
-                QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
+                QMessageBox::warning(this, fpsAppName,
                                      tr("Error writing to file \'%1\': %2.")
                                              .arg(writer.fileName())
                                              .arg(writer.errorString()),
@@ -153,8 +165,8 @@ void fpsMainWindow::on_actionSave_triggered()
         }
         dlg.close();
     } else {
-        QMessageBox::warning(this, QStringLiteral("FreePictureSplitter"),
-                             tr("No rule to split this picture"), QMessageBox::Close);
+        QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),
+                             QMessageBox::Close);
         return;
     }
 }
@@ -196,36 +208,44 @@ void fpsMainWindow::on_btnReset_clicked()
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Left);
+                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
+                    fpsImageHandler::SplitSequence::Left);
         else if (ui->rbtnHoriRight->isChecked())
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Right);
+                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
+                    fpsImageHandler::SplitSequence::Right);
         else if (ui->rbtnVertLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Left);
+                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
+                    fpsImageHandler::SplitSequence::Left);
         else
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::Average, fpsImageHandler::Right);
+                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
+                    fpsImageHandler::SplitSequence::Right);
     } else if (ui->rbtnSize->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
+                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
+                    fpsImageHandler::SplitSequence::Left);
         else if (ui->rbtnHoriRight->isChecked())
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
+                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
+                    fpsImageHandler::SplitSequence::Right);
         else if (ui->rbtnVertLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Left);
+                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
+                    fpsImageHandler::SplitSequence::Left);
         else
             m_rects = fpsImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::Size, fpsImageHandler::Right);
+                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
+                    fpsImageHandler::SplitSequence::Right);
     }
     ui->actionSave->setEnabled(true);
     ui->graphicsView->removeAllFloatingLines();
