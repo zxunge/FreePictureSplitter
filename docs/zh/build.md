@@ -18,7 +18,7 @@ pacman -S mingw-w64-x86_64-toolchain  \
           mingw-w64-x86_64-qt6-tools  \
           git
 ````
-Qt5同样受到支持：
+Qt5同样受到支持（仅限3.x版本）：
 ````
 pacman -S mingw-w64-x86_64-toolchain  \
           mingw-w64-x86_64-cmake      \
@@ -33,23 +33,12 @@ git submodule update --init --recursive
 mkdir build && cd $_
 cmake ..
 cmake --build . --parallel $(nproc)
-./FreePictureSplitter
+cmake --install .
 ````
-享受它吧！
+如果您没有指定安装目录（CMAKE_INSTALL_PREFIX)，您可能需要在指示的目录下找到已编译的程序并运行。享受它吧！
 
 ## Linux发行版
 在不同的Linux发行版上，安装包的方法可能有所不同。然而，“尝一脔肉，而知一镬之味”，我们介绍一下用apt安装相关包的过程。
-````
-sudo apt update
-sudo apt install -y          \
-         build-essential     \
-         qtbase5-dev         \
-         qtbase5-private-dev \
-         qttools5-dev-tools  \
-         qttools5-dev        \
-         libxkbcommon-dev
-````
-或
 ````
 sudo apt update
 sudo apt install -y           \
@@ -58,6 +47,6 @@ sudo apt install -y           \
          qt6-base-private-dev \
          linguist-qt6         \
          qt6-tools-dev        \
-         libxkbcommon-dev
+         libxkbcommon-dev                  # 注意，这需要Ubuntu 24.04及以上版本
 ````
 其余与上述Msys2操作相同。

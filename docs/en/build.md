@@ -17,7 +17,7 @@ pacman -S mingw-w64-x86_64-toolchain  \
           mingw-w64-x86_64-qt6-tools  \
           git
 ````
-Qt5 is also supported for older computers, so the above commands are:
+Qt5 is also supported for older computers（version 3.x), so the above commands are:
 ````
 pacman -S mingw-w64-x86_64-toolchain  \
           mingw-w64-x86_64-cmake      \
@@ -36,10 +36,9 @@ git submodule update --init --recursive
 mkdir build && cd $_
 cmake ..
 cmake --build . --parallel $(nproc)
-./FreePictureSplitter
+cmake --install .
 ````
-
-Enjoy it!
+You need to find the application under the installation folder. Enjoy it!
 
 ## UNIX/Linux
 First, you should make sure that you have installed the newest C++ compiler and Qt by:

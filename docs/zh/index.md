@@ -1,4 +1,4 @@
-<div align=center>
+<div align="center">
 
 <img src="../../src/resources/fps.ico" width="15%" height="15%">
 
@@ -20,7 +20,7 @@
 FreePictureSplitter是一款快速、小巧且易用的图片分割软件。
 
 ## 项目演示
-<video src="https://github.com/user-attachments/assets/c95170e7-2305-48a0-abdf-48664f2a67ac" data-canonical-src="https://github.com/user-attachments/assets/c95170e7-2305-48a0-abdf-48664f2a67ac" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+<video src="https://github.com/user-attachments/assets/d36a9fd0-6d29-4a09-a1d4-fe8c469507ec" data-canonical-src="https://github.com/user-attachments/assets/d36a9fd0-6d29-4a09-a1d4-fe8c469507ec" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
 
 > [!NOTE]
 > 当我们以后提到FreePictureSplitter时，我们指的是FreePictureSplitter版本3及以上版本。
@@ -41,6 +41,9 @@ HTML生成 | ❎
 
 ## 下载
 最新版本可在[Github Releases](https://github.com/zxunge/FreePictureSplitter/releases)上找到。
+
+## 需求
+您必须知道的是，我们的**3.x**系列版本需要Qt 5.15及以上，但是即将来临的版本4将需要Qt 6.8.0及以上。一些老旧用户可能需要某些工作，例如一种兼容层，才能使应用程序良好运行。
 
 ## 从源码构建
 这部分内容见[Building](build.md)。

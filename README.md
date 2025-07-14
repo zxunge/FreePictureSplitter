@@ -46,6 +46,9 @@ Quality control | ✅
 ## Releases
 The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
 
+## Requirements
+It's important to know that our **3.x** versions support Qt >= 5.15, while the incoming version 4 will only support Qt >= 6.8.0. Thus, some users with old computers would need some workaround like a compatibility-layer.
+
 ## Building
 See [Building](docs/en/build.md)
 
