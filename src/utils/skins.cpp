@@ -18,7 +18,7 @@ QStringList getAvailableSkins()
 {
     QStringList list;
     QDir skinDir(Util::getSkinsDir());
-    for (const auto skin : skinDir.entryList(QStringList{ "*.json" }, QDir::Files)) {
+    for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files)) {
         const QString baseName{ QFileInfo(skin).baseName() };
         // Capitalize the first letter
         list.push_back(baseName.left(1).toUpper()
@@ -49,8 +49,8 @@ void setAppSkin(QApplication *app, const QString &skinName)
         app->setStyleSheet(QLatin1String(styleFile.readAll()));
         styleFile.close();
     } else {
-        QMessageBox::warning(nullptr, fpsAppName,
-                             QObject::tr("Error loading skin."), QMessageBox::Close);
+        QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading skin."),
+                             QMessageBox::Close);
         QMetaObject::invokeMethod(app, &QCoreApplication::quit, Qt::QueuedConnection);
     }
 }
