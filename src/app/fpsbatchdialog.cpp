@@ -390,11 +390,7 @@ void fpsBatchDialog::on_actionRemoveFromList_triggered()
         delete ui->wgtList->takeItem(ui->wgtTable->selectedItems()[0]->row());
         ui->wgtTable->removeRow(ui->wgtTable->selectedItems()[0]->row());
     } else {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         qsizetype index{ m_filesList.indexOf(ui->wgtList->selectedItems()[0]->text()) };
-#else
-        int index{ m_filesList.indexOf(ui->wgtList->selectedItems()[0]->text()) };
-#endif
         m_filesList.removeAt(index);
         delete ui->wgtList->takeItem(index);
         ui->wgtTable->removeRow(index);

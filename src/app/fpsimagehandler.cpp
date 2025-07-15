@@ -158,13 +158,8 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
         return false;
 
     output.clear();
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     for (qsizetype j{}; j != cRows; ++j)
         for (qsizetype k{}; k != cCols; ++k)
-#else
-    for (int j{}; j != cRows; ++j)
-        for (int k{}; k != cCols; ++k)
-#endif
             output.push_back(img.copy(rects[j][k]));
 
     return true;
@@ -176,11 +171,7 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
         return;
 
     fpsFloatingLine *line{};
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     for (qsizetype i{}; i != rects.size() - 1; ++i) {
-#else
-    for (int i{}; i != rects.size() - 1; ++i) {
-#endif
         line = new fpsFloatingLine(parent);
         line->setScenePos(rects[i][0].bottom());
         line->show();

@@ -25,15 +25,9 @@ QColor getDominantColorHSVWeighted(const QPixmap &pixmap)
             if (color.alpha() < 128)
                 continue;
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
             float h{ color.hueF() };
             float s{ color.saturationF() };
             float v{ color.valueF() };
-#else
-            qreal h{ color.hueF() };
-            qreal s{ color.saturationF() };
-            qreal v{ color.valueF() };
-#endif
 
             if (h < 0)
                 continue; // Skip invalid hue
@@ -71,23 +65,14 @@ QColor getContrastColor(const QColor &color)
 {
     // Convert to HSV and obtain the brightness component
     QColor hsv{ color.toHsv() };
-
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     float value{ hsv.valueF() };
-#else
-    qreal value{ hsv.valueF() };
-#endif
 
     // Use brightness threshold (adjustable)
     float threshold{ 0.6f }; // Use dark background if higher
 
     // Take saturation into account,
     // high saturation -> enhanced contrast color
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     float saturation{ hsv.saturationF() };
-#else
-    qreal saturation{ hsv.saturationF() };
-#endif
 
     if (saturation > 0.7) {
         threshold -= 0.15f; // high saturation -> lower threshold

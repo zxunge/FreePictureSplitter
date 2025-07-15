@@ -138,11 +138,7 @@ void fpsGraphicsView::addFloatingLine(Qt::Orientation orientation, const QPoint 
     fl->updateLine(pos);
     fl->show();
     m_plines.push_back(fl);
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     qsizetype i{ m_plines.size() - 1 };
-#else
-    int i{ m_plines.size() - 1 };
-#endif
     connect(fl, &fpsFloatingLine::userDestruction, this, [this, fl, i]() {
         fl->deleteLater();
         this->m_plines.remove(i);
@@ -155,11 +151,7 @@ void fpsGraphicsView::addFloatingLine(fpsFloatingLine *fl)
         return;
 
     m_plines.push_back(fl);
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     qsizetype i{ m_plines.size() - 1 };
-#else
-    int i{ m_plines.size() - 1 };
-#endif
     connect(fl, &fpsFloatingLine::userDestruction, this, [this, fl, i]() {
         fl->deleteLater();
         this->m_plines.remove(i);
