@@ -24,7 +24,6 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        qt: [qt5, qt6]
         msystem: [mingw64, clang64]
 
     steps:
@@ -37,8 +36,9 @@ jobs:
           toolchain:p
           cmake:p
           ninja:p
-          ${{ matrix.qt }}-base:p
-          ${{ matrix.qt }}-tools:p
+          qt6-base:p
+          qt6-tools:p
+          qt6-svg:p
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -54,9 +54,9 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
         cmake --build build --parallel $(nproc)
+        cmake --install .
         
   msvc:
-    # We only support Qt6 when building using MSVC.
     runs-on: windows-latest
     steps:
     - name: Install Qt
@@ -84,9 +84,9 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -B build .
         cmake --build build --parallel $(nproc) --config Release
+        cmake --install .
       
   ubuntu:
-    # We only support Qt6 on Linux.
     runs-on: ubuntu-latest
     steps:
     - name: Install Qt
@@ -110,3 +110,4 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
         cmake --build build --parallel $(nproc)
+        cmake --install .
