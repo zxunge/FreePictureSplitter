@@ -33,9 +33,8 @@ int main(int argc, char *argv[])
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(":/icons/fps.ico"));
     QTranslator translator;
-    if (translator.load(QLocale::system(), fpsAppName, "_", Util::getDataDir() + "/translations")) {
+    if (translator.load(QLocale::system(), fpsAppName, "_", Util::getTranslationsDir()))
         a.installTranslator(&translator);
-    }
 
     // Load configuration
     QFile cfgFile("conf.json");

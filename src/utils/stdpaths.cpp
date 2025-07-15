@@ -6,47 +6,34 @@
 #include "stdpaths.h"
 
 #include <QDir>
-#include <QCoreApplication>
+#include <QLibraryInfo>
 
 namespace Util {
 
-QString getInstallPrefix()
+QString getSkinsDir()
 {
-    QDir binDir(QCoreApplication::applicationDirPath());
-#if defined(Q_OS_UNIX)
-    binDir.cdUp();
+#if defined(Q_OS_WIN)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
+    dir.cd("skins");
+#elif defined(Q_OS_UNIX)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+    dir.cd("fps");
+    dir.cd("skins");
 #endif
-    return binDir.absolutePath();
+    return dir.absolutePath();
 }
 
-QString getDataDir()
+QString getTranslationsDir()
 {
-    QDir binDir(QCoreApplication::applicationDirPath());
-
-#if defined(Q_OS_UNIX)
-    binDir.cdUp();
-    binDir.cd("share"); // The DATADIR of GNUInstallDirs is usually share
+#if defined(Q_OS_WIN)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
+    dir.cd("translations");
+#elif defined(Q_OS_UNIX)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+    dir.cd("fps");
+    dir.cd("translations");
 #endif
-
-    return binDir.absolutePath();
-}
-
-QString getLibDir()
-{
-    QDir binDir(QCoreApplication::applicationDirPath());
-
-#if defined(Q_OS_UNIX)
-    binDir.cdUp();
-    binDir.cd("lib"); // The LIBDIR of GNUInstallDirs is usually lib
-#endif
-
-    return binDir.absolutePath();
-}
-
-QString getBinDir()
-{
-    QDir binDir(QCoreApplication::applicationDirPath());
-    return binDir.absolutePath();
+    return dir.absolutePath();
 }
 
 } // namespace Util

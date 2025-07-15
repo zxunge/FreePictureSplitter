@@ -76,7 +76,7 @@ inline void setDefConf(Config &s)
                          .majorVersion = fpsVersionMajor,
                          .minorVersion = fpsVersionMinor,
                          .microVersion = fpsVersionMicro,
-                         .style = "default" },
+                         .style = "Default" },
                 .options = { .outputOpt = { .savingTo = SavingTo::inPlace,
                                             .subDir = false,
                                             .outFormat = "jpg",

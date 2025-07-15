@@ -45,7 +45,7 @@
      <x>0</x>
      <y>0</y>
      <width>1105</width>
-     <height>29</height>
+     <height>28</height>
     </rect>
    </property>
    <property name="font">
@@ -105,6 +105,9 @@
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
    <property name="toolButtonStyle">
     <enum>Qt::ToolButtonTextUnderIcon</enum>
    </property>
@@ -153,7 +156,11 @@
        </property>
        <layout class="QGridLayout" name="gridLayout">
         <item row="2" column="1">
-         <widget class="QSpinBox" name="sbxWidth"/>
+         <widget class="QSpinBox" name="sbxWidth">
+          <property name="maximum">
+           <number>0</number>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label">
@@ -166,12 +173,19 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QSpinBox" name="sbxHeight"/>
+         <widget class="QSpinBox" name="sbxHeight">
+          <property name="maximum">
+           <number>0</number>
+          </property>
+         </widget>
         </item>
         <item row="6" column="1">
          <widget class="QSpinBox" name="sbxCols">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+          <property name="maximum">
+           <number>0</number>
           </property>
          </widget>
         </item>
@@ -202,6 +216,9 @@
          <widget class="QSpinBox" name="sbxRows">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+          <property name="maximum">
+           <number>0</number>
           </property>
          </widget>
         </item>

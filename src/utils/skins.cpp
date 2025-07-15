@@ -8,19 +8,18 @@
 
 #include <QFile>
 #include <QMessageBox>
-#include <QMetaObject>
-#include <QCoreApplication>
 #include <QApplication>
 #include <QDir>
-#include <QStyleFactory>
+
+#include <oclero/qlementine.hpp>
 
 namespace Util {
 
 QStringList getAvailableSkins()
 {
     QStringList list;
-    QDir skinDir(Util::getDataDir() + "/skins");
-    for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files)) {
+    QDir skinDir(Util::getSkinsDir());
+    for (const auto skin : skinDir.entryList(QStringList{ "*.json" }, QDir::Files)) {
         const QString baseName{ QFileInfo(skin).baseName() };
         // Capitalize the first letter
         list.push_back(baseName.left(1).toUpper()
@@ -31,30 +30,11 @@ QStringList getAvailableSkins()
 
 void setAppSkin(QApplication *app, const QString &skinName)
 {
-    QFile styleFile;
-    // Normalize the skin name
-    const QString skin{ skinName.toLower() };
-
-    if (skin == "default") {
-        // The default style includes a fusion style
-        app->setStyle(QStyleFactory::create("fusion"));
-        styleFile.setFileName(Util::getDataDir() + "/skins/default.qss");
-    } else
-        styleFile.setFileName(Util::getDataDir() + "/skins/" + skin + ".qss");
-
-    styleFile.open(QFile::ReadOnly);
-    if (styleFile.isOpen()) {
-        if (skin == "lightblue") // "lightblue" requires changing the palette
-            app->setPalette(QPalette("#eaf7ff"));
-        else
-            app->setPalette(QPalette());
-        app->setStyleSheet(QLatin1String(styleFile.readAll()));
-        styleFile.close();
-    } else {
-        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                             QObject::tr("Error loading skin."), QMessageBox::Close);
-        QMetaObject::invokeMethod(app, &QCoreApplication::quit, Qt::QueuedConnection);
-    }
+    QString skin(skinName.toLower());
+    oclero::qlementine::QlementineStyle *style{ new oclero::qlementine::QlementineStyle(app) };
+    if (skin != "default")
+        style->setThemeJsonPath(Util::getSkinsDir() + '/' + skin + ".json");
+    QApplication::setStyle(style);
 }
 
 } // namespace Util

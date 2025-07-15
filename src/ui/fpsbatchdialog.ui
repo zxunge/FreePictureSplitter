@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1060</width>
-    <height>612</height>
+    <height>632</height>
    </rect>
   </property>
   <property name="font">
@@ -42,6 +42,9 @@
        <horstretch>1</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="movable">
+      <bool>false</bool>
      </property>
      <property name="toolButtonStyle">
       <enum>Qt::ToolButtonTextUnderIcon</enum>

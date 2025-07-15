@@ -1,5 +1,8 @@
 <div align=center>
 <img src="src/resources/fps.ico" width="15%" height="15%">
+</div>
+
+<div align="center">
 <h1>FreePictureSplitter</h1>
 
 [![All-platforms](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/build.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/build.yml)

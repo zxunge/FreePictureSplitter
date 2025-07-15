@@ -56,40 +56,23 @@ set(UTILS_SRCS
 
 set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
 
-if(Qt6_FOUND)
-    qt_add_executable(FreePictureSplitter
-        MANUAL_FINALIZATION
-        ${QTGUI_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET FreePictureSplitter APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
+qt_add_executable(FreePictureSplitter
+    MANUAL_FINALIZATION
+    ${QTGUI_SOURCES}
+)
+
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+set_property(TARGET FreePictureSplitter
+    APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
+)
 
-    qt_add_translations(
-        TARGETS FreePictureSplitter
-        SOURCE_TARGETS FreePictureSplitter
-        TS_FILES ${TS_FILES}
-        LUPDATE_OPTIONS -no-obsolete
-        QM_FILES_OUTPUT_VARIABLE QM_FILES
-    )
-else()
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-
-    if(ANDROID)
-        add_library(FreePictureSplitter SHARED
-            ${QTGUI_SOURCES}
-            ${QM_FILES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(FreePictureSplitter
-            ${QTGUI_SOURCES}
-            ${QM_FILES}
-        )
-    endif()
-endif()
+qt_add_translations(
+    TARGETS FreePictureSplitter
+    SOURCE_TARGETS FreePictureSplitter
+    TS_FILES ${TS_FILES}
+    LUPDATE_OPTIONS -no-obsolete
+    QM_FILES_OUTPUT_VARIABLE QM_FILES
+)
 
 add_subdirectory(3rdparty)
 
@@ -106,6 +89,7 @@ target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Core
     Qt::Widgets
     reflectcpp
+    qlementine
 )
 
 set_target_properties(FreePictureSplitter PROPERTIES
@@ -116,27 +100,26 @@ set_target_properties(FreePictureSplitter PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
+install(TARGETS FreePictureSplitter
+    BUNDLE DESTINATION .
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+# Install resources
 if(UNIX)
-    install(TARGETS FreePictureSplitter
-        BUNDLE DESTINATION .
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    )
-    # Install resources
-    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR})
-    install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/translations)
+    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR}/fps)
+    install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/fps/translations)
 elseif(WIN32)
-    # A traditional Win32-like installation directory structure
-    install(TARGETS FreePictureSplitter
-        BUNDLE DESTINATION .
-        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
-    )
-    # Install resources
     install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_PREFIX})
     install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/translations)
 endif()
 
-if(Qt6_FOUND)
-    qt_finalize_executable(FreePictureSplitter)
-endif()
+qt_generate_deploy_app_script(
+    TARGET FreePictureSplitter
+    OUTPUT_SCRIPT deploy_script
+    NO_UNSUPPORTED_PLATFORM_ERROR
+)
+install(SCRIPT ${deploy_script})
+
+qt_finalize_executable(FreePictureSplitter)

@@ -12,17 +12,11 @@
 namespace Util {
 
 /*********** Standard Paths Helper ***********/
-// Get the app's install prefix
-QString getInstallPrefix();
+// Get the skins directory
+QString getSkinsDir();
 
-// Get the app's DATADIR
-QString getDataDir();
-
-// Get the app's LIBDIR
-QString getLibDir();
-
-// Get the app's BINDIR
-QString getBinDir();
+// Get the translations directory
+QString getTranslationsDir();
 /*********************************************/
 
 } // namespace Util

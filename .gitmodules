@@ -1,3 +1,6 @@
 [submodule "src/3rdparty/reflect-cpp"]
 	path = src/3rdparty/reflect-cpp
 	url = https://github.com/getml/reflect-cpp.git
+[submodule "src/3rdparty/qlementine"]
+	path = src/3rdparty/qlementine
+	url = https://github.com/oclero/qlementine.git

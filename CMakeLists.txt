@@ -23,34 +23,22 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     option(WITH_ASAN "Build with ASAN" OFF)
 endif()
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTORCC ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(Qt6 QUIET COMPONENTS Core Widgets LinguistTools)
-if (NOT Qt6_FOUND)
-    # We need at least Qt 5.15 to enable some CMake and App features.
-    find_package(Qt5 5.15 REQUIRED COMPONENTS Core Widgets LinguistTools)
-    if(Qt5_FOUND)
-        message(STATUS "Found Qt " ${Qt5_VERSION})
-    else()
-        message(FATAL_ERROR "Could not find Qt (need version >= 5.15)!")
-    endif()
-else()
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools Svg)
+if (Qt6_FOUND)
     message(STATUS "Found Qt " ${Qt6_VERSION})
+    qt_standard_project_setup(REQUIRES 6.8 I18N_TRANSLATED_LANGUAGES en zh_CN)
+else()
+    message(FATAL_ERROR "Could not find Qt (need version >= 6.8.0)!")
 endif()
 
 configure_file(config/config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
-
-include(GNUInstallDirs)
 
 if(WITH_ASAN)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
