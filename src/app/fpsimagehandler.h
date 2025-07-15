@@ -19,14 +19,16 @@ class QPixmap;
 
 typedef QVector<QVector<QRect>> RectList;
 
-/*
- * fpsImageHandler: Handles all the stuff for all-purpose image splitting and file generation
- * (Single picture). The general workflow is:
- *  1. Users specify their wants, and we use `getSubRects' or `linesToRects' to capture them.
- *  2. Display our result using `rectsToLines'.
- *  3. Obtain all the sub-images using `split'.
- *  4. Obtain all the names of the files to save using `getOutputList'.
- *  5. [Optional] Draw a grid figure for the picture using `darwGridLines' with related arguments.
+/*!
+ * \brief The fpsImageHandler class: Handles all the stuff for all-purpose image splitting and file generation (Single picture).
+ * \class fpsImageHandler
+ * \include fpsimagehandler.h
+ * \details The general workflow is:
+ *  1. Users specify their wants, and we use \code getSubRects \endcode or \code linesToRects \endcode to capture them.
+ *  2. Display our result using \code rectsToLines \endcode.
+ *  3. Obtain all the sub-images using \code split \endcode.
+ *  4. Obtain all the names of the files to save using \code getOutputList \endcode.
+ *  5. [Optional] Draw a grid figure for the picture using \code darwGridLines \endcode with related arguments.
  *  6. Save files.
  */
 class fpsImageHandler

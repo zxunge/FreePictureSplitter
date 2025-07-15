@@ -95,12 +95,13 @@ void fpsMainWindow::on_actionSave_triggered()
     QVector<QImage> imageList;
     QImageWriter writer;
     QStringList outputList;
+    QString baseName{ QFileInfo(m_imgReader.fileName()).baseName() };
 
     // Check for user's selection: output folder
-    QString out;
+    QString outBase, out;
     switch (appConfig.options.outputOpt.savingTo) {
     case Util::SavingTo::inPlace:
-        out = QFileDialog::getExistingDirectory(
+        outBase = QFileDialog::getExistingDirectory(
                 this, tr("Choose the output directory."),
                 appConfig.dialog.lastSavedToDir.empty()
                         ? "."
@@ -108,18 +109,33 @@ void fpsMainWindow::on_actionSave_triggered()
         break;
 
     case Util::SavingTo::specified:
-        out = QString::fromStdString(appConfig.options.outputOpt.outPath);
+        outBase = QString::fromStdString(appConfig.options.outputOpt.outPath);
         break;
 
     case Util::SavingTo::same:
-        out = QFileInfo(m_imgReader.fileName()).absoluteDir().path();
+        outBase = QFileInfo(m_imgReader.fileName()).absoluteDir().path();
         break;
     }
 
-    if (out.isEmpty())
+    if (outBase.isEmpty())
         return;
-    else
-        appConfig.dialog.lastSavedToDir = out.toStdString();
+
+    if (!appConfig.options.outputOpt.subDir)
+        out = outBase;
+    else {
+        QDir dir(outBase);
+        if (!dir.exists(baseName))
+            if (!dir.mkdir(baseName)) {
+                QMessageBox::warning(
+                        this, fpsAppName,
+                        tr("QDir::mkdir \'%1\' error!").arg(dir.absolutePath() + '/' + baseName),
+                        QMessageBox::Close);
+                return;
+            }
+        out = outBase + '/' + baseName;
+    }
+
+    appConfig.dialog.lastSavedToDir = out.toStdString();
 
     if (ui->rbtnManual->isChecked())
         m_rects = fpsImageHandler::linesToRects(ui->graphicsView);
@@ -150,7 +166,7 @@ void fpsMainWindow::on_actionSave_triggered()
 
         outputList = fpsImageHandler::getOutputList(
                 appConfig.options.nameOpt.prefMode == Util::Prefix::same
-                        ? QFileInfo(m_imgReader.fileName()).baseName()
+                        ? baseName
                         : QString::fromStdString(appConfig.options.nameOpt.prefix),
                 QString::fromStdString(appConfig.options.outputOpt.outFormat), m_rects.size(),
                 m_rects[0].size(), appConfig.options.nameOpt.rcContained,

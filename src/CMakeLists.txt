@@ -40,6 +40,8 @@ set(APP_SRCS
     app/fpsrulerbar.h
     app/fpssettingsdialog.cpp
     app/fpssettingsdialog.h
+    app/fpssplitworker.cpp
+    app/fpssplitworker.h
     app/main.cpp
 )
 
@@ -55,6 +57,8 @@ set(UTILS_SRCS
 )
 
 set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
+
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_add_executable(FreePictureSplitter
     MANUAL_FINALIZATION
@@ -90,6 +94,7 @@ target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Widgets
     reflectcpp
 )
+target_link_libraries(FreePictureSplitter PRIVATE Qt6::Core)
 
 set_target_properties(FreePictureSplitter PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER com.freepicturesplitter

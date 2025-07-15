@@ -11,6 +11,7 @@
 #include <QImageWriter>
 #include <QColorDialog>
 #include <QFileInfo>
+#include <QFileDialog>
 
 extern Util::Config appConfig;
 
