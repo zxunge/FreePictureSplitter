@@ -7,25 +7,20 @@
 
 #include <QImageWriter>
 
-void fpsSplitWorker::doSplit(const QString &files,
-                             const QStringList &outputs,
-                             const QVector<QImage> &images,
-                             const QString &outPath,
-                             const QString &format,
-                             const double scaleFactor,
-                             const int quality)
+void fpsSplitWorker::doSplit(const QString &files, const QStringList &outputs,
+                             const QVector<QImage> &images, const QString &outPath,
+                             const QString &format, const double scaleFactor, const int quality)
 {
     QImageWriter writer;
 
     for (int i{}; i != images.size(); ++i) {
 
-        writer.setFileName(outPath+ '/' + outputs[i]);
+        writer.setFileName(outPath + '/' + outputs[i]);
         writer.setFormat(format.toUtf8());
         writer.setQuality(quality);
-        if (!writer.write(images[i].scaled(
-                    images[i].width() * scaleFactor,
-                    images[i].height() * scaleFactor,
-                    Qt::IgnoreAspectRatio, Qt::SmoothTransformation))) {
+        if (!writer.write(images[i].scaled(images[i].width() * scaleFactor,
+                                           images[i].height() * scaleFactor, Qt::IgnoreAspectRatio,
+                                           Qt::SmoothTransformation))) {
 
             break;
         }

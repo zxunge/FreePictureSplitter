@@ -30,15 +30,13 @@ public slots:
     /// \param outPath        A QString indicating the output directory.
     /// \param format         Output pictures' format.
     /// \param scaleFactor    Factor used to scale the output images (default is 1.0).
-    /// \param quality        Output images' quality (default is 100) (only some formats, \see { https://doc.qt.io/qt-6/qimagewriter.html#setQuality }.
-    /// \details Designed to handle the most essential part of image splitting, doSplit() will only include several lines of code.
+    /// \param quality        Output images' quality (default is 100) (only some formats, \see {
+    /// https://doc.qt.io/qt-6/qimagewriter.html#setQuality }.
+    /// \details Designed to handle the most essential part of image splitting, doSplit() will only
+    /// include several lines of code.
     ///
-    void doSplit(const QString &files,
-                 const QStringList &outputs,
-                 const QVector<QImage> &images,
-                 const QString &outPath,
-                 const QString &format,
-                 const double scaleFactor = 1.0,
+    void doSplit(const QString &files, const QStringList &outputs, const QVector<QImage> &images,
+                 const QString &outPath, const QString &format, const double scaleFactor = 1.0,
                  const int quality = 100);
 
 signals:
