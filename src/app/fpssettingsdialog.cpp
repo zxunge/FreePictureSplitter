@@ -59,7 +59,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     ui->cbxFormats->setCurrentIndex(ui->cbxFormats->findText(
             QString::fromStdString(appConfig.options.outputOpt.outFormat)));
     ui->sbxQuality->setValue(appConfig.options.outputOpt.jpgQuality);
-    ui->dsbxFactor->setValue(appConfig.options.outputOpt.scalingFactor);
+    ui->dsbxFactor->setValue(appConfig.options.outputOpt.scalingFactor * 100.0);
 
     // ----- Grid Figure -----
     ui->frColor->setAutoFillBackground(true);
@@ -109,7 +109,7 @@ void fpsSettingsDialog::on_buttonBox_accepted()
     appConfig.options.outputOpt.outPath = ui->lePath->text().toStdString();
     appConfig.options.outputOpt.outFormat = ui->cbxFormats->currentText().toStdString();
     appConfig.options.outputOpt.jpgQuality = ui->sbxQuality->value();
-    appConfig.options.outputOpt.scalingFactor = ui->dsbxFactor->value();
+    appConfig.options.outputOpt.scalingFactor = ui->dsbxFactor->value() / 100.0;
     appConfig.options.gridOpt.enabled = ui->chbGrid->isChecked();
     appConfig.options.gridOpt.lineSize = ui->sbxLineSize->value();
     appConfig.options.gridOpt.colorRgb = m_color.name().toStdString();
@@ -171,4 +171,19 @@ void fpsSettingsDialog::on_tbtnOutput_toggled(bool checked)
 {
     if (checked)
         ui->wgtOptions->setCurrentIndex(1); // "Output"
+}
+
+void fpsSettingsDialog::on_tbtnBrowse_clicked()
+{
+    QString in{ QFileDialog::getExistingDirectory(
+            this, tr("Choose a directory to save pictures."),
+            appConfig.dialog.lastSavedToDir.empty()
+                    ? "."
+                    : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
+    if (in.isEmpty())
+        return;
+
+    appConfig.dialog.lastSavedToDir = in.toStdString();
+    appConfig.options.outputOpt.outPath = in.toStdString();
+    ui->lePath->setText(in);
 }

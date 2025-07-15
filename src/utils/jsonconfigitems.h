@@ -81,7 +81,7 @@ inline void setDefConf(Config &s)
                                             .subDir = false,
                                             .outFormat = "jpg",
                                             .jpgQuality = 80,
-                                            .scalingFactor = 100.0 },
+                                            .scalingFactor = 1.0 },
                              .gridOpt = { .enabled = false, .lineSize = 3, .colorRgb = "#ffffff" },
                              .nameOpt = { .prefMode = Prefix::same,
                                           .prefix = "splited",

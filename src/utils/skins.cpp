@@ -11,6 +11,8 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QDir>
+#include <QStyleFactory>
+#include <QMetaObject>
 
 namespace Util {
 

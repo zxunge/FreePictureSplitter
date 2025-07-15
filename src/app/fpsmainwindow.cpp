@@ -18,6 +18,7 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QColor>
+#include <QDir>
 
 extern Util::Config appConfig;
 
@@ -94,11 +95,26 @@ void fpsMainWindow::on_actionSave_triggered()
     QVector<QImage> imageList;
     QImageWriter writer;
     QStringList outputList;
-    QString out{ QFileDialog::getExistingDirectory(
-            this, tr("Choose the output directory."),
-            appConfig.dialog.lastSavedToDir.empty()
-                    ? "."
-                    : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
+
+    // Check for user's selection: output folder
+    QString out;
+    switch (appConfig.options.outputOpt.savingTo) {
+    case Util::SavingTo::inPlace:
+        out = QFileDialog::getExistingDirectory(
+                this, tr("Choose the output directory."),
+                appConfig.dialog.lastSavedToDir.empty()
+                        ? "."
+                        : QString::fromStdString(appConfig.dialog.lastSavedToDir));
+        break;
+
+    case Util::SavingTo::specified:
+        out = QString::fromStdString(appConfig.options.outputOpt.outPath);
+        break;
+
+    case Util::SavingTo::same:
+        out = QFileInfo(m_imgReader.fileName()).absoluteDir().path();
+        break;
+    }
 
     if (out.isEmpty())
         return;
@@ -153,7 +169,10 @@ void fpsMainWindow::on_actionSave_triggered()
             writer.setFormat(
                     QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
             writer.setQuality(appConfig.options.outputOpt.jpgQuality);
-            if (!writer.write(imageList[i])) {
+            if (!writer.write(imageList[i].scaled(
+                        imageList[i].width() * appConfig.options.outputOpt.scalingFactor,
+                        imageList[i].height() * appConfig.options.outputOpt.scalingFactor,
+                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation))) {
                 QMessageBox::warning(this, fpsAppName,
                                      tr("Error writing to file \'%1\': %2.")
                                              .arg(writer.fileName())

@@ -213,8 +213,8 @@ void fpsBatchDialog::on_btnChange_clicked()
                     : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
     if (in.isEmpty())
         return;
-    else
-        appConfig.dialog.lastSavedToDir = in.toStdString();
+
+    appConfig.dialog.lastSavedToDir = in.toStdString();
     ui->lePath->setText(in);
 }
 
