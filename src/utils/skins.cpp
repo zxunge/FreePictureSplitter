@@ -5,13 +5,12 @@
 
 #include "skins.h"
 #include "stdpaths.h"
+#include "config.h"
 
 #include <QFile>
 #include <QMessageBox>
 #include <QApplication>
 #include <QDir>
-
-#include <oclero/qlementine.hpp>
 
 namespace Util {
 
@@ -30,11 +29,30 @@ QStringList getAvailableSkins()
 
 void setAppSkin(QApplication *app, const QString &skinName)
 {
-    QString skin(skinName.toLower());
-    oclero::qlementine::QlementineStyle *style{ new oclero::qlementine::QlementineStyle(app) };
-    if (skin != "default")
-        style->setThemeJsonPath(Util::getSkinsDir() + '/' + skin + ".json");
-    QApplication::setStyle(style);
+    QFile styleFile;
+    // Normalize the skin name
+    const QString skin{ skinName.toLower() };
+
+    if (skin == "default") {
+        // The default style includes a fusion style
+        app->setStyle(QStyleFactory::create("fusion"));
+        styleFile.setFileName(Util::getSkinsDir() + "/default.qss");
+    } else
+        styleFile.setFileName(Util::getSkinsDir() + '/' + skin + ".qss");
+
+    styleFile.open(QFile::ReadOnly);
+    if (styleFile.isOpen()) {
+        if (skin == "lightblue") // "lightblue" requires changing the palette
+            app->setPalette(QPalette("#eaf7ff"));
+        else
+            app->setPalette(QPalette());
+        app->setStyleSheet(QLatin1String(styleFile.readAll()));
+        styleFile.close();
+    } else {
+        QMessageBox::warning(nullptr, fpsAppName,
+                             QObject::tr("Error loading skin."), QMessageBox::Close);
+        QMetaObject::invokeMethod(app, &QCoreApplication::quit, Qt::QueuedConnection);
+    }
 }
 
 } // namespace Util
