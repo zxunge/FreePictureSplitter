@@ -20,6 +20,8 @@
 #include <QColor>
 #include <QDir>
 
+using namespace Qt::Literals::StringLiterals;
+
 extern Util::Config appConfig;
 
 fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
@@ -44,7 +46,7 @@ void fpsMainWindow::on_actionOpen_triggered()
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
-                              ? "."
+                              ? u"."_s
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);
@@ -101,7 +103,7 @@ void fpsMainWindow::on_actionSave_triggered()
         outBase = QFileDialog::getExistingDirectory(
                 this, tr("Choose the output directory."),
                 appConfig.dialog.lastSavedToDir.empty()
-                        ? "."
+                        ? u"."_s
                         : QString::fromStdString(appConfig.dialog.lastSavedToDir));
         break;
 
@@ -179,7 +181,7 @@ void fpsMainWindow::on_actionSave_triggered()
             if (dlg.isCancelled())
                 break;
 
-            writer.setFileName(out + "/" + outputList[i]);
+            writer.setFileName(out + '/' + outputList[i]);
             writer.setFormat(
                     QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
             writer.setQuality(appConfig.options.outputOpt.jpgQuality);

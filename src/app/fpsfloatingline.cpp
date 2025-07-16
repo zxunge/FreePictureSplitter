@@ -12,6 +12,8 @@
 #include <QColor>
 #include <QPalette>
 
+using namespace Qt::Literals::StringLiterals;
+
 fpsFloatingLine::fpsFloatingLine(QGraphicsView *parent, Qt::Orientation orientation,
                                  const QPoint &pos)
     : QPushButton(parent)
@@ -122,12 +124,12 @@ bool fpsFloatingLine::event(QEvent *event)
 {
     switch (event->type()) {
     case QEvent::Enter:
-        setStyleSheet("background-color: rgba(50, 205, 50, 0.5);"); // Highlighting
+        setStyleSheet(u"background-color: rgba(50, 205, 50, 0.5);"_s); // Highlighting
         setCursor(QCursor(m_orientation == Qt::Horizontal ? Qt::SizeVerCursor : Qt::SizeHorCursor));
         break;
     case QEvent::Leave:
         setCursor(QCursor(Qt::ArrowCursor));
-        setStyleSheet("background-color: rgb(50, 205, 50);");
+        setStyleSheet(u"background-color: rgb(50, 205, 50);"_s);
         break;
     default:
         break;

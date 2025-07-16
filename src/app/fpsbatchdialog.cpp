@@ -24,6 +24,8 @@
 
 #include <limits>
 
+using namespace Qt::Literals::StringLiterals;
+
 extern Util::Config appConfig;
 
 fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fpsBatchDialog)
@@ -92,7 +94,7 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Add pictures..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
-                              ? "."
+                              ? u"."_s
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFiles);
@@ -118,7 +120,7 @@ void fpsBatchDialog::closeEvent(QCloseEvent *event)
     QDialog::closeEvent(event);
 }
 
-void fpsBatchDialog::addPicture(const QString &fileName)
+void fpsBatchDialog::addPicture(QAnyStringView fileName)
 {
     QListWidgetItem *listItem{ new QListWidgetItem(ui->wgtList) };
     listItem->setIcon(QIcon(fileName));
@@ -133,7 +135,7 @@ void fpsBatchDialog::addPicture(const QString &fileName)
     QTableWidgetItem *tableItemPath{ new QTableWidgetItem(fileName) };
     ui->wgtTable->setItem(rowCount, 1, tableItemPath);
     QTableWidgetItem *tableItemSize{ new QTableWidgetItem(
-            QString::number(static_cast<long>(QFileInfo(fileName).size() / 1024)) + " KB") };
+            QString::number(static_cast<long>(QFileInfo(fileName).size() / 1024)) + u" KB"_s) };
     ui->wgtTable->setItem(rowCount, 2, tableItemSize);
     m_filesList.push_back(fileName);
 }
@@ -143,7 +145,7 @@ void fpsBatchDialog::on_actionAddDirectory_triggered()
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory containing pictures."),
             appConfig.dialog.lastOpenedDir.empty()
-                    ? "."
+                    ? u"."_s
                     : QString::fromStdString(appConfig.dialog.lastOpenedDir)) };
     if (in.isEmpty())
         return;
@@ -154,7 +156,7 @@ void fpsBatchDialog::on_actionAddDirectory_triggered()
     QStringList nameFilters;
     const QByteArrayList supportedFormats{ QImageReader::supportedImageFormats() };
     for (const auto format : supportedFormats)
-        nameFilters << "*." + QString(format);
+        nameFilters << u"*."_s + QString(format);
 
     for (const auto file : dir.entryList(nameFilters, QDir::Files))
         addPicture(in + '/' + file);
@@ -209,7 +211,7 @@ void fpsBatchDialog::on_btnChange_clicked()
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
             appConfig.dialog.lastSavedToDir.empty()
-                    ? "."
+                    ? u"."_s
                     : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
     if (in.isEmpty())
         return;
@@ -220,7 +222,7 @@ void fpsBatchDialog::on_btnChange_clicked()
 
 void fpsBatchDialog::on_btnOpen_clicked()
 {
-    QDesktopServices::openUrl(QUrl("file:" + ui->lePath->text(), QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl(u"file:"_s + ui->lePath->text(), QUrl::TolerantMode));
 }
 
 void fpsBatchDialog::on_btnSplit_clicked()

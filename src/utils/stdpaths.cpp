@@ -8,17 +8,19 @@
 #include <QDir>
 #include <QLibraryInfo>
 
+using namespace Qt::Literals::StringLiterals;
+
 namespace Util {
 
 QString getSkinsDir()
 {
 #if defined(Q_OS_WIN)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
-    dir.cd("skins");
+    dir.cd(u"skins"_s);
 #elif defined(Q_OS_UNIX)
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
-    dir.cd("fps");
-    dir.cd("skins");
+    dir.cd(u"fps"_s);
+    dir.cd(u"skins"_s);
 #endif
     return dir.absolutePath();
 }
@@ -27,11 +29,11 @@ QString getTranslationsDir()
 {
 #if defined(Q_OS_WIN)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
-    dir.cd("translations");
+    dir.cd(u"translations"_s);
 #elif defined(Q_OS_UNIX)
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
-    dir.cd("fps");
-    dir.cd("translations");
+    dir.cd(u"fps"_s);
+    dir.cd(u"translations"_s);
 #endif
     return dir.absolutePath();
 }

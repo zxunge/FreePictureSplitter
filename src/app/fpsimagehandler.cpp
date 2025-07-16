@@ -15,8 +15,10 @@
 
 #include <algorithm>
 
-/* static */ QStringList fpsImageHandler::getOutputList(const QString &prefix,
-                                                        const QString &suffix, int rows, int cols,
+using namespace Qt::Literals::StringLiterals;
+
+/* static */ QStringList fpsImageHandler::getOutputList(QAnyStringView prefix,
+                                                        QAnyStringView suffix, int rows, int cols,
                                                         bool rcContained, bool grid)
 {
     QStringList outputList;
@@ -24,14 +26,12 @@
 
     for (int i{ 1 }; i != rows + 1; ++i)
         for (int j{ 1 }; j != cols + 1; ++j)
-            outputList << prefix + QStringLiteral("_")
+            outputList << prefix + u"_"_s
                             + QString::asprintf("%0*d", static_cast<int>(splitCount),
                                                 (i - 1) * cols + j)
-                            + (rcContained ? QString::asprintf("_%dx%d.", i, j)
-                                           : QStringLiteral("."))
-                            + suffix;
+                            + (rcContained ? QString::asprintf("_%dx%d.", i, j) : u"."_s) + suffix;
     if (grid)
-        outputList << prefix + QStringLiteral("_grid.") + suffix;
+        outputList << prefix + u"_grid."_s + suffix;
     return outputList;
 }
 

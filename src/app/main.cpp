@@ -17,6 +17,8 @@
 
 #include <rfl/json.hpp>
 
+using namespace Qt::Literals::StringLiterals;
+
 Util::Config appConfig;
 
 int main(int argc, char *argv[])
@@ -27,15 +29,15 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     QCoreApplication::setApplicationName(fpsAppName);
-    QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
+    QCoreApplication::setOrganizationName(u"zxunge (Grit Clef)"_s);
     QGuiApplication::setApplicationDisplayName(fpsAppName);
-    QGuiApplication::setWindowIcon(QIcon(":/icons/fps.ico"));
+    QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
     QTranslator translator;
-    if (translator.load(QLocale::system(), fpsAppName, "_", Util::getTranslationsDir()))
+    if (translator.load(QLocale::system(), fpsAppName, u"_"_s, Util::getTranslationsDir()))
         a.installTranslator(&translator);
 
     // Load configuration
-    QFile cfgFile("conf.json");
+    QFile cfgFile(u"conf.json"_s);
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);

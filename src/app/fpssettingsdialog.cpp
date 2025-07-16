@@ -13,6 +13,8 @@
 #include <QFileInfo>
 #include <QFileDialog>
 
+using namespace Qt::Literals::StringLiterals;
+
 extern Util::Config appConfig;
 
 fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
@@ -25,7 +27,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     ui->cbxStyle->addItems(Util::getAvailableSkins());
     ui->cbxStyle->setCurrentText(QString::fromStdString(appConfig.app.style));
     // `Language' is now fixed
-    ui->cbxLang->addItem("System");
+    ui->cbxLang->addItem(u"System"_s);
     ui->cbxLang->setCurrentIndex(0);
     /************************************************/
 
@@ -131,13 +133,13 @@ void fpsSettingsDialog::on_cbxLocation_currentIndexChanged(int index)
 
 void fpsSettingsDialog::on_cbxFormats_currentTextChanged(const QString &text)
 {
-    ui->sbxQuality->setEnabled(text.compare("jpg", Qt::CaseInsensitive) == 0
-                               || text.compare("jpeg", Qt::CaseInsensitive) == 0);
+    ui->sbxQuality->setEnabled(text.compare(u"jpg"_s, Qt::CaseInsensitive) == 0
+                               || text.compare(u"jpeg"_s, Qt::CaseInsensitive) == 0);
 }
 
 void fpsSettingsDialog::on_btnSelectColor_clicked()
 {
-    QColor color{ QColorDialog::getColor(m_color, this, "Select a color for grid lines") };
+    QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };
     if (color.isValid()) {
         m_color = color;
         ui->frColor->setPalette(QPalette(color));
@@ -179,7 +181,7 @@ void fpsSettingsDialog::on_tbtnBrowse_clicked()
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
             appConfig.dialog.lastSavedToDir.empty()
-                    ? "."
+                    ? u"."_s
                     : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
     if (in.isEmpty())
         return;

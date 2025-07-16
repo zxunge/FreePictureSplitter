@@ -14,13 +14,15 @@
 #include <QStyleFactory>
 #include <QMetaObject>
 
+using namespace Qt::Literals::StringLiterals;
+
 namespace Util {
 
 QStringList getAvailableSkins()
 {
     QStringList list;
     QDir skinDir(Util::getSkinsDir());
-    for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files)) {
+    for (const auto skin : skinDir.entryList(QStringList{ u"*.qss"_s }, QDir::Files)) {
         const QString baseName{ QFileInfo(skin).baseName() };
         // Capitalize the first letter
         list.push_back(baseName.left(1).toUpper()
@@ -35,17 +37,17 @@ void setAppSkin(QApplication *app, const QString &skinName)
     // Normalize the skin name
     const QString skin{ skinName.toLower() };
 
-    if (skin == "default") {
+    if (skin == u"default"_s) {
         // The default style includes a fusion style
-        app->setStyle(QStyleFactory::create("fusion"));
-        styleFile.setFileName(Util::getSkinsDir() + "/default.qss");
+        app->setStyle(QStyleFactory::create(u"fusion"_s));
+        styleFile.setFileName(Util::getSkinsDir() + u"/default.qss"_s);
     } else
-        styleFile.setFileName(Util::getSkinsDir() + '/' + skin + ".qss");
+        styleFile.setFileName(Util::getSkinsDir() + '/' + skin + u".qss"_s);
 
     styleFile.open(QFile::ReadOnly);
     if (styleFile.isOpen()) {
-        if (skin == "lightblue") // "lightblue" requires changing the palette
-            app->setPalette(QPalette("#eaf7ff"));
+        if (skin == u"lightblue"_s) // "lightblue" requires changing the palette
+            app->setPalette(QPalette(u"#eaf7ff"_s));
         else
             app->setPalette(QPalette());
         app->setStyleSheet(QLatin1String(styleFile.readAll()));
