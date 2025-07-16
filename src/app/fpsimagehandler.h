@@ -13,6 +13,7 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qrect.h>
 #include <QtCore/qvector.h>
+#include <QtCore/qanystringview.h>
 
 class fpsGraphicsView;
 class QPixmap;
@@ -55,7 +56,7 @@ public:
 
     static bool split(QImageReader &imgReader, QVector<QImage> &output, const RectList &rects);
 
-    static QStringList getOutputList(const QString &prefix, const QString &suffix, int rows,
+    static QStringList getOutputList(QAnyStringView prefix, QAnyStringView suffix, int rows,
                                      int cols, bool rcContained = false, bool grid = false);
 
     static void rectsToLines(const RectList &rects, fpsGraphicsView *parent);

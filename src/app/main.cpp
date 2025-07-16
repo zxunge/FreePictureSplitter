@@ -22,7 +22,7 @@ Util::Config appConfig;
 int main(int argc, char *argv[])
 {
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
-            Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+            Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
 
     QApplication a(argc, argv);
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
         QTextStream ts(&cfgFile);
         jsonCfgStr = ts.readAll();
     } else {
-        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+        QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error creating/opening configuration file."),
                              QMessageBox::Close);
         QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
@@ -53,9 +53,9 @@ int main(int argc, char *argv[])
     else {
         const auto result{ rfl::json::read<Util::Config>(jsonCfgStr.toStdString()) };
         if (!result) {
-            QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                                 QObject::tr("Error parsing configuration file: ")
-                                         + QString::fromStdString(result.error().what()),
+            QMessageBox::warning(nullptr, fpsAppName,
+                                 QObject::tr("Error parsing configuration file: %1.")
+                                         .arg(QString::fromStdString(result.error().what())),
                                  QMessageBox::Close);
             QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
         }
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         // We promise not to change the interfaces when updating the micro version.
         if (appConfig.app.majorVersion != fpsVersionMajor
             || appConfig.app.minorVersion != fpsVersionMinor) {
-            QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+            QMessageBox::warning(nullptr, fpsAppName,
                                  QObject::tr("Configuration file\'s version doesn\'t match, try "
                                              "deleting it after backuping."),
                                  QMessageBox::Close);
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     jsonCfgStr = QString::fromStdString(rfl::json::write(appConfig));
     cfgFile.close();
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
-        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+        QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error writing to configuration file."),
                              QMessageBox::Close);
         QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);

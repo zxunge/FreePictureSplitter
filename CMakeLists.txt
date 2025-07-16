@@ -31,7 +31,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools Svg)
 message(STATUS "Found Qt " ${Qt6_VERSION})
-qt_standard_project_setup(REQUIRES 6.3 I18N_TRANSLATED_LANGUAGES en zh_CN)
+qt_standard_project_setup(REQUIRES 6.4 I18N_TRANSLATED_LANGUAGES en zh_CN)
 
 configure_file(config/config.h.in config.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})

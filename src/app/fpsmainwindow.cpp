@@ -29,10 +29,7 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 
 fpsMainWindow::~fpsMainWindow()
 {
-    if (ui) {
-        delete ui;
-        ui = nullptr;
-    }
+    delete ui;
 }
 
 void fpsMainWindow::on_actionOpen_triggered()
@@ -159,7 +156,8 @@ void fpsMainWindow::on_actionSave_triggered()
             m_imgReader.setFileName(m_imgReader.fileName());
             QPixmap p{ QPixmap::fromImageReader(&m_imgReader) };
             fpsImageHandler::drawGridLines(
-                    &p, m_rects, QColor(QString::fromStdString(appConfig.options.gridOpt.colorRgb)),
+                    &p, m_rects,
+                    QColor::fromString(QString::fromStdString(appConfig.options.gridOpt.colorRgb)),
                     appConfig.options.gridOpt.lineSize);
             imageList.push_back(p.toImage());
         }

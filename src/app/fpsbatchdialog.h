@@ -10,6 +10,7 @@
 #include <QDialog>
 #include <QMenu>
 #include <QtCore/qstringlist.h>
+#include <QtCore/qanystringview.h>
 
 namespace Ui {
 class fpsBatchDialog;
@@ -69,7 +70,7 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    void addPicture(const QString &fileName);
+    void addPicture(QAnyStringView fileName);
 
 private:
     Ui::fpsBatchDialog *ui;

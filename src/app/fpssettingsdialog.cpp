@@ -64,7 +64,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
 
     // ----- Grid Figure -----
     ui->frColor->setAutoFillBackground(true);
-    m_color = QColor(QString::fromStdString(appConfig.options.gridOpt.colorRgb));
+    m_color = QColor::fromString(QString::fromStdString(appConfig.options.gridOpt.colorRgb));
     ui->frColor->setPalette(QPalette(m_color));
     ui->sbxLineSize->setValue(appConfig.options.gridOpt.lineSize);
     ui->chbGrid->setChecked(appConfig.options.gridOpt.enabled);
