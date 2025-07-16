@@ -3,7 +3,7 @@
 # See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.22)
 
 project(FreePictureSplitter
         VERSION 3.0.0
@@ -15,12 +15,17 @@ if((NOT UNIX) AND (NOT WIN32))
     message(FATAL_ERROR "Could not recognize the platform!")
 endif()
 
-option(WITH_QT_GUI "Build FreePictureSplitter's Qt GUI (Default)." ON)
-option(WITH_PCH "Using Pre-compiled Headers(PCH)." ON)
+# Build Options
+option(WITH_QT_GUI "Build FreePictureSplitter's Qt GUI (default)." ON)
+option(WITH_PCH "Use pre-compiled headers (PCH)." ON)
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     option(WITH_UBSAN "Build with UBSAN" OFF)
     option(WITH_TSAN "Build with TSAN" OFF)
     option(WITH_ASAN "Build with ASAN" OFF)
+endif()
+# Deployment Options
+if(WIN32)
+  option(DEPLOY_WINDOWS "Install exes/libs directly to prefix (no GNUInstallDirs)." ON)
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
