@@ -14,10 +14,10 @@ namespace Util {
 
 QString getSkinsDir()
 {
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
     dir.cd(u"skins"_s);
-#elif defined(Q_OS_UNIX)
+#elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
     dir.cd(u"fps"_s);
     dir.cd(u"skins"_s);
@@ -27,10 +27,10 @@ QString getSkinsDir()
 
 QString getTranslationsDir()
 {
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
     dir.cd(u"translations"_s);
-#elif defined(Q_OS_UNIX)
+#elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
     dir.cd(u"fps"_s);
     dir.cd(u"translations"_s);

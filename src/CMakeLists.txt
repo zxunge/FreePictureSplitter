@@ -10,11 +10,6 @@ qt_add_executable(FreePictureSplitter
     ""
 )
 
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-set_property(TARGET FreePictureSplitter
-    APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/android
-)
-
 add_subdirectory(3rdparty)
 add_subdirectory(app)
 add_subdirectory(resources)
@@ -33,26 +28,27 @@ target_link_libraries(FreePictureSplitter PRIVATE
 target_link_libraries(FreePictureSplitter PRIVATE Qt6::Core)
 
 set_target_properties(FreePictureSplitter PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER com.freepicturesplitter
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
-install(TARGETS FreePictureSplitter
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-# Install resources
 if(UNIX)
-    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR}/fps)
-    install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/fps/translations)
-elseif(WIN32)
-    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_PREFIX})
-    install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/translations)
+    install(TARGETS FreePictureSplitter
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+else()
+    if(NOT DEPLOY_WINDOWS)
+        target_compile_definitions(FreePictureSplitter PRIVATE WIN32_GNU_DEPLOY)
+        install(TARGETS FreePictureSplitter
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        )
+    else()
+        install(TARGETS FreePictureSplitter
+            LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
+        )
+    endif()
 endif()
 
 qt_generate_deploy_app_script(

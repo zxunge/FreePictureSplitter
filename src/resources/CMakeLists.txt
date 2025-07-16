@@ -20,3 +20,17 @@ qt_add_translations(
     LUPDATE_OPTIONS -no-obsolete
     QM_FILES_OUTPUT_VARIABLE QM_FILES
 )
+
+# Install resources
+if(UNIX)
+    install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR}/fps)
+    install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/fps/translations)
+elseif(WIN32)
+    if(DEPLOY_WINDOWS)
+        install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_PREFIX})
+        install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/translations)
+    else()
+        install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/resources/skins DESTINATION ${CMAKE_INSTALL_DATADIR}/fps)
+        install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/fps/translations)
+    endif()
+endif()
