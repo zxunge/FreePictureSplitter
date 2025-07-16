@@ -17,8 +17,8 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-/* static */ QStringList fpsImageHandler::getOutputList(QAnyStringView prefix,
-                                                        QAnyStringView suffix, int rows, int cols,
+/* static */ QStringList fpsImageHandler::getOutputList(const QString &prefix,
+                                                        const QString &suffix, int rows, int cols,
                                                         bool rcContained, bool grid)
 {
     QStringList outputList;

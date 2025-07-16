@@ -120,7 +120,7 @@ void fpsBatchDialog::closeEvent(QCloseEvent *event)
     QDialog::closeEvent(event);
 }
 
-void fpsBatchDialog::addPicture(QAnyStringView fileName)
+void fpsBatchDialog::addPicture(const QString &fileName)
 {
     QListWidgetItem *listItem{ new QListWidgetItem(ui->wgtList) };
     listItem->setIcon(QIcon(fileName));

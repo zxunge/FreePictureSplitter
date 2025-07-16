@@ -45,24 +45,23 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
             this) };
     versionLabel->setAlignment(Qt::AlignCenter);
 
-    QLabel *copyrightLabel{ new QLabel(
-            u"© 2024, 2025 zxunge\nLicensed under: GPLv3\n"
-             "This program is free software: you can redistribute "
-             "it and/or modify it under "
-             "the terms of the GNU General Public License as "
-             "published by the Free Software "
-             "Foundation, either version 3 of the License, or (at "
-             "your option) any later version.\n"
-             "This program is distributed in the hope that it "
-             "will be useful, but WITHOUT ANY "
-             "WARRANTY; without even the implied warranty of "
-             "MERCHANTABILITY or FITNESS FOR A "
-             "PARTICULAR PURPOSE.  See the GNU General Public "
-             "License for more details.\n"
-             "You should have received a copy of the GNU General "
-             "Public License along with this program.  If not, "
-             "see <https://www.gnu.org/licenses/>.\n"_s),
-            this) };
+    QLabel *copyrightLabel{ new QLabel(u"© 2024, 2025 zxunge\nLicensed under: GPLv3\n"
+                                       "This program is free software: you can redistribute "
+                                       "it and/or modify it under "
+                                       "the terms of the GNU General Public License as "
+                                       "published by the Free Software "
+                                       "Foundation, either version 3 of the License, or (at "
+                                       "your option) any later version.\n"
+                                       "This program is distributed in the hope that it "
+                                       "will be useful, but WITHOUT ANY "
+                                       "WARRANTY; without even the implied warranty of "
+                                       "MERCHANTABILITY or FITNESS FOR A "
+                                       "PARTICULAR PURPOSE.  See the GNU General Public "
+                                       "License for more details.\n"
+                                       "You should have received a copy of the GNU General "
+                                       "Public License along with this program.  If not, "
+                                       "see <https://www.gnu.org/licenses/>.\n"_s,
+                                       this) };
     copyrightLabel->setAlignment(Qt::AlignCenter);
     copyrightLabel->adjustSize();
     copyrightLabel->setWordWrap(true);
@@ -96,7 +95,7 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
             "border-radius: 5px; font: 13px \'Segoe UI\';"
             "padding: 5px 12px 6px 12px; outline: none; }"_s);
 
-    QPropertyAnimation *animation{ new QPropertyAnimation(this, u"windowOpacity"_s) };
+    QPropertyAnimation *animation{ new QPropertyAnimation(this, "windowOpacity"_ba) };
     animation->setDuration(300);
     animation->setStartValue(0.0);
     animation->setEndValue(1.0);
