@@ -1,0 +1,3 @@
+files:
+  - source: /src/resources/i18n/*.ts
+    translation: /%two_letters_code%/%original_file_name%
