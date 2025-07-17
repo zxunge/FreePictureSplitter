@@ -50,7 +50,7 @@ Quality control | ✅
 The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
 
 ## Requirements
-It's important to know that our **3.x** versions support Qt >= 5.15, while the incoming version 4 will only support Qt >= 6.8.0. Thus, some users with old computers would need some workaround like a compatibility-layer.
+It's important to know that our **3.x** versions support Qt >= 5.15, while the incoming version 4 will only support Qt >= 6.9.0. Thus, some users with old computers would need some workaround like a compatibility-layer.
 
 ## Acknowlegments
 Some skins are from [QSS-STOCK](https://qss-stock.devsecstudio.com) and [feiyangqingyun](https://github.com/feiyangqingyun), thanks!
