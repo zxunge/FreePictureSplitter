@@ -6,7 +6,7 @@
 <h1>FreePictureSplitter</h1>
 
 [![All-platforms](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/build.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/build.yml)
-[![Static Analysis](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/static-analysis.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/static-analysis.yml)
+[![Static Analysis](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/static-analysis.yml?style=flat-square&label=static-analysis)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/static-analysis.yml)
 [![Downloads](https://img.shields.io/github/downloads/zxunge/FreePictureSplitter/total.svg?maxAge=2592001&style=flat-square)](https://github.com/zxunge/FreePictureSplitter/releases/)
 [![Welcome PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
 [![Stars](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)

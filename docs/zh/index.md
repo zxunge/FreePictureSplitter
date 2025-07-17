@@ -6,7 +6,7 @@
 <h1>FreePictureSplitter</h1>
 
 [![全平台](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/build.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/build.yml)
-[![静态分析](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/static-analysis.yml?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/static-analysis.yml)
+[![静态分析](https://img.shields.io/github/actions/workflow/status/zxunge/FreePictureSplitter/static-analysis.yml?style=flat-square&label=static-analysis)](https://github.com/zxunge/FreePictureSplitter/actions/workflows/static-analysis.yml)
 [![下载](https://img.shields.io/github/downloads/zxunge/FreePictureSplitter/total.svg?maxAge=2592001&style=flat-square)](https://github.com/zxunge/FreePictureSplitter/releases/)
 [![欢迎拉取请求](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
 [![星标](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)
