@@ -19,6 +19,10 @@
 
 English | [简体中文](docs/zh/index.md)
 
+> [!TIP]
+> ### Translators Wanted ###
+> Our project needs translators! See at [Crowdin](https://crowdin.com/project/freepicturesplitter).
+
 # Introduction
 FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
 

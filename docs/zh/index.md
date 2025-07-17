@@ -17,6 +17,10 @@
 <img alt="许可证" src="https://img.shields.io/github/license/zxunge/FreePictureSplitter?style=flat-square" />
 </div>
 
+> [!TIP]
+> ### 招贤纳士 ###
+> 我们的项目需要翻译！具体查看 [Crowdin](https://crowdin.com/project/freepicturesplitter)。
+
 # 简介
 FreePictureSplitter是一款快速、小巧且易用的图片分割软件。
 
