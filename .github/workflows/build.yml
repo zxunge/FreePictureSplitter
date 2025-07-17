@@ -62,12 +62,13 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
+        version: 6.9.*
         arch: win64_msvc2022_64
         install-deps: true
         modules: "qtimageformats"
         setup-python: false
         
-    - name: Setup cmake
+    - name: Setup CMake
       uses: jwlawson/actions-setup-cmake@v2
       
     - name: Checkout
@@ -92,6 +93,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
+        version: 6.9.*
         arch: linux_gcc_64
         install-deps: true
         modules: "qtimageformats"
