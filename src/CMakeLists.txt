@@ -25,7 +25,6 @@ target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Widgets
     reflectcpp
 )
-target_link_libraries(FreePictureSplitter PRIVATE Qt6::Core)
 
 set_target_properties(FreePictureSplitter PROPERTIES
     WIN32_EXECUTABLE TRUE
@@ -54,7 +53,6 @@ endif()
 qt_generate_deploy_app_script(
     TARGET FreePictureSplitter
     OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
 )
 install(SCRIPT ${deploy_script})
 

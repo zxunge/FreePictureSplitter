@@ -62,9 +62,6 @@ void fpsMainWindow::on_actionOpen_triggered()
     m_imgReader.setAutoTransform(true);
 
     if (m_imgReader.canRead()) {
-        QPixmap pixmap{ QPixmap::fromImageReader(&m_imgReader) };
-        ui->graphicsView->showPixmap(pixmap);
-
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
         ui->statusBar->showMessage(tr("%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
@@ -83,6 +80,8 @@ void fpsMainWindow::on_actionOpen_triggered()
         ui->sbxWidth->setRange(1, m_imgReader.size().width());
         if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
+        QPixmap pixmap{ QPixmap::fromImageReader(&m_imgReader) };
+        ui->graphicsView->showPixmap(pixmap);
     } else
         QMessageBox::warning(this, fpsAppName,
                              tr("Error loading picture file: %1.").arg(m_imgReader.fileName()),
@@ -239,6 +238,7 @@ void fpsMainWindow::on_actionAbout_triggered()
 
 void fpsMainWindow::on_btnReset_clicked()
 {
+    m_imgReader.setFileName(m_imgReader.fileName());
     if (ui->rbtnAver->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(
