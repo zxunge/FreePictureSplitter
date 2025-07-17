@@ -11,6 +11,7 @@ project(FreePictureSplitter
         HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter
 )
 
+# We do not support other platforms yet.
 if((NOT UNIX) AND (NOT WIN32))
     message(FATAL_ERROR "Could not recognize the platform!")
 endif()

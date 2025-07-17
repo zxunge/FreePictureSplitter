@@ -27,4 +27,4 @@ target_sources(FreePictureSplitter PRIVATE
     main.cpp
 )
 
-target_include_directories(FreePictureSplitter PRIVATE .)
+target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

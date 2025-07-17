@@ -26,16 +26,15 @@ target_link_libraries(FreePictureSplitter PRIVATE
     reflectcpp
 )
 
-set_target_properties(FreePictureSplitter PROPERTIES
-    WIN32_EXECUTABLE TRUE
-)
-
 if(UNIX)
     install(TARGETS FreePictureSplitter
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 else()
+    set_target_properties(FreePictureSplitter PROPERTIES
+        WIN32_EXECUTABLE TRUE
+    )
     if(NOT DEPLOY_WINDOWS)
         target_compile_definitions(FreePictureSplitter PRIVATE WIN32_GNU_DEPLOY)
         install(TARGETS FreePictureSplitter

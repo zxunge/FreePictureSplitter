@@ -14,4 +14,4 @@ target_sources(FreePictureSplitter PRIVATE
     stdpaths.cpp
 )
 
-target_include_directories(FreePictureSplitter PRIVATE .)
+target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})
