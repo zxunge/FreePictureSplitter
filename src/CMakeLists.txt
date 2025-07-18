@@ -27,38 +27,30 @@ target_link_libraries(FreePictureSplitter PRIVATE
     reflectcpp
 )
 
-# Deployment (with custom rules)
+# Deployment
+## Custom deployment script
 set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/deploy_fps.cmake")
+include(GenDeployScript)
 if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
     install(TARGETS FreePictureSplitter
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
-    file(GENERATE OUTPUT ${deploy_script} CONTENT "
-        set(QT_DEPLOY_PLUGINS_DIR \"${CMAKE_INSTALL_LIBDIR}/plugins\")
-        set(QT_DEPLOY_TRANSLATIONS_DIR \"${CMAKE_INSTALL_DATADIR}/fps/translations\")
-
-        include(\"${QT_DEPLOY_SUPPORT}\")
-
-        qt_deploy_runtime_dependencies(
-            EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:FreePictureSplitter>\"
-            GENERATE_QT_CONF
-        )")
+    gen_deploy_script(
+        TARGET FreePictureSplitter
+        WINDEPLOY FALSE
+        SCRIPT ${deploy_script}
+    )
 else()    # Win32 && DEPLOY_WINDOWS
     install(TARGETS FreePictureSplitter
         LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
     )
-    file(GENERATE OUTPUT ${deploy_script} CONTENT "
-        set(QT_DEPLOY_PLUGINS_DIR \"plugins\")
-        set(QT_DEPLOY_TRANSLATIONS_DIR \"translations\")
-
-        include(\"${QT_DEPLOY_SUPPORT}\")
-
-        qt_deploy_runtime_dependencies(
-            EXECUTABLE \"$<TARGET_FILE_NAME:FreePictureSplitter>\"
-            GENERATE_QT_CONF
-        )")
+    gen_deploy_script(
+        TARGET FreePictureSplitter
+        WINDEPLOY TRUE
+        SCRIPT ${deploy_script}
+    )
 endif()
 
 install(SCRIPT ${deploy_script})

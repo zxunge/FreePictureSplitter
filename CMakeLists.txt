@@ -11,6 +11,8 @@ project(FreePictureSplitter
         HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter
 )
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/")
+
 # We do not support other platforms yet.
 if((NOT UNIX) AND (NOT WIN32))
     message(FATAL_ERROR "Could not recognize the platform!")
