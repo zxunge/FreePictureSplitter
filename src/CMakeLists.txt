@@ -42,6 +42,7 @@ if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
 
         qt_deploy_runtime_dependencies(
             EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:FreePictureSplitter>\"
+            GENERATE_QT_CONF
         )")
 else()    # Win32 && DEPLOY_WINDOWS
     install(TARGETS FreePictureSplitter
@@ -56,6 +57,7 @@ else()    # Win32 && DEPLOY_WINDOWS
 
         qt_deploy_runtime_dependencies(
             EXECUTABLE \"$<TARGET_FILE_NAME:FreePictureSplitter>\"
+            GENERATE_QT_CONF
         )")
 endif()
 
