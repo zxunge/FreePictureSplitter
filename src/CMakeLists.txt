@@ -29,7 +29,6 @@ target_link_libraries(FreePictureSplitter PRIVATE
 
 # Deployment
 ## Custom deployment script
-set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/deploy_fps.cmake")
 include(GenDeployScript)
 if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
     install(TARGETS FreePictureSplitter
@@ -39,7 +38,7 @@ if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
     gen_deploy_script(
         TARGET FreePictureSplitter
         WINDEPLOY FALSE
-        SCRIPT ${deploy_script}
+        OUTPUT_SCRIPT deploy_script
     )
 else()    # Win32 && DEPLOY_WINDOWS
     install(TARGETS FreePictureSplitter
@@ -49,7 +48,7 @@ else()    # Win32 && DEPLOY_WINDOWS
     gen_deploy_script(
         TARGET FreePictureSplitter
         WINDEPLOY TRUE
-        SCRIPT ${deploy_script}
+        OUTPUT_SCRIPT deploy_script
     )
 endif()
 
