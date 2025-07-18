@@ -56,7 +56,7 @@ else()    # Win32 && DEPLOY_WINDOWS
         include(\"${QT_DEPLOY_SUPPORT}\")
 
         qt_deploy_runtime_dependencies(
-            EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:FreePictureSplitter>\"
+            EXECUTABLE \"$<TARGET_FILE_NAME:FreePictureSplitter>\"
         )")
 endif()
 
