@@ -37,12 +37,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Override variables
 if(WIN32 AND DEPLOY_WINDOWS)
-    set(CMAKE_INSTALL_BINDIR "")
-    set(CMAKE_INSTALL_LIBDIR "")
-    set(CMAKE_INSTALL_LIBEXECDIR "")
+    set(CMAKE_INSTALL_BINDIR ".")
+    set(CMAKE_INSTALL_LIBDIR ".")
+    set(CMAKE_INSTALL_LIBEXECDIR ".")
 endif()
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools Svg)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets LinguistTools)
 message(STATUS "Found Qt " ${Qt6_VERSION})
 
 qt_standard_project_setup(
