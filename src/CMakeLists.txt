@@ -49,7 +49,6 @@ else()    # Win32 && DEPLOY_WINDOWS
         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
     )
     file(GENERATE OUTPUT ${deploy_script} CONTENT "
-        set(QT_DEPLOY_BIN_DIR \"\")
         set(QT_DEPLOY_PLUGINS_DIR \"plugins\")
         set(QT_DEPLOY_TRANSLATIONS_DIR \"translations\")
 
