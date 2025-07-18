@@ -5,9 +5,10 @@
 
 list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_LIST_DIR}/ui")
 
-qt_add_executable(FreePictureSplitter
-    MANUAL_FINALIZATION
-    ""
+qt_add_executable(FreePictureSplitter "")
+
+set_target_properties(FreePictureSplitter PROPERTIES
+    WIN32_EXECUTABLE TRUE
 )
 
 add_subdirectory(3rdparty)
@@ -26,33 +27,37 @@ target_link_libraries(FreePictureSplitter PRIVATE
     reflectcpp
 )
 
-if(UNIX)
+# Deployment (with custom rules)
+set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/deploy_fps.cmake")
+if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
     install(TARGETS FreePictureSplitter
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
-else()
-    set_target_properties(FreePictureSplitter PROPERTIES
-        WIN32_EXECUTABLE TRUE
+    file(GENERATE OUTPUT ${deploy_script} CONTENT "
+        set(QT_DEPLOY_PLUGINS_DIR \"${CMAKE_INSTALL_LIBDIR}/plugins\")
+        set(QT_DEPLOY_TRANSLATIONS_DIR \"${CMAKE_INSTALL_DATADIR}/fps/translations\")
+
+        include(\"${QT_DEPLOY_SUPPORT}\")
+
+        qt_deploy_runtime_dependencies(
+            EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:FreePictureSplitter>\"
+        )")
+else()    # Win32 && DEPLOY_WINDOWS
+    install(TARGETS FreePictureSplitter
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
     )
-    if(NOT DEPLOY_WINDOWS)
-        target_compile_definitions(FreePictureSplitter PRIVATE WIN32_GNU_DEPLOY)
-        install(TARGETS FreePictureSplitter
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        )
-    else()
-        install(TARGETS FreePictureSplitter
-            LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}
-        )
-    endif()
+    file(GENERATE OUTPUT ${deploy_script} CONTENT "
+        set(QT_DEPLOY_BIN_DIR \"\")
+        set(QT_DEPLOY_PLUGINS_DIR \"plugins\")
+        set(QT_DEPLOY_TRANSLATIONS_DIR \"translations\")
+
+        include(\"${QT_DEPLOY_SUPPORT}\")
+
+        qt_deploy_runtime_dependencies(
+            EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:FreePictureSplitter>\"
+        )")
 endif()
 
-qt_generate_deploy_app_script(
-    TARGET FreePictureSplitter
-    OUTPUT_SCRIPT deploy_script
-)
 install(SCRIPT ${deploy_script})
-
-qt_finalize_executable(FreePictureSplitter)
