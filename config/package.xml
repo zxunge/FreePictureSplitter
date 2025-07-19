@@ -16,5 +16,5 @@ SPDX-License-Identifier: GPL-3.0-or-later
     </Licenses>
     <Default>true</Default>
     <Essential>true</Essential>
-    <Checkable>false</Checkable>
+    <ForcedInstallation>true</ForcedInstallation>
 </Package>
