@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+This file is a part of FreePictureSplitter and is subject to the the terms of the GPL-3.0 license.
+Copyright (c) 2024 2025 zxunge
+See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+<Installer>
+    <Name>FreePictureSplitter</Name>
+    <Version>3.0.0</Version>
+    <Title>FreePictureSplitter 3.0.0 Installer</Title>
+    <Publisher>zxunge</Publisher>
+    <ProductUrl>https://github.com/zxunge/FreePictureSplitter</ProductUrl>
+    <InstallerWindowIcon>FreePictureSplitter/src/resources/fps.ico</InstallerWindowIcon>
+    <InstallerApplicationIcon>FreePictureSplitter/src/resources/fps.ico</InstallerApplicationIcon>
+    <Logo>FreePictureSplitter/src/resources/fps.png</Logo>
+    <StartMenuDir>FreePictureSplitter</StartMenuDir>
+    <TargetDir>@ApplicationsDir@</TargetDir>
+    <RunProgram>@TargetDir@/FreePictureSplitter</RunProgram>
+</Installer>

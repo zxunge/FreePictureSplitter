@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  clang:
+  clang64:
     # We pack an archive using Qt6 in clang64 environment.
     runs-on: windows-latest
 
@@ -19,12 +19,12 @@ jobs:
           toolchain:p
           cmake:p
           ninja:p
-          jq:p
           angleproject:p
           qt6-base:p
           qt6-tools:p
           qt6-translations:p
           qt6-imageformats:p
+          qt-installer-framework:p
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/FreePictureSplitter -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/data -B build .
         cmake --build build -j
         cmake --install build
         
@@ -73,14 +73,25 @@ jobs:
                   "libintl-8.dll"             \
                   "libpcre2-16-0.dll"         \
                   "libturbojpeg.dll"          \
-                  "libwinpthread-1.dll")
+                  "libwinpthread-1.dll"       \
+                  "libc++.dll")
         for dll in ${win_dlls[@]};
         do
-          cp -f /clang64/bin/$dll /opt/FreePictureSplitter/
+          cp -f /clang64/bin/$dll /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/data/
         done
+        
+    - name: Create an installer
+      shell: msys2 {0}
+      run: |
+        mkdir -p /opt/freepicturesplitter/config
+        mkdir -p /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/meta
+        cp -f FreePictureSplitter/config/config.xml /opt/freepicturesplitter/config/
+        cp -f FreePictureSplitter/config/package.xml /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/meta/
+        cp -f FreePictureSplitter/LICENSE /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/meta/
+        binarycreator --offline-only -t /clang64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: FreePictureSplitter-clang64-qt6-all
-        path: D:/msys64/opt/FreePictureSplitter
+        path: FreePictureSplitterSetup.exe

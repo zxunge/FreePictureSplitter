@@ -52,7 +52,7 @@ qt_standard_project_setup(
     I18N_TRANSLATED_LANGUAGES de fr ja pl tr uk zh_TW zh_CN it
 )
 
-configure_file(config/config.h.in config.h)
+configure_file(config/config.h.in config.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 if(WITH_ASAN)
