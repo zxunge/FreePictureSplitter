@@ -5,12 +5,42 @@ on:
   
 jobs:
   clang:
-    # We pack an archive using Qt 5/6 in clang64 environment.
+    # We pack an archive using Qt6 in clang64 environment.
     runs-on: windows-latest
-    strategy:
-      matrix:
-        qt: [qt5, qt6]
-        
+    env:
+      dlls:
+        - libb2-1.dll               
+        - libfreetype-6.dll  
+        - libiconv-2.dll  
+        - libjasper.dll      
+        - libpcre2-8-0.dll   
+        - libwebp-7.dll         
+        - libzstd.dll
+        - libbrotlicommon.dll 
+        - libicudt77.dll 
+        - libjpeg-8.dll      
+        - libpng16-16.dll    
+        - libwebpdecoder-3.dll  
+        - vulkan-1.dll
+        - libbrotlidec.dll          
+        - libglib-2.0-0.dll   
+        - libicuin77.dll  
+        - libmd4c.dll       
+        - libsharpyuv-0.dll  
+        - libwebpdemux-2.dll    
+        - zlib1.dll
+        - libbz2-1.dll              
+        - libgraphite2.dll   
+        - libicuuc77.dll 
+        - libmng-2.dll
+        - libwebpmux-3.dll
+        - libdouble-conversion.dll 
+        - libharfbuzz-0.dll   
+        - libintl-8.dll  
+        - libpcre2-16-0.dll  
+        - libturbojpeg.dll  
+        - libwinpthread-1.dll
+
     steps:
     - name: Setup MSYS2 Environment
       uses: msys2/setup-msys2@v2
@@ -24,12 +54,10 @@ jobs:
           ninja:p
           jq:p
           angleproject:p
-          ${{ matrix.qt }}-base:p
-          ${{ matrix.qt }}-tools:p
-          ${{ matrix.qt }}-translations:p
-          ${{ matrix.qt }}-imageformats:p
-        install: >-
-          unzip
+          qt6-base:p
+          qt6-tools:p
+          qt6-translations:p
+          qt6-imageformats:p
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -37,15 +65,6 @@ jobs:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
         submodules: recursive
-        
-    - name: Download and extract pedeps
-      shell: msys2 {0}
-      run: |
-        LATEST_VERSION=$(curl -s https://api.github.com/repos/brechtsanders/pedeps/releases/latest | jq -r .tag_name)
-        echo "Latest version is $LATEST_VERSION"
-        DOWNLOAD_URL="https://github.com/brechtsanders/pedeps/releases/download/${LATEST_VERSION}/pedeps-${LATEST_VERSION}-win64.zip"
-        wget $DOWNLOAD_URL -O pedeps-latest.zip
-        unzip pedeps-latest.zip -d pedeps
         
     - name: Build, deploy and copy dependencies
       shell: msys2 {0}
@@ -53,62 +72,17 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/FreePictureSplitter -B build .
-        cmake --build build --parallel $(nproc)
-        cmake --install .
-        pushd /opt/FreePictureSplitter/
-        if [ "${{ matrix.qt }}" = "qt6" ]; then
-          windeployqt6 --compiler-runtime ./FreePictureSplitter.exe
-        else
-          windeployqt ./FreePictureSplitter.exe
-        fi
-        '${{ github.workspace }}/pedeps/bin/copypedeps.exe' -r -n -v ./FreePictureSplitter.exe ./
-        popd
+        cmake --build build -j
+        cmake --install build
+        
+        # Copy DLLs
+        for dll in ${{ env.dlls }}
+        do
+          cp -f /clang64/bin/$dll /opt/FreePictureSplitter/
+        done
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-clang64-${{ matrix.qt }}-all
+        name: FreePictureSplitter-clang64-qt6-all
         path: D:/msys64/opt/FreePictureSplitter
-        
-  msvc:
-    # We pack an archive using Qt6 built with MSVC.
-    runs-on: windows-latest
-    steps:
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v4
-      with:
-        arch: win64_msvc2022_64
-        install-deps: true
-        modules: "qtimageformats"
-        setup-python: false
-        
-    - name: Setup CMake
-      uses: jwlawson/actions-setup-cmake@v2
-      
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        repository: zxunge/FreePictureSplitter
-        submodules: recursive
-      
-    - name: Download and extract pedeps
-      shell: pwsh
-      run: |
-        Invoke-WebRequest -Uri "https://github.com/brechtsanders/pedeps/releases/download/0.1.15/pedeps-0.1.15-win64.zip" -OutFile "./pedeps-latest.zip"
-        Expand-Archive -Path "./pedeps-latest.zip" -DestinationPath "./pedeps"
-      
-    - name: Build, deploy and copy dependencies
-      shell: pwsh
-      run: |
-        # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\FreePictureSplitter -B build .
-        cmake --build build --parallel $(nproc) --config Release
-        cd FreePictureSplitter\
-        windeployqt6 --compiler-runtime .\FreePictureSplitter.exe
-        ${{ github.workspace }}\pedeps\bin\copypedeps.exe -r -n -v .\FreePictureSplitter.exe .\
-        
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: FreePictureSplitter-msvc2022-qt6-all
-        path: FreePictureSplitter

@@ -29,7 +29,7 @@ target_link_libraries(FreePictureSplitter PRIVATE
 
 # Deployment
 ## Custom deployment script
-include(GenDeployScript)
+include(GenDeploy)
 if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
     install(TARGETS FreePictureSplitter
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -51,5 +51,5 @@ else()    # Win32 && DEPLOY_WINDOWS
         OUTPUT_SCRIPT deploy_script
     )
 endif()
-
 install(SCRIPT ${deploy_script})
+include(CPack)

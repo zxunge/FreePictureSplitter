@@ -32,12 +32,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(u"zxunge (Grit Clef)"_s);
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
-    
+
     // Load translations
     QTranslator qtTranslator, appTranslator;
     if (qtTranslator.load(QLocale::system(), u"qt"_s, u"_"_s, Util::getTranslationsDir()))
         a.installTranslator(&qtTranslator);
-    
+
     if (appTranslator.load(QLocale::system(), fpsAppName, u"_"_s, Util::getTranslationsDir()))
         a.installTranslator(&appTranslator);
 

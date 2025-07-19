@@ -54,7 +54,7 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
-        cmake --build build --parallel $(nproc)
+        cmake --build build -j
         cmake --install build
         
   msvc:
@@ -85,7 +85,7 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=D:\FreePictureSplitter -B build .
-        cmake --build build --parallel $(nproc) --config Release
+        cmake --build build -j --config Release
         cmake --install build
       
   ubuntu:
@@ -112,5 +112,5 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
-        cmake --build build --parallel $(nproc)
+        cmake --build build -j
         cmake --install build
