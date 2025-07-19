@@ -39,6 +39,7 @@ jobs:
           qt6-base:p
           qt6-tools:p
           qt6-svg:p
+          qt6-translations:p
 
     - name: Checkout
       uses: actions/checkout@v4
