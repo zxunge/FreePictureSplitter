@@ -38,4 +38,15 @@ QString getTranslationsDir()
     return dir.absolutePath();
 }
 
+QString getDataDir()
+{
+#if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::BinariesPath));
+#elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+    dir.cd(u"fps"_s);
+#endif
+    return dir.absolutePath();
+}
+
 } // namespace Util

@@ -38,7 +38,7 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/data -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data -B build .
         cmake --build build -j
         cmake --install build
         
@@ -77,21 +77,23 @@ jobs:
                   "libc++.dll")
         for dll in ${win_dlls[@]};
         do
-          cp -f /clang64/bin/$dll /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/data/
+          cp -f /clang64/bin/$dll /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
         done
         
     - name: Create an installer
       shell: msys2 {0}
       run: |
         mkdir -p /opt/freepicturesplitter/config
-        mkdir -p /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/meta
+        mkdir -p /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta
         cp -f FreePictureSplitter/config/config.xml /opt/freepicturesplitter/config/
-        cp -f FreePictureSplitter/config/package.xml /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/meta/
-        cp -f FreePictureSplitter/LICENSE /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter/meta/
-        binarycreator --offline-only -t /clang64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup
+        cp -f FreePictureSplitter/config/package.xml /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
+        cp -f FreePictureSplitter/LICENSE /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
+        cp -f FreePictureSplitter/src/resources/fps.ico /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
+        cp -f FreePictureSplitter/src/resources/fps.png /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
+        binarycreator --offline-only -t /clang64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup-win64
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-clang64-qt6-all
-        path: FreePictureSplitterSetup.exe
+        name: FreePictureSplitterSetup-win64
+        path: FreePictureSplitterSetup-win64.exe

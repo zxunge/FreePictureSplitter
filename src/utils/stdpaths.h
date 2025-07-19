@@ -17,6 +17,9 @@ QString getSkinsDir();
 
 // Get the translations directory
 QString getTranslationsDir();
+
+// Get the application's data directory
+QString getDataDir();
 /*********************************************/
 
 } // namespace Util

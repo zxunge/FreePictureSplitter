@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
         a.installTranslator(&appTranslator);
 
     // Load configurations
-    QFile cfgFile(u"conf.json"_s);
+    QFile cfgFile(Util::getDataDir() + u"/conf.json"_s);
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);

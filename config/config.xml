@@ -5,16 +5,44 @@ Copyright (c) 2024 2025 zxunge
 See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 SPDX-License-Identifier: GPL-3.0-or-later
 -->
+<!--
+For Windows Only
+-->
 <Installer>
     <Name>FreePictureSplitter</Name>
     <Version>3.0.0</Version>
     <Title>FreePictureSplitter 3.0.0 Installer</Title>
     <Publisher>zxunge</Publisher>
     <ProductUrl>https://github.com/zxunge/FreePictureSplitter</ProductUrl>
-    <InstallerWindowIcon>FreePictureSplitter/src/resources/fps.ico</InstallerWindowIcon>
-    <InstallerApplicationIcon>FreePictureSplitter/src/resources/fps.ico</InstallerApplicationIcon>
-    <Logo>FreePictureSplitter/src/resources/fps.png</Logo>
+    <InstallerWindowIcon>fps.ico</InstallerWindowIcon>
+    <InstallerApplicationIcon>fps.ico</InstallerApplicationIcon>
+    <Logo>fps.png</Logo>
     <StartMenuDir>FreePictureSplitter</StartMenuDir>
-    <TargetDir>@ApplicationsDir@</TargetDir>
+    <TargetDir>@ApplicationsDir@/FreePictureSplitter</TargetDir>
     <RunProgram>@TargetDir@/FreePictureSplitter</RunProgram>
+    <RunProgramDescription>A fast, small, and easy-to-use picture splitter!</RunProgramDescription>
+    <MaintenanceToolName>FPSMaintenancer</MaintenanceToolName>
+    <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
+    <AllowSpaceInPath>true</AllowSpaceInPath>
+    <Translations>
+        <Translation>ifw_de</Translation>
+        <Translation>ifw_zh_CN</Translation>
+        <Translation>ifw_zh_TW</Translation>
+        <Translation>ifw_fr</Translation>
+        <Translation>ifw_it</Translation>
+        <Translation>ifw_ja</Translation>
+        <Translation>ifw_pl</Translation>
+        <Translation>ifw_tr</Translation>
+        <Translation>ifw_uk</Translation>
+        <Translation>qt_de</Translation>
+        <Translation>qt_zh_CN</Translation>
+        <Translation>qt_zh_TW</Translation>
+        <Translation>qt_fr</Translation>
+        <Translation>qt_it</Translation>
+        <Translation>qt_ja</Translation>
+        <Translation>qt_pl</Translation>
+        <Translation>qt_tr</Translation>
+        <Translation>qt_uk</Translation>
+    </Translations>
+    <SupportsModify>true</SupportsModify>
 </Installer>
