@@ -24,7 +24,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../utils/skins.cpp" line="56"/>
+        <location filename="../../utils/skins.cpp" line="61"/>
         <source>Error loading skin.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -523,47 +523,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="48"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="50"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="70"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="72"/>
         <source>%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="89"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="91"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="105"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="107"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="131"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="133"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="144"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="146"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="152"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="154"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="194"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="196"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="204"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="206"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>

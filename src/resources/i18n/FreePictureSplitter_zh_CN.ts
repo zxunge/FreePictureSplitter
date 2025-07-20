@@ -24,7 +24,7 @@
         <translation>写入配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../utils/skins.cpp" line="56"/>
+        <location filename="../../utils/skins.cpp" line="61"/>
         <source>Error loading skin.</source>
         <translation>加载皮肤出错。</translation>
     </message>
@@ -523,47 +523,47 @@
         <translation>Ctrl+Alt+O</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="48"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="50"/>
         <source>Open a picture...</source>
         <translation>打开一张图片...</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="70"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="72"/>
         <source>%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation>%1，%2x%3，色深：%4，竖直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="89"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="91"/>
         <source>Error loading picture file: %1.</source>
         <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="105"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="107"/>
         <source>Choose the output directory.</source>
         <translation>选择输出文件夹。</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="131"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="133"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished">QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="144"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="146"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="152"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="154"/>
         <source>Error splitting picture.</source>
         <translation>分割图片出错。</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="194"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="196"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation>写入到文件&apos;%1&apos;出错: %2。</translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="204"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="206"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
     </message>

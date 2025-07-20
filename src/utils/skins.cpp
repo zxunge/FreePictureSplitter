@@ -12,7 +12,6 @@
 #include <QApplication>
 #include <QDir>
 #include <QMetaObject>
-#include <QAnyStringView>
 
 #include <qwin11phantomstyle.h> // For a modern look on the default skin
 
@@ -56,7 +55,7 @@ void setAppSkin(QApplication *app, const QString &skinName)
             app->setPalette(QPalette(u"#eaf7ff"_s));
         else
             app->setPalette(QPalette());
-        app->setStyleSheet(QAnyStringView(styleFile.readAll()));
+        app->setStyleSheet(QString(styleFile.readAll()));
         styleFile.close();
     } else {
         QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading skin."),
