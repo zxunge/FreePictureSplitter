@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   
 jobs:
-  clang64:
-    # We pack an archive using Qt6 in clang64 environment.
+  win64:
+    # We create an installer in MSYS2 CLANG64 environment on Windows.
     runs-on: windows-latest
 
     steps:
@@ -80,7 +80,7 @@ jobs:
           cp -f /clang64/bin/$dll /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
         done
         
-    - name: Create an installer
+    - name: Create an installer using Qt IFW
       shell: msys2 {0}
       run: |
         mkdir -p /opt/freepicturesplitter/config
@@ -88,8 +88,8 @@ jobs:
         cp -f FreePictureSplitter/config/config.xml /opt/freepicturesplitter/config/
         cp -f FreePictureSplitter/config/package.xml /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
         cp -f FreePictureSplitter/LICENSE /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
-        cp -f FreePictureSplitter/src/resources/fps.ico /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
-        cp -f FreePictureSplitter/src/resources/fps.png /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
+        cp -f FreePictureSplitter/src/resources/fps.ico /opt/freepicturesplitter/config/
+        cp -f FreePictureSplitter/src/resources/fps.png /opt/freepicturesplitter/config/
         binarycreator --offline-only -t /clang64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup-win64
 
     - name: Upload artifact

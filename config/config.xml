@@ -19,8 +19,8 @@ For Windows Only
     <Logo>fps.png</Logo>
     <StartMenuDir>FreePictureSplitter</StartMenuDir>
     <TargetDir>@ApplicationsDir@/FreePictureSplitter</TargetDir>
-    <RunProgram>@TargetDir@/FreePictureSplitter</RunProgram>
-    <RunProgramDescription>A fast, small, and easy-to-use picture splitter!</RunProgramDescription>
+    <RunProgram>@TargetDir@/FreePictureSplitter.exe</RunProgram>
+    <RunProgramDescription>Run FreePictureSplitter now</RunProgramDescription>
     <MaintenanceToolName>FPSMaintenancer</MaintenanceToolName>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
     <AllowSpaceInPath>true</AllowSpaceInPath>

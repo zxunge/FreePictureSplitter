@@ -100,4 +100,6 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
     animation->setStartValue(0.0);
     animation->setEndValue(1.0);
     animation->start();
+    
+    activeWindow();
 }
