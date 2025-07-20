@@ -14,6 +14,7 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QAction>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QFileInfo>
@@ -28,6 +29,7 @@ extern Util::Config appConfig;
 fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
 {
     ui->setupUi(this);
+    connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 }
 
 fpsMainWindow::~fpsMainWindow()
@@ -335,9 +337,4 @@ void fpsMainWindow::on_rbtnManual_toggled(bool checked)
         if (ui->graphicsView->scene())
             ui->actionSave->setEnabled(true);
     }
-}
-
-void fpsMainWindow::on_actionAboutQt_triggered()
-{
-    QApplication::aboutQt();
 }

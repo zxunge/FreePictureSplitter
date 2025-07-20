@@ -11,8 +11,10 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QDir>
-#include <QStyleFactory>
 #include <QMetaObject>
+#include <QAnyStringView>
+
+#include <qwin11phantomstyle.h> // For a modern look on the default skin
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -38,11 +40,15 @@ void setAppSkin(QApplication *app, const QString &skinName)
     const QString skin{ skinName.toLower() };
 
     if (skin == u"default"_s) {
-        // The default style includes a fusion style
-        app->setStyle(QStyleFactory::create(u"fusion"_s));
+        // The default style includes a Win11Phantom style
+        QWin11PhantomStyle *phStyle{ new QWin11PhantomStyle() };
+        app->setStyle(phStyle);
         styleFile.setFileName(Util::getSkinsDir() + u"/default.qss"_s);
-    } else
+    } else {
+        // For other skins, we use `fusion`
+        app->setStyle(QStyleFactory::create(u"fusion"_s));
         styleFile.setFileName(Util::getSkinsDir() + '/' + skin + u".qss"_s);
+    }
 
     styleFile.open(QFile::ReadOnly);
     if (styleFile.isOpen()) {
@@ -50,7 +56,7 @@ void setAppSkin(QApplication *app, const QString &skinName)
             app->setPalette(QPalette(u"#eaf7ff"_s));
         else
             app->setPalette(QPalette());
-        app->setStyleSheet(QLatin1String(styleFile.readAll()));
+        app->setStyleSheet(QAnyStringView(styleFile.readAll()));
         styleFile.close();
     } else {
         QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading skin."),
