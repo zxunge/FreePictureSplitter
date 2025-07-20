@@ -9,6 +9,7 @@ on:
       - '*.md'
       - '.clang-format'
       - 'docs/**'
+      - 'config/**'
       - '.github/workflows/*.yml'
   pull_request:
     branches:
@@ -17,6 +18,7 @@ on:
       - '*.md'
       - '.clang-format'
       - 'docs/**'
+      - 'config/**'
       - '.github/workflows/*.yml'
 
 jobs:

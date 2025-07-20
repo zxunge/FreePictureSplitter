@@ -16,12 +16,13 @@
 #include <QPixmap>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QGraphicsDropShadowEffect>
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
+fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog(parent, Qt::FramelessWindowHint)
 {
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint | Qt::WA_TranslucentBackground);
     QVBoxLayout *mainLayout{ new QVBoxLayout(this) };
 
     QLabel *iconLabel{ new QLabel(this) };
@@ -95,11 +96,15 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
             "border-radius: 5px; font: 13px \'Segoe UI\';"
             "padding: 5px 12px 6px 12px; outline: none; }"_s);
 
+    // Graphical Effects
     QPropertyAnimation *animation{ new QPropertyAnimation(this, "windowOpacity"_ba) };
     animation->setDuration(300);
     animation->setStartValue(0.0);
     animation->setEndValue(1.0);
     animation->start();
-    
-    activateWindow();
+    auto shadow{ new QGraphicsDropShadowEffect(this) };
+    shadow->setBlurRadius(20);
+    shadow->setColor(QColor(0, 0, 0, 150));
+    shadow->setOffset(0, 3);
+    setGraphicsEffect(shadow);
 }

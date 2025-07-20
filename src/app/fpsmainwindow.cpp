@@ -19,6 +19,8 @@
 #include <QFileInfo>
 #include <QColor>
 #include <QDir>
+#include <QPoint>
+#include <QSize>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -234,6 +236,10 @@ void fpsMainWindow::on_actionAbout_triggered()
 {
     fpsAboutDialog *aboutDlg{ new fpsAboutDialog(this) };
     aboutDlg->setAttribute(Qt::WA_DeleteOnClose, true);
+    QPoint parentCenter{ mapToGlobal(rect().center()) };
+    QSize dialogSize{ aboutDlg->size() };
+    aboutDlg->move(parentCenter.x() - dialogSize.width() / 2,
+                   parentCenter.y() - dialogSize.height() / 2);
     aboutDlg->exec();
 }
 
