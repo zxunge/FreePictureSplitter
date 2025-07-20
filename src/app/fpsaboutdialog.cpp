@@ -16,64 +16,62 @@
 #include <QPixmap>
 #include <QDesktopServices>
 #include <QUrl>
-#include <QGraphicsDropShadowEffect>
 
 using namespace Qt::Literals::StringLiterals;
 
 fpsAboutDialog::fpsAboutDialog(QWidget *parent)
     : QDialog(parent, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint)
 {
-    setAttribute(Qt::WA_TranslucentBackground);
-    QVBoxLayout *mainLayout{ new QVBoxLayout(this) };
+    auto mainLayout{ new QVBoxLayout(this) };
 
-    QLabel *iconLabel{ new QLabel(this) };
+    auto iconLabel{ new QLabel(this) };
     iconLabel->setPixmap(QPixmap(u":/icons/fps.ico"_s).scaled(64, 64, Qt::KeepAspectRatio));
 
-    QLabel *titleLabel{ new QLabel(fpsAppName, this) };
-    QFont titleFont{ titleLabel->font() };
+    auto titleLabel{ new QLabel(fpsAppName, this) };
+    auto titleFont{ titleLabel->font() };
     titleFont.setPointSize(18);
     titleFont.setBold(true);
     titleLabel->setFont(titleFont);
 
-    QHBoxLayout *headerLayout{ new QHBoxLayout() };
+    auto headerLayout{ new QHBoxLayout() };
     headerLayout->addWidget(iconLabel);
     headerLayout->addWidget(titleLabel);
     headerLayout->addStretch();
 
-    QLabel *versionLabel{ new QLabel(
+    auto versionLabel{ new QLabel(
             tr("<strong>Version: %1</strong><br />An efficient, small but powerful picture "
                "splitting application.<br />Most common formats are supported.")
                     .arg(fpsVersionFull),
             this) };
     versionLabel->setAlignment(Qt::AlignCenter);
 
-    QLabel *copyrightLabel{ new QLabel(u"© 2024, 2025 zxunge\nLicensed under: GPLv3\n"
-                                       "This program is free software: you can redistribute "
-                                       "it and/or modify it under "
-                                       "the terms of the GNU General Public License as "
-                                       "published by the Free Software "
-                                       "Foundation, either version 3 of the License, or (at "
-                                       "your option) any later version.\n"
-                                       "This program is distributed in the hope that it "
-                                       "will be useful, but WITHOUT ANY "
-                                       "WARRANTY; without even the implied warranty of "
-                                       "MERCHANTABILITY or FITNESS FOR A "
-                                       "PARTICULAR PURPOSE.  See the GNU General Public "
-                                       "License for more details.\n"
-                                       "You should have received a copy of the GNU General "
-                                       "Public License along with this program.  If not, "
-                                       "see <https://www.gnu.org/licenses/>.\n"_s,
-                                       this) };
+    auto copyrightLabel{ new QLabel(u"© 2024, 2025 zxunge\nLicensed under: GPLv3\n"
+                                    "This program is free software: you can redistribute "
+                                    "it and/or modify it under "
+                                    "the terms of the GNU General Public License as "
+                                    "published by the Free Software "
+                                    "Foundation, either version 3 of the License, or (at "
+                                    "your option) any later version.\n"
+                                    "This program is distributed in the hope that it "
+                                    "will be useful, but WITHOUT ANY "
+                                    "WARRANTY; without even the implied warranty of "
+                                    "MERCHANTABILITY or FITNESS FOR A "
+                                    "PARTICULAR PURPOSE.  See the GNU General Public "
+                                    "License for more details.\n"
+                                    "You should have received a copy of the GNU General "
+                                    "Public License along with this program.  If not, "
+                                    "see <https://www.gnu.org/licenses/>.\n"_s,
+                                    this) };
     copyrightLabel->setAlignment(Qt::AlignCenter);
     copyrightLabel->adjustSize();
     copyrightLabel->setWordWrap(true);
 
-    QLabel *linkLabel{ new QLabel(tr("<a href=\"%1\">GitHub Repository</a>").arg(fpsHomepageUrl),
-                                  this) };
+    auto linkLabel{ new QLabel(tr("<a href=\"%1\">GitHub Repository</a>").arg(fpsHomepageUrl),
+                               this) };
     linkLabel->setOpenExternalLinks(true);
     linkLabel->setAlignment(Qt::AlignCenter);
 
-    QPushButton *closeButton{ new QPushButton(tr("Close"), this) };
+    auto closeButton{ new QPushButton(tr("Close"), this) };
     connect(closeButton, &QPushButton::clicked, this, [this]() { this->close(); });
 
     mainLayout->addLayout(headerLayout);
@@ -98,14 +96,9 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent)
             "padding: 5px 12px 6px 12px; outline: none; }"_s);
 
     // Graphical Effects
-    QPropertyAnimation *animation{ new QPropertyAnimation(this, "windowOpacity"_ba) };
+    auto animation{ new QPropertyAnimation(this, "windowOpacity"_ba) };
     animation->setDuration(300);
     animation->setStartValue(0.0);
     animation->setEndValue(1.0);
     animation->start();
-    auto shadow{ new QGraphicsDropShadowEffect(this) };
-    shadow->setBlurRadius(20);
-    shadow->setColor(QColor(0, 0, 0, 150));
-    shadow->setOffset(0, 3);
-    setGraphicsEffect(shadow);
 }

@@ -57,6 +57,8 @@ private slots:
 
     void on_rbtnManual_toggled(bool checked);
 
+    void on_actionAboutQt_triggered();
+
 private:
     Ui::fpsMainWindow *ui;
 

@@ -4,22 +4,22 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="47"/>
+        <location filename="../../app/main.cpp" line="52"/>
         <source>Error creating/opening configuration file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="59"/>
+        <location filename="../../app/main.cpp" line="64"/>
         <source>Error parsing configuration file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="71"/>
+        <location filename="../../app/main.cpp" line="76"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="91"/>
+        <location filename="../../app/main.cpp" line="96"/>
         <source>Error writing to configuration file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -328,237 +328,242 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="106"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="107"/>
         <source>toolBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="139"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="140"/>
         <source>Splitting Settings..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="155"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="156"/>
         <source>Splitting Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="168"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="169"/>
         <source>Height (Pixel):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="195"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="196"/>
         <source>Split by Fixed Sizes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="228"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="229"/>
         <source>Width (Pixel):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="238"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="239"/>
         <source>Split Averagely</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="245"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="246"/>
         <source>Columns:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="255"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="256"/>
         <source>Rows:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="265"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="266"/>
         <source>Split Manually</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="275"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="276"/>
         <source>Splitting Sequence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="281"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="282"/>
         <source>Left horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="291"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="292"/>
         <source>Left vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="298"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="299"/>
         <source>Right horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="305"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="306"/>
         <source>Right vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="318"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="319"/>
         <source>Reset Split Lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="331"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="332"/>
         <source>Open Picture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="334"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="335"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open a picture file to split.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="337"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="338"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="349"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="350"/>
         <source>Save Pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="352"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="353"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save the splitted pictures.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="355"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="356"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="360"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="361"/>
         <source>&amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="363"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="364"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="366"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="367"/>
         <source>Alt+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="375"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="376"/>
         <source>Batch Splitting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="378"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="379"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Batch split pictures.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="381"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="382"/>
         <source>Ctrl+B</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="390"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="391"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="393"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="394"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;App preferences, including the app&apos;s appearance and the splitting policies.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="398"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="399"/>
         <source>&amp;Homepage...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="403"/>
-        <source>&amp;About</source>
+        <location filename="../../ui/fpsmainwindow.ui" line="404"/>
+        <source>&amp;About FreePictureSplitter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="416"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="446"/>
+        <source>About &amp;Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fpsmainwindow.ui" line="417"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="419"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="420"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed in.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="422"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="423"/>
         <source>Ctrl+Alt+I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="434"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="435"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="437"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="438"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed out.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="440"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="441"/>
         <source>Ctrl+Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="47"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="48"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="69"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="70"/>
         <source>%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="88"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="89"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="104"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="105"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="130"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="131"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="143"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="144"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="151"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="152"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="193"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="194"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/fpsmainwindow.cpp" line="203"/>
+        <location filename="../../app/fpsmainwindow.cpp" line="204"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>

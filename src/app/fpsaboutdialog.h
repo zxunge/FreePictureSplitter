@@ -14,8 +14,6 @@ class fpsAboutDialog : public QDialog
     Q_OBJECT
 public:
     explicit fpsAboutDialog(QWidget *parent = nullptr);
-
-signals:
 };
 
 #endif // FPSABOUTDIALOG_H
