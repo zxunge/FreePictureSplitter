@@ -20,9 +20,10 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog(parent, Qt::FramelessWindowHint)
+fpsAboutDialog::fpsAboutDialog(QWidget *parent)
+    : QDialog(parent, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint)
 {
-    setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint | Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_TranslucentBackground);
     QVBoxLayout *mainLayout{ new QVBoxLayout(this) };
 
     QLabel *iconLabel{ new QLabel(this) };
