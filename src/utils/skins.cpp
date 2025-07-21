@@ -12,6 +12,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QMetaObject>
+#include <QStyleFactory>
 
 #include <qwin11phantomstyle.h> // For a modern look on the default skin
 
