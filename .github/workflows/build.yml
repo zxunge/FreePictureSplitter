@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - 3.x
     paths-ignore:
       - '*.md'
       - '.clang-format'
@@ -13,7 +13,7 @@ on:
       - '.github/workflows/*.yml'
   pull_request:
     branches:
-      - main
+      - 3.x
     paths-ignore:
       - '*.md'
       - '.clang-format'
@@ -50,6 +50,7 @@ jobs:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
         submodules: recursive
+        fetch-depth: 1
 
     - name: Build
       shell: msys2 {0}
@@ -81,6 +82,7 @@ jobs:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
         submodules: recursive
+        fetch-depth: 1
       
     - name: Build
       shell: pwsh
@@ -109,6 +111,7 @@ jobs:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
         submodules: recursive
+        fetch-depth: 1
 
     - name: Build
       run: |

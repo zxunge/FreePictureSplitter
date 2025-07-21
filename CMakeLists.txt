@@ -27,7 +27,7 @@ if(WIN32)
   option(DEPLOY_WINDOWS "Install exes/libs directly to prefix (no GNUInstallDirs)." ON)
 endif()
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules/")
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -37,6 +37,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+if(WIN32 AND DEPLOY_WINDOWS)
+    set(CMAKE_INSTALL_BINDIR ".")
+    set(CMAKE_INSTALL_LIBDIR ".")
+    set(CMAKE_INSTALL_LIBEXECDIR ".")
+endif()
 
 find_package(Qt6 QUIET COMPONENTS Core Widgets LinguistTools)
 if (NOT Qt6_FOUND)
