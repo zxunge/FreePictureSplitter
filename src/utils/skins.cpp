@@ -5,6 +5,7 @@
 
 #include "skins.h"
 #include "stdpaths.h"
+#include "config.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -19,7 +20,7 @@ namespace Util {
 QStringList getAvailableSkins()
 {
     QStringList list;
-    QDir skinDir(Util::getDataDir() + "/skins");
+    QDir skinDir(Util::getSkinsDir());
     for (const auto skin : skinDir.entryList(QStringList{ "*.qss" }, QDir::Files)) {
         const QString baseName{ QFileInfo(skin).baseName() };
         // Capitalize the first letter
@@ -38,9 +39,9 @@ void setAppSkin(QApplication *app, const QString &skinName)
     if (skin == "default") {
         // The default style includes a fusion style
         app->setStyle(QStyleFactory::create("fusion"));
-        styleFile.setFileName(Util::getDataDir() + "/skins/default.qss");
+        styleFile.setFileName(Util::getSkinsDir() + "/default.qss");
     } else
-        styleFile.setFileName(Util::getDataDir() + "/skins/" + skin + ".qss");
+        styleFile.setFileName(Util::getSkinsDir() + "/" + skin + ".qss");
 
     styleFile.open(QFile::ReadOnly);
     if (styleFile.isOpen()) {
@@ -48,11 +49,11 @@ void setAppSkin(QApplication *app, const QString &skinName)
             app->setPalette(QPalette("#eaf7ff"));
         else
             app->setPalette(QPalette());
-        app->setStyleSheet(QLatin1String(styleFile.readAll()));
+        app->setStyleSheet(QString(styleFile.readAll()));
         styleFile.close();
     } else {
-        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                             QObject::tr("Error loading skin."), QMessageBox::Close);
+        QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading skin."),
+                             QMessageBox::Close);
         QMetaObject::invokeMethod(app, &QCoreApplication::quit, Qt::QueuedConnection);
     }
 }

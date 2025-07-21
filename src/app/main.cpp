@@ -21,10 +21,8 @@ Util::Config appConfig;
 
 int main(int argc, char *argv[])
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
-            Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
-#endif
+            Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
 
     QApplication a(argc, argv);
 
@@ -32,19 +30,23 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("zxunge (Grit Clef)");
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(":/icons/fps.ico"));
-    QTranslator translator;
-    if (translator.load(QLocale::system(), fpsAppName, "_", Util::getDataDir() + "/translations")) {
-        a.installTranslator(&translator);
-    }
+
+    // Load translations
+    QTranslator qtTranslator, appTranslator;
+    if (qtTranslator.load(QLocale::system(), "qt", "_", Util::getTranslationsDir()))
+        a.installTranslator(&qtTranslator);
+
+    if (appTranslator.load(QLocale::system(), fpsAppName, "_", Util::getTranslationsDir()))
+        a.installTranslator(&appTranslator);
 
     // Load configuration
-    QFile cfgFile("conf.json");
+    QFile cfgFile(Util::getDataDir() + "/conf.json");
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);
         jsonCfgStr = ts.readAll();
     } else {
-        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+        QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error creating/opening configuration file."),
                              QMessageBox::Close);
         QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
@@ -56,9 +58,9 @@ int main(int argc, char *argv[])
     else {
         const auto result{ rfl::json::read<Util::Config>(jsonCfgStr.toStdString()) };
         if (!result) {
-            QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
-                                 QObject::tr("Error parsing configuration file: ")
-                                         + QString::fromStdString(result.error().what()),
+            QMessageBox::warning(nullptr, fpsAppName,
+                                 QObject::tr("Error parsing configuration file: %1.")
+                                         .arg(QString::fromStdString(result.error().what())),
                                  QMessageBox::Close);
             QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
         }
@@ -68,7 +70,7 @@ int main(int argc, char *argv[])
         // We promise not to change the interfaces when updating the micro version.
         if (appConfig.app.majorVersion != fpsVersionMajor
             || appConfig.app.minorVersion != fpsVersionMinor) {
-            QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+            QMessageBox::warning(nullptr, fpsAppName,
                                  QObject::tr("Configuration file\'s version doesn\'t match, try "
                                              "deleting it after backuping."),
                                  QMessageBox::Close);
@@ -88,7 +90,7 @@ int main(int argc, char *argv[])
     jsonCfgStr = QString::fromStdString(rfl::json::write(appConfig));
     cfgFile.close();
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
-        QMessageBox::warning(nullptr, QStringLiteral("FreePictureSplitter"),
+        QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error writing to configuration file."),
                              QMessageBox::Close);
         QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);

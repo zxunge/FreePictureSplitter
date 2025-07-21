@@ -6,47 +6,48 @@
 #include "stdpaths.h"
 
 #include <QDir>
-#include <QCoreApplication>
+#include <QLibraryInfo>
+#include <QStringLiteral>
+
+using namespace Qt::Literals::StringLiterals;
 
 namespace Util {
 
-QString getInstallPrefix()
+QString getSkinsDir()
 {
-    QDir binDir(QCoreApplication::applicationDirPath());
-#if defined(Q_OS_UNIX)
-    binDir.cdUp();
+#if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
+    dir.cd(QStringLiteral(u"skins"));
+#elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+    dir.cd(QStringLiteral(u"fps"));
+    dir.cd(QStringLiteral(u"skins"));
 #endif
-    return binDir.absolutePath();
+    return dir.absolutePath();
+}
+
+QString getTranslationsDir()
+{
+#if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
+    dir.cd(QStringLiteral(u"translations"));
+#elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+    dir.cd(QStringLiteral(u"fps"));
+    dir.cd(QStringLiteral(u"translations"));
+#endif
+    return dir.absolutePath();
 }
 
 QString getDataDir()
 {
-    QDir binDir(QCoreApplication::applicationDirPath());
-
-#if defined(Q_OS_UNIX)
-    binDir.cdUp();
-    binDir.cd("share"); // The DATADIR of GNUInstallDirs is usually share
+#if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::BinariesPath));
+#elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
+    QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+    dir.cd(QStringLiteral(u"fps"));
 #endif
-
-    return binDir.absolutePath();
-}
-
-QString getLibDir()
-{
-    QDir binDir(QCoreApplication::applicationDirPath());
-
-#if defined(Q_OS_UNIX)
-    binDir.cdUp();
-    binDir.cd("lib"); // The LIBDIR of GNUInstallDirs is usually lib
-#endif
-
-    return binDir.absolutePath();
-}
-
-QString getBinDir()
-{
-    QDir binDir(QCoreApplication::applicationDirPath());
-    return binDir.absolutePath();
+    return dir.absolutePath();
 }
 
 } // namespace Util

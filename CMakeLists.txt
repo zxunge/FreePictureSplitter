@@ -57,7 +57,7 @@ else()
     message(STATUS "Found Qt " ${Qt6_VERSION})
 endif()
 
-configure_file(config/config.h.in config.h)
+configure_file(config/config.h.in config.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 include(GNUInstallDirs)

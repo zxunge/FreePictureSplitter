@@ -63,7 +63,7 @@ void fpsMainWindow::on_actionOpen_triggered()
 
     if (m_imgReader.canRead()) {
         QPixmap pixmap{ QPixmap::fromImageReader(&m_imgReader) };
-        ui->graphicsView->showPixmap(pixmap);
+        m_imgReader.setFileName(m_imgReader.fileName());
 
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
@@ -81,6 +81,7 @@ void fpsMainWindow::on_actionOpen_triggered()
         ui->sbxRows->setRange(1, m_imgReader.size().height());
         ui->sbxHeight->setRange(1, m_imgReader.size().height());
         ui->sbxWidth->setRange(1, m_imgReader.size().width());
+        ui->graphicsView->showPixmap(pixmap);
         if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
     } else
@@ -94,16 +95,47 @@ void fpsMainWindow::on_actionSave_triggered()
     QVector<QImage> imageList;
     QImageWriter writer;
     QStringList outputList;
-    QString out{ QFileDialog::getExistingDirectory(
-            this, tr("Choose the output directory."),
-            appConfig.dialog.lastSavedToDir.empty()
-                    ? "."
-                    : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
+    QString baseName{ QFileInfo(m_imgReader.fileName()).baseName() };
 
-    if (out.isEmpty())
+    // Check for user's selection: output folder
+    QString outBase, out;
+    switch (appConfig.options.outputOpt.savingTo) {
+    case Util::SavingTo::inPlace:
+        outBase = QFileDialog::getExistingDirectory(
+                this, tr("Choose the output directory."),
+                appConfig.dialog.lastSavedToDir.empty()
+                        ? "."
+                        : QString::fromStdString(appConfig.dialog.lastSavedToDir));
+        break;
+
+    case Util::SavingTo::specified:
+        outBase = QString::fromStdString(appConfig.options.outputOpt.outPath);
+        break;
+
+    case Util::SavingTo::same:
+        outBase = QFileInfo(m_imgReader.fileName()).absoluteDir().path();
+        break;
+    }
+
+    if (outBase.isEmpty())
         return;
-    else
-        appConfig.dialog.lastSavedToDir = out.toStdString();
+
+    if (!appConfig.options.outputOpt.subDir)
+        out = outBase;
+    else {
+        QDir dir(outBase);
+        if (!dir.exists(baseName))
+            if (!dir.mkdir(baseName)) {
+                QMessageBox::warning(
+                        this, fpsAppName,
+                        tr("QDir::mkdir \'%1\' error!").arg(dir.absolutePath() + '/' + baseName),
+                        QMessageBox::Close);
+                return;
+            }
+        out = outBase + '/' + baseName;
+    }
+
+    appConfig.dialog.lastSavedToDir = out.toStdString();
 
     if (ui->rbtnManual->isChecked())
         m_rects = fpsImageHandler::linesToRects(ui->graphicsView);
@@ -134,7 +166,7 @@ void fpsMainWindow::on_actionSave_triggered()
 
         outputList = fpsImageHandler::getOutputList(
                 appConfig.options.nameOpt.prefMode == Util::Prefix::same
-                        ? QFileInfo(m_imgReader.fileName()).baseName()
+                        ? baseName
                         : QString::fromStdString(appConfig.options.nameOpt.prefix),
                 QString::fromStdString(appConfig.options.outputOpt.outFormat), m_rects.size(),
                 m_rects[0].size(), appConfig.options.nameOpt.rcContained,
@@ -153,7 +185,10 @@ void fpsMainWindow::on_actionSave_triggered()
             writer.setFormat(
                     QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
             writer.setQuality(appConfig.options.outputOpt.jpgQuality);
-            if (!writer.write(imageList[i])) {
+            if (!writer.write(imageList[i].scaled(
+                        imageList[i].width() * appConfig.options.outputOpt.scalingFactor,
+                        imageList[i].height() * appConfig.options.outputOpt.scalingFactor,
+                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation))) {
                 QMessageBox::warning(this, fpsAppName,
                                      tr("Error writing to file \'%1\': %2.")
                                              .arg(writer.fileName())
@@ -204,6 +239,7 @@ void fpsMainWindow::on_actionAbout_triggered()
 
 void fpsMainWindow::on_btnReset_clicked()
 {
+    m_imgReader.setFileName(m_imgReader.fileName());
     if (ui->rbtnAver->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked())
             m_rects = fpsImageHandler::getSubRects(

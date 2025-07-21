@@ -18,9 +18,9 @@
 #include <QUrl>
 #include <QStringLiteral>
 
-fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog{ parent }
+fpsAboutDialog::fpsAboutDialog(QWidget *parent)
+    : QDialog(parent, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint)
 {
-    setWindowFlags(Qt::FramelessWindowHint);
     QVBoxLayout *mainLayout{ new QVBoxLayout(this) };
 
     QLabel *iconLabel{ new QLabel(this) };
