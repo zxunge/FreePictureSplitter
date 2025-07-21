@@ -51,6 +51,7 @@ jobs:
         path: FreePictureSplitter
         submodules: recursive
         fetch-depth: 1
+        ref: 3.x
 
     - name: Build
       shell: msys2 {0}
@@ -83,6 +84,7 @@ jobs:
         path: FreePictureSplitter
         submodules: recursive
         fetch-depth: 1
+        ref: 3.x
       
     - name: Build
       shell: pwsh
@@ -112,6 +114,7 @@ jobs:
         path: FreePictureSplitter
         submodules: recursive
         fetch-depth: 1
+        ref: 3.x
 
     - name: Build
       run: |

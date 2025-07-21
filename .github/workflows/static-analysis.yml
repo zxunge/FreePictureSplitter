@@ -15,6 +15,7 @@ jobs:
         with:
           fetch-depth: 1
           submodules: recursive
+          ref: 3.x
           
       - name: Install tools
         run: |
