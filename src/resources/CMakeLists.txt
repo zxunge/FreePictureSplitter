@@ -8,12 +8,16 @@ target_sources(FreePictureSplitter PRIVATE
     resources.rc
 )
 
-qt_add_translations(
-    TARGETS FreePictureSplitter
-    LUPDATE_OPTIONS -no-obsolete
-    TS_OUTPUT_DIRECTORY i18n
-    QM_FILES_OUTPUT_VARIABLE QM_FILES
-)
+if(Qt6_FOUND)
+    qt_add_translations(
+        TARGETS FreePictureSplitter
+        LUPDATE_OPTIONS -no-obsolete
+        TS_OUTPUT_DIRECTORY i18n
+        QM_FILES_OUTPUT_VARIABLE QM_FILES
+    )
+else()
+    # Qt5
+endif()
 
 # Install resources
 if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
