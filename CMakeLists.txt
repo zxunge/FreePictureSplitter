@@ -3,7 +3,7 @@
 # See https://github.com/zxunge/FreePictureSplitter/blob/main/LICENSE for the full license text.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.19)
 
 project(FreePictureSplitter
         VERSION 3.0.0
@@ -21,6 +21,10 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     option(WITH_UBSAN "Build with UBSAN" OFF)
     option(WITH_TSAN "Build with TSAN" OFF)
     option(WITH_ASAN "Build with ASAN" OFF)
+endif()
+# Deployment Options
+if(WIN32)
+  option(DEPLOY_WINDOWS "Install exes/libs directly to prefix (no GNUInstallDirs)." ON)
 endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

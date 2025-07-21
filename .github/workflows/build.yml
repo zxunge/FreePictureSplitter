@@ -9,6 +9,7 @@ on:
       - '*.md'
       - '.clang-format'
       - 'docs/**'
+      - 'config/**'
       - '.github/workflows/*.yml'
   pull_request:
     branches:
@@ -17,6 +18,7 @@ on:
       - '*.md'
       - '.clang-format'
       - 'docs/**'
+      - 'config/**'
       - '.github/workflows/*.yml'
 
 jobs:
@@ -39,6 +41,8 @@ jobs:
           ninja:p
           ${{ matrix.qt }}-base:p
           ${{ matrix.qt }}-tools:p
+          ${{ matrix.qt }}-translations:p
+          ${{ matrix.qt }}-imageformats:p
 
     - name: Checkout
       uses: actions/checkout@v4
@@ -53,7 +57,8 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
-        cmake --build build --parallel $(nproc)
+        cmake --build build -j
+        cmake --install build
         
   msvc:
     # We only support Qt6 when building using MSVC.
@@ -67,7 +72,7 @@ jobs:
         modules: "qtimageformats"
         setup-python: false
         
-    - name: Setup cmake
+    - name: Setup CMake
       uses: jwlawson/actions-setup-cmake@v2
       
     - name: Checkout
@@ -83,7 +88,8 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -B build .
-        cmake --build build --parallel $(nproc) --config Release
+        cmake --build build -j --config Release
+        cmake --install build
       
   ubuntu:
     # We only support Qt6 on Linux.
@@ -109,4 +115,5 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
-        cmake --build build --parallel $(nproc)
+        cmake --build build -j
+        cmake --install build

@@ -5,57 +5,6 @@
 
 list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_LIST_DIR}/ui")
 
-set(TS_FILES
-    resources/i18n/FreePictureSplitter_zh_CN.ts
-)
-
-set(UI_FILES
-    ui/fpsmainwindow.ui
-    ui/fpsbatchdialog.ui
-    ui/fpssettingsdialog.ui
-    ui/fpsprogressdialog.ui
-)
-
-set(RC_FILES
-    resources/fps.qrc
-    resources/resources.rc
-)
-
-set(APP_SRCS
-    app/fpsaboutdialog.cpp
-    app/fpsaboutdialog.h
-    app/fpsbatchdialog.cpp
-    app/fpsbatchdialog.h
-    app/fpsfloatingline.cpp
-    app/fpsfloatingline.h
-    app/fpsgraphicsview.cpp
-    app/fpsgraphicsview.h
-    app/fpsimagehandler.cpp
-    app/fpsimagehandler.h
-    app/fpsmainwindow.cpp
-    app/fpsmainwindow.h
-    app/fpsprogressdialog.cpp
-    app/fpsprogressdialog.h
-    app/fpsrulerbar.cpp
-    app/fpsrulerbar.h
-    app/fpssettingsdialog.cpp
-    app/fpssettingsdialog.h
-    app/main.cpp
-)
-
-set(UTILS_SRCS
-    utils/jsonconfigitems.h
-    utils/debugutil.h
-    utils/colors.h
-    utils/colors.cpp
-    utils/skins.h
-    utils/skins.cpp
-    utils/stdpaths.h
-    utils/stdpaths.cpp
-)
-
-set(QTGUI_SOURCES ${APP_SRCS} ${UTILS_SRCS} ${UI_FILES} ${RC_FILES} ${TS_FILES})
-
 if(Qt6_FOUND)
     qt_add_executable(FreePictureSplitter
         MANUAL_FINALIZATION
