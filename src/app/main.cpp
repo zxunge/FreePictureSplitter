@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     if (appTranslator.load(QLocale::system(), fpsAppName, "_", Util::getTranslationsDir()))
         a.installTranslator(&appTranslator);
 
-    // Load configuration
+    // Load configurations
     QFile cfgFile(Util::getDataDir() + "/conf.json");
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {

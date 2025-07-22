@@ -9,12 +9,16 @@
 #include <QMouseEvent>
 #include <QCursor>
 #include <QGraphicsView>
+#include <QColor>
+#include <QPalette>
 
 fpsFloatingLine::fpsFloatingLine(QGraphicsView *parent, Qt::Orientation orientation,
                                  const QPoint &pos)
     : QPushButton(parent)
 {
-    setStyleSheet("background-color: rgb(50, 205, 50);");
+    setAutoFillBackground(true);
+    setPalette(QPalette(QColor(50, 205, 50)));
+    
     m_orientation = orientation;
     if (m_orientation == Qt::Horizontal) {
         setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
