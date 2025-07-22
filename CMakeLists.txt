@@ -44,14 +44,16 @@ if(WIN32 AND DEPLOY_WINDOWS)
     set(CMAKE_INSTALL_LIBEXECDIR ".")
 endif()
 
-find_package(Qt6 QUIET COMPONENTS Core Widgets LinguistTools)
-if (NOT Qt6_FOUND)
-    # We need at least Qt 5.15 to enable some CMake and App features.
+# Translations
+set(QT_I18N_TRANSLATED_LANGUAGES de fr ja pl tr uk zh_TW zh_CN it)
+
+find_package(Qt6 6.7 QUIET COMPONENTS Core Widgets LinguistTools)
+if(NOT Qt6_FOUND)
     find_package(Qt5 5.15 REQUIRED COMPONENTS Core Widgets LinguistTools)
     if(Qt5_FOUND)
         message(STATUS "Found Qt " ${Qt5_VERSION})
     else()
-        message(FATAL_ERROR "Could not find Qt (need version >= 5.15)!")
+        message(FATAL_ERROR "Could not find Qt (need version == 5.15 OR >= 6.7)!")
     endif()
 else()
     message(STATUS "Found Qt " ${Qt6_VERSION})

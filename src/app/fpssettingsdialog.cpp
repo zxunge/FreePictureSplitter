@@ -11,6 +11,7 @@
 #include <QImageWriter>
 #include <QColorDialog>
 #include <QFileInfo>
+#include <QFileDialog>
 
 extern Util::Config appConfig;
 
@@ -178,7 +179,7 @@ void fpsSettingsDialog::on_tbtnBrowse_clicked()
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
             appConfig.dialog.lastSavedToDir.empty()
-                    ? u"."_s
+                    ? "."
                     : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
     if (in.isEmpty())
         return;

@@ -16,9 +16,10 @@ endif()
 
 add_subdirectory(3rdparty)
 add_subdirectory(app)
-add_subdirectory(resources)
 add_subdirectory(ui)
 add_subdirectory(utils)
+# Must be the last
+add_subdirectory(resources)
 
 if(WITH_PCH)
     target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
@@ -71,8 +72,8 @@ else()    # Win32 && DEPLOY_WINDOWS
     ## For Qt5, we need to deploy Qt files manually.
 endif()
 
+include(CPack)
+
 if(Qt6_FOUND)
     qt_finalize_executable(FreePictureSplitter)
 endif()
-
-include(CPack)

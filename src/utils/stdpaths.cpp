@@ -9,17 +9,23 @@
 #include <QLibraryInfo>
 #include <QStringLiteral>
 
-using namespace Qt::Literals::StringLiterals;
-
 namespace Util {
 
 QString getSkinsDir()
 {
 #if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
+#  if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
+#  else
+    QDir dir(QLibraryInfo::location(QLibraryInfo::PrefixPath));
+#  endif
     dir.cd(QStringLiteral(u"skins"));
 #elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
+#  if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+#  else
+    QDir dir(QLibraryInfo::location(QLibraryInfo::DataPath));
+#  endif
     dir.cd(QStringLiteral(u"fps"));
     dir.cd(QStringLiteral(u"skins"));
 #endif
@@ -29,10 +35,18 @@ QString getSkinsDir()
 QString getTranslationsDir()
 {
 #if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
+#  if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
+#  else
+    QDir dir(QLibraryInfo::location(QLibraryInfo::PrefixPath));
+#  endif
     dir.cd(QStringLiteral(u"translations"));
 #elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
+#  if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+#  else
+    QDir dir(QLibraryInfo::location(QLibraryInfo::DataPath));
+#  endif
     dir.cd(QStringLiteral(u"fps"));
     dir.cd(QStringLiteral(u"translations"));
 #endif
@@ -42,9 +56,17 @@ QString getTranslationsDir()
 QString getDataDir()
 {
 #if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
+#  if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QDir dir(QLibraryInfo::path(QLibraryInfo::BinariesPath));
+#  else
+    QDir dir(QLibraryInfo::location(QLibraryInfo::BinariesPath));
+#  endif
 #elif defined(Q_OS_UNIX) || defined(WIN32_GNU_DEPLOY)
+#  if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
+#  else
+    QDir dir(QLibraryInfo::location(QLibraryInfo::DataPath));
+#  endif
     dir.cd(QStringLiteral(u"fps"));
 #endif
     return dir.absolutePath();

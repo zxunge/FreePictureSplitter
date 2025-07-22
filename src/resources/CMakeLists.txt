@@ -16,7 +16,12 @@ if(Qt6_FOUND)
         QM_FILES_OUTPUT_VARIABLE QM_FILES
     )
 else()
-    # Qt5
+    # For Qt5, we manually create the translations using QT_I18N_TRANSLATED_LANGUAGES.
+    #include(Qt5GenTranslations)
+    #gen_qt5_translations(QM_FILES 
+    #    TARGET FreePictureSplitter 
+    #    TS_FILE_DIR ${CMAKE_CURRENT_LIST_DIR}/i18n
+    #)
 endif()
 
 # Install resources
