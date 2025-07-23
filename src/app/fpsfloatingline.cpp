@@ -18,7 +18,7 @@ fpsFloatingLine::fpsFloatingLine(QGraphicsView *parent, Qt::Orientation orientat
 {
     setAutoFillBackground(true);
     setPalette(QPalette(QColor(50, 205, 50)));
-    
+
     m_orientation = orientation;
     if (m_orientation == Qt::Horizontal) {
         setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));

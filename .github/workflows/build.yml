@@ -60,6 +60,9 @@ jobs:
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -B build .
         cmake --build build -j
+        if [ "${{ matrix.qt }}" = "qt5" ]; then
+            cmake --build build --target release_translations
+        fi
         cmake --install build
         
   msvc:
@@ -92,7 +95,7 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -B build .
-        cmake --build build -j
+        cmake --build build -j --config Release
         cmake --install build
       
   ubuntu:

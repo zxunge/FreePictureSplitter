@@ -36,7 +36,6 @@ set_target_properties(FreePictureSplitter PROPERTIES
 )
 
 # Deployment
-## Custom deployment script
 include(GenDeployScript)
 if(UNIX OR (WIN32 AND (NOT DEPLOY_WINDOWS)))
     install(TARGETS FreePictureSplitter
