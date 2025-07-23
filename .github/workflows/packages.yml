@@ -52,7 +52,7 @@ jobs:
         wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0011-fix-redefined-mode_t.patch
         wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0012-get_timezone-not-available-on-msvcrt.patch
         wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0013-fix-libarchive-linking.patch
-        cd installer-framework-everywhere-src-4.10.0/
+        cd installer-framework-everywhere-src-4.10/
         for file in ../*.patch; do
             if [ -f "$file" ]; then
                 patch -p1 < "$file"
