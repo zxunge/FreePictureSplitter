@@ -47,7 +47,7 @@ jobs:
         cmake --build build --target release_translations
         cmake --install build
         cd /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
-        windeployqt ./FreePictureSplitter.exe --dir . --libdir . --plugindir plugins --qml-deploy-dir qml --translationdir translations --force --compiler-runtime --qtpaths /mingw64/bin/qtpaths6.exe
+        windeployqt ./FreePictureSplitter.exe --dir . --libdir . --plugindir plugins --force --compiler-runtime
         # Copy dependent dlls
         win_dlls=("libfreetype-6.dll"         \
                   "libiconv-2.dll"            \
