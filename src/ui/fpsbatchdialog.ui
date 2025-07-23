@@ -10,12 +10,6 @@
     <height>632</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>Segoe UI</family>
-    <pointsize>10</pointsize>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>FreePictureSplitter Batch Splitting</string>
   </property>
@@ -405,12 +399,6 @@
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
-        <property name="font">
-         <font>
-          <family>Segoe UI</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="text">
          <string>Output Location:</string>
         </property>
@@ -483,12 +471,6 @@
        <widget class="QLabel" name="label_2">
         <property name="enabled">
          <bool>false</bool>
-        </property>
-        <property name="font">
-         <font>
-          <family>Segoe UI</family>
-          <pointsize>10</pointsize>
-         </font>
         </property>
         <property name="text">
          <string>Specify Output Directory:</string>

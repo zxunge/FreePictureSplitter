@@ -16,12 +16,6 @@
     <height>600</height>
    </size>
   </property>
-  <property name="font">
-   <font>
-    <family>Segoe UI</family>
-    <pointsize>10</pointsize>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>FreePictureSplitter</string>
   </property>
@@ -47,12 +41,6 @@
      <width>1105</width>
      <height>29</height>
     </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>10</pointsize>
-    </font>
    </property>
    <property name="nativeMenuBar">
     <bool>false</bool>
@@ -97,12 +85,6 @@
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="toolBar">
-   <property name="font">
-    <font>
-     <family>MS Shell Dlg 2</family>
-     <pointsize>10</pointsize>
-    </font>
-   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -444,12 +426,6 @@
   <action name="actionAboutQt">
    <property name="text">
     <string>About &amp;Qt</string>
-   </property>
-   <property name="font">
-    <font>
-     <family>Segoe UI</family>
-     <pointsize>10</pointsize>
-    </font>
    </property>
   </action>
  </widget>

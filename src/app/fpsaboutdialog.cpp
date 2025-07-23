@@ -106,7 +106,7 @@ fpsAboutDialog::fpsAboutDialog(QWidget *parent)
             "QLabel#title { color: #2c3e50; }"
             "QPushButton { color: black; background: rgba(255, 255, 255, 0.7);"
             "border: 1px solid rgba(0, 0, 0, 0.073); border-bottom: 1px solid rgba(0, 0, 0, 0.183);"
-            "border-radius: 5px; font: 13px \'Segoe UI\';"
+            "border-radius: 5px;"
             "padding: 5px 12px 6px 12px; outline: none; }"_s);
 
     // Graphical Effects

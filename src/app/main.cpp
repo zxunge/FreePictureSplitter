@@ -21,6 +21,7 @@
 #include "jsonconfigitems.h"
 #include "skins.h"
 #include "stdpaths.h"
+#include "fonts.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(u"zxunge (Grit Clef)"_s);
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
+    Util::setAppFont(QLocale::system(), &a);
 
     // Load translations
     QTranslator qtTranslator, appTranslator;

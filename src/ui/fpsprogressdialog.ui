@@ -10,12 +10,6 @@
     <height>175</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <family>Segoe UI</family>
-    <pointsize>10</pointsize>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>Progress</string>
   </property>
@@ -38,12 +32,6 @@ QProgressBar { background: rgba(255, 255, 255, 0.7); border-radius:5px; }
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
      <property name="autoFillBackground">
       <bool>false</bool>
      </property>
@@ -57,12 +45,6 @@ QProgressBar { background: rgba(255, 255, 255, 0.7); border-radius:5px; }
    </item>
    <item row="1" column="1">
     <widget class="QLabel" name="labRemaining">
-     <property name="font">
-      <font>
-       <family>Segoe UI</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
      <property name="styleSheet">
       <string notr="true">background: transparent;</string>
      </property>
@@ -93,7 +75,6 @@ QProgressBar { background: rgba(255, 255, 255, 0.7); border-radius:5px; }
     border: 1px solid rgba(0, 0, 0, 0.073);
     border-bottom: 1px solid rgba(0, 0, 0, 0.183);
     border-radius: 5px;
-    font: 13px 'Segoe UI';
     padding: 5px 12px 6px 12px;
     outline: none;
 }</string>
