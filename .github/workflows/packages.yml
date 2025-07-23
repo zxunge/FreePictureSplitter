@@ -26,6 +26,7 @@ jobs:
           qt5-tools:p
           qt5-translations:p
           qt5-imageformats:p
+          qt-installer-framework:p
     
     - name: Checkout
       uses: actions/checkout@v4
@@ -35,41 +36,6 @@ jobs:
         submodules: recursive
         ref: 3.x
         fetch-depth: 1
-        
-    - name: Build Qt IFW Using Qt5
-      shell: msys2 {0}
-      run: |
-        # Download and extract source
-        wget -q https://download.qt.io/archive/qt-installer-framework/4.10.0/installer-framework-everywhere-src-4.10.0.tar.xz
-        tar xf installer-framework-everywhere-src-4.10.0.tar.xz
-        
-        # Get and apply patches
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0002-add-installation-stuff-to-pro-files.patch
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0003-add-recursive-option-to-rmdir-operation.patch
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0004-add-dirExists-fuction.patch
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0006-Don-t-remove-files-that-live-outside-of-path.patch
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0010-fix-version-pass-to-windres.patch
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0011-fix-redefined-mode_t.patch
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0012-get_timezone-not-available-on-msvcrt.patch
-        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0013-fix-libarchive-linking.patch
-        cd installer-framework-everywhere-src-4.10/
-        for file in ../*.patch; do
-            if [ -f "$file" ]; then
-                patch -p1 < "$file"
-            fi
-        done
-        
-        # Build the source and install
-        mkdir build && cd $_
-        qmake CONFIG+=release                       \
-            CONFIG+=libarchive                      \
-            CONFIG+=no_testcase_installs            \
-            IFW_ZLIB_LIBRARY=/mingw64/lib/libz.a    \
-            IFW_BZIP2_LIBRARY=/mingw64/lib/libbz2.a \
-            IFW_LZMA_LIBRARY=/mingw64/lib/liblzma.a \
-            ../installerfw.pro
-        make
-        make INSTALL_ROOT="/mingw64" install
         
     - name: Build, deploy and copy dependencies
       shell: msys2 {0}
