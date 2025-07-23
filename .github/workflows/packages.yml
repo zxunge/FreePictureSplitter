@@ -4,111 +4,135 @@ on:
   workflow_dispatch:
   
 jobs:
-  clang:
-    # We pack an archive using Qt 5/6 in clang64 environment.
+  qt5_win64:
+    # We pack an archive using Qt5.15 in the mingw64 environment of MSYS2.
     runs-on: windows-latest
-    strategy:
-      matrix:
-        qt: [qt5, qt6]
         
     steps:
     - name: Setup MSYS2 Environment
       uses: msys2/setup-msys2@v2
       with:
-        msystem: clang64
+        msystem: mingw64
         update: true
-        location: D:\
+        install: >-
+          patch
+          make
         pacboy: >-
           toolchain:p
           cmake:p
           ninja:p
-          jq:p
           angleproject:p
-          ${{ matrix.qt }}-base:p
-          ${{ matrix.qt }}-tools:p
-          ${{ matrix.qt }}-translations:p
-          ${{ matrix.qt }}-imageformats:p
-        install: >-
-          unzip
-
+          qt5-base:p
+          qt5-tools:p
+          qt5-translations:p
+          qt5-imageformats:p
+    
     - name: Checkout
       uses: actions/checkout@v4
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
         submodules: recursive
+        ref: 3.x
+        fetch-depth: 1
         
-    - name: Download and extract pedeps
+    - name: Build Qt IFW Using Qt5
       shell: msys2 {0}
       run: |
-        LATEST_VERSION=$(curl -s https://api.github.com/repos/brechtsanders/pedeps/releases/latest | jq -r .tag_name)
-        echo "Latest version is $LATEST_VERSION"
-        DOWNLOAD_URL="https://github.com/brechtsanders/pedeps/releases/download/${LATEST_VERSION}/pedeps-${LATEST_VERSION}-win64.zip"
-        wget $DOWNLOAD_URL -O pedeps-latest.zip
-        unzip pedeps-latest.zip -d pedeps
+        # Download and extract source
+        wget -q https://download.qt.io/archive/qt-installer-framework/4.10.0/installer-framework-everywhere-src-4.10.0.tar.xz
+        tar xf installer-framework-everywhere-src-4.10.0.tar.xz
+        
+        # Get and apply patches
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0002-add-installation-stuff-to-pro-files.patch
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0003-add-recursive-option-to-rmdir-operation.patch
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0004-add-dirExists-fuction.patch
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0006-Don-t-remove-files-that-live-outside-of-path.patch
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0010-fix-version-pass-to-windres.patch
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0011-fix-redefined-mode_t.patch
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0012-get_timezone-not-available-on-msvcrt.patch
+        wget -q https://github.com/msys2/MINGW-packages/raw/refs/heads/master/mingw-w64-qt-installer-framework/0013-fix-libarchive-linking.patch
+        cd installer-framework-everywhere-src-4.10.0/
+        for file in ../*.patch; do
+            if [ -f "$file" ]; then
+                patch -p1 < "$file"
+            fi
+        done
+        
+        # Build the source and install
+        mkdir build && cd $_
+        qmake CONFIG+=release                       \
+            CONFIG+=libarchive                      \
+            CONFIG+=no_testcase_installs            \
+            IFW_ZLIB_LIBRARY=/mingw64/lib/libz.a    \
+            IFW_BZIP2_LIBRARY=/mingw64/lib/libbz2.a \
+            IFW_LZMA_LIBRARY=/mingw64/lib/liblzma.a \
+            ../installerfw.pro
+        make
+        make INSTALL_ROOT="/mingw64" install
         
     - name: Build, deploy and copy dependencies
       shell: msys2 {0}
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/FreePictureSplitter -B build .
-        cmake --build build --parallel $(nproc)
-        cmake --install .
-        pushd /opt/FreePictureSplitter/
-        if [ "${{ matrix.qt }}" = "qt6" ]; then
-          windeployqt6 --compiler-runtime ./FreePictureSplitter.exe
-        else
-          windeployqt ./FreePictureSplitter.exe
-        fi
-        '${{ github.workspace }}/pedeps/bin/copypedeps.exe' -r -n -v ./FreePictureSplitter.exe ./
-        popd
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data -B build .
+        cmake --build build -j
+        cmake --build build --target release_translations
+        cmake --install build
+        cd /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
+        windeployqt ./FreePictureSplitter.exe --dir . --libdir . --plugindir plugins --qml-deploy-dir qml --translationdir translations --force --compiler-runtime --qtpaths /mingw64/bin/qtpaths6.exe
+        # Copy dependent dlls
+        win_dlls=("libfreetype-6.dll"         \
+                  "libiconv-2.dll"            \
+                  "libjasper.dll"             \
+                  "libpcre2-8-0.dll"          \
+                  "libwebp-7.dll"             \  
+                  "libzstd.dll"               \
+                  "libbrotlicommon.dll"       \
+                  "libicudt77.dll"            \
+                  "libjpeg-8.dll"             \
+                  "libpng16-16.dll"           \
+                  "libwebpdecoder-3.dll"      \
+                  "vulkan-1.dll"              \
+                  "libbrotlidec.dll"          \
+                  "libfontconfig-1.dll"       \
+                  "libicuin77.dll"            \
+                  "libmd4c.dll"               \
+                  "libsharpyuv-0.dll"         \
+                  "libwebpdemux-2.dll"        \ 
+                  "zlib1.dll"                 \
+                  "libbz2-1.dll"              \
+                  "libgraphite2.dll"          \
+                  "libicuuc77.dll"            \
+                  "libmng-2.dll"              \
+                  "libwebpmux-3.dll"          \
+                  "libdouble-conversion.dll"  \
+                  "libharfbuzz-0.dll"         \
+                  "libintl-8.dll"             \
+                  "libpcre2-16-0.dll"         \
+                  "libturbojpeg.dll"          \
+                  "libtiff-6.dll"             \
+                  "libtiffxx-6.dll")
+        for dll in ${win_dlls[@]};
+        do
+          cp -f /mingw64/bin/$dll ./
+        done
+        
+    - name: Create an installer using Qt IFW
+      shell: msys2 {0}
+      run: |
+        mkdir -p /opt/freepicturesplitter/config
+        mkdir -p /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta
+        cp -f FreePictureSplitter/config/config.xml /opt/freepicturesplitter/config/
+        cp -f FreePictureSplitter/config/package.xml /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
+        cp -f FreePictureSplitter/LICENSE /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
+        cp -f FreePictureSplitter/src/resources/fps.ico /opt/freepicturesplitter/config/
+        cp -f FreePictureSplitter/src/resources/fps.png /opt/freepicturesplitter/config/
+        binarycreator --offline-only -t /mingw64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup-qt5-win64
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitter-clang64-${{ matrix.qt }}-all
-        path: D:/msys64/opt/FreePictureSplitter
-        
-  msvc:
-    # We pack an archive using Qt6 built with MSVC.
-    runs-on: windows-latest
-    steps:
-    - name: Install Qt
-      uses: jurplel/install-qt-action@v4
-      with:
-        arch: win64_msvc2022_64
-        install-deps: true
-        modules: "qtimageformats"
-        setup-python: false
-        
-    - name: Setup CMake
-      uses: jwlawson/actions-setup-cmake@v2
-      
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        repository: zxunge/FreePictureSplitter
-        submodules: recursive
-      
-    - name: Download and extract pedeps
-      shell: pwsh
-      run: |
-        Invoke-WebRequest -Uri "https://github.com/brechtsanders/pedeps/releases/download/0.1.15/pedeps-0.1.15-win64.zip" -OutFile "./pedeps-latest.zip"
-        Expand-Archive -Path "./pedeps-latest.zip" -DestinationPath "./pedeps"
-      
-    - name: Build, deploy and copy dependencies
-      shell: pwsh
-      run: |
-        # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=${{ github.workspace }}\FreePictureSplitter -B build .
-        cmake --build build --parallel $(nproc) --config Release
-        cd FreePictureSplitter\
-        windeployqt6 --compiler-runtime .\FreePictureSplitter.exe
-        ${{ github.workspace }}\pedeps\bin\copypedeps.exe -r -n -v .\FreePictureSplitter.exe .\
-        
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: FreePictureSplitter-msvc2022-qt6-all
-        path: FreePictureSplitter
+        name: FreePictureSplitterSetup-qt5-win64
+        path: FreePictureSplitterSetup-qt5-win64.exe
