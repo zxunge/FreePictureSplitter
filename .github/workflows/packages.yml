@@ -85,20 +85,13 @@ jobs:
           cp -f /mingw64/bin/$dll ./
         done
         
-    - name: Create an installer using Qt IFW
+    - name: Pack an archive
       shell: msys2 {0}
       run: |
-        mkdir -p /opt/freepicturesplitter/config
-        mkdir -p /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta
-        cp -f FreePictureSplitter/config/config.xml /opt/freepicturesplitter/config/
-        cp -f FreePictureSplitter/config/package.xml /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
-        cp -f FreePictureSplitter/LICENSE /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
-        cp -f FreePictureSplitter/src/resources/fps.ico /opt/freepicturesplitter/config/
-        cp -f FreePictureSplitter/src/resources/fps.png /opt/freepicturesplitter/config/
-        binarycreator --offline-only -t /mingw64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup-qt5-win64
-
+        tar -Jcf FreePictureSplitter-qt5-win64.tar.xz /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/*
+    
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: FreePictureSplitterSetup-qt5-win64
-        path: FreePictureSplitterSetup-qt5-win64.exe
+        name: FreePictureSplitter-qt5-win64
+        path: FreePictureSplitter-qt5-win64.tar.xz
