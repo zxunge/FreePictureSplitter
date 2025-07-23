@@ -40,7 +40,6 @@ if(WIN32 AND DEPLOY_WINDOWS)
 endif()
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets LinguistTools)
-message(STATUS "Found Qt " ${Qt6_VERSION})
 
 qt_standard_project_setup(
     REQUIRES 6.9
