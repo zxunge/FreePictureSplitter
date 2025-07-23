@@ -23,12 +23,11 @@
 #include <QFont>
 
 namespace Util {
-    
+
 void setAppFont(QLocale locale, QGuiApplication *app)
 {
     QFont font;
-    switch (locale.language())
-    {
+    switch (locale.language()) {
     case QLocale::English:
     case QLocale::Chinese:
     case QLocale::Turkish:
@@ -37,12 +36,12 @@ void setAppFont(QLocale locale, QGuiApplication *app)
         font.setFamily("Microsoft YaHei UI");
 #endif
         break;
-        
+
     default:
         break;
     }
     font.setPixelSize(13);
     app->setFont(font);
 }
-    
-}
+
+} // namespace Util
