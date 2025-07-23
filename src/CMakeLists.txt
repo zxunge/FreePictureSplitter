@@ -29,6 +29,7 @@ target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Core
     Qt::Widgets
     reflectcpp
+    QWin11PhantomStyle
 )
 
 set_target_properties(FreePictureSplitter PROPERTIES

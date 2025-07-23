@@ -15,6 +15,8 @@
 #include <QDir>
 #include <QStyleFactory>
 
+#include <qwin11phantomstyle.h> // For a modern look on the default skin
+
 namespace Util {
 
 QStringList getAvailableSkins()
@@ -37,11 +39,15 @@ void setAppSkin(QApplication *app, const QString &skinName)
     const QString skin{ skinName.toLower() };
 
     if (skin == "default") {
-        // The default style includes a fusion style
-        app->setStyle(QStyleFactory::create("fusion"));
+        // The default style includes a Win11Phantom style
+        QWin11PhantomStyle *phStyle{ new QWin11PhantomStyle() };
+        app->setStyle(phStyle);
         styleFile.setFileName(Util::getSkinsDir() + "/default.qss");
-    } else
-        styleFile.setFileName(Util::getSkinsDir() + "/" + skin + ".qss");
+    } else {
+        // For other skins, we use `fusion`
+        app->setStyle(QStyleFactory::create("fusion"));
+        styleFile.setFileName(Util::getSkinsDir() + '/' + skin + ".qss");
+    }
 
     styleFile.open(QFile::ReadOnly);
     if (styleFile.isOpen()) {
