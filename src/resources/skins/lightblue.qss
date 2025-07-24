@@ -160,19 +160,19 @@ height:15px;
 }
 
 QRadioButton::indicator::unchecked{
-image:url(:/skins/skins/lightblue/radiobutton_unchecked.png);
+image:url(@SKINS_DIR@/lightblue/radiobutton_unchecked.png);
 }
 
 QRadioButton::indicator::unchecked:disabled{
-image:url(:/skins/skins/lightblue/radiobutton_unchecked_disable.png);
+image:url(@SKINS_DIR@/lightblue/radiobutton_unchecked_disable.png);
 }
 
 QRadioButton::indicator::checked{
-image:url(:/skins/skins/lightblue/radiobutton_checked.png);
+image:url(@SKINS_DIR@/lightblue/radiobutton_checked.png);
 }
 
 QRadioButton::indicator::checked:disabled{
-image:url(:/skins/skins/lightblue/radiobutton_checked_disable.png);
+image:url(@SKINS_DIR@/lightblue/radiobutton_checked_disable.png);
 }
 
 QGroupBox::indicator,QTreeView::indicator,QListView::indicator,QTableView::indicator{
@@ -185,38 +185,38 @@ height:13px;
 }
 
 QCheckBox::indicator:unchecked,QGroupBox::indicator:unchecked,QTreeView::indicator:unchecked,QListView::indicator:unchecked,QTableView::indicator:unchecked{
-image:url(:/skins/skins/lightblue/checkbox_unchecked.png);
+image:url(@SKINS_DIR@/lightblue/checkbox_unchecked.png);
 }
 
 QCheckBox::indicator:unchecked:disabled,QGroupBox::indicator:unchecked:disabled,QTreeView::indicator:unchecked:disabled,QListView::indicator:unchecked:disabled,QTableView::indicator:unchecked:disabled{
-image:url(:/skins/skins/lightblue/checkbox_unchecked_disable.png);
+image:url(@SKINS_DIR@/lightblue/checkbox_unchecked_disable.png);
 }
 
 QCheckBox::indicator:checked,QGroupBox::indicator:checked,QTreeView::indicator:checked,QListView::indicator:checked,QTableView::indicator:checked{
-image:url(:/skins/skins/lightblue/checkbox_checked.png);
+image:url(@SKINS_DIR@/lightblue/checkbox_checked.png);
 }
 
 QCheckBox::indicator:checked:disabled,QGroupBox::indicator:checked:disabled,QTreeView::indicator:checked:disabled,QListView::indicator:checked:disabled,QTableView::indicator:checked:disabled{
-image:url(:/skins/skins/lightblue/checkbox_checked_disable.png);
+image:url(@SKINS_DIR@/lightblue/checkbox_checked_disable.png);
 }
 
 QCheckBox::indicator:indeterminate,QGroupBox::indicator:indeterminate,QTreeView::indicator:indeterminate,QListView::indicator:indeterminate,QTableView::indicator:indeterminate{
-image:url(:/skins/skins/lightblue/checkbox_parcial.png);
+image:url(@SKINS_DIR@/lightblue/checkbox_parcial.png);
 }
 
 QCheckBox::indicator:indeterminate:disabled,QGroupBox::indicator:indeterminate:disabled,QTreeView::indicator:indeterminate:disabled,QListView::indicator:indeterminate:disabled,QTableView::indicator:indeterminate:disabled{
-image:url(:/skins/skins/lightblue/checkbox_parcial_disable.png);
+image:url(@SKINS_DIR@/lightblue/checkbox_parcial_disable.png);
 }
 
 QTimeEdit::up-button,QDateEdit::up-button,QDateTimeEdit::up-button,QDoubleSpinBox::up-button,QSpinBox::up-button{
-image:url(:/skins/skins/lightblue/add_top.png);
+image:url(@SKINS_DIR@/lightblue/add_top.png);
 width:10px;
 height:10px;
 padding:2px 5px 0px 0px;
 }
 
 QTimeEdit::down-button,QDateEdit::down-button,QDateTimeEdit::down-button,QDoubleSpinBox::down-button,QSpinBox::down-button{
-image:url(:/skins/skins/lightblue/add_bottom.png);
+image:url(@SKINS_DIR@/lightblue/add_bottom.png);
 width:10px;
 height:10px;
 padding:0px 5px 2px 0px;
@@ -231,7 +231,7 @@ bottom:-2px;
 }
 
 QComboBox::down-arrow,QDateEdit[calendarPopup="true"]::down-arrow,QTimeEdit[calendarPopup="true"]::down-arrow,QDateTimeEdit[calendarPopup="true"]::down-arrow{
-image:url(:/skins/skins/lightblue/add_bottom.png);
+image:url(@SKINS_DIR@/lightblue/add_bottom.png);
 width:10px;
 height:10px;
 right:2px;
@@ -276,11 +276,11 @@ height:13px;
 }
 
 QMenu::indicator::checked{
-image:url(:/skins/skins/lightblue/menu_checked.png);
+image:url(@SKINS_DIR@/lightblue/menu_checked.png);
 }
 
 QMenu::right-arrow{
-image:url(:/skins/skins/lightblue/arrow_right.png);
+image:url(@SKINS_DIR@/lightblue/arrow_right.png);
 width:13px;
 height:13px;
 padding:0px 3px 0px 0px;
@@ -450,12 +450,12 @@ gridline-color:#C0DCF2;
 
 QTreeView::branch:closed:has-children{
 margin:4px;
-border-image:url(:/skins/skins/lightblue/branch_open.png);
+border-image:url(@SKINS_DIR@/lightblue/branch_open.png);
 }
 
 QTreeView::branch:open:has-children{
 margin:4px;
-border-image:url(:/skins/skins/lightblue/branch_close.png);
+border-image:url(@SKINS_DIR@/lightblue/branch_close.png);
 }
 
 QTreeView,QListView,QTableView,QSplitter::handle,QTreeView::branch{
@@ -594,13 +594,13 @@ min-width:80px;
 QToolButton#qt_calendar_prevmonth{
 icon-size:0px;
 min-width:20px;
-image:url(:/skins/skins/lightblue/calendar_prevmonth.png);
+image:url(@SKINS_DIR@/lightblue/calendar_prevmonth.png);
 }
 
 QToolButton#qt_calendar_nextmonth{
 icon-size:0px;
 min-width:20px;
-image:url(:/skins/skins/lightblue/calendar_nextmonth.png);
+image:url(@SKINS_DIR@/lightblue/calendar_nextmonth.png);
 }
 
 QToolButton#qt_calendar_prevmonth,QToolButton#qt_calendar_nextmonth,QToolButton#qt_calendar_monthbutton,QToolButton#qt_calendar_yearbutton{

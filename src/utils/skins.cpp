@@ -70,7 +70,12 @@ void setAppSkin(QApplication *app, const QString &skinName)
             app->setPalette(QPalette(u"#eaf7ff"_s));
         else
             app->setPalette(QPalette());
-        app->setStyleSheet(QString(styleFile.readAll()));
+            
+        // The stylesheets cannot be applied directly,
+        // we need to do some path-conversion.
+        QString ss(styleFile.readAll());
+        ss.replace(u"@SKINS_DIR@"_s, Util::getSkinsDir());
+        app->setStyleSheet(ss);
         styleFile.close();
     } else {
         QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading skin."),
