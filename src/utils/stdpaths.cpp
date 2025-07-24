@@ -36,7 +36,7 @@ QString getSkinsDir()
     dir.cd(u"fps"_s);
     dir.cd(u"skins"_s);
 #endif
-    return dir.cleanPath();
+    return QDir::cleanPath(dir.absolutePath());
 }
 
 QString getTranslationsDir()
@@ -49,7 +49,7 @@ QString getTranslationsDir()
     dir.cd(u"fps"_s);
     dir.cd(u"translations"_s);
 #endif
-    return dir.cleanPath();
+    return QDir::cleanPath(dir.absolutePath());
 }
 
 QString getDataDir()
@@ -60,7 +60,7 @@ QString getDataDir()
     QDir dir(QLibraryInfo::path(QLibraryInfo::DataPath));
     dir.cd(u"fps"_s);
 #endif
-    return dir.cleanPath();
+    return QDir::cleanPath(dir.absolutePath());
 }
 
 } // namespace Util
