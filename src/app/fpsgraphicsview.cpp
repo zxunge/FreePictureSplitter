@@ -62,6 +62,7 @@ void fpsGraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
     m_hruler->setVisible(true);
     m_vruler->setVisible(true);
     m_box->setVisible(true);
+    updateRuler();
 
     if (adaptive) { // Set an adaptive background for GraphicsView based on the image's color
         const QColor dominant{ Util::getDominantColorHSVWeighted(pixmap) };
@@ -115,15 +116,15 @@ void fpsGraphicsView::updateRuler()
     QRectF viewbox{ this->rect() };
     QPointF offset{ mapFromScene(scene()->sceneRect().topLeft()) };
     double factor{ 1.0 / transform().m11() };
-    double lower_x{ factor * (viewbox.left() - offset.x()) };
-    double upper_x{ factor * (viewbox.right() - RULER_SIZE - offset.x()) };
-    m_hruler->setRange(lower_x, upper_x, upper_x - lower_x);
+    double lowerX{ factor * (viewbox.left() - offset.x()) };
+    double upperX{ factor * (viewbox.right() - RULER_SIZE - offset.x()) };
+    m_hruler->setRange(lowerX, upperX, upperX - lowerX);
     m_hruler->update();
 
-    double lower_y{ -factor * (viewbox.top() - offset.y()) };
-    double upper_y{ -factor * (viewbox.bottom() - RULER_SIZE - offset.y()) };
+    double lowerY{ -factor * (viewbox.top() - offset.y()) };
+    double upperY{ -factor * (viewbox.bottom() - RULER_SIZE - offset.y()) };
 
-    m_vruler->setRange(lower_y, upper_y, upper_y - lower_y);
+    m_vruler->setRange(lowerY, upperY, upperY - lowerY);
     m_vruler->update();
 }
 

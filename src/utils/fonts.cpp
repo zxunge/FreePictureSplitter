@@ -22,6 +22,8 @@
 #include <QGuiApplication>
 #include <QFont>
 
+using namespace Qt::Literals::StringLiterals;
+
 namespace Util {
 
 void setAppFont(QLocale locale, QGuiApplication *app)
@@ -29,18 +31,23 @@ void setAppFont(QLocale locale, QGuiApplication *app)
     QFont font;
     switch (locale.language()) {
     case QLocale::English:
+#if defined(Q_OS_WIN)
+        font.setFamily(u"Segoe UI"_s);
+#endif
+        break;
+    
     case QLocale::Chinese:
     case QLocale::Turkish:
     case QLocale::Greek:
 #if defined(Q_OS_WIN)
-        font.setFamily("Microsoft YaHei UI");
+        font.setFamily(u"Microsoft YaHei UI"_s);
 #endif
         break;
 
     default:
         break;
     }
-    font.setPixelSize(13);
+    font.setPointSize(9);
     app->setFont(font);
 }
 
