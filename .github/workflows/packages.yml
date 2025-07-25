@@ -83,7 +83,7 @@ jobs:
         
         # Also pack an archive
         cd /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
-        tar -Jcf '${{ github.workspace }}/FreePictureSplitter-portable-win64.tar.xz' *
+        tar -Jcf $(cygpath -u '${{ github.workspace }}')/FreePictureSplitter-portable-win64.tar.xz *
         
     - name: Create an installer using Qt IFW
       shell: msys2 {0}
