@@ -21,7 +21,7 @@
 #ifndef FPSGRAPHICSVIEW_H
 #define FPSGRAPHICSVIEW_H
 
-#include "fpsfloatingline.h"
+#include "fpsdraggableline.h"
 
 #include <QGraphicsView>
 #include <QImage>
@@ -48,11 +48,14 @@ public:
     void showPixmap(const QPixmap &pixmap,
                     bool adaptive = true); // Show an image on the GraphicsView.
     // Create a line using direction and initial position. pos -> whole GraphicsView
-    void addFloatingLine(Qt::Orientation ori, const QPoint &pos);
-    void addFloatingLine(fpsFloatingLine *fl); // Add an existing line to list.
-    void removeAllFloatingLines();
+    void addDraggableLine(Qt::Orientation ori, const QPoint &pos);
+    void addDraggableLine(fpsDraggableLine *fl); // Add an existing line to list.
+    void removeAllDraggableLines();
 
-    const QVector<QPointer<fpsFloatingLine>> &getFloatingLines() const { return m_plines; }
+    const QVector<QPointer<fpsDraggableLine>> &getDraggableLines() const { return m_plines; }
+
+public slots:
+    void lineDestruction();
 
 signals:
     void positionChanged(int x, int y);
@@ -67,7 +70,7 @@ private:
     fpsRulerBar *m_hruler;
     fpsRulerBar *m_vruler;
     fpsCornerBox *m_box;
-    QVector<QPointer<fpsFloatingLine>> m_plines;
+    QVector<QPointer<fpsDraggableLine>> m_plines;
 
 private slots:
     void dragStarted(const QPoint &startPos);
@@ -75,7 +78,7 @@ private slots:
     void dragFinished(const QPoint &endPos, bool isReal);
 
 private:
-    fpsFloatingLine *m_tempLine{ nullptr }; // Temporary line widget
+    fpsDraggableLine *m_tempLine{ nullptr }; // Temporary line widget
     QPoint m_dragStartPos; // Position where dragging starts
 };
 

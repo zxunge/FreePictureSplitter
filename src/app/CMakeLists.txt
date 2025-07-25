@@ -3,8 +3,8 @@ target_sources(FreePictureSplitter PRIVATE
     fpsaboutdialog.h
     fpsbatchdialog.cpp
     fpsbatchdialog.h
-    fpsfloatingline.cpp
-    fpsfloatingline.h
+    fpsdraggableline.cpp
+    fpsdraggableline.h
     fpsgraphicsview.cpp
     fpsgraphicsview.h
     fpsimagehandler.cpp

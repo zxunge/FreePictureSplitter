@@ -23,6 +23,7 @@
 #include <QMouseEvent>
 #include <QPixmap>
 #include <QColor>
+#include <QRandomGenerator64>
 
 fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
@@ -63,6 +64,7 @@ void fpsGraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
     m_vruler->setVisible(true);
     m_box->setVisible(true);
     updateRuler();
+    removeAllDraggableLines();
 
     if (adaptive) { // Set an adaptive background for GraphicsView based on the image's color
         const QColor dominant{ Util::getDominantColorHSVWeighted(pixmap) };
@@ -144,36 +146,30 @@ void fpsGraphicsView::zoomOut()
         l->updateLine();
 }
 
-void fpsGraphicsView::addFloatingLine(Qt::Orientation orientation, const QPoint &pos)
+void fpsGraphicsView::addDraggableLine(Qt::Orientation orientation, const QPoint &pos)
 {
     if (!scene())
         return;
 
-    QPointer<fpsFloatingLine> fl{ new fpsFloatingLine(this, orientation) };
+    QPointer<fpsDraggableLine> fl{ new fpsDraggableLine(this, orientation) };
     fl->updateLine(pos);
+    fl->setId(QRandomGenerator64::global()->generate());
     fl->show();
+    connect(fl, &fpsDraggableLine::userDestruction, this, &fpsGraphicsView::lineDestruction);
     m_plines.push_back(fl);
-    qsizetype i{ m_plines.size() - 1 };
-    connect(fl, &fpsFloatingLine::userDestruction, this, [this, fl, i]() {
-        fl->deleteLater();
-        this->m_plines.remove(i);
-    });
 }
 
-void fpsGraphicsView::addFloatingLine(fpsFloatingLine *fl)
+void fpsGraphicsView::addDraggableLine(fpsDraggableLine *fl)
 {
     if (!scene())
         return;
 
+    fl->setId(QRandomGenerator64::global()->generate());
+    connect(fl, &fpsDraggableLine::userDestruction, this, &fpsGraphicsView::lineDestruction);
     m_plines.push_back(fl);
-    qsizetype i{ m_plines.size() - 1 };
-    connect(fl, &fpsFloatingLine::userDestruction, this, [this, fl, i]() {
-        fl->deleteLater();
-        this->m_plines.remove(i);
-    });
 }
 
-void fpsGraphicsView::removeAllFloatingLines()
+void fpsGraphicsView::removeAllDraggableLines()
 {
     for (auto l : m_plines)
         l->deleteLater();
@@ -190,10 +186,10 @@ void fpsGraphicsView::dragStarted(const QPoint &startPos)
 
     // Create a temporary line
     if (qobject_cast<fpsRulerBar *>(sender())->getOritation() == Qt::Horizontal) {
-        m_tempLine = new fpsFloatingLine(this, Qt::Horizontal);
+        m_tempLine = new fpsDraggableLine(this, Qt::Horizontal);
         m_tempLine->updateLine(0, startPos.y());
     } else {
-        m_tempLine = new fpsFloatingLine(this, Qt::Vertical);
+        m_tempLine = new fpsDraggableLine(this, Qt::Vertical);
         m_tempLine->updateLine(startPos.x(), 0);
     }
 
@@ -230,9 +226,21 @@ void fpsGraphicsView::dragFinished(const QPoint &endPos, bool isReal)
         return;
     }
 
-    addFloatingLine(m_tempLine);
+    addDraggableLine(m_tempLine);
 
     // Set to null (not deleting)
     m_tempLine = nullptr;
     setCursor(QCursor(Qt::ArrowCursor));
+}
+
+void fpsGraphicsView::lineDestruction()
+{
+    fpsDraggableLine *sd{ qobject_cast<fpsDraggableLine *>(sender()) };
+    if (sd) {
+        for (qsizetype i{}; i != m_plines.size(); ++i)
+            if (m_plines[i]->id() == sd->id()) {
+                m_plines[i]->deleteLater();
+                m_plines.remove(i);
+            }
+    }
 }

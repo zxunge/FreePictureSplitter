@@ -37,7 +37,7 @@ public:
         m_faceColor = color;
         update();
     }
-    QColor getFaceColor() const { return m_faceColor; }
+    QColor faceColor() const { return m_faceColor; }
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -57,7 +57,7 @@ public:
         m_faceColor = color;
         update();
     }
-    QColor getFaceColor() const { return m_faceColor; }
+    QColor faceColor() const { return m_faceColor; }
 
     void setOrientation(Qt::Orientation orientation) { m_direction = orientation; }
     Qt::Orientation getOritation() const { return m_direction; }

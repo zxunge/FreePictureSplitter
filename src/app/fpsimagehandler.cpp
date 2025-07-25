@@ -19,7 +19,7 @@
 
 #include "fpsimagehandler.h"
 #include "fpsgraphicsview.h"
-#include "fpsfloatingline.h"
+#include "fpsdraggableline.h"
 
 #include <QImage>
 #include <QRect>
@@ -184,19 +184,19 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
     if (0 == rects.size() || 0 == rects[0].size())
         return;
 
-    fpsFloatingLine *line{};
+    fpsDraggableLine *line{};
     for (qsizetype i{}; i != rects.size() - 1; ++i) {
-        line = new fpsFloatingLine(parent);
+        line = new fpsDraggableLine(parent);
         line->setScenePos(rects[i][0].bottom());
         line->show();
-        parent->addFloatingLine(line);
+        parent->addDraggableLine(line);
         line = nullptr;
     }
     for (int i{}; i != rects[0].size() - 1; ++i) {
-        line = new fpsFloatingLine(parent, Qt::Vertical);
+        line = new fpsDraggableLine(parent, Qt::Vertical);
         line->setScenePos(rects[0][i].right());
         line->show();
-        parent->addFloatingLine(line);
+        parent->addDraggableLine(line);
         line = nullptr;
     }
 }
@@ -205,11 +205,11 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
 {
     QVector<int> vx, vy;
 
-    for (auto l : parent->getFloatingLines())
+    for (auto l : parent->getDraggableLines())
         if (l->getOrientation() == Qt::Horizontal)
-            vy.push_back(l->getScenePos());
+            vy.push_back(l->scenePos());
         else
-            vx.push_back(l->getScenePos());
+            vx.push_back(l->scenePos());
     std::sort(vx.begin(), vx.end());
     std::sort(vy.begin(), vy.end());
 

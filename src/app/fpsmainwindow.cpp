@@ -301,7 +301,7 @@ void fpsMainWindow::on_btnReset_clicked()
                     fpsImageHandler::SplitSequence::Right);
     }
     ui->actionSave->setEnabled(true);
-    ui->graphicsView->removeAllFloatingLines();
+    ui->graphicsView->removeAllDraggableLines();
     fpsImageHandler::rectsToLines(m_rects, ui->graphicsView);
 }
 
