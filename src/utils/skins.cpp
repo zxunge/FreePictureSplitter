@@ -70,7 +70,7 @@ void setAppSkin(QApplication *app, const QString &skinName)
             app->setPalette(QPalette(u"#eaf7ff"_s));
         else
             app->setPalette(QPalette());
-            
+
         // The stylesheets cannot be applied directly,
         // we need to do some path-conversion.
         QString ss(styleFile.readAll());

@@ -18,7 +18,9 @@ endif()
 
 target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Core
+    Qt::Gui
     Qt::Widgets
+    Qt::Svg
     reflectcpp
     QWin11PhantomStyle
 )

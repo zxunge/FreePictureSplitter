@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package>
-    <DisplayName>FreePictureSplitter App</DisplayName>
-    <Description>FreePictureSplitter is a fast, small, and easy-to-use picture splitter. Click to install.</Description>
-    <Version>3.0.0</Version>
-    <ReleaseDate>2025-07-20</ReleaseDate>
+    <DisplayName>Main Application</DisplayName>
+    <Description>Install the main application of FreePictureSplitter, a fast, small, and easy-to-use picture splitter; including the programs, libraries and default skins.</Description>
+    <Version>4.0.0</Version>
+    <ReleaseDate>2025-07-25</ReleaseDate>
     <Name>com.zxunge.freepicturesplitter.app</Name>
     <Licenses>
         <License name="License Agreement" file="LICENSE" />

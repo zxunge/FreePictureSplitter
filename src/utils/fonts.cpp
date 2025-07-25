@@ -28,25 +28,27 @@ namespace Util {
 
 void setAppFont(QLocale locale, QGuiApplication *app)
 {
-    QFont font;
+    QFont font{ app->font() };
+    
+#if defined(Q_OS_WIN)
     switch (locale.language()) {
     case QLocale::English:
-#if defined(Q_OS_WIN)
         font.setFamily(u"Segoe UI"_s);
-#endif
         break;
     
     case QLocale::Chinese:
     case QLocale::Turkish:
     case QLocale::Greek:
-#if defined(Q_OS_WIN)
         font.setFamily(u"Microsoft YaHei UI"_s);
-#endif
         break;
 
     default:
         break;
     }
+#else
+    // Unix stuff
+#endif
+
     font.setPointSize(9);
     app->setFont(font);
 }

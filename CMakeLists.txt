@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 
 project(FreePictureSplitter
-        VERSION 3.0.0
+        VERSION 4.0.0
         LANGUAGES C CXX
+        DESCRIPTION "A fast, small, and easy-to-use picture splitter!"
         HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter
 )
 
@@ -39,7 +40,7 @@ if(WIN32 AND DEPLOY_WINDOWS)
     set(CMAKE_INSTALL_LIBEXECDIR ".")
 endif()
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Svg LinguistTools)
 
 qt_standard_project_setup(
     REQUIRES 6.9
