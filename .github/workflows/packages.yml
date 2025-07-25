@@ -33,6 +33,7 @@ jobs:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
         submodules: recursive
+        fetch-depth: 1
         
     - name: Build, deploy and copy dependencies
       shell: msys2 {0}
@@ -102,9 +103,11 @@ jobs:
       with:
         name: FreePictureSplitterSetup-win64
         path: FreePictureSplitterSetup-win64.exe
+        compression-level: 9
         
     - name: Upload Archive Artifact
       uses: actions/upload-artifact@v4
       with:
         name: FreePictureSplitter-portable-win64
         path: FreePictureSplitter-portable-win64.tar.xz
+        compression-level: 9
