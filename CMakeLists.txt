@@ -71,4 +71,6 @@ endif()
 if(WITH_QT_GUI)
     message(STATUS "Qt GUI is enabled.")
     add_subdirectory(src)
+    add_subdirectory(lib)
 endif()
+

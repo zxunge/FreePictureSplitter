@@ -52,4 +52,6 @@ else()    # Win32 && DEPLOY_WINDOWS
     )
 endif()
 install(SCRIPT ${deploy_script})
+# Note that we need to deploy Dr.MinGW dlls manually,
+# including exchndl.dll, mgwhelp.dll, dbghelp.dll, dbgcore.dll, symsrv.dll, and symsrv.yes.
 include(CPack)

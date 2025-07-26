@@ -18,6 +18,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "colors.h"
+
 #include <cmath>
 
 namespace Util {
@@ -64,13 +65,9 @@ QColor getDominantColorHSVWeighted(const QPixmap &pixmap)
         return QColor(128, 128, 128);
 
     // Calculate weighted mean
-    double avgH{ fmod(sumH / totalWeight, 1.0) };
+    float avgH{ fmodf(sumH / totalWeight, 1.0f) };
     float avgS{ qBound(0.0f, static_cast<float>(sumS / totalWeight), 1.0f) };
     float avgV{ qBound(0.0f, static_cast<float>(sumV / totalWeight), 1.0f) };
-
-    // Adjust red area
-    if (avgH > 0.75)
-        avgH -= 1.0;
 
     return QColor::fromHsvF(avgH, avgS, avgV);
 }
@@ -92,7 +89,7 @@ QColor getContrastColor(const QColor &color)
         threshold -= 0.15f; // high saturation -> lower threshold
     }
 
-    return (value > threshold) ? QColor(182, 182, 192) : QColor(240, 240, 245);
+    return (value > threshold) ? QColor(182, 182, 182) : QColor(240, 240, 240);
 }
 
 } // namespace Util

@@ -32,8 +32,20 @@ void setAppFont(QLocale locale, QGuiApplication *app)
 
 #if defined(Q_OS_WIN)
     switch (locale.language()) {
+    case QLocale::Afrikaans:
+    case QLocale::Albanian:
+    case QLocale::Arabic:
+    case QLocale::Armenian:
     case QLocale::English:
         font.setFamily(u"Segoe UI"_s);
+        break;
+
+    case QLocale::Amharic:
+        font.setFamily(u"Ebrima"_s);
+        break;
+
+    case QLocale::Assamese:
+        font.setFamily(u"Nirmala UI"_s);
         break;
 
     case QLocale::Chinese:

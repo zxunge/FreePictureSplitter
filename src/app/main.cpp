@@ -29,12 +29,46 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QObject>
+#if defined(Q_OS_WIN)
+#  include <QLibrary>
+#endif // Q_OS_WIN
 
 #include <rfl/json.hpp>
 
 using namespace Qt::Literals::StringLiterals;
 
 Util::Config appConfig;
+
+#if defined(Q_OS_WIN)
+// Loader for crash helper: Dr.MinGW
+[[nodiscard]] bool loadExcHndl()
+{
+    // Load the DLL
+    QLibrary *exchndl{ new QLibrary(u"exchndl.dll"_s) };
+
+    if (exchndl->load()) {
+        typedef void (*ProtoExcHndlInit)();
+        typedef bool (*ProtoExcHndlSetLogFileNameA)(const char *);
+        ProtoExcHndlInit excHndlInit{ (ProtoExcHndlInit)exchndl->resolve("ExcHndlInit") };
+        ProtoExcHndlSetLogFileNameA excHndlSetLogFileNameA{
+            (ProtoExcHndlSetLogFileNameA)exchndl->resolve("ExcHndlSetLogFileNameA")
+        };
+        if (excHndlInit) {
+            excHndlInit();
+            if (!excHndlSetLogFileNameA("crashreport.rpt"))
+                return false;
+            return true;
+            // Do not free the DLL module
+        } else {
+            delete exchndl;
+            return false;
+        }
+    } else {
+        delete exchndl;
+        return false;
+    }
+}
+#endif // Q_OS_WIN
 
 int main(int argc, char *argv[])
 {
@@ -43,8 +77,16 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
+#if defined(Q_OS_WIN)
+    if (!loadExcHndl()) {
+        QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading module: exchndl.dll."),
+                             QMessageBox::Close);
+        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+    }
+#endif // Q_OS_WIN
+
     QCoreApplication::setApplicationName(fpsAppName);
-    QCoreApplication::setOrganizationName(u"zxunge (Grit Clef)"_s);
+    QCoreApplication::setOrganizationName(u"zxunge"_s);
     QGuiApplication::setApplicationDisplayName(fpsAppName);
     QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
     Util::setAppFont(QLocale::system(), &a);
