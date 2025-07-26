@@ -241,6 +241,7 @@ void fpsGraphicsView::lineDestruction()
             if (m_plines[i]->id() == sd->id()) {
                 m_plines[i]->deleteLater();
                 m_plines.remove(i);
+				break;
             }
     }
 }

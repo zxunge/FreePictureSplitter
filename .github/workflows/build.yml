@@ -57,7 +57,7 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DWITH_ASAN=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
         cmake --build build -j
         cmake --install build
         
@@ -96,9 +96,9 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=D:\FreePictureSplitter -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=D:\FreePictureSplitter -B build .
         cmake --build build -j --config Debug
-        cmake --install build
+        cmake --install build --config Debug
         
     - name: Upload Build Output
       uses: actions/upload-artifact@v4
@@ -131,7 +131,7 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DWITH_ASAN=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
         cmake --build build -j
         cmake --install build
         
