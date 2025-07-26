@@ -49,11 +49,13 @@ public slots:
     /// \details Designed to handle the most essential part of image splitting, doSplit() will only
     /// include several lines of code.
     ///
-    void doSplit(const QString &files, const QStringList &outputs, const QVector<QImage> &images,
-                 const QString &outPath, const QString &format, const double scaleFactor = 1.0,
-                 const int quality = 100);
+    void doSplit(const QStringList &files, const QVector<QStringList> &outputs,
+                 const QVector<QVector<QImage>> &images, const QString &outPath,
+                 const QString &format, const double scaleFactor = 1.0, const int quality = 100);
 
 signals:
+    void error(const QString &fileName);
+    void ready();
 };
 
 #endif // FPSSPLITWORKER_H

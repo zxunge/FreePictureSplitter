@@ -23,6 +23,7 @@
 #include "fpssettingsdialog.h"
 #include "fpsaboutdialog.h"
 #include "fpsprogressdialog.h"
+#include "fpssplitworker.h"
 #include "jsonconfigitems.h"
 #include "config.h"
 
@@ -80,6 +81,8 @@ void fpsMainWindow::on_actionOpen_triggered()
 
     if (m_imgReader.canRead()) {
         QPixmap pixmap{ QPixmap::fromImageReader(&m_imgReader) };
+        // We need to reset the file name before the calls to size(),
+        // see https://bugreports.qt.io/browse/QTBUG-138530
         m_imgReader.setFileName(m_imgReader.fileName());
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI

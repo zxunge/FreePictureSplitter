@@ -21,22 +21,32 @@
 
 #include <QImageWriter>
 
-void fpsSplitWorker::doSplit(const QString &files, const QStringList &outputs,
-                             const QVector<QImage> &images, const QString &outPath,
+using namespace Qt::Literals::StringLiterals;
+
+void fpsSplitWorker::doSplit(const QStringList &files, const QVector<QStringList> &outputs,
+                             const QVector<QVector<QImage>> &images, const QString &outPath,
                              const QString &format, const double scaleFactor, const int quality)
 {
+    if (!(files.size() == images.size() && files.size() == outputs.size()))
+        return;
+
     QImageWriter writer;
 
-    for (int i{}; i != images.size(); ++i) {
-
-        writer.setFileName(outPath + '/' + outputs[i]);
-        writer.setFormat(format.toUtf8());
-        writer.setQuality(quality);
-        if (!writer.write(images[i].scaled(images[i].width() * scaleFactor,
-                                           images[i].height() * scaleFactor, Qt::IgnoreAspectRatio,
-                                           Qt::SmoothTransformation))) {
-
-            break;
+    for (qsizetype i{}; i != files.size(); ++i) {
+        // Each file
+        const QString file{ files[i] };
+        for (int j{}; j != images[i].size(); ++j) {
+            // Each image in the corresponding list of each file
+            writer.setFileName(outPath + u"/"_s + outputs[i][j]);
+            writer.setFormat(format.toUtf8());
+            writer.setQuality(quality);
+            if (!writer.write(images[i][j].scaled(
+                        images[i][j].width() * scaleFactor, images[i][j].height() * scaleFactor,
+                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation))) {
+                Q_EMIT error(writer.fileName());
+                return;
+            }
         }
     }
+    Q_EMIT ready();
 }
