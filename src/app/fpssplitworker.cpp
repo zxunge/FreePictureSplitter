@@ -23,30 +23,30 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-void fpsSplitWorker::doSplit(const QStringList &files, const QVector<QStringList> &outputs,
-                             const QVector<QVector<QImage>> &images, const QString &outPath,
-                             const QString &format, const double scaleFactor, const int quality)
+void fpsSplitWorker::doSplit()
 {
-    if (!(files.size() == images.size() && files.size() == outputs.size()))
+    if (m_images.size() != m_outputs.size()) {
+        Q_EMIT error(tr("Size not match, check the call."));
         return;
+    }
 
     QImageWriter writer;
 
-    for (qsizetype i{}; i != files.size(); ++i) {
-        // Each file
-        const QString file{ files[i] };
-        for (int j{}; j != images[i].size(); ++j) {
+    for (qsizetype i{}; i != m_images.size(); ++i) {
+        // Each source image file
+        for (int j{}; j != m_images[i].size(); ++j) {
             // Each image in the corresponding list of each file
-            writer.setFileName(outPath + u"/"_s + outputs[i][j]);
-            writer.setFormat(format.toUtf8());
-            writer.setQuality(quality);
-            if (!writer.write(images[i][j].scaled(
-                        images[i][j].width() * scaleFactor, images[i][j].height() * scaleFactor,
-                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation))) {
-                Q_EMIT error(writer.fileName());
+            writer.setFileName(m_outPath + u"/"_s + m_outputs[i][j]);
+            writer.setFormat(m_format.toUtf8());
+            writer.setQuality(m_quality);
+            if (!writer.write(m_images[i][j].scaled(m_images[i][j].width() * m_scaleFactor,
+                                                    m_images[i][j].height() * m_scaleFactor,
+                                                    Qt::IgnoreAspectRatio,
+                                                    Qt::SmoothTransformation))) {
+                Q_EMIT error(tr("Error saving to file: %1.").arg(writer.fileName()));
                 return;
             }
+            Q_EMIT proceed((i + 1) * (j + 1));
         }
     }
-    Q_EMIT ready();
 }

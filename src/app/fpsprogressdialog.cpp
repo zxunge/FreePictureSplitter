@@ -20,6 +20,8 @@
 #include "fpsprogressdialog.h"
 #include "ui_fpsprogressdialog.h"
 
+#include <QMessageBox>
+
 using namespace Qt::Literals::StringLiterals;
 
 fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total)

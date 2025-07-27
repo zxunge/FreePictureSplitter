@@ -1,3 +1,5 @@
+Flat Light
+--@@##BEGIN##@@--
 /*
  * This file is a part of FreePictureSplitter, a fast and easy-to-use picture splitter.
  * Copyright (c) 2024 2025 zxunge
@@ -18,7 +20,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 
 /* FreePictureSplitter Default Skin Style */
-/* Flat Light */
 
 QMainWindow, QDialog {
     background-color: rgb(249, 249, 249);

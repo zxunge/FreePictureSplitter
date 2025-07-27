@@ -1,3 +1,5 @@
+Light Blue
+--@@##BEGIN##@@--
 QPalette{background:#EAF7FF;}*{outline:0px;color:#386487;}
 
 QGraphicsView{

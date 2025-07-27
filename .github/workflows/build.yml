@@ -96,9 +96,9 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=D:\FreePictureSplitter -B build .
-        cmake --build build -j --config Debug
-        cmake --install build --config Debug
+        cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=D:\FreePictureSplitter -B build .
+        cmake --build build -j --config RelWithDebInfo
+        cmake --install build --config RelWithDebInfo
         
     - name: Upload Build Output
       uses: actions/upload-artifact@v4

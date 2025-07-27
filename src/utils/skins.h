@@ -28,11 +28,11 @@ class QApplication;
 
 namespace Util {
 /********** Skins Helper **********/
-// Get available .qss files under DATADIR/skins directory
+// Get available skins names under DATADIR/skins directory
 QStringList getAvailableSkins();
 
-// Set application's stylesheet to skin.qss
-void setAppSkin(QApplication *app, const QString &skin);
+// Set application's stylesheet to the corresponding file with name `skinName'
+bool setAppSkin(QApplication *app, const QString &skinName);
 /**********************************/
 
 } // namespace Util

@@ -90,7 +90,7 @@ inline void setDefConf(Config &s)
                          .majorVersion = fpsVersionMajor,
                          .minorVersion = fpsVersionMinor,
                          .microVersion = fpsVersionMicro,
-                         .style = "Default" },
+                         .style = "Flat Light" },
                 .options = { .outputOpt = { .savingTo = SavingTo::inPlace,
                                             .subDir = false,
                                             .outFormat = "jpg",

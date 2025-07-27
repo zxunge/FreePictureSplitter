@@ -35,10 +35,10 @@
 class fpsSplitWorker : public QObject
 {
     Q_OBJECT
-public slots:
+
+public:
     ///
-    /// \brief doSplit
-    /// \param files          A string list of source files' paths.
+    /// \brief fpsSplitWorker Constructor
     /// \param outputs        A string list of the output files' full names.
     /// \param images         A list of <em>QImage</em>s to save.
     /// \param outPath        A QString indicating the output directory.
@@ -46,16 +46,39 @@ public slots:
     /// \param scaleFactor    Factor used to scale the output images (default is 1.0).
     /// \param quality        Output images' quality (default is 100) (only some formats, \see {
     /// https://doc.qt.io/qt-6/qimagewriter.html#setQuality }.
+    ///
+    explicit fpsSplitWorker(const QVector<QStringList> &outputs,
+                            const QVector<QVector<QImage>> &images, const QString &outPath,
+                            const QString &format, const double scaleFactor = 1.0,
+                            const int quality = 80)
+        : m_outputs(outputs),
+          m_images(images),
+          m_outPath(outPath),
+          m_format(format),
+          m_scaleFactor(scaleFactor),
+          m_quality(quality)
+    {
+    }
+
+public slots:
+    ///
+    /// \brief doSplit
     /// \details Designed to handle the most essential part of image splitting, doSplit() will only
     /// include several lines of code.
     ///
-    void doSplit(const QStringList &files, const QVector<QStringList> &outputs,
-                 const QVector<QVector<QImage>> &images, const QString &outPath,
-                 const QString &format, const double scaleFactor = 1.0, const int quality = 100);
+    void doSplit();
 
 signals:
-    void error(const QString &fileName);
-    void ready();
+    void error(const QString &message);
+    void proceed(int elapsed);
+
+private:
+    QVector<QStringList> m_outputs;
+    QVector<QVector<QImage>> m_images;
+    QString m_outPath;
+    QString m_format;
+    double m_scaleFactor;
+    int m_quality;
 };
 
 #endif // FPSSPLITWORKER_H

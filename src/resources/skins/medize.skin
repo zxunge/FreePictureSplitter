@@ -1,3 +1,5 @@
+Medize
+--@@##BEGIN##@@--
 /*Copyright (c) DevSec Studio. All rights reserved.
 
 MIT License
@@ -20,6 +22,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+QWidget{
+	background-color: #e6e7eb;
+}
+
 /*-----QLabel-----*/
 QLabel
 {
@@ -33,9 +39,8 @@ QLabel
 /*-----QMenuBar-----*/
 QMenuBar
 {
-	background-color: #2b579a;
-	color: #ffffff;
-	border-color: #000000;
+	background-color: #d6e1f0;
+	color: #000;
 
 }
 
@@ -58,15 +63,15 @@ QMenuBar::item
 
 QMenuBar::item:selected
 {
-    background-color: #f0f5f3;
-	color: #2b579a;
+    background-color: #a7dfff;
+	color: #000;
 
 }
 
 
 QMenuBar::item:pressed
 {
-    background-color: #dcdcdf;
+    background-color: #98daff;
     border: 1px solid #000;
     margin-bottom: -1px;
     padding-bottom: 1px;
@@ -77,7 +82,7 @@ QMenuBar::item:pressed
 /*-----QMenu-----*/
 QMenu
 {
-    background-color: #dcdcdf;
+    background-color: #beccde;
     border: 1px solid;
     color: #000;
 
@@ -112,8 +117,8 @@ QMenu::item
 
 QMenu::item:selected
 {
-    background-color: #2b579a;
-    color: #f0f5f3;
+    background-color: #d6e1f0;
+    color: #000;
 
 }
 
@@ -128,7 +133,7 @@ QMenu::item:disabled
 /*-----QToolBar-----*/
 QToolBar
 {
-	background-color: #2b579a;
+	background-color: #d6e1f0;
 	color: #ffffff;
 	border-color: #000000;
 
@@ -138,7 +143,7 @@ QToolBar
 /*-----QToolButton-----*/
 QToolButton
 {
-	background-color: #2b579a;
+	background-color: #d6e1f0;
 	color: #ffffff;
 	border-color: #000000;
 
@@ -149,34 +154,34 @@ QToolButton::hover
 {
 	background-color: #f0f5f3;
 	color: #ffffff;
-	border: 1px solid #fff;
+	border: none;
 
 }
 
 
 QToolButton::checked:hover
 {
-	background-color: #f0f5f3;
+	background-color: #5cc4ff;
 	color: #ffffff;
-	border-color: #fff;
+	border: none;
 
 }
 
 
 QToolButton::pressed
 {
-	background-color: #4070b3;
+	background-color: #5cc4ff;
 	color: #ffffff;
-	border: 1px solid #fff;
+	border: none;
 
 }
 
 
 QToolButton::checked
 {
-	background-color: #f0f5f3;
+	background-color: #5cc4ff;
 	color: #ffffff;
-	border-color: #f0f5f3;
+	border: none;
 	show-decoration-selected: 0;
 	outline: 0;
 
@@ -187,14 +192,23 @@ QToolButton::checked
 QToolTip
 {
     border: 1px solid black;
-    background-color: #2b579a;
+    background-color: #b2c1d5;
     border-radius: 0px;
-    color: #fff;
+    color: #000;
+}
+
+
+/*-----QLineEdit-----*/
+QLineEdit{
+	background-color: #fefffc;
+	color: #000;
+
 }
 
 
 /*-----QTextEdit-----*/
-QTextEdit{
+QTableWidget{
+	background-color: #fff;
 	padding: 10px;
 	
 }
@@ -225,7 +239,7 @@ QComboBox QAbstractItemView
     background-color: #dcdcdf;
     color: #000;
     border: 1px solid black;
-    selection-background-color: #2b579a;
+    selection-background-color: #217346;
     selection-color: #dcdcdf;
     outline: 0;
 
@@ -328,9 +342,9 @@ QSlider::groove:horizontal
 
 QSlider::handle:horizontal 
 {
-    background-color: #2b579a;
+    background-color: #4ebfff;
     width: 15px;
-    border-radius: 22px;
+    border-radius: 7px;
 
 }
 
@@ -354,7 +368,7 @@ QSlider::add-page:horizontal
 /*-----QScrollBar-----*/
 QScrollBar:horizontal 
 {
-    background-color: #e8e5e9;
+    background-color: #beccde;
 	border: 1px solid darkgray;
     height: 15px;
 
@@ -365,7 +379,7 @@ QScrollBar::handle:horizontal
 {
     border: 1px solid gray;
 	min-width: 100px;
-    background-color: #fffdff;
+    background-color: #e6edf6;
 
 }
 
@@ -383,7 +397,7 @@ QScrollBar::sub-page:horizontal
 
 QScrollBar:vertical 
 {
-    background-color: #e8e5e9;
+    background-color: #beccde;
 	border: 1px solid darkgray;
     width: 14px;
 
@@ -394,7 +408,7 @@ QScrollBar::handle:vertical
 {
     border: 1px solid gray;
 	min-height: 100px;
-    background-color: #fffdff;
+    background-color: #e6edf6;
 
 }
 
@@ -413,10 +427,8 @@ QScrollBar::sub-page:vertical
 /*-----QStatusBar-----*/
 QStatusBar
 {
-	background-color: #f5f3f3;
+	background-color: #d6e1f0;
 	color: #000000;
 	border-color: #000000;
 
 }
-
-

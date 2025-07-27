@@ -26,6 +26,8 @@
 #include <QColorDialog>
 #include <QFileInfo>
 #include <QFileDialog>
+#include <QCompleter>
+#include <QFileSystemModel>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -35,6 +37,10 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     : QDialog(parent), ui(new Ui::fpsSettingsDialog)
 {
     ui->setupUi(this);
+    QCompleter *completer{ new QCompleter(this) };
+    completer->setModel(new QFileSystemModel(completer));
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->lePath->setCompleter(completer);
 
     // Load configurations
     /****************** Appearance ******************/

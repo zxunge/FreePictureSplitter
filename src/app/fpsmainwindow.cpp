@@ -36,6 +36,7 @@
 #include <QColor>
 #include <QDir>
 #include <QApplication>
+#include <QThread>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -193,32 +194,20 @@ void fpsMainWindow::on_actionSave_triggered()
                 appConfig.options.gridOpt.enabled);
 
         fpsProgressDialog dlg(this, outputList.size());
-
-        connect(this, &fpsMainWindow::splitProceed, &dlg, &fpsProgressDialog::proceed);
-
-        dlg.show();
-        for (int i{}; i != imageList.size(); ++i) {
-            if (dlg.isCancelled())
-                break;
-
-            writer.setFileName(out + '/' + outputList[i]);
-            writer.setFormat(
-                    QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
-            writer.setQuality(appConfig.options.outputOpt.jpgQuality);
-            if (!writer.write(imageList[i].scaled(
-                        imageList[i].width() * appConfig.options.outputOpt.scalingFactor,
-                        imageList[i].height() * appConfig.options.outputOpt.scalingFactor,
-                        Qt::IgnoreAspectRatio, Qt::SmoothTransformation))) {
-                QMessageBox::warning(this, fpsAppName,
-                                     tr("Error writing to file \'%1\': %2.")
-                                             .arg(writer.fileName())
-                                             .arg(writer.errorString()),
-                                     QMessageBox::Close);
-                break;
-            }
-            Q_EMIT splitProceed(i + 1);
-        }
-        dlg.close();
+        QThread thread;
+        fpsSplitWorker worker(
+                QVector<QStringList>() << outputList, QVector<QVector<QImage>>() << imageList, out,
+                QString::fromStdString(appConfig.options.outputOpt.outFormat),
+                appConfig.options.outputOpt.scalingFactor, appConfig.options.outputOpt.jpgQuality);
+        worker.moveToThread(&thread);
+        connect(&thread, &QThread::finished, &dlg, &QDialog::close);
+        connect(&thread, &QThread::started, &worker, &fpsSplitWorker::doSplit);
+        connect(&thread, &QThread::started, &dlg, &QDialog::exec);
+        connect(&worker, &fpsSplitWorker::proceed, &dlg, &fpsProgressDialog::proceed);
+        connect(&worker, &fpsSplitWorker::error, this, [this](const QString &message) {
+            QMessageBox::warning(this, fpsAppName, message, QMessageBox::Close);
+        });
+        thread.start();
     } else {
         QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),
                              QMessageBox::Close);

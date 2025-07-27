@@ -55,20 +55,18 @@ Util::Config appConfig;
         };
         if (excHndlInit && excHndlSetLogFileNameA) {
             excHndlInit();
-            if (!excHndlSetLogFileNameA("crashreport.rpt")) {
-                delete exchndl;
-                return false;
-            }
+            if (!excHndlSetLogFileNameA("crashreport.rpt"))
+                goto failed;
             return true;
             // Do not free the DLL module
-        } else {
-            delete exchndl;
-            return false;
-        }
-    } else {
-        delete exchndl;
-        return false;
-    }
+        } else
+            goto failed;
+    } else
+        goto failed;
+
+failed:
+    delete exchndl;
+    return false;
 }
 #endif // __MINGW32__ || __MINGW64__
 
@@ -141,7 +139,12 @@ int main(int argc, char *argv[])
     }
 
     // Load styles
-    Util::setAppSkin(&a, QString::fromStdString(appConfig.app.style));
+    if (!Util::setAppSkin(&a, QString::fromStdString(appConfig.app.style))) {
+        QMessageBox::warning(nullptr, fpsAppName,
+                             QObject::tr("Error loading skin: %1.").arg(appConfig.app.style),
+                             QMessageBox::Close);
+        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+    }
 
     fpsMainWindow w;
     w.show();

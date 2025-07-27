@@ -35,6 +35,8 @@
 #include <QImage>
 #include <QTableWidgetItem>
 #include <QListWidgetItem>
+#include <QCompleter>
+#include <QFileSystemModel>
 
 #include <limits>
 
@@ -45,6 +47,11 @@ extern Util::Config appConfig;
 fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fpsBatchDialog)
 {
     ui->setupUi(this);
+    QCompleter *completer{ new QCompleter(this) };
+    completer->setModel(new QFileSystemModel(completer));
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->lePath->setCompleter(completer);
+
     ui->wgtTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     ui->sbxCols->setMaximum(std::numeric_limits<int>::max());
     ui->sbxRows->setMaximum(std::numeric_limits<int>::max());

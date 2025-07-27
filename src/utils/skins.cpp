@@ -38,50 +38,71 @@ QStringList getAvailableSkins()
 {
     QStringList list;
     QDir skinDir(Util::getSkinsDir());
-    for (const auto skin : skinDir.entryList(QStringList{ u"*.qss"_s }, QDir::Files)) {
-        const QString baseName{ QFileInfo(skin).baseName() };
-        // Capitalize the first letter
-        list.push_back(baseName.left(1).toUpper()
-                       + baseName.mid(1, baseName.length() - 1).toLower());
+    for (const auto skin : skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
+        // Obtain the skin's name
+        QFile file(skin);
+        if (file.open(QFile::ReadOnly)) {
+            QTextStream in(&file);
+            const QString name{ in.readLine() };
+            const QString placeholder{ in.readLine() };
+            // A valid skin file
+            if (!name.isEmpty() && placeholder == u"--@@##BEGIN##@@--"_s)
+                list.push_back(name);
+        }
     }
     return list;
 }
 
-void setAppSkin(QApplication *app, const QString &skinName)
+bool setAppSkin(QApplication *app, const QString &skinName)
 {
+    QString realFn;
     QFile styleFile;
-    // Normalize the skin name
-    const QString skin{ skinName.toLower() };
 
-    if (skin == u"default"_s) {
+    if (skinName == u"Flat Light"_s) {
         // The default style includes a Win11Phantom style
         QWin11PhantomStyle *phStyle{ new QWin11PhantomStyle() };
         app->setStyle(phStyle);
-        styleFile.setFileName(Util::getSkinsDir() + u"/default.qss"_s);
+        styleFile.setFileName(Util::getSkinsDir() + u"/default.skin"_s);
     } else {
+        // Search for a skin file
+        QDir skinDir(Util::getSkinsDir());
+
+        for (const auto fileName : skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
+            QFile file(fileName);
+            if (file.open(QFile::ReadOnly)) {
+                QTextStream in(&file);
+                const QString name{ in.readLine() };
+                const QString placeholder{ in.readLine() };
+                if (name == skinName && placeholder == u"--@@##BEGIN##@@--"_s) {
+                    realFn = fileName;
+                    break;
+                }
+            }
+        }
+        if (realFn.isEmpty())
+            return false;
+
         // For other skins, we use `fusion`
         app->setStyle(QStyleFactory::create(u"fusion"_s));
-        styleFile.setFileName(Util::getSkinsDir() + '/' + skin + u".qss"_s);
+        styleFile.setFileName(realFn);
     }
 
-    styleFile.open(QFile::ReadOnly);
-    if (styleFile.isOpen()) {
-        if (skin == u"lightblue"_s) // "lightblue" requires changing the palette
+    if (styleFile.open(QFile::ReadOnly)) {
+        if (skinName == u"Light Blue"_s) // "Light Blue" requires changing the palette
             app->setPalette(QPalette(u"#eaf7ff"_s));
         else
             app->setPalette(QPalette());
 
+        QTextStream in(&styleFile);
         // The stylesheets cannot be applied directly,
         // we need to do some path-conversion.
-        QString ss(styleFile.readAll());
+        QString ss{ in.readAll().split(u"--@@##BEGIN##@@--\n"_s, Qt::SkipEmptyParts)[1] };
         ss.replace(u"@SKINS_DIR@"_s, Util::getSkinsDir());
         app->setStyleSheet(ss);
         styleFile.close();
-    } else {
-        QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading skin."),
-                             QMessageBox::Close);
-        QMetaObject::invokeMethod(app, &QCoreApplication::quit, Qt::QueuedConnection);
-    }
+    } else
+        return false;
+    return true;
 }
 
 } // namespace Util
