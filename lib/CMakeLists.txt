@@ -1,4 +1,4 @@
-if(WIN32)
+if(MINGW)
     # Install ExcHndl dlls
     if(CMAKE_HOST_SYSTEM_PROCESSOR STREQUAL "AMD64")
         list(APPEND exchndl_dlls

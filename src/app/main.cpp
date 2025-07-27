@@ -29,9 +29,9 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QObject>
-#if defined(Q_OS_WIN)
+#if defined(__MINGW32__) || defined(__MINGW64__)
 #  include <QLibrary>
-#endif // Q_OS_WIN
+#endif // __MINGW32__ || __MINGW64__
 
 #include <rfl/json.hpp>
 
@@ -39,7 +39,7 @@ using namespace Qt::Literals::StringLiterals;
 
 Util::Config appConfig;
 
-#if defined(Q_OS_WIN)
+#if defined(__MINGW32__) || defined(__MINGW64__)
 // Loader for crash helper: Dr.MinGW
 [[nodiscard]] bool loadExcHndl()
 {
@@ -68,7 +68,7 @@ Util::Config appConfig;
         return false;
     }
 }
-#endif // Q_OS_WIN
+#endif // __MINGW32__ || __MINGW64__
 
 int main(int argc, char *argv[])
 {
@@ -77,13 +77,13 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-#if defined(Q_OS_WIN)
+#if defined(__MINGW32__) || defined(__MINGW64__)
     if (!loadExcHndl()) {
         QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading module: exchndl.dll."),
                              QMessageBox::Close);
         QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
     }
-#endif // Q_OS_WIN
+#endif // __MINGW32__ || __MINGW64__
 
     QCoreApplication::setApplicationName(fpsAppName);
     QCoreApplication::setOrganizationName(u"zxunge"_s);
