@@ -53,10 +53,12 @@ Util::Config appConfig;
         ProtoExcHndlSetLogFileNameA excHndlSetLogFileNameA{
             (ProtoExcHndlSetLogFileNameA)exchndl->resolve("ExcHndlSetLogFileNameA")
         };
-        if (excHndlInit) {
+        if (excHndlInit && excHndlSetLogFileNameA) {
             excHndlInit();
-            if (!excHndlSetLogFileNameA("crashreport.rpt"))
+            if (!excHndlSetLogFileNameA("crashreport.rpt")) {
+                delete exchndl;
                 return false;
+            }
             return true;
             // Do not free the DLL module
         } else {
