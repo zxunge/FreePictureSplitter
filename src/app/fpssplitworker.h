@@ -56,7 +56,8 @@ public:
           m_outPath(outPath),
           m_format(format),
           m_scaleFactor(scaleFactor),
-          m_quality(quality)
+          m_quality(quality),
+          m_cancelled(false)
     {
     }
 
@@ -67,6 +68,12 @@ public slots:
     /// include several lines of code.
     ///
     void doSplit();
+
+    ///
+    /// \brief cancel
+    /// \details Request the split process to be cancelled.
+    ///
+    void cancel() { m_cancelled = true; }
 
 signals:
     void error(const QString &message);
@@ -80,6 +87,8 @@ private:
     QString m_format;
     double m_scaleFactor;
     int m_quality;
+
+    bool m_cancelled;
 };
 
 #endif // FPSSPLITWORKER_H

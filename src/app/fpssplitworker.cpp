@@ -35,6 +35,11 @@ void fpsSplitWorker::doSplit()
     for (qsizetype i{}; i != m_images.size(); ++i) {
         // Each source image file
         for (int j{}; j != m_images[i].size(); ++j) {
+            // Was cancelled?
+            if (m_cancelled) {
+                Q_EMIT ready();
+                return;
+            }
             // Each image in the corresponding list of each file
             writer.setFileName(m_outPath + u"/"_s + m_outputs[i][j]);
             writer.setFormat(m_format.toUtf8());

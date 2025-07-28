@@ -33,7 +33,10 @@
 #  include <QLibrary>
 #endif // __MINGW32__ || __MINGW64__
 
-#include <rfl/json.hpp>
+#include <rfl/Result.hpp>
+#include <rfl/get.hpp>
+#include <rfl/json/read.hpp>
+#include <rfl/json/write.hpp>
 
 using namespace Qt::Literals::StringLiterals;
 
