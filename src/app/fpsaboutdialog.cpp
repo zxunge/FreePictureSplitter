@@ -33,9 +33,12 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsAboutDialog::fpsAboutDialog(QWidget *parent)
-    : QDialog(parent, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint)
+fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog(parent)
 {
+    // Must be 2 steps
+    setWindowFlag(Qt::WindowStaysOnTopHint, true);
+    setWindowFlag(Qt::FramelessWindowHint, true);
+
     auto mainLayout{ new QVBoxLayout(this) };
 
     auto iconLabel{ new QLabel(this) };

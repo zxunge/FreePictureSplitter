@@ -37,6 +37,7 @@
 #include <QListWidgetItem>
 #include <QCompleter>
 #include <QFileSystemModel>
+#include <QStandardPaths>
 
 #include <limits>
 
@@ -115,7 +116,7 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Add pictures..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
-                              ? u"."_s
+                              ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFiles);
@@ -166,7 +167,7 @@ void fpsBatchDialog::on_actionAddDirectory_triggered()
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory containing pictures."),
             appConfig.dialog.lastOpenedDir.empty()
-                    ? u"."_s
+                    ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                     : QString::fromStdString(appConfig.dialog.lastOpenedDir)) };
     if (in.isEmpty())
         return;
@@ -180,7 +181,7 @@ void fpsBatchDialog::on_actionAddDirectory_triggered()
         nameFilters << u"*."_s + QString(format);
 
     for (const auto file : dir.entryList(nameFilters, QDir::Files))
-        addPicture(in + '/' + file);
+        addPicture(in + u"/"_s + file);
 }
 
 void fpsBatchDialog::on_cbxLocation_currentIndexChanged(int index)
@@ -232,7 +233,7 @@ void fpsBatchDialog::on_btnChange_clicked()
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
             appConfig.dialog.lastSavedToDir.empty()
-                    ? u"."_s
+                    ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                     : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
     if (in.isEmpty())
         return;
@@ -313,8 +314,8 @@ void fpsBatchDialog::on_btnSplit_clicked()
 
         if (!rects.isEmpty()) {
             if (!fpsImageHandler::split(reader, imageList, rects)) {
-                QMessageBox::warning(this, tr("FreePictureSplitter Batch Splitting"),
-                                     tr("Error splitting picture."), QMessageBox::Close);
+                QMessageBox::warning(this, tr("Batch Splitting"), tr("Error splitting picture."),
+                                     QMessageBox::Close);
                 return;
             }
             // TODO@25/07/04 Add batch splitting related options.
@@ -330,7 +331,7 @@ void fpsBatchDialog::on_btnSplit_clicked()
                 if (!ui->lePath->text().isEmpty())
                     baseDir = QDir(ui->lePath->text());
                 else {
-                    QMessageBox::warning(this, tr("FreePictureSplitter Batch Splitting"),
+                    QMessageBox::warning(this, tr("Batch Splitting"),
                                          tr("You have not specified the output directory yet, "
                                             "please try again."),
                                          QMessageBox::Close);
@@ -343,7 +344,7 @@ void fpsBatchDialog::on_btnSplit_clicked()
             if (ui->chbSubdir->isChecked()) {
                 if (!QFileInfo::exists(baseDir.absolutePath() + '/' + baseName + '/'))
                     if (!baseDir.mkdir(baseName)) {
-                        QMessageBox::warning(this, tr("FreePictureSplitter Batch Splitting"),
+                        QMessageBox::warning(this, tr("Batch Splitting"),
                                              tr("QDir::mkdir \'%1\' error!")
                                                      .arg(baseDir.absolutePath() + '/' + baseName),
                                              QMessageBox::Close);
@@ -356,7 +357,7 @@ void fpsBatchDialog::on_btnSplit_clicked()
             for (int i{}; i != imageList.size(); ++i) {
                 writer.setFileName(outPath + outputList[i]);
                 if (!writer.write(imageList[i])) {
-                    QMessageBox::warning(this, tr("FreePictureSplitter Batch Splitting"),
+                    QMessageBox::warning(this, tr("Batch Splitting"),
                                          tr("Error writing to file \'%1\': %2.")
                                                  .arg(writer.fileName())
                                                  .arg(writer.errorString()),
@@ -365,8 +366,8 @@ void fpsBatchDialog::on_btnSplit_clicked()
                 }
             }
         } else {
-            QMessageBox::warning(this, tr("FreePictureSplitter Batch Splitting"),
-                                 tr("No rule to split this picture"), QMessageBox::Close);
+            QMessageBox::warning(this, tr("Batch Splitting"), tr("No rule to split this picture"),
+                                 QMessageBox::Close);
             return;
         }
         Q_EMIT splitProceed(++count);

@@ -25,13 +25,14 @@
 using namespace Qt::Literals::StringLiterals;
 
 fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total)
-    : QDialog(parent, Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint),
-      ui(new Ui::fpsProgressDialog),
-      m_cancelled(false)
+    : QDialog(parent), ui(new Ui::fpsProgressDialog), m_cancelled(false)
 {
     ui->setupUi(this);
     ui->progressBar->setFormat(u"%p%"_s);
     ui->progressBar->setAlignment(Qt::AlignCenter);
+    // Must be 2 steps
+    setWindowFlag(Qt::WindowStaysOnTopHint, true);
+    setWindowFlag(Qt::FramelessWindowHint, true);
 
     m_total = total;
     ui->progressBar->setRange(0, total);

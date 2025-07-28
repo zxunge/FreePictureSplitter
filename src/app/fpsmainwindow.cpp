@@ -31,6 +31,7 @@
 #include <QMessageBox>
 #include <QAction>
 #include <QDesktopServices>
+#include <QStandardPaths>
 #include <QUrl>
 #include <QFileInfo>
 #include <QColor>
@@ -65,7 +66,7 @@ void fpsMainWindow::on_actionOpen_triggered()
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
-                              ? u"."_s
+                              ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);
@@ -124,7 +125,7 @@ void fpsMainWindow::on_actionSave_triggered()
         outBase = QFileDialog::getExistingDirectory(
                 this, tr("Choose the output directory."),
                 appConfig.dialog.lastSavedToDir.empty()
-                        ? u"."_s
+                        ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                         : QString::fromStdString(appConfig.dialog.lastSavedToDir));
         break;
 
@@ -152,7 +153,7 @@ void fpsMainWindow::on_actionSave_triggered()
                         QMessageBox::Close);
                 return;
             }
-        out = outBase + '/' + baseName;
+        out = outBase + u"/"_s + baseName;
     }
 
     appConfig.dialog.lastSavedToDir = out.toStdString();
