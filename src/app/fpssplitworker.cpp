@@ -49,4 +49,5 @@ void fpsSplitWorker::doSplit()
             Q_EMIT proceed((i + 1) * (j + 1));
         }
     }
+    Q_EMIT ready();
 }

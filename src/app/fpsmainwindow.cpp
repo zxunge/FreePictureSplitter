@@ -200,14 +200,15 @@ void fpsMainWindow::on_actionSave_triggered()
                 QString::fromStdString(appConfig.options.outputOpt.outFormat),
                 appConfig.options.outputOpt.scalingFactor, appConfig.options.outputOpt.jpgQuality);
         worker.moveToThread(&thread);
+        connect(&worker, &fpsSplitWorker::ready, &thread, &QThread::quit);
         connect(&thread, &QThread::finished, &dlg, &QDialog::close);
         connect(&thread, &QThread::started, &worker, &fpsSplitWorker::doSplit);
-        connect(&thread, &QThread::started, &dlg, &QDialog::exec);
         connect(&worker, &fpsSplitWorker::proceed, &dlg, &fpsProgressDialog::proceed);
         connect(&worker, &fpsSplitWorker::error, this, [this](const QString &message) {
             QMessageBox::warning(this, fpsAppName, message, QMessageBox::Close);
         });
         thread.start();
+        dlg.exec();
     } else {
         QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),
                              QMessageBox::Close);

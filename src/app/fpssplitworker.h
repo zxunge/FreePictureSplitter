@@ -71,6 +71,7 @@ public slots:
 signals:
     void error(const QString &message);
     void proceed(int elapsed);
+    void ready();
 
 private:
     QVector<QStringList> m_outputs;

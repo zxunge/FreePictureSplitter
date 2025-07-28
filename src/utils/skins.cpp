@@ -96,7 +96,7 @@ bool setAppSkin(QApplication *app, const QString &skinName)
         QTextStream in(&styleFile);
         // The stylesheets cannot be applied directly,
         // we need to do some path-conversion.
-        QString ss{ in.readAll().split(u"--@@##BEGIN##@@--\n"_s, Qt::SkipEmptyParts)[1] };
+        QString ss{ in.readAll().split(u"--@@##BEGIN##@@--"_s, Qt::SkipEmptyParts)[1] };
         ss.replace(u"@SKINS_DIR@"_s, Util::getSkinsDir());
         app->setStyleSheet(ss);
         styleFile.close();
