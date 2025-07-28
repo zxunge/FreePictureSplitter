@@ -19,6 +19,7 @@
 
 #include "fpsprogressdialog.h"
 #include "ui_fpsprogressdialog.h"
+#include "debugutil.h"
 
 #include <QMessageBox>
 
