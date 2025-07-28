@@ -56,8 +56,7 @@ public:
           m_outPath(outPath),
           m_format(format),
           m_scaleFactor(scaleFactor),
-          m_quality(quality),
-          m_cancelled(false)
+          m_quality(quality)
     {
     }
 
