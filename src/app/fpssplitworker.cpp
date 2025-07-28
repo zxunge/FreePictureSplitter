@@ -18,6 +18,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "fpssplitworker.h"
+#include "debugutil.h"
 
 #include <QImageWriter>
 #include <QThread>
@@ -38,6 +39,7 @@ void fpsSplitWorker::doSplit()
         for (int j{}; j != m_images[i].size(); ++j) {
             // Was requested to be interrupted?
             if (QThread::currentThread()->isInterruptionRequested()) {
+                fpsDebugStr("Interruption Requested!");
                 Q_EMIT ready();
                 return;
             }

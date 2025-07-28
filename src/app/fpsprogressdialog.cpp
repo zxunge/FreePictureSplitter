@@ -53,5 +53,6 @@ void fpsProgressDialog::proceed(int elapsed)
 void fpsProgressDialog::on_btnCancel_clicked()
 {
     m_cancelled = true;
+    fpsDebugStr("Cancel Clicked!");
     Q_EMIT cancelled();
 }

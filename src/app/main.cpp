@@ -52,9 +52,11 @@ Util::Config appConfig;
     if (exchndl->load()) {
         typedef void (*ProtoExcHndlInit)();
         typedef bool (*ProtoExcHndlSetLogFileNameA)(const char *);
-        ProtoExcHndlInit excHndlInit{ (ProtoExcHndlInit)exchndl->resolve("ExcHndlInit") };
+        ProtoExcHndlInit excHndlInit{ reinterpret_cast<ProtoExcHndlInit>(
+                exchndl->resolve("ExcHndlInit")) };
         ProtoExcHndlSetLogFileNameA excHndlSetLogFileNameA{
-            (ProtoExcHndlSetLogFileNameA)exchndl->resolve("ExcHndlSetLogFileNameA")
+            reinterpret_cast<ProtoExcHndlSetLogFileNameA>(
+                    exchndl->resolve("ExcHndlSetLogFileNameA"))
         };
         if (excHndlInit && excHndlSetLogFileNameA) {
             excHndlInit();
