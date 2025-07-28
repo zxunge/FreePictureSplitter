@@ -20,6 +20,7 @@
 #include "fpssplitworker.h"
 
 #include <QImageWriter>
+#include <QThread>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -35,8 +36,8 @@ void fpsSplitWorker::doSplit()
     for (qsizetype i{}; i != m_images.size(); ++i) {
         // Each source image file
         for (int j{}; j != m_images[i].size(); ++j) {
-            // Was cancelled?
-            if (m_cancelled) {
+            // Was requested to be interrupted?
+            if (QThread::currentThread()->isInterruptionRequested()) {
                 Q_EMIT ready();
                 return;
             }

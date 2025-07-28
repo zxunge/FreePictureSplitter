@@ -205,7 +205,7 @@ void fpsMainWindow::on_actionSave_triggered()
         connect(&thread, &QThread::finished, &dlg, &QDialog::close);
         connect(&thread, &QThread::started, &worker, &fpsSplitWorker::doSplit);
         connect(&worker, &fpsSplitWorker::proceed, &dlg, &fpsProgressDialog::proceed);
-        connect(&dlg, &fpsProgressDialog::cancelled, &worker, &fpsSplitWorker::cancel);
+        connect(&dlg, &fpsProgressDialog::cancelled, &worker, &QThread::requestInterruption);
         connect(&worker, &fpsSplitWorker::error, this, [this](const QString &message) {
             QMessageBox::warning(this, fpsAppName, message, QMessageBox::Close);
         });
