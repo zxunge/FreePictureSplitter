@@ -22,6 +22,7 @@
 #include "jsonconfigitems.h"
 #include "fpsimagehandler.h"
 #include "fpsprogressdialog.h"
+#include "fpssplitworker.h"
 
 #include <QButtonGroup>
 #include <QActionGroup>
@@ -38,6 +39,7 @@
 #include <QCompleter>
 #include <QFileSystemModel>
 #include <QStandardPaths>
+#include <QThread>
 
 #include <limits>
 
@@ -250,23 +252,14 @@ void fpsBatchDialog::on_btnOpen_clicked()
 void fpsBatchDialog::on_btnSplit_clicked()
 {
     QImageReader reader;
-    QImageWriter writer;
     RectList rects;
-    QVector<QImage> imageList;
-    QStringList outputList;
+    QVector<QVector<QImage>> imageLists(m_filesList.size());
+    QVector<QStringList> outputLists(m_filesList.size());
+    QStringList outPaths;
     int count{};
 
-    fpsProgressDialog dlg(this, m_filesList.size());
-
-    connect(this, &fpsBatchDialog::splitProceed, &dlg, &fpsProgressDialog::proceed);
-
-    dlg.show();
-
-    for (const auto file : m_filesList) {
-        if (dlg.isCancelled())
-            break;
-
-        reader.setFileName(file);
+    for (qsizetype i{}; i != m_filesList.size(); ++i) {
+        reader.setFileName(m_filesList.at(i));
 
         if (ui->rbtnAverage->isChecked()) {
             if (ui->rbtnHoriLeft->isChecked())
@@ -313,20 +306,21 @@ void fpsBatchDialog::on_btnSplit_clicked()
         }
 
         if (!rects.isEmpty()) {
-            if (!fpsImageHandler::split(reader, imageList, rects)) {
+            if (!fpsImageHandler::split(reader, imageLists[i], rects)) {
                 QMessageBox::warning(this, tr("Batch Splitting"), tr("Error splitting picture."),
                                      QMessageBox::Close);
                 return;
             }
             // TODO@25/07/04 Add batch splitting related options.
-            outputList = fpsImageHandler::getOutputList(QFileInfo(file).baseName(),
-                                                        QFileInfo(file).suffix(), rects.size(),
-                                                        rects[0].size());
+            outputLists[i] = fpsImageHandler::getOutputList(QFileInfo(m_filesList.at(i)).baseName(),
+                                                            QFileInfo(m_filesList.at(i)).suffix(),
+                                                            rects.size(), rects[0].size());
+            count += static_cast<int>(outputLists[i].size());
 
             // Get the output directory
             QDir baseDir;
             if (ui->cbxLocation->currentIndex() == 0) // "The same"
-                baseDir = QFileInfo(file).dir();
+                baseDir = QFileInfo(m_filesList.at(i)).dir();
             else {
                 if (!ui->lePath->text().isEmpty())
                     baseDir = QDir(ui->lePath->text());
@@ -339,7 +333,7 @@ void fpsBatchDialog::on_btnSplit_clicked()
                 }
             }
 
-            const QString baseName{ QFileInfo(file).baseName() };
+            const QString baseName{ QFileInfo(m_filesList.at(i)).baseName() };
             QString outPath;
             if (ui->chbSubdir->isChecked()) {
                 if (!QFileInfo::exists(baseDir.absolutePath() + '/' + baseName + '/'))
@@ -353,26 +347,30 @@ void fpsBatchDialog::on_btnSplit_clicked()
                 outPath = baseDir.absolutePath() + '/' + baseName + '/';
             } else
                 outPath = baseDir.absolutePath() + '/';
-
-            for (int i{}; i != imageList.size(); ++i) {
-                writer.setFileName(outPath + outputList[i]);
-                if (!writer.write(imageList[i])) {
-                    QMessageBox::warning(this, tr("Batch Splitting"),
-                                         tr("Error writing to file \'%1\': %2.")
-                                                 .arg(writer.fileName())
-                                                 .arg(writer.errorString()),
-                                         QMessageBox::Close);
-                    break;
-                }
-            }
+            outPaths.push_back(outPath);
         } else {
-            QMessageBox::warning(this, tr("Batch Splitting"), tr("No rule to split this picture"),
+            QMessageBox::warning(this, tr("Batch Splitting"),
+                                 tr("No rule to split picture: %1.").arg(m_filesList.at(i)),
                                  QMessageBox::Close);
             return;
         }
-        Q_EMIT splitProceed(++count);
     }
-    dlg.close();
+
+    fpsProgressDialog dlg(this, count);
+    QThread thread;
+    fpsSplitWorker worker(outputLists, imageLists, outPaths,
+                          QString::fromStdString(appConfig.options.outputOpt.outFormat));
+    worker.moveToThread(&thread);
+    connect(&worker, &fpsSplitWorker::ready, &thread, &QThread::quit);
+    connect(&thread, &QThread::finished, &dlg, &QDialog::close);
+    connect(&thread, &QThread::started, &worker, &fpsSplitWorker::doSplit);
+    connect(&worker, &fpsSplitWorker::proceed, &dlg, &fpsProgressDialog::proceed);
+    connect(&dlg, &fpsProgressDialog::cancelled, &thread, &QThread::requestInterruption);
+    connect(&worker, &fpsSplitWorker::error, this, [this](const QString &message) {
+        QMessageBox::critical(this, tr("Batch Splitting"), message, QMessageBox::Close);
+    });
+    thread.start();
+    dlg.exec();
 }
 
 void fpsBatchDialog::on_wgtTable_customContextMenuRequested(const QPoint &pos)
@@ -384,11 +382,15 @@ void fpsBatchDialog::on_wgtTable_customContextMenuRequested(const QPoint &pos)
 void fpsBatchDialog::on_wgtTable_itemClicked(QTableWidgetItem *item)
 {
     ui->actionRemoveFromList->setEnabled(true);
+    ui->statusBar->showMessage(ui->wgtTable->currentItem()->text());
 }
 
 void fpsBatchDialog::on_wgtTable_itemSelectionChanged()
 {
-    ui->actionRemoveFromList->setEnabled(!ui->wgtTable->selectedItems().isEmpty());
+    if (!ui->wgtTable->selectedItems().isEmpty()) {
+        ui->actionRemoveFromList->setEnabled(true);
+        ui->statusBar->showMessage(ui->wgtTable->currentItem()->text());
+    }
 }
 
 void fpsBatchDialog::on_wgtList_customContextMenuRequested(const QPoint &pos)
@@ -400,11 +402,15 @@ void fpsBatchDialog::on_wgtList_customContextMenuRequested(const QPoint &pos)
 void fpsBatchDialog::on_wgtList_itemClicked(QListWidgetItem *item)
 {
     ui->actionRemoveFromList->setEnabled(true);
+    ui->statusBar->showMessage(ui->wgtList->currentItem()->text());
 }
 
 void fpsBatchDialog::on_wgtList_itemSelectionChanged()
 {
-    ui->actionRemoveFromList->setEnabled(!ui->wgtList->selectedItems().isEmpty());
+    if (!ui->wgtList->selectedItems().isEmpty()) {
+        ui->actionRemoveFromList->setEnabled(true);
+        ui->statusBar->showMessage(ui->wgtList->currentItem()->text());
+    }
 }
 
 void fpsBatchDialog::on_actionRemoveFromList_triggered()

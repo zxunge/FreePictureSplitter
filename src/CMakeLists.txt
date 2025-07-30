@@ -22,7 +22,6 @@ target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Widgets
     Qt::Svg
     reflectcpp
-    QWin11PhantomStyle
 )
 
 # Deployment

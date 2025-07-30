@@ -27,12 +27,11 @@ using namespace Qt::Literals::StringLiterals;
 
 void fpsSplitWorker::doSplit()
 {
-    if (m_images.size() != m_outputs.size()) {
-        Q_EMIT error(tr("Size not match, check the call."));
-        return;
-    }
+    Q_ASSERT(m_images.size() == m_outputs.size());
+    Q_ASSERT(m_outPath.size() == m_outputs.size());
 
     QImageWriter writer;
+    int count{};
 
     for (qsizetype i{}; i != m_images.size(); ++i) {
         // Each source image file
@@ -44,17 +43,18 @@ void fpsSplitWorker::doSplit()
                 return;
             }
             // Each image in the corresponding list of each file
-            writer.setFileName(m_outPath + u"/"_s + m_outputs[i][j]);
+            writer.setFileName(m_outPath[i] + u"/"_s + m_outputs[i][j]);
             writer.setFormat(m_format.toUtf8());
             writer.setQuality(m_quality);
             if (!writer.write(m_images[i][j].scaled(m_images[i][j].width() * m_scaleFactor,
                                                     m_images[i][j].height() * m_scaleFactor,
                                                     Qt::IgnoreAspectRatio,
                                                     Qt::SmoothTransformation))) {
-                Q_EMIT error(tr("Error saving to file: %1.").arg(writer.fileName()));
+                Q_EMIT error(tr("Error saving to file: \'%1\': %2.")
+                                     .arg(writer.fileName(), writer.errorString()));
                 return;
             }
-            Q_EMIT proceed((i + 1) * (j + 1));
+            Q_EMIT proceed(++count);
         }
     }
     Q_EMIT ready();

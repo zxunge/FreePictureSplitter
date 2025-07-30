@@ -1,6 +1,3 @@
 [submodule "src/3rdparty/reflect-cpp"]
 	path = src/3rdparty/reflect-cpp
 	url = https://github.com/getml/reflect-cpp.git
-[submodule "src/3rdparty/QWin11PhantomStyle"]
-	path = src/3rdparty/QWin11PhantomStyle
-	url = https://github.com/zxunge/QWin11PhantomStyle.git

@@ -71,8 +71,9 @@ void fpsMainWindow::on_actionOpen_triggered()
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);
     if (QDialog::Accepted == fdlg.exec()) {
-        m_imgReader.setFileName(fdlg.selectedFiles()[0]);
-        appConfig.dialog.lastOpenedDir = QFileInfo(fdlg.selectedFiles()[0]).path().toStdString();
+        m_imgReader.setFileName(fdlg.selectedFiles().constFirst());
+        appConfig.dialog.lastOpenedDir =
+                QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
     } else
         return;
 
@@ -197,8 +198,8 @@ void fpsMainWindow::on_actionSave_triggered()
         fpsProgressDialog dlg(this, outputList.size());
         QThread thread;
         fpsSplitWorker worker(
-                QVector<QStringList>() << outputList, QVector<QVector<QImage>>() << imageList, out,
-                QString::fromStdString(appConfig.options.outputOpt.outFormat),
+                QVector<QStringList>() << outputList, QVector<QVector<QImage>>() << imageList,
+                QStringList() << out, QString::fromStdString(appConfig.options.outputOpt.outFormat),
                 appConfig.options.outputOpt.scalingFactor, appConfig.options.outputOpt.jpgQuality);
         worker.moveToThread(&thread);
         connect(&worker, &fpsSplitWorker::ready, &thread, &QThread::quit);

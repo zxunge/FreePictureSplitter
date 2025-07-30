@@ -22,6 +22,7 @@
 #include "skins.h"
 #include "stdpaths.h"
 #include "fonts.h"
+#include "debugutil.h"
 
 #include <QApplication>
 #include <QLocale>

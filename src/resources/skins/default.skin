@@ -39,3 +39,48 @@ QToolBar {
     border: solid;
     background-color: rgba(226, 228, 226, 0.83);
 }
+
+QToolButton {
+    border: solid;
+    padding: 5px 9px 6px 8px;
+    border-radius: 4px;
+}
+
+QToolButton:hover {
+    background: #cdcccd;
+}
+
+QToolButton:pressed {
+    background: #cdcdcd;
+}
+
+QToolButton:checked {
+    background: #f7f7f7;
+}
+
+QPushButton {
+    color: black;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.073);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.183);
+    border-radius: 5px;
+    padding: 5px 12px 6px 12px;
+    outline: none;
+}
+
+QPushButton:hover {
+    background: rgba(249, 249, 249, 0.5);
+}
+
+QPushButton:pressed {
+    color: rgba(0, 0, 0, 0.63);
+    background: rgba(249, 249, 249, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.073);
+}
+
+QPushButton:disabled {
+    color: rgba(0, 0, 0, 0.36);
+    background: rgba(249, 249, 249, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}

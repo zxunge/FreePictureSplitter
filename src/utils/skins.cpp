@@ -28,8 +28,6 @@
 #include <QMetaObject>
 #include <QStyleFactory>
 
-#include <qwin11phantomstyle.h> // For a modern look on the default skin
-
 using namespace Qt::Literals::StringLiterals;
 
 namespace Util {
@@ -38,9 +36,9 @@ QStringList getAvailableSkins()
 {
     QStringList list;
     QDir skinDir(Util::getSkinsDir());
-    for (const auto skin : skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
+    foreach (const auto skin, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
         // Obtain the skin's name
-        QFile file(skin);
+        QFile file(Util::getSkinsDir() + u"/"_s + skin);
         if (file.open(QFile::ReadOnly)) {
             QTextStream in(&file);
             const QString name{ in.readLine() };
@@ -58,34 +56,26 @@ bool setAppSkin(QApplication *app, const QString &skinName)
     QString realFn;
     QFile styleFile;
 
-    if (skinName == u"Flat Light"_s) {
-        // The default style includes a Win11Phantom style
-        QWin11PhantomStyle *phStyle{ new QWin11PhantomStyle() };
-        app->setStyle(phStyle);
-        styleFile.setFileName(Util::getSkinsDir() + u"/default.skin"_s);
-    } else {
-        // Search for a skin file
-        QDir skinDir(Util::getSkinsDir());
+    // Search for a skin file
+    QDir skinDir(Util::getSkinsDir());
 
-        for (const auto fileName : skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
-            QFile file(fileName);
-            if (file.open(QFile::ReadOnly)) {
-                QTextStream in(&file);
-                const QString name{ in.readLine() };
-                const QString placeholder{ in.readLine() };
-                if (name == skinName && placeholder == u"--@@##BEGIN##@@--"_s) {
-                    realFn = fileName;
-                    break;
-                }
+    foreach (const auto fileName, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
+        QFile file(Util::getSkinsDir() + u"/"_s + fileName);
+        if (file.open(QFile::ReadOnly)) {
+            QTextStream in(&file);
+            const QString name{ in.readLine() };
+            const QString placeholder{ in.readLine() };
+            if (name == skinName && placeholder == u"--@@##BEGIN##@@--"_s) {
+                realFn = fileName;
+                break;
             }
         }
-        if (realFn.isEmpty())
-            return false;
-
-        // For other skins, we use `fusion`
-        app->setStyle(QStyleFactory::create(u"fusion"_s));
-        styleFile.setFileName(realFn);
     }
+    if (realFn.isEmpty())
+        return false;
+
+    app->setStyle(QStyleFactory::create(u"fusion"_s));
+    styleFile.setFileName(Util::getSkinsDir() + u"/"_s + realFn);
 
     if (styleFile.open(QFile::ReadOnly)) {
         if (skinName == u"Light Blue"_s) // "Light Blue" requires changing the palette

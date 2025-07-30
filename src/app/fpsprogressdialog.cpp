@@ -26,14 +26,13 @@
 using namespace Qt::Literals::StringLiterals;
 
 fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total)
-    : QDialog(parent), ui(new Ui::fpsProgressDialog), m_cancelled(false)
+    : QDialog(parent, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint),
+      ui(new Ui::fpsProgressDialog),
+      m_cancelled(false)
 {
     ui->setupUi(this);
     ui->progressBar->setFormat(u"%p%"_s);
     ui->progressBar->setAlignment(Qt::AlignCenter);
-    // Must be 2 steps
-    setWindowFlag(Qt::WindowStaysOnTopHint, true);
-    setWindowFlag(Qt::FramelessWindowHint, true);
 
     m_total = total;
     ui->progressBar->setRange(0, total);
@@ -54,6 +53,5 @@ void fpsProgressDialog::proceed(int elapsed)
 void fpsProgressDialog::on_btnCancel_clicked()
 {
     m_cancelled = true;
-    fpsDebugStr("Cancel Clicked!");
     Q_EMIT cancelled();
 }

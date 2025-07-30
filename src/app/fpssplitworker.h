@@ -41,14 +41,15 @@ public:
     /// \brief fpsSplitWorker Constructor
     /// \param outputs        A string list of the output files' full names.
     /// \param images         A list of <em>QImage</em>s to save.
-    /// \param outPath        A QString indicating the output directory.
+    /// \param outPath        A list of QString indicating the output directory for each source
+    /// image.
     /// \param format         Output pictures' format.
     /// \param scaleFactor    Factor used to scale the output images (default is 1.0).
     /// \param quality        Output images' quality (default is 100) (only some formats, \see {
     /// https://doc.qt.io/qt-6/qimagewriter.html#setQuality }.
     ///
     explicit fpsSplitWorker(const QVector<QStringList> &outputs,
-                            const QVector<QVector<QImage>> &images, const QString &outPath,
+                            const QVector<QVector<QImage>> &images, const QStringList &outPath,
                             const QString &format, const double scaleFactor = 1.0,
                             const int quality = 80)
         : m_outputs(outputs),
@@ -76,7 +77,7 @@ signals:
 private:
     QVector<QStringList> m_outputs;
     QVector<QVector<QImage>> m_images;
-    QString m_outPath;
+    QStringList m_outPath;
     QString m_format;
     double m_scaleFactor;
     int m_quality;

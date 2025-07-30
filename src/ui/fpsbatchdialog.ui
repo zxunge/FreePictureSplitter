@@ -41,7 +41,7 @@
       <bool>false</bool>
      </property>
      <property name="toolButtonStyle">
-      <enum>Qt::ToolButtonTextUnderIcon</enum>
+      <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
      </property>
      <property name="floatable">
       <bool>false</bool>
@@ -284,13 +284,13 @@
              </sizepolicy>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::CustomContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
             </property>
             <property name="statusTip">
              <string>A list of pictures added.</string>
             </property>
             <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectItems</enum>
+             <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
             </property>
             <property name="iconSize">
              <size>
@@ -299,16 +299,16 @@
              </size>
             </property>
             <property name="movement">
-             <enum>QListView::Static</enum>
+             <enum>QListView::Movement::Static</enum>
             </property>
             <property name="resizeMode">
-             <enum>QListView::Adjust</enum>
+             <enum>QListView::ResizeMode::Adjust</enum>
             </property>
             <property name="spacing">
              <number>10</number>
             </property>
             <property name="viewMode">
-             <enum>QListView::IconMode</enum>
+             <enum>QListView::ViewMode::IconMode</enum>
             </property>
            </widget>
           </item>
@@ -346,13 +346,13 @@
              </sizepolicy>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::CustomContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
             </property>
             <property name="selectionMode">
-             <enum>QAbstractItemView::SingleSelection</enum>
+             <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
             </property>
             <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectRows</enum>
+             <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
             </property>
             <property name="columnCount">
              <number>3</number>
@@ -390,17 +390,10 @@
    <item>
     <widget class="QWidget" name="wgtOptions" native="true">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="5" rowspan="2">
-       <widget class="QPushButton" name="btnSplit">
+      <item row="0" column="2" colspan="2">
+       <widget class="QCheckBox" name="chbSubdir">
         <property name="text">
-         <string>Start Splitting...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Output Location:</string>
+         <string>Create Sub-directories</string>
         </property>
        </widget>
       </item>
@@ -427,13 +420,10 @@
         </item>
        </widget>
       </item>
-      <item row="1" column="3">
-       <widget class="QPushButton" name="btnChange">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Change...</string>
+         <string>Output Location:</string>
         </property>
        </widget>
       </item>
@@ -444,6 +434,26 @@
         </property>
         <property name="text">
          <string>Open in Explorer</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="btnChange">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Change...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Specify Output Directory:</string>
         </property>
        </widget>
       </item>
@@ -460,24 +470,24 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2" colspan="2">
-       <widget class="QCheckBox" name="chbSubdir">
+      <item row="0" column="5" rowspan="2">
+       <widget class="QPushButton" name="btnSplit">
         <property name="text">
-         <string>Create Sub-directories</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Specify Output Directory:</string>
+         <string>Start Splitting...</string>
         </property>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStatusBar" name="statusBar">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
     </widget>
    </item>
   </layout>
