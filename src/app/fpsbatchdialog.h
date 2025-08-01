@@ -30,6 +30,7 @@ class fpsBatchDialog;
 }
 class QTableWidgetItem;
 class QListWidgetItem;
+class QProgressBar;
 
 class fpsBatchDialog : public QDialog
 {
@@ -90,6 +91,7 @@ private:
 
     QStringList m_filesList;
     QMenu *m_contextMenu;
+    QProgressBar *m_pbLoading;
 };
 
 #endif // FPSBATCHDIALOG_H

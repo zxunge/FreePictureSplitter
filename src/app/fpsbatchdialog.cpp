@@ -22,17 +22,18 @@
 #include "jsonconfigitems.h"
 #include "fpsimagehandler.h"
 #include "fpsprogressdialog.h"
-#include "fpssplitworker.h"
+#include "debugutil.h"
 
 #include <QButtonGroup>
 #include <QActionGroup>
 #include <QFileDialog>
 #include <QImageReader>
-#include <QImageWriter>
 #include <QFileInfo>
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QVector>
+#include <QPixmap>
+#include <QSize>
 #include <QImage>
 #include <QTableWidgetItem>
 #include <QListWidgetItem>
@@ -40,6 +41,11 @@
 #include <QFileSystemModel>
 #include <QStandardPaths>
 #include <QThread>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QPromise>
+#include <QtConcurrent/QtConcurrentRun>
+#include <QtAssert>
 
 #include <limits>
 
@@ -78,6 +84,10 @@ fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fp
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(ui->actionShowDetailInfo);
     m_contextMenu->addAction(ui->actionShowThumbnails);
+
+    m_pbLoading = new QProgressBar(this);
+    ui->statusBar->insertPermanentWidget(0, m_pbLoading);
+    m_pbLoading->setVisible(false);
 
     // Load configurations
     ui->cbxLocation->setCurrentIndex(
@@ -122,11 +132,19 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFiles);
-    if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles()[0].isEmpty()) {
-        appConfig.dialog.lastOpenedDir = QFileInfo(fdlg.selectedFiles()[0]).path().toStdString();
+    if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
+        && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {
+        appConfig.dialog.lastOpenedDir =
+                QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
 
-        for (const auto file : fdlg.selectedFiles())
+        const QStringList list{ fdlg.selectedFiles() };
+        // m_pbLoading->setRange(0, list.size());
+        // m_pbLoading->setValue(0);
+        // m_pbLoading->setVisible(true);
+        foreach (const auto file, list)
+            // QFuture<void> future{ QtConcurrent::run(&fpsBatchDialog::addPicture, this, file) };
             addPicture(file);
+        // m_pbLoading->setVisible(false);
     } else
         return;
 }
@@ -146,14 +164,20 @@ void fpsBatchDialog::closeEvent(QCloseEvent *event)
 
 void fpsBatchDialog::addPicture(const QString &fileName)
 {
-    QListWidgetItem *listItem{ new QListWidgetItem(ui->wgtList) };
-    listItem->setIcon(QIcon(fileName));
+    QListWidgetItem *listItem{ new QListWidgetItem() };
+    QImageReader reader(fileName);
+    reader.setScaledSize(QSize(80, 80));
+    reader.setAutoTransform(true);
+    listItem->setIcon(QIcon(QPixmap::fromImageReader(&reader)));
     listItem->setText(fileName);
     listItem->setSizeHint(QSize(80, 100));
+    ui->wgtList->addItem(listItem);
 
     int rowCount{ ui->wgtTable->rowCount() };
     ui->wgtTable->insertRow(rowCount);
-    QTableWidgetItem *tableItemName{ new QTableWidgetItem(QIcon(fileName),
+    reader.setFileName(fileName);
+    reader.setScaledSize(QSize(15, 25));
+    QTableWidgetItem *tableItemName{ new QTableWidgetItem(QIcon(QPixmap::fromImageReader(&reader)),
                                                           QFileInfo(fileName).fileName()) };
     ui->wgtTable->setItem(rowCount, 0, tableItemName);
     QTableWidgetItem *tableItemPath{ new QTableWidgetItem(fileName) };
@@ -179,11 +203,16 @@ void fpsBatchDialog::on_actionAddDirectory_triggered()
     QDir dir(in);
     QStringList nameFilters;
     const QByteArrayList supportedFormats{ QImageReader::supportedImageFormats() };
-    for (const auto format : supportedFormats)
+    foreach (const auto format, supportedFormats)
         nameFilters << u"*."_s + QString(format);
 
-    for (const auto file : dir.entryList(nameFilters, QDir::Files))
+    const QStringList list{ dir.entryList(nameFilters, QDir::Files) };
+    /* m_pbLoading->setRange(0, list.size());
+    m_pbLoading->setValue(0);
+    m_pbLoading->setVisible(true); */
+    foreach (const auto file, list)
         addPicture(in + u"/"_s + file);
+    // m_pbLoading->setVisible(false);
 }
 
 void fpsBatchDialog::on_cbxLocation_currentIndexChanged(int index)
@@ -253,123 +282,133 @@ void fpsBatchDialog::on_btnSplit_clicked()
 {
     QImageReader reader;
     RectList rects;
-    QVector<QVector<QImage>> imageLists(m_filesList.size());
-    QVector<QStringList> outputLists(m_filesList.size());
-    QStringList outPaths;
+    QImageWriter writer;
+    QVector<QImage> imageList;
+    QStringList outputList;
     int count{};
 
-    for (qsizetype i{}; i != m_filesList.size(); ++i) {
-        reader.setFileName(m_filesList.at(i));
-
-        if (ui->rbtnAverage->isChecked()) {
-            if (ui->rbtnHoriLeft->isChecked())
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxRows->value(), ui->sbxCols->value(),
-                                                     fpsImageHandler::SplitMode::Average,
-                                                     fpsImageHandler::SplitSequence::Left);
-            else if (ui->rbtnHoriRight->isChecked())
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxRows->value(), ui->sbxCols->value(),
-                                                     fpsImageHandler::SplitMode::Average,
-                                                     fpsImageHandler::SplitSequence::Right);
-            else if (ui->rbtnVertLeft->isChecked())
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxRows->value(), ui->sbxCols->value(),
-                                                     fpsImageHandler::SplitMode::Average,
-                                                     fpsImageHandler::SplitSequence::Left);
-            else
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxRows->value(), ui->sbxCols->value(),
-                                                     fpsImageHandler::SplitMode::Average,
-                                                     fpsImageHandler::SplitSequence::Right);
-        } else if (ui->rbtnSize->isChecked()) {
-            if (ui->rbtnHoriLeft->isChecked())
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::SplitMode::Size,
-                                                     fpsImageHandler::SplitSequence::Left);
-            else if (ui->rbtnHoriRight->isChecked())
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::SplitMode::Size,
-                                                     fpsImageHandler::SplitSequence::Right);
-            else if (ui->rbtnVertLeft->isChecked())
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::SplitMode::Size,
-                                                     fpsImageHandler::SplitSequence::Left);
-            else
-                rects = fpsImageHandler::getSubRects(reader.size().width(), reader.size().height(),
-                                                     ui->sbxHeight->value(), ui->sbxWidth->value(),
-                                                     fpsImageHandler::SplitMode::Size,
-                                                     fpsImageHandler::SplitSequence::Right);
-        }
-
-        if (!rects.isEmpty()) {
-            if (!fpsImageHandler::split(reader, imageLists[i], rects)) {
-                QMessageBox::warning(this, tr("Batch Splitting"), tr("Error splitting picture."),
-                                     QMessageBox::Close);
-                return;
-            }
-            // TODO@25/07/04 Add batch splitting related options.
-            outputLists[i] = fpsImageHandler::getOutputList(QFileInfo(m_filesList.at(i)).baseName(),
-                                                            QFileInfo(m_filesList.at(i)).suffix(),
-                                                            rects.size(), rects[0].size());
-            count += static_cast<int>(outputLists[i].size());
-
-            // Get the output directory
-            QDir baseDir;
-            if (ui->cbxLocation->currentIndex() == 0) // "The same"
-                baseDir = QFileInfo(m_filesList.at(i)).dir();
-            else {
-                if (!ui->lePath->text().isEmpty())
-                    baseDir = QDir(ui->lePath->text());
-                else {
-                    QMessageBox::warning(this, tr("Batch Splitting"),
-                                         tr("You have not specified the output directory yet, "
-                                            "please try again."),
-                                         QMessageBox::Close);
-                    break;
-                }
-            }
-
-            const QString baseName{ QFileInfo(m_filesList.at(i)).baseName() };
-            QString outPath;
-            if (ui->chbSubdir->isChecked()) {
-                if (!QFileInfo::exists(baseDir.absolutePath() + '/' + baseName + '/'))
-                    if (!baseDir.mkdir(baseName)) {
-                        QMessageBox::warning(this, tr("Batch Splitting"),
-                                             tr("QDir::mkdir \'%1\' error!")
-                                                     .arg(baseDir.absolutePath() + '/' + baseName),
-                                             QMessageBox::Close);
-                        break;
-                    }
-                outPath = baseDir.absolutePath() + '/' + baseName + '/';
-            } else
-                outPath = baseDir.absolutePath() + '/';
-            outPaths.push_back(outPath);
+    // Detect splitting sequence and mode
+    fpsImageHandler::SplitMode mode;
+    fpsImageHandler::SplitSequence sequence;
+    if (ui->rbtnAverage->isChecked()) {
+        if (ui->rbtnHoriLeft->isChecked()) {
+            mode = fpsImageHandler::SplitMode::Average;
+            sequence = fpsImageHandler::SplitSequence::Left;
+        } else if (ui->rbtnHoriRight->isChecked()) {
+            mode = fpsImageHandler::SplitMode::Average;
+            sequence = fpsImageHandler::SplitSequence::Right;
+        } else if (ui->rbtnVertLeft->isChecked()) {
+            mode = fpsImageHandler::SplitMode::Average;
+            sequence = fpsImageHandler::SplitSequence::Left;
         } else {
-            QMessageBox::warning(this, tr("Batch Splitting"),
-                                 tr("No rule to split picture: %1.").arg(m_filesList.at(i)),
-                                 QMessageBox::Close);
-            return;
+            mode = fpsImageHandler::SplitMode::Average;
+            sequence = fpsImageHandler::SplitSequence::Right;
+        }
+    } else if (ui->rbtnSize->isChecked()) {
+        if (ui->rbtnHoriLeft->isChecked()) {
+            mode = fpsImageHandler::SplitMode::Size;
+            sequence = fpsImageHandler::SplitSequence::Left;
+        } else if (ui->rbtnHoriRight->isChecked()) {
+            mode = fpsImageHandler::SplitMode::Size;
+            sequence = fpsImageHandler::SplitSequence::Right;
+        } else if (ui->rbtnVertLeft->isChecked()) {
+            mode = fpsImageHandler::SplitMode::Size;
+            sequence = fpsImageHandler::SplitSequence::Left;
+        } else {
+            mode = fpsImageHandler::SplitMode::Size;
+            sequence = fpsImageHandler::SplitSequence::Right;
         }
     }
 
-    fpsProgressDialog dlg(this, count);
-    QThread thread;
-    fpsSplitWorker worker(outputLists, imageLists, outPaths,
-                          QString::fromStdString(appConfig.options.outputOpt.outFormat));
-    worker.moveToThread(&thread);
-    connect(&worker, &fpsSplitWorker::ready, &thread, &QThread::quit);
-    connect(&thread, &QThread::finished, &dlg, &QDialog::close);
-    connect(&thread, &QThread::started, &worker, &fpsSplitWorker::doSplit);
-    connect(&worker, &fpsSplitWorker::proceed, &dlg, &fpsProgressDialog::proceed);
-    connect(&dlg, &fpsProgressDialog::cancelled, &thread, &QThread::requestInterruption);
-    connect(&worker, &fpsSplitWorker::error, this, [this](const QString &message) {
-        QMessageBox::critical(this, tr("Batch Splitting"), message, QMessageBox::Close);
+    fpsProgressDialog dlg(this, m_filesList.size());
+    QFuture<void> future{ QtConcurrent::run([&](QPromise<void> &promise) {
+        int count{};
+        for (qsizetype i{}; i != m_filesList.size(); ++i) {
+            promise.suspendIfRequested();
+            if (promise.isCanceled())
+                return;
+
+            reader.setFileName(m_filesList.at(i));
+
+            rects = fpsImageHandler::getSubRects(
+                    reader.size().width(), reader.size().height(),
+                    mode == fpsImageHandler::SplitMode::Size ? ui->sbxHeight->value()
+                                                             : ui->sbxRows->value(),
+                    mode == fpsImageHandler::SplitMode::Size ? ui->sbxWidth->value()
+                                                             : ui->sbxCols->value(),
+                    mode, sequence);
+
+            if (!rects.isEmpty()) {
+                if (!fpsImageHandler::split(reader, imageList, rects)) {
+                    promise.setProgressValueAndText(-1, tr("Error splitting picture."));
+                    return;
+                }
+                // TODO@25/07/04 Add batch splitting related options.
+                outputList = fpsImageHandler::getOutputList(QFileInfo(m_filesList.at(i)).baseName(),
+                                                            QFileInfo(m_filesList.at(i)).suffix(),
+                                                            rects.size(), rects[0].size());
+
+                // Get the output directory
+                QDir baseDir;
+                if (ui->cbxLocation->currentIndex() == 0) // "The same"
+                    baseDir = QFileInfo(m_filesList.at(i)).dir();
+                else {
+                    if (!ui->lePath->text().isEmpty())
+                        baseDir = QDir(ui->lePath->text());
+                    else {
+                        promise.setProgressValueAndText(
+                                -1,
+                                tr("You have not specified the output directory yet, "
+                                   "please try again."));
+                        return;
+                    }
+                }
+
+                const QString baseName{ QFileInfo(m_filesList.at(i)).baseName() };
+                QString outPath;
+                if (ui->chbSubdir->isChecked()) {
+                    if (!QFileInfo::exists(baseDir.absolutePath() + '/' + baseName + '/'))
+                        if (!baseDir.mkdir(baseName)) {
+                            promise.setProgressValueAndText(
+                                    -1,
+                                    tr("QDir::mkdir \'%1\' error!")
+                                            .arg(baseDir.absolutePath() + '/' + baseName));
+                            break;
+                        }
+                    outPath = baseDir.absolutePath() + '/' + baseName + '/';
+                } else
+                    outPath = baseDir.absolutePath() + '/';
+
+                for (qsizetype i{}; i != imageList.size(); ++i) {
+                    writer.setFileName(outPath + outputList[i]);
+                    if (!writer.write(imageList[i])) {
+                        promise.setProgressValueAndText(
+                                -1,
+                                tr("Error writing to file \'%1\': %2.")
+                                        .arg(writer.fileName(), writer.errorString()));
+                        return;
+                    }
+                }
+            } else {
+                promise.setProgressValueAndText(
+                        -1, tr("No rule to split picture: %1.").arg(m_filesList.at(i)));
+                return;
+            }
+            promise.setProgressValue(++count);
+        }
+    }) };
+
+    QFutureWatcher<void> watcher;
+    connect(&watcher, &QFutureWatcher<void>::progressValueChanged, this, [&](int progressValue) {
+        if (progressValue == -1) {
+            QMessageBox::critical(this, fpsAppName, watcher.progressText(), QMessageBox::Close);
+            dlg.close();
+        } else
+            dlg.proceed(progressValue);
     });
-    thread.start();
+    connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
+    watcher.setFuture(future);
+    connect(&dlg, &fpsProgressDialog::cancelled, this, [&] { future.cancel(); });
     dlg.exec();
 }
 

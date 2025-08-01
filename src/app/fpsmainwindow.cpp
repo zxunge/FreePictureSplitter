@@ -23,7 +23,6 @@
 #include "fpssettingsdialog.h"
 #include "fpsaboutdialog.h"
 #include "fpsprogressdialog.h"
-#include "fpssplitworker.h"
 #include "jsonconfigitems.h"
 #include "config.h"
 
@@ -37,7 +36,10 @@
 #include <QColor>
 #include <QDir>
 #include <QApplication>
-#include <QThread>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QPromise>
+#include <QtConcurrent/QtConcurrentRun>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -58,7 +60,7 @@ void fpsMainWindow::on_actionOpen_triggered()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    for (const QByteArray &mimeTypeName : supportedMimeTypes)
+    foreach (const QByteArray &mimeTypeName, supportedMimeTypes)
         mimeTypeFilters.append(mimeTypeName);
 
     mimeTypeFilters.sort();
@@ -70,14 +72,12 @@ void fpsMainWindow::on_actionOpen_triggered()
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypeFilters);
     fdlg.setFileMode(QFileDialog::ExistingFile);
-    if (QDialog::Accepted == fdlg.exec()) {
+    if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
+        && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {
         m_imgReader.setFileName(fdlg.selectedFiles().constFirst());
         appConfig.dialog.lastOpenedDir =
                 QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
     } else
-        return;
-
-    if (m_imgReader.fileName().isEmpty())
         return;
 
     m_imgReader.setAutoTransform(true);
@@ -196,21 +196,43 @@ void fpsMainWindow::on_actionSave_triggered()
                 appConfig.options.gridOpt.enabled);
 
         fpsProgressDialog dlg(this, outputList.size());
-        QThread thread;
-        fpsSplitWorker worker(
-                QVector<QStringList>() << outputList, QVector<QVector<QImage>>() << imageList,
-                QStringList() << out, QString::fromStdString(appConfig.options.outputOpt.outFormat),
-                appConfig.options.outputOpt.scalingFactor, appConfig.options.outputOpt.jpgQuality);
-        worker.moveToThread(&thread);
-        connect(&worker, &fpsSplitWorker::ready, &thread, &QThread::quit);
-        connect(&thread, &QThread::finished, &dlg, &QDialog::close);
-        connect(&thread, &QThread::started, &worker, &fpsSplitWorker::doSplit);
-        connect(&worker, &fpsSplitWorker::proceed, &dlg, &fpsProgressDialog::proceed);
-        connect(&dlg, &fpsProgressDialog::cancelled, &thread, &QThread::requestInterruption);
-        connect(&worker, &fpsSplitWorker::error, this, [this](const QString &message) {
-            QMessageBox::warning(this, fpsAppName, message, QMessageBox::Close);
-        });
-        thread.start();
+
+        QFuture<void> future{ QtConcurrent::run([&](QPromise<void> &promise) {
+            for (int i{}; i != imageList.size(); ++i) {
+                promise.suspendIfRequested();
+                if (promise.isCanceled())
+                    return;
+
+                writer.setFileName(out + '/' + outputList[i]);
+                writer.setFormat(
+                        QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
+                writer.setQuality(appConfig.options.outputOpt.jpgQuality);
+                if (!writer.write(imageList[i].scaled(
+                            imageList[i].width() * appConfig.options.outputOpt.scalingFactor,
+                            imageList[i].height() * appConfig.options.outputOpt.scalingFactor,
+                            Qt::IgnoreAspectRatio, Qt::SmoothTransformation))) {
+                    promise.setProgressValueAndText(
+                            -1,
+                            tr("Error writing to file \'%1\': %2.")
+                                    .arg(writer.fileName(), writer.errorString()));
+                    break;
+                }
+                promise.setProgressValue(i + 1);
+            }
+        }) };
+        QFutureWatcher<void> watcher;
+        connect(&watcher, &QFutureWatcher<void>::progressValueChanged, this,
+                [&](int progressValue) {
+                    if (progressValue == -1) {
+                        QMessageBox::critical(this, fpsAppName, watcher.progressText(),
+                                              QMessageBox::Close);
+                        dlg.close();
+                    } else
+                        dlg.proceed(progressValue);
+                });
+        connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
+        watcher.setFuture(future);
+        connect(&dlg, &fpsProgressDialog::cancelled, this, [&] { future.cancel(); });
         dlg.exec();
     } else {
         QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),

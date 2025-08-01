@@ -21,6 +21,7 @@ target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Gui
     Qt::Widgets
     Qt::Svg
+    Qt::Concurrent
     reflectcpp
 )
 

@@ -17,8 +17,6 @@ target_sources(FreePictureSplitter PRIVATE
     fpsrulerbar.h
     fpssettingsdialog.cpp
     fpssettingsdialog.h
-    fpssplitworker.cpp
-    fpssplitworker.h
     main.cpp
 )
 
