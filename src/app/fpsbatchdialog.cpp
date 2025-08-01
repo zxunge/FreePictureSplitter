@@ -28,9 +28,12 @@
 #include <QActionGroup>
 #include <QFileDialog>
 #include <QImageReader>
+#include <QImageWriter>
 #include <QFileInfo>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QProgressBar>
+#include <QStatusBar>
 #include <QVector>
 #include <QPixmap>
 #include <QSize>
