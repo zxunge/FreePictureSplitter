@@ -196,8 +196,17 @@ void fpsMainWindow::on_actionSave_triggered()
                 appConfig.options.gridOpt.enabled);
 
         fpsProgressDialog dlg(this, outputList.size());
-
-        QFuture<void> future{ QtConcurrent::run([&](QPromise<void> &promise) {
+        QFutureWatcher<void> watcher;
+        connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
+            if (progressValue == -1) {
+                QMessageBox::critical(this, fpsAppName, watcher.progressText(), QMessageBox::Close);
+                dlg.close();
+            } else
+                dlg.proceed(progressValue);
+        });
+        connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
+        connect(&dlg, &fpsProgressDialog::cancelled, &watcher, &QFutureWatcher<void>::cancel);
+        watcher.setFuture(QtConcurrent::run([&](QPromise<void> &promise) {
             for (int i{}; i != imageList.size(); ++i) {
                 promise.suspendIfRequested();
                 if (promise.isCanceled())
@@ -219,20 +228,7 @@ void fpsMainWindow::on_actionSave_triggered()
                 }
                 promise.setProgressValue(i + 1);
             }
-        }) };
-        QFutureWatcher<void> watcher;
-        connect(&watcher, &QFutureWatcher<void>::progressValueChanged, this,
-                [&](int progressValue) {
-                    if (progressValue == -1) {
-                        QMessageBox::critical(this, fpsAppName, watcher.progressText(),
-                                              QMessageBox::Close);
-                        dlg.close();
-                    } else
-                        dlg.proceed(progressValue);
-                });
-        connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
-        watcher.setFuture(future);
-        connect(&dlg, &fpsProgressDialog::cancelled, this, [&] { future.cancel(); });
+        }));
         dlg.exec();
     } else {
         QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),

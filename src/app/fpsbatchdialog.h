@@ -84,7 +84,8 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    void addPicture(const QString &fileName);
+    void addPicture(const QString &fileName,
+                    int elapsed); // We also update the progress bar when adding pictures.
 
 private:
     Ui::fpsBatchDialog *ui;

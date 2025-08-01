@@ -90,6 +90,10 @@ fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fp
 
     m_pbLoading = new QProgressBar(this);
     ui->statusBar->insertPermanentWidget(0, m_pbLoading);
+    m_pbLoading->setTextVisible(false);
+    m_pbLoading->setMaximumHeight(20);
+    m_pbLoading->setMaximumWidth(100);
+    m_pbLoading->setStyleSheet(u"QProgressBar::chunk{background:grey;}"_s);
     m_pbLoading->setVisible(false);
 
     // Load configurations
@@ -141,13 +145,15 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
                 QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
 
         const QStringList list{ fdlg.selectedFiles() };
-        // m_pbLoading->setRange(0, list.size());
-        // m_pbLoading->setValue(0);
-        // m_pbLoading->setVisible(true);
-        foreach (const auto file, list)
-            // QFuture<void> future{ QtConcurrent::run(&fpsBatchDialog::addPicture, this, file) };
-            addPicture(file);
-        // m_pbLoading->setVisible(false);
+        m_pbLoading->setRange(0, list.size());
+        m_pbLoading->setVisible(true);
+        QFuture<void> future{ QtConcurrent::run([&] {
+            int count{};
+            foreach (const auto file, list)
+                addPicture(file, ++count);
+        }) };
+        future.waitForFinished();
+        m_pbLoading->setVisible(false);
     } else
         return;
 }
@@ -165,7 +171,7 @@ void fpsBatchDialog::closeEvent(QCloseEvent *event)
     QDialog::closeEvent(event);
 }
 
-void fpsBatchDialog::addPicture(const QString &fileName)
+void fpsBatchDialog::addPicture(const QString &fileName, int elapsed)
 {
     QListWidgetItem *listItem{ new QListWidgetItem() };
     QImageReader reader(fileName);
@@ -189,6 +195,8 @@ void fpsBatchDialog::addPicture(const QString &fileName)
             QString::number(static_cast<long>(QFileInfo(fileName).size() / 1024)) + u" KB"_s) };
     ui->wgtTable->setItem(rowCount, 2, tableItemSize);
     m_filesList.push_back(fileName);
+
+    m_pbLoading->setValue(elapsed);
 }
 
 void fpsBatchDialog::on_actionAddDirectory_triggered()
@@ -210,12 +218,15 @@ void fpsBatchDialog::on_actionAddDirectory_triggered()
         nameFilters << u"*."_s + QString(format);
 
     const QStringList list{ dir.entryList(nameFilters, QDir::Files) };
-    /* m_pbLoading->setRange(0, list.size());
-    m_pbLoading->setValue(0);
-    m_pbLoading->setVisible(true); */
-    foreach (const auto file, list)
-        addPicture(in + u"/"_s + file);
-    // m_pbLoading->setVisible(false);
+    m_pbLoading->setRange(0, list.size());
+    m_pbLoading->setVisible(true);
+    QFuture<void> future{ QtConcurrent::run([&] {
+        int count{};
+        foreach (const auto file, list)
+            addPicture(in + u"/"_s + file, ++count);
+    }) };
+    future.waitForFinished();
+    m_pbLoading->setVisible(false);
 }
 
 void fpsBatchDialog::on_cbxLocation_currentIndexChanged(int index)
@@ -324,7 +335,17 @@ void fpsBatchDialog::on_btnSplit_clicked()
     }
 
     fpsProgressDialog dlg(this, m_filesList.size());
-    QFuture<void> future{ QtConcurrent::run([&](QPromise<void> &promise) {
+    QFutureWatcher<void> watcher;
+    connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
+        if (progressValue == -1) {
+            QMessageBox::critical(this, fpsAppName, watcher.progressText(), QMessageBox::Close);
+            dlg.close();
+        } else
+            dlg.proceed(progressValue);
+    });
+    connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
+    connect(&dlg, &fpsProgressDialog::cancelled, &watcher, &QFutureWatcher<void>::cancel);
+    watcher.setFuture(QtConcurrent::run([&](QPromise<void> &promise) {
         int count{};
         for (qsizetype i{}; i != m_filesList.size(); ++i) {
             promise.suspendIfRequested();
@@ -399,19 +420,7 @@ void fpsBatchDialog::on_btnSplit_clicked()
             }
             promise.setProgressValue(++count);
         }
-    }) };
-
-    QFutureWatcher<void> watcher;
-    connect(&watcher, &QFutureWatcher<void>::progressValueChanged, this, [&](int progressValue) {
-        if (progressValue == -1) {
-            QMessageBox::critical(this, fpsAppName, watcher.progressText(), QMessageBox::Close);
-            dlg.close();
-        } else
-            dlg.proceed(progressValue);
-    });
-    connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
-    watcher.setFuture(future);
-    connect(&dlg, &fpsProgressDialog::cancelled, this, [&] { future.cancel(); });
+    }));
     dlg.exec();
 }
 
