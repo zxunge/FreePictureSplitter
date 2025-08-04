@@ -11,6 +11,7 @@ add_subdirectory(app)
 add_subdirectory(resources)
 add_subdirectory(ui)
 add_subdirectory(utils)
+add_subdirectory(widgets)
 
 if(WITH_PCH)
     target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)

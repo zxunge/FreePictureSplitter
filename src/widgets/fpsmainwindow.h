@@ -21,7 +21,7 @@
 #ifndef FPSMAINWINDOW_H
 #define FPSMAINWINDOW_H
 
-#include "fpsimagehandler.h"
+#include "imagehandler.h"
 #include <QMainWindow>
 #include <QImageReader>
 #include <QImageWriter>

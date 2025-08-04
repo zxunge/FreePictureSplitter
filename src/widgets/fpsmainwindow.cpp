@@ -160,7 +160,7 @@ void fpsMainWindow::on_actionSave_triggered()
     appConfig.dialog.lastSavedToDir = out.toStdString();
 
     if (ui->rbtnManual->isChecked())
-        m_rects = fpsImageHandler::linesToRects(ui->graphicsView);
+        m_rects = ImageHandler::linesToRects(ui->graphicsView);
     else if (m_rects.isEmpty()) {
         QMessageBox::warning(this, fpsAppName,
                              tr("Please at least choose one splitting mode, offer "
@@ -170,7 +170,7 @@ void fpsMainWindow::on_actionSave_triggered()
     }
 
     if (!m_rects.isEmpty()) {
-        if (!fpsImageHandler::split(m_imgReader, imageList, m_rects)) {
+        if (!ImageHandler::split(m_imgReader, imageList, m_rects)) {
             QMessageBox::warning(this, fpsAppName, tr("Error splitting picture."),
                                  QMessageBox::Close);
             return;
@@ -180,14 +180,14 @@ void fpsMainWindow::on_actionSave_triggered()
         if (appConfig.options.gridOpt.enabled) {
             m_imgReader.setFileName(m_imgReader.fileName());
             QPixmap p{ QPixmap::fromImageReader(&m_imgReader) };
-            fpsImageHandler::drawGridLines(
+            ImageHandler::drawGridLines(
                     &p, m_rects,
                     QColor::fromString(QString::fromStdString(appConfig.options.gridOpt.colorRgb)),
                     appConfig.options.gridOpt.lineSize);
             imageList.push_back(p.toImage());
         }
 
-        outputList = fpsImageHandler::getOutputList(
+        outputList = ImageHandler::getOutputList(
                 appConfig.options.nameOpt.prefMode == Util::Prefix::same
                         ? baseName
                         : QString::fromStdString(appConfig.options.nameOpt.prefix),
@@ -273,50 +273,50 @@ void fpsMainWindow::on_btnReset_clicked()
     m_imgReader.setFileName(m_imgReader.fileName());
     if (ui->rbtnAver->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked())
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
-                    fpsImageHandler::SplitSequence::Left);
+                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
+                    ImageHandler::SplitSequence::Left);
         else if (ui->rbtnHoriRight->isChecked())
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
-                    fpsImageHandler::SplitSequence::Right);
+                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
+                    ImageHandler::SplitSequence::Right);
         else if (ui->rbtnVertLeft->isChecked())
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
-                    fpsImageHandler::SplitSequence::Left);
+                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
+                    ImageHandler::SplitSequence::Left);
         else
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), fpsImageHandler::SplitMode::Average,
-                    fpsImageHandler::SplitSequence::Right);
+                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
+                    ImageHandler::SplitSequence::Right);
     } else if (ui->rbtnSize->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked())
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
-                    fpsImageHandler::SplitSequence::Left);
+                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
+                    ImageHandler::SplitSequence::Left);
         else if (ui->rbtnHoriRight->isChecked())
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
-                    fpsImageHandler::SplitSequence::Right);
+                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
+                    ImageHandler::SplitSequence::Right);
         else if (ui->rbtnVertLeft->isChecked())
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
-                    fpsImageHandler::SplitSequence::Left);
+                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
+                    ImageHandler::SplitSequence::Left);
         else
-            m_rects = fpsImageHandler::getSubRects(
+            m_rects = ImageHandler::getSubRects(
                     m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), fpsImageHandler::SplitMode::Size,
-                    fpsImageHandler::SplitSequence::Right);
+                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
+                    ImageHandler::SplitSequence::Right);
     }
     ui->actionSave->setEnabled(true);
     ui->graphicsView->removeAllDraggableLines();
-    fpsImageHandler::rectsToLines(m_rects, ui->graphicsView);
+    ImageHandler::rectsToLines(m_rects, ui->graphicsView);
 }
 
 void fpsMainWindow::on_rbtnSize_toggled(bool checked)

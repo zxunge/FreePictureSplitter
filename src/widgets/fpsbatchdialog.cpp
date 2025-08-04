@@ -20,7 +20,7 @@
 #include "fpsbatchdialog.h"
 #include "ui_fpsbatchdialog.h"
 #include "jsonconfigitems.h"
-#include "fpsimagehandler.h"
+#include "imagehandler.h"
 #include "fpsprogressdialog.h"
 #include "debugutil.h"
 
@@ -302,35 +302,35 @@ void fpsBatchDialog::on_btnSplit_clicked()
     int count{};
 
     // Detect splitting sequence and mode
-    fpsImageHandler::SplitMode mode;
-    fpsImageHandler::SplitSequence sequence;
+    ImageHandler::SplitMode mode;
+    ImageHandler::SplitSequence sequence;
     if (ui->rbtnAverage->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked()) {
-            mode = fpsImageHandler::SplitMode::Average;
-            sequence = fpsImageHandler::SplitSequence::Left;
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Left;
         } else if (ui->rbtnHoriRight->isChecked()) {
-            mode = fpsImageHandler::SplitMode::Average;
-            sequence = fpsImageHandler::SplitSequence::Right;
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Right;
         } else if (ui->rbtnVertLeft->isChecked()) {
-            mode = fpsImageHandler::SplitMode::Average;
-            sequence = fpsImageHandler::SplitSequence::Left;
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Left;
         } else {
-            mode = fpsImageHandler::SplitMode::Average;
-            sequence = fpsImageHandler::SplitSequence::Right;
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Right;
         }
     } else if (ui->rbtnSize->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked()) {
-            mode = fpsImageHandler::SplitMode::Size;
-            sequence = fpsImageHandler::SplitSequence::Left;
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Left;
         } else if (ui->rbtnHoriRight->isChecked()) {
-            mode = fpsImageHandler::SplitMode::Size;
-            sequence = fpsImageHandler::SplitSequence::Right;
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Right;
         } else if (ui->rbtnVertLeft->isChecked()) {
-            mode = fpsImageHandler::SplitMode::Size;
-            sequence = fpsImageHandler::SplitSequence::Left;
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Left;
         } else {
-            mode = fpsImageHandler::SplitMode::Size;
-            sequence = fpsImageHandler::SplitSequence::Right;
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Right;
         }
     }
 
@@ -354,23 +354,23 @@ void fpsBatchDialog::on_btnSplit_clicked()
 
             reader.setFileName(m_filesList.at(i));
 
-            rects = fpsImageHandler::getSubRects(
+            rects = ImageHandler::getSubRects(
                     reader.size().width(), reader.size().height(),
-                    mode == fpsImageHandler::SplitMode::Size ? ui->sbxHeight->value()
-                                                             : ui->sbxRows->value(),
-                    mode == fpsImageHandler::SplitMode::Size ? ui->sbxWidth->value()
-                                                             : ui->sbxCols->value(),
+                    mode == ImageHandler::SplitMode::Size ? ui->sbxHeight->value()
+                                                          : ui->sbxRows->value(),
+                    mode == ImageHandler::SplitMode::Size ? ui->sbxWidth->value()
+                                                          : ui->sbxCols->value(),
                     mode, sequence);
 
             if (!rects.isEmpty()) {
-                if (!fpsImageHandler::split(reader, imageList, rects)) {
+                if (!ImageHandler::split(reader, imageList, rects)) {
                     promise.setProgressValueAndText(-1, tr("Error splitting picture."));
                     return;
                 }
                 // TODO@25/07/04 Add batch splitting related options.
-                outputList = fpsImageHandler::getOutputList(QFileInfo(m_filesList.at(i)).baseName(),
-                                                            QFileInfo(m_filesList.at(i)).suffix(),
-                                                            rects.size(), rects[0].size());
+                outputList = ImageHandler::getOutputList(QFileInfo(m_filesList.at(i)).baseName(),
+                                                         QFileInfo(m_filesList.at(i)).suffix(),
+                                                         rects.size(), rects[0].size());
 
                 // Get the output directory
                 QDir baseDir;

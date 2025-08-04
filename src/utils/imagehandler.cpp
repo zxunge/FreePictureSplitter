@@ -17,7 +17,7 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsimagehandler.h"
+#include "imagehandler.h"
 #include "fpsgraphicsview.h"
 #include "fpsdraggableline.h"
 
@@ -31,9 +31,9 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-/* static */ QStringList fpsImageHandler::getOutputList(const QString &prefix,
-                                                        const QString &suffix, int rows, int cols,
-                                                        bool rcContained, bool grid)
+/* static */ QStringList ImageHandler::getOutputList(const QString &prefix, const QString &suffix,
+                                                     int rows, int cols, bool rcContained,
+                                                     bool grid)
 {
     QStringList outputList;
     auto splitCount{ QString::asprintf("%d", rows * cols).size() };
@@ -49,9 +49,8 @@ using namespace Qt::Literals::StringLiterals;
     return outputList;
 }
 
-/* static */ RectList fpsImageHandler::getSubRects(int width, int height, int rowsOrHeight,
-                                                   int colsOrWidth, SplitMode mode,
-                                                   SplitSequence seq)
+/* static */ RectList ImageHandler::getSubRects(int width, int height, int rowsOrHeight,
+                                                int colsOrWidth, SplitMode mode, SplitSequence seq)
 {
     // TODO@25/05/10 Improve algorithm.
     // There're 2 steps we should follow basically:
@@ -157,8 +156,8 @@ using namespace Qt::Literals::StringLiterals;
     return rects;
 }
 
-[[nodiscard]] /* static */ bool
-fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const RectList &rects)
+[[nodiscard]] /* static */ bool ImageHandler::split(QImageReader &imgReader,
+                                                    QVector<QImage> &output, const RectList &rects)
 {
     if (rects.isEmpty())
         return false;
@@ -179,7 +178,7 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
     return true;
 }
 
-/* static */ void fpsImageHandler::rectsToLines(const RectList &rects, fpsGraphicsView *parent)
+/* static */ void ImageHandler::rectsToLines(const RectList &rects, fpsGraphicsView *parent)
 {
     if (0 == rects.size() || 0 == rects[0].size())
         return;
@@ -201,7 +200,7 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
     }
 }
 
-/* static */ RectList fpsImageHandler::linesToRects(fpsGraphicsView *parent)
+/* static */ RectList ImageHandler::linesToRects(fpsGraphicsView *parent)
 {
     QVector<int> vx, vy;
 
@@ -243,8 +242,8 @@ fpsImageHandler::split(QImageReader &imgReader, QVector<QImage> &output, const R
     return rects;
 }
 
-/* static */ void fpsImageHandler::drawGridLines(QPixmap *pixmap, const RectList &rects,
-                                                 const QColor &color, int size)
+/* static */ void ImageHandler::drawGridLines(QPixmap *pixmap, const RectList &rects,
+                                              const QColor &color, int size)
 {
     if (rects.empty() || pixmap->isNull())
         return;

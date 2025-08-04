@@ -18,8 +18,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSIMAGEHANDLER_H
-#define FPSIMAGEHANDLER_H
+#ifndef IMAGEHANDLER_H
+#define IMAGEHANDLER_H
 
 #include <QImage>
 #include <QImageReader>
@@ -34,10 +34,10 @@ class QPixmap;
 typedef QVector<QVector<QRect>> RectList;
 
 /*!
- * \brief The fpsImageHandler class: Handles all the stuff for all-purpose image splitting and file
+ * \brief The ImageHandler class: Handles all the stuff for all-purpose image splitting and file
  * generation (Single picture).
- * \class fpsImageHandler
- * \include fpsimagehandler.h
+ * \class ImageHandler
+ * \include imagehandler.h
  * \details The general workflow is:
  *  1. Users specify their wants, and we use \code getSubRects \endcode or \code linesToRects
  * \endcode to capture them.
@@ -48,7 +48,7 @@ typedef QVector<QVector<QRect>> RectList;
  * arguments.
  *  6. Save files.
  */
-class fpsImageHandler
+class ImageHandler
 {
 public:
     enum class SplitMode { Size, Average };
@@ -79,4 +79,4 @@ public:
                               int size);
 };
 
-#endif // FPSIMAGEHANDLER_H
+#endif // IMAGEHANDLER_H
