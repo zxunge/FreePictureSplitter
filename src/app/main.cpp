@@ -38,6 +38,7 @@
 #include <rfl/get.hpp>
 #include <rfl/json/read.hpp>
 #include <rfl/json/write.hpp>
+#include <flesshelper.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -145,14 +146,14 @@ int main(int argc, char *argv[])
     }
 
     // Load styles
-    if (!Util::setAppSkin(&a, QString::fromStdString(appConfig.app.style))) {
-        QMessageBox::warning(nullptr, fpsAppName,
-                             QObject::tr("Error loading skin: %1.").arg(appConfig.app.style),
-                             QMessageBox::Close);
-        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
-    }
+    //if (!Util::setAppSkin(&a, QString::fromStdString(appConfig.app.style))) {
+    //    QMessageBox::warning(nullptr, fpsAppName,
+    //                         QObject::tr("Error loading skin: %1.").arg(appConfig.app.style),
+    //                         QMessageBox::Close);
+    //    QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+    //}
 
-    fpsMainWindow w;
+    MakeMainWindowFrameless<fpsMainWindow> w;
     w.show();
 
     int ret{ a.exec() };

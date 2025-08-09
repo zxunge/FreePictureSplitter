@@ -1,3 +1,6 @@
 [submodule "src/3rdparty/reflect-cpp"]
 	path = src/3rdparty/reflect-cpp
 	url = https://github.com/getml/reflect-cpp.git
+[submodule "src/3rdparty/FramelessWindow"]
+	path = src/3rdparty/FramelessWindow
+	url = https://github.com/zxunge/FramelessWindow.git

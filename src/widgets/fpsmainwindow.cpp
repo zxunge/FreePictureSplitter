@@ -41,6 +41,8 @@
 #include <QPromise>
 #include <QtConcurrent/QtConcurrentRun>
 
+#include <flesshelper.h>
+
 using namespace Qt::Literals::StringLiterals;
 
 extern Util::Config appConfig;
@@ -244,16 +246,14 @@ void fpsMainWindow::on_actionExit_triggered()
 
 void fpsMainWindow::on_actionBatch_triggered()
 {
-    fpsBatchDialog *batchDlg{ new fpsBatchDialog(this) };
-    batchDlg->setAttribute(Qt::WA_DeleteOnClose, true);
-    batchDlg->exec();
+    MakeDialogFrameless<fpsBatchDialog> batchDlg(this);
+    batchDlg.exec();
 }
 
 void fpsMainWindow::on_actionSettings_triggered()
 {
-    fpsSettingsDialog *settingsDlg{ new fpsSettingsDialog(this) };
-    settingsDlg->setAttribute(Qt::WA_DeleteOnClose, true);
-    settingsDlg->exec();
+    MakeDialogFrameless<fpsSettingsDialog> settingsDlg(this);
+    settingsDlg.exec();
 }
 
 void fpsMainWindow::on_actionHomepage_triggered()
