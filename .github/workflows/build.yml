@@ -45,7 +45,7 @@ jobs:
           qt6-translations:p
 
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
@@ -81,7 +81,7 @@ jobs:
         setup-python: false
 
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
