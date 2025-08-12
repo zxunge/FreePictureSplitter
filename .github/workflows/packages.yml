@@ -60,6 +60,7 @@ jobs:
                   "libjpeg-8.dll"             \
                   "libpng16-16.dll"           \
                   "libwebpdecoder-3.dll"      \
+                  "libglib-2.0-0.dll"         \
                   "vulkan-1.dll"              \
                   "libbrotlidec.dll"          \
                   "libfontconfig-1.dll"       \
