@@ -26,7 +26,10 @@
 
 namespace Ui {
 class fpsSettingsDialog;
-}
+} // namespace Ui
+namespace QWK {
+class WidgetWindowAgent;
+} // namespace QWK
 
 class fpsSettingsDialog : public QDialog
 {
@@ -56,9 +59,13 @@ private slots:
     void on_tbtnOutput_toggled(bool checked);
 
     void on_tbtnBrowse_clicked();
+    
+private:
+    void installWindowAgent();
 
 private:
     Ui::fpsSettingsDialog *ui;
+    QWK::WidgetWindowAgent *m_windowAgent;
 
     QColor m_color;
 };

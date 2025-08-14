@@ -51,6 +51,9 @@
 #include <QtAssert>
 
 #include <limits>
+#include <QWKWidgets/widgetwindowagent.h>
+#include <widgetframe/windowbar.h>
+#include <widgetframe/windowbutton.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -104,6 +107,8 @@ fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fp
     ui->lePath->setText(QString::fromStdString(appConfig.options.batchOpt.outPath));
     ui->btnChange->setEnabled(appConfig.options.batchOpt.savingTo == Util::SavingTo::specified);
     ui->chbSubdir->setChecked(appConfig.options.batchOpt.subDir);
+    
+    installWindowAgent();
 }
 
 fpsBatchDialog::~fpsBatchDialog()
@@ -476,4 +481,36 @@ void fpsBatchDialog::on_actionRemoveFromList_triggered()
         delete ui->wgtList->takeItem(index);
         ui->wgtTable->removeRow(index);
     }
+}
+
+void fpsBatchDialog::installWindowAgent()
+{
+    // Setup window agent
+    m_windowAgent = new QWK::WidgetWindowAgent(this);
+    m_windowAgent->setup(this);
+
+    // Construct window bar
+    auto windowBar{ new QWK::WindowBar };
+    auto titleLabel{ new QLabel };
+    titleLabel->setAlignment(Qt::AlignCenter);
+    titleLabel->setObjectName(u"win-title-label"_s);
+
+    auto iconButton{ new QWK::WindowButton };
+    iconButton->setObjectName(u"icon-button"_s);
+    iconButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+    auto closeButton{ new QWK::WindowButton };
+    closeButton->setObjectName(u"close-button"_s);
+    closeButton->setProperty("system-button", true);
+    closeButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+    windowBar->setHostWidget(this);
+    windowBar->setTitleLabel(titleLabel);
+    windowBar->setIconButton(iconButton);
+    windowBar->setCloseButton(closeButton);
+    m_windowAgent->setTitleBar(windowBar);
+
+    // Set properties
+    m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
+    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
 }

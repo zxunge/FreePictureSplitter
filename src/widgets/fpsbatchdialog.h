@@ -27,7 +27,10 @@
 
 namespace Ui {
 class fpsBatchDialog;
-}
+} // namespace Ui
+namespace QWK {
+class WidgetWindowAgent;
+} // namespace QWK
 class QTableWidgetItem;
 class QListWidgetItem;
 class QProgressBar;
@@ -86,9 +89,11 @@ protected:
 private:
     void addPicture(const QString &fileName,
                     int elapsed); // We also update the progress bar when adding pictures.
+    void installWindowAgent();
 
 private:
     Ui::fpsBatchDialog *ui;
+    QWK::WidgetWindowAgent *m_windowAgent;
 
     QStringList m_filesList;
     QMenu *m_contextMenu;

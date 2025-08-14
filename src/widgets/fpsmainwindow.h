@@ -22,13 +22,17 @@
 #define FPSMAINWINDOW_H
 
 #include "imagehandler.h"
+
 #include <QMainWindow>
 #include <QImageReader>
 #include <QImageWriter>
 
 namespace Ui {
 class fpsMainWindow;
-}
+} // namespace Ui
+namespace QWK {
+class WidgetWindowAgent;
+} // namespace QWK
 class fpsBatchDialog;
 class fpsAboutDialog;
 class fpsSettingsDialog;
@@ -72,7 +76,11 @@ private slots:
     void on_rbtnManual_toggled(bool checked);
 
 private:
+    void installWindowAgent();
+
+private:
     Ui::fpsMainWindow *ui;
+    QWK::WidgetWindowAgent *m_windowAgent;
 
     QImageReader m_imgReader;
     RectList m_rects;
