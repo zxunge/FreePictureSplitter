@@ -40,7 +40,10 @@ if(WIN32 AND DEPLOY_WINDOWS)
     set(CMAKE_INSTALL_LIBEXECDIR ".")
 endif()
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent Svg LinguistTools)
+find_package(QT NAMES Qt6 REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent LinguistTools
+    OPTIONAL_COMPONENTS Svg
+)
 
 qt_standard_project_setup(
     REQUIRES 6.9
@@ -73,4 +76,5 @@ if(WITH_QT_GUI)
     add_subdirectory(src)
     add_subdirectory(lib)
 endif()
+
 
