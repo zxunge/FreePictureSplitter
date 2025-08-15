@@ -25,4 +25,14 @@
         <file>preferences/output.png</file>
         <file>preferences/output-off.png</file>
     </qresource>
+    <qresource prefix="/windowBar">
+        <file>windowBar/close-dark.svg</file>
+        <file>windowBar/close-light.svg</file>
+        <file>windowBar/max-dark.svg</file>
+        <file>windowBar/max-light.svg</file>
+        <file>windowBar/min-dark.svg</file>
+        <file>windowBar/min-light.svg</file>
+        <file>windowBar/normal-dark.svg</file>
+        <file>windowBar/normal-light.svg</file>
+    </qresource>
 </RCC>

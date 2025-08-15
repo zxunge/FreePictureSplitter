@@ -21,13 +21,83 @@ Flat Light
 
 /* FreePictureSplitter Default Skin Style */
 
-QMainWindow, QDialog {
-    background-color: rgb(249, 249, 249);
+/* Default code for styles */
+/* Window bar */
+
+QWK--WindowBar[bar-active=true] {
+    background-color: white;
 }
 
-QMenuBar {
-    background-color: qlineargradient(x1:0.5, y1:0, x2:0.5, y2:1, stop:0 #f8f9f8, stop:1 #f1f3f2);
-    color: rgb(0, 0, 0);
+QWK--WindowBar[bar-active=false] {
+    background-color: white;
+}
+
+
+/* Title label */
+
+QWK--WindowBar>QLabel#win-title-label {
+    padding: 0;
+    border: none;
+    color: black;
+    background-color: transparent;
+    min-height: 28px;
+}
+
+
+/* System buttons */
+
+QWK--WindowBar>QAbstractButton[system-button=true] {
+    qproperty-iconSize: 12px 12px;
+    min-width: 50px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+QWK--WindowBar>QAbstractButton#min-button {
+    qproperty-iconNormal: url(":/windowBar/windowBar/min-light.svg");
+    qproperty-iconSize: 12px 12px;
+}
+
+QWK--WindowBar>QAbstractButton#min-button:hover,
+QWK--WindowBar>QAbstractButton#min-button:pressed {
+    background-color: rgba(0, 0, 0, 15%);
+}
+
+QWK--WindowBar>QAbstractButton#max-button {
+    qproperty-iconNormal: url(":/windowBar/windowBar/max-light.svg");
+    qproperty-iconChecked: url(":/windowBar/windowBar/normal-light.svg");
+}
+
+QWK--WindowBar>QAbstractButton#max-button:hover,
+QWK--WindowBar>QAbstractButton#max-button:pressed {
+    background-color: rgba(0, 0, 0, 15%);
+}
+
+QWK--WindowBar>QAbstractButton#close-button {
+    qproperty-iconNormal: url(":/windowBar/windowBar/close-light.svg");
+}
+
+QWK--WindowBar>QAbstractButton#close-button:hover,
+QWK--WindowBar>QAbstractButton#close-button:pressed {
+    background-color: #e81123;
+}
+
+/* Icon button */
+
+QWK--WindowBar>QAbstractButton#icon-button {
+    qproperty-iconNormal: url(":/icons/fps.ico");
+    qproperty-iconSize: 18px 18px;
+    min-width: 40px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+/********************/
+
+QMainWindow, QDialog {
+    background-color: rgb(249, 249, 249);
 }
 
 QStatusBar {
