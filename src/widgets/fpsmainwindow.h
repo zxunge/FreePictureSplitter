@@ -45,9 +45,6 @@ public:
     explicit fpsMainWindow(QWidget *parent = nullptr);
     ~fpsMainWindow();
 
-signals:
-    void splitProceed(int elapsed);
-
 private slots:
     void on_actionOpen_triggered();
 

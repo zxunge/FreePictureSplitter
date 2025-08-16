@@ -273,49 +273,47 @@ void fpsMainWindow::on_actionAbout_triggered()
 void fpsMainWindow::on_btnReset_clicked()
 {
     m_imgReader.setFileName(m_imgReader.fileName());
+    
+    // Detect splitting sequence and mode
+    ImageHandler::SplitMode mode;
+    ImageHandler::SplitSequence sequence;
     if (ui->rbtnAver->isChecked()) {
-        if (ui->rbtnHoriLeft->isChecked())
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
-                    ImageHandler::SplitSequence::Left);
-        else if (ui->rbtnHoriRight->isChecked())
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
-                    ImageHandler::SplitSequence::Right);
-        else if (ui->rbtnVertLeft->isChecked())
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
-                    ImageHandler::SplitSequence::Left);
-        else
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxRows->value(),
-                    ui->sbxCols->value(), ImageHandler::SplitMode::Average,
-                    ImageHandler::SplitSequence::Right);
+        if (ui->rbtnHoriLeft->isChecked()) {
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Left;
+        } else if (ui->rbtnHoriRight->isChecked()) {
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Right;
+        } else if (ui->rbtnVertLeft->isChecked()) {
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Left;
+        } else {
+            mode = ImageHandler::SplitMode::Average;
+            sequence = ImageHandler::SplitSequence::Right;
+        }
     } else if (ui->rbtnSize->isChecked()) {
-        if (ui->rbtnHoriLeft->isChecked())
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
-                    ImageHandler::SplitSequence::Left);
-        else if (ui->rbtnHoriRight->isChecked())
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
-                    ImageHandler::SplitSequence::Right);
-        else if (ui->rbtnVertLeft->isChecked())
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
-                    ImageHandler::SplitSequence::Left);
-        else
-            m_rects = ImageHandler::getSubRects(
-                    m_imgReader.size().width(), m_imgReader.size().height(), ui->sbxHeight->value(),
-                    ui->sbxWidth->value(), ImageHandler::SplitMode::Size,
-                    ImageHandler::SplitSequence::Right);
+        if (ui->rbtnHoriLeft->isChecked()) {
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Left;
+        } else if (ui->rbtnHoriRight->isChecked()) {
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Right;
+        } else if (ui->rbtnVertLeft->isChecked()) {
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Left;
+        } else {
+            mode = ImageHandler::SplitMode::Size;
+            sequence = ImageHandler::SplitSequence::Right;
+        }
     }
+    m_rects = ImageHandler::getSubRects(
+                      reader.size().width(), reader.size().height(),
+                      mode == ImageHandler::SplitMode::Size ? ui->sbxHeight->value()
+                                                            : ui->sbxRows->value(),
+                      mode == ImageHandler::SplitMode::Size ? ui->sbxWidth->value()
+                                                            : ui->sbxCols->value(),
+                      mode, sequence);
+                      
     ui->actionSave->setEnabled(true);
     ui->graphicsView->removeAllDraggableLines();
     ImageHandler::rectsToLines(m_rects, ui->graphicsView);

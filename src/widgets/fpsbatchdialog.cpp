@@ -43,7 +43,7 @@
 #include <QCompleter>
 #include <QFileSystemModel>
 #include <QStandardPaths>
-#include <QThread>
+#include <QCoreApplication>
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QPromise>
@@ -132,7 +132,7 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    for (const QByteArray &mimeTypeName : supportedMimeTypes)
+    foreach (const QByteArray &mimeTypeName, supportedMimeTypes)
         mimeTypeFilters.append(mimeTypeName);
 
     mimeTypeFilters.sort();
@@ -152,12 +152,12 @@ void fpsBatchDialog::on_actionAddPicture_triggered()
         const QStringList list{ fdlg.selectedFiles() };
         m_pbLoading->setRange(0, list.size());
         m_pbLoading->setVisible(true);
-        QFuture<void> future{ QtConcurrent::run([&] {
-            int count{};
-            foreach (const auto file, list)
-                addPicture(file, ++count);
-        }) };
-        future.waitForFinished();
+        int count{};
+        foreach (const auto file, list) {
+            QCoreApplication::processEvents();
+            addPicture(file);
+            m_pbLoading->setValue(++count);
+        }
         m_pbLoading->setVisible(false);
     } else
         return;
@@ -200,8 +200,6 @@ void fpsBatchDialog::addPicture(const QString &fileName, int elapsed)
             QString::number(static_cast<long>(QFileInfo(fileName).size() / 1024)) + u" KB"_s) };
     ui->wgtTable->setItem(rowCount, 2, tableItemSize);
     m_filesList.push_back(fileName);
-
-    m_pbLoading->setValue(elapsed);
 }
 
 void fpsBatchDialog::on_actionAddDirectory_triggered()
@@ -223,14 +221,14 @@ void fpsBatchDialog::on_actionAddDirectory_triggered()
         nameFilters << u"*."_s + QString(format);
 
     const QStringList list{ dir.entryList(nameFilters, QDir::Files) };
+    int count{};
     m_pbLoading->setRange(0, list.size());
     m_pbLoading->setVisible(true);
-    QFuture<void> future{ QtConcurrent::run([&] {
-        int count{};
-        foreach (const auto file, list)
-            addPicture(in + u"/"_s + file, ++count);
-    }) };
-    future.waitForFinished();
+    foreach (const auto file, list) {
+        QCoreApplication::processEvents();
+        addPicture(in + u"/"_s + file);
+        m_pbLoading->setValue(++count);
+    }
     m_pbLoading->setVisible(false);
 }
 
@@ -342,10 +340,9 @@ void fpsBatchDialog::on_btnSplit_clicked()
     fpsProgressDialog dlg(this, m_filesList.size());
     QFutureWatcher<void> watcher;
     connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
-        if (progressValue == -1) {
+        if (progressValue == -1)
             QMessageBox::critical(this, fpsAppName, watcher.progressText(), QMessageBox::Close);
-            dlg.close();
-        } else
+        else
             dlg.proceed(progressValue);
     });
     connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);

@@ -80,15 +80,11 @@ private slots:
 
     void on_actionRemoveFromList_triggered();
 
-signals:
-    void splitProceed(int elapsed);
-
 protected:
     void closeEvent(QCloseEvent *event) override;
 
 private:
-    void addPicture(const QString &fileName,
-                    int elapsed); // We also update the progress bar when adding pictures.
+    void addPicture(const QString &fileName);
     void installWindowAgent();
 
 private:
