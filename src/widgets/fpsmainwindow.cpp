@@ -53,6 +53,7 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 {
     ui->setupUi(this);
     connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
+    
     installWindowAgent();
 }
 
@@ -203,10 +204,9 @@ void fpsMainWindow::on_actionSave_triggered()
         fpsProgressDialog dlg(this, outputList.size());
         QFutureWatcher<void> watcher;
         connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
-            if (progressValue == -1) {
+            if (progressValue == -1)
                 QMessageBox::critical(this, fpsAppName, watcher.progressText(), QMessageBox::Close);
-                dlg.close();
-            } else
+            else
                 dlg.proceed(progressValue);
         });
         connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
@@ -229,7 +229,7 @@ void fpsMainWindow::on_actionSave_triggered()
                             -1,
                             tr("Error writing to file \'%1\': %2.")
                                     .arg(writer.fileName(), writer.errorString()));
-                    break;
+                    return;
                 }
                 promise.setProgressValue(i + 1);
             }
@@ -266,9 +266,8 @@ void fpsMainWindow::on_actionHomepage_triggered()
 
 void fpsMainWindow::on_actionAbout_triggered()
 {
-    fpsAboutDialog *aboutDlg{ new fpsAboutDialog(this) };
-    aboutDlg->setAttribute(Qt::WA_DeleteOnClose, true);
-    aboutDlg->exec();
+    fpsAboutDialog aboutDlg(this);
+    aboutDlg.exec();
 }
 
 void fpsMainWindow::on_btnReset_clicked()
