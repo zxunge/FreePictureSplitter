@@ -176,7 +176,7 @@ void fpsBatchDialog::closeEvent(QCloseEvent *event)
     QDialog::closeEvent(event);
 }
 
-void fpsBatchDialog::addPicture(const QString &fileName, int elapsed)
+void fpsBatchDialog::addPicture(const QString &fileName)
 {
     QListWidgetItem *listItem{ new QListWidgetItem() };
     QImageReader reader(fileName);

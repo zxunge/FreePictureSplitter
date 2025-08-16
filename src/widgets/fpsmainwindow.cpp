@@ -307,7 +307,7 @@ void fpsMainWindow::on_btnReset_clicked()
         }
     }
     m_rects = ImageHandler::getSubRects(
-                      reader.size().width(), reader.size().height(),
+                      m_imgReader.size().width(), m_imgReader.size().height(),
                       mode == ImageHandler::SplitMode::Size ? ui->sbxHeight->value()
                                                             : ui->sbxRows->value(),
                       mode == ImageHandler::SplitMode::Size ? ui->sbxWidth->value()
