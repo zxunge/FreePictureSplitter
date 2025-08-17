@@ -33,7 +33,7 @@ fpsDraggableLine::fpsDraggableLine(QGraphicsView *parent, Qt::Orientation orient
     : QPushButton(parent)
 {
     setAutoFillBackground(true);
-    setPalette(QPalette(QColor(50, 205, 50)));
+    setStyleSheet(u"background-color: rgb(50, 205, 50);"_s);
 
     m_orientation = orientation;
     if (m_orientation == Qt::Horizontal) {

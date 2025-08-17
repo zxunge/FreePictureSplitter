@@ -28,6 +28,7 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QEvent>
 #include <QAction>
 #include <QDesktopServices>
 #include <QStandardPaths>
@@ -413,4 +414,27 @@ void fpsMainWindow::installWindowAgent()
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Maximize, maxButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
     setMenuWidget(windowBar);
+}
+
+bool fpsMainWindow::event(QEvent *event) 
+{
+    switch (event->type()) {
+    case QEvent::WindowActivate: {
+        auto menu{ menuWidget() };
+        menu->setProperty("bar-active", true);
+        style()->polish(menu);
+        break;
+    }
+
+    case QEvent::WindowDeactivate: {
+        auto menu{ menuWidget() };
+        menu->setProperty("bar-active", false);
+        style()->polish(menu);
+        break;
+    }
+
+    default:
+        break;
+    }
+    return QMainWindow::event(event);
 }

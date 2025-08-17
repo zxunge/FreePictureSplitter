@@ -33,6 +33,7 @@ class fpsMainWindow;
 namespace QWK {
 class WidgetWindowAgent;
 } // namespace QWK
+class QEvent;
 class fpsBatchDialog;
 class fpsAboutDialog;
 class fpsSettingsDialog;
@@ -74,6 +75,9 @@ private slots:
 
 private:
     void installWindowAgent();
+    
+protected:
+    bool event(QEvent *event) override;
 
 private:
     Ui::fpsMainWindow *ui;
