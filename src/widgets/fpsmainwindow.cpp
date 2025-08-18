@@ -35,6 +35,7 @@
 #include <QUrl>
 #include <QFileInfo>
 #include <QColor>
+#include <QStyle>
 #include <QDir>
 #include <QApplication>
 #include <QFuture>
