@@ -22,6 +22,75 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/* Default code for styles */
+/* Window bar */
+QWK--WindowBar[bar-active=true] {
+    background-color: #e6e7eb;
+}
+
+QWK--WindowBar[bar-active=false] {
+    background-color: #e6e7eb;
+}
+
+/* Title label */
+QWK--WindowBar>QLabel#win-title-label {
+    padding: 0;
+    border: none;
+    color: black;
+    background-color: transparent;
+    min-height: 28px;
+}
+
+
+/* System buttons */
+QWK--WindowBar>QAbstractButton[system-button=true] {
+    qproperty-iconSize: 12px 12px;
+    min-width: 50px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+
+QWK--WindowBar>QAbstractButton#min-button {
+    qproperty-iconNormal: url(":/windowBar/windowBar/min-dark.svg");
+    qproperty-iconSize: 12px 12px;
+}
+
+QWK--WindowBar>QAbstractButton#min-button:hover,
+QWK--WindowBar>QAbstractButton#min-button:pressed {
+    background-color: #f0f5f3;
+}
+
+QWK--WindowBar>QAbstractButton#max-button {
+    qproperty-iconNormal: url(":/windowBar/windowBar/max-dark.svg");
+    qproperty-iconChecked: url(":/windowBar/windowBar/normal-dark.svg");
+}
+
+QWK--WindowBar>QAbstractButton#max-button:hover,
+QWK--WindowBar>QAbstractButton#max-button:pressed {
+    background-color: #f0f5f3;
+}
+
+QWK--WindowBar>QAbstractButton#close-button {
+    qproperty-iconNormal: url(":/windowBar/windowBar/close-dark.svg");
+}
+
+QWK--WindowBar>QAbstractButton#close-button:hover,
+QWK--WindowBar>QAbstractButton#close-button:pressed {
+    background-color: #e81123;
+}
+
+/* Icon button */
+QWK--WindowBar>QAbstractButton#icon-button {
+    qproperty-iconNormal: url(":/icons/fps.ico");
+    qproperty-iconSize: 18px 18px;
+    min-width: 40px;
+    border: none;
+    padding: 0;
+    background-color: transparent;
+}
+/********************/
+
 QWidget{
 	background-color: #e6e7eb;
 }
