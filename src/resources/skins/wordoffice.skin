@@ -41,7 +41,6 @@ QWK--WindowBar>QLabel#win-title-label {
     min-height: 28px;
 }
 
-
 /* System buttons */
 QWK--WindowBar>QAbstractButton[system-button=true] {
     qproperty-iconSize: 12px 12px;

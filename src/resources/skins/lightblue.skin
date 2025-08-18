@@ -1,4 +1,4 @@
-Light Blue
+Light Blue,#EAF7FF
 --@@##BEGIN##@@--
 /* Default code for styles */
 /* Window bar */
@@ -18,7 +18,6 @@ QWK--WindowBar>QLabel#win-title-label {
     background-color: transparent;
     min-height: 28px;
 }
-
 
 /* System buttons */
 QWK--WindowBar>QAbstractButton[system-button=true] {
