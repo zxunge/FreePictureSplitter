@@ -41,11 +41,11 @@ QStringList getAvailableSkins()
         QFile file(Util::getSkinsDir() + u"/"_s + skin);
         if (file.open(QFile::ReadOnly)) {
             QTextStream in(&file);
-            const QString name{ in.readLine() };
+            const QString header{ in.readLine() };
             const QString placeholder{ in.readLine() };
-            // A valid skin file
-            if (!name.isEmpty() && placeholder == u"--@@##BEGIN##@@--"_s)
-                list.push_back(name);
+            // A valid skin file, whose 'header' is NAME,PALETTE
+            if (!header.isEmpty() && placeholder == u"--@@##BEGIN##@@--"_s)
+                list.push_back(header.split(u","_s)[0]);
         }
     }
     return list;
@@ -60,12 +60,12 @@ bool setAppSkin(QApplication *app, const QString &skinName)
     QDir skinDir(Util::getSkinsDir());
 
     foreach (const auto fileName, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
-        QFile file(Util::getSkinsDir() + u"/"_s + fileName);
-        if (file.open(QFile::ReadOnly)) {
-            QTextStream in(&file);
-            const QString name{ in.readLine() };
+        styleFile.setFileName(Util::getSkinsDir() + u"/"_s + fileName);
+        if (styleFile.open(QFile::ReadOnly)) {
+            QTextStream in(&styleFile);
+            const QString header{ in.readLine() };
             const QString placeholder{ in.readLine() };
-            if (name == skinName && placeholder == u"--@@##BEGIN##@@--"_s) {
+            if (header.split(u","_s)[0] == skinName && placeholder == u"--@@##BEGIN##@@--"_s) {
                 realFn = fileName;
                 break;
             }
@@ -78,15 +78,22 @@ bool setAppSkin(QApplication *app, const QString &skinName)
     styleFile.setFileName(Util::getSkinsDir() + u"/"_s + realFn);
 
     if (styleFile.open(QFile::ReadOnly)) {
-        if (skinName == u"Light Blue"_s) // "Light Blue" requires changing the palette
-            app->setPalette(QPalette(u"#eaf7ff"_s));
-        else
-            app->setPalette(QPalette());
-
         QTextStream in(&styleFile);
+        const QString header{ in.readLine() };
+        const QStringList headerParts{ header.split(u","_s) };
+        // Retrieve palette info from header
+        if (headerParts.size() == 1) // Not changing the palette
+            app->setPalette(QPalette());
+        else if (headerParts.size() == 2)
+            app->setPalette(QPalette(headerParts[1]));
+        else { // Corrupted skin file
+            styleFile.close();
+            return false;
+        }
+        
         // The stylesheets cannot be applied directly,
         // we need to do some path-conversion.
-        QString ss{ in.readAll().split(u"--@@##BEGIN##@@--"_s, Qt::SkipEmptyParts)[1] };
+        QString ss{ in.readAll().split(u"--@@##BEGIN##@@--"_s)[1] };
         ss.replace(u"@SKINS_DIR@"_s, Util::getSkinsDir());
         app->setStyleSheet(ss);
         styleFile.close();
