@@ -59,7 +59,7 @@ private slots:
     void on_tbtnOutput_toggled(bool checked);
 
     void on_tbtnBrowse_clicked();
-    
+
 private:
     void installWindowAgent();
 

@@ -107,7 +107,7 @@ fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fp
     ui->lePath->setText(QString::fromStdString(appConfig.options.batchOpt.outPath));
     ui->btnChange->setEnabled(appConfig.options.batchOpt.savingTo == Util::SavingTo::specified);
     ui->chbSubdir->setChecked(appConfig.options.batchOpt.subDir);
-    
+
     installWindowAgent();
 }
 

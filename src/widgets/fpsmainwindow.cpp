@@ -55,7 +55,7 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
 {
     ui->setupUi(this);
     connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
-    
+
     installWindowAgent();
 }
 
@@ -275,7 +275,7 @@ void fpsMainWindow::on_actionAbout_triggered()
 void fpsMainWindow::on_btnReset_clicked()
 {
     m_imgReader.setFileName(m_imgReader.fileName());
-    
+
     // Detect splitting sequence and mode
     ImageHandler::SplitMode mode;
     ImageHandler::SplitSequence sequence;
@@ -309,13 +309,11 @@ void fpsMainWindow::on_btnReset_clicked()
         }
     }
     m_rects = ImageHandler::getSubRects(
-                      m_imgReader.size().width(), m_imgReader.size().height(),
-                      mode == ImageHandler::SplitMode::Size ? ui->sbxHeight->value()
-                                                            : ui->sbxRows->value(),
-                      mode == ImageHandler::SplitMode::Size ? ui->sbxWidth->value()
-                                                            : ui->sbxCols->value(),
-                      mode, sequence);
-                      
+            m_imgReader.size().width(), m_imgReader.size().height(),
+            mode == ImageHandler::SplitMode::Size ? ui->sbxHeight->value() : ui->sbxRows->value(),
+            mode == ImageHandler::SplitMode::Size ? ui->sbxWidth->value() : ui->sbxCols->value(),
+            mode, sequence);
+
     ui->actionSave->setEnabled(true);
     ui->graphicsView->removeAllDraggableLines();
     ImageHandler::rectsToLines(m_rects, ui->graphicsView);
@@ -417,7 +415,7 @@ void fpsMainWindow::installWindowAgent()
     setMenuWidget(windowBar);
 }
 
-bool fpsMainWindow::event(QEvent *event) 
+bool fpsMainWindow::event(QEvent *event)
 {
     switch (event->type()) {
     case QEvent::WindowActivate: {

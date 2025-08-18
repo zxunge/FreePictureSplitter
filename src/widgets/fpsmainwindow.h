@@ -75,7 +75,7 @@ private slots:
 
 private:
     void installWindowAgent();
-    
+
 protected:
     bool event(QEvent *event) override;
 

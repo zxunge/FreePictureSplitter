@@ -106,7 +106,7 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     ui->rbtnOriName->setChecked(appConfig.options.nameOpt.prefMode == Util::Prefix::same);
     ui->chbNumberContained->setChecked(appConfig.options.nameOpt.rcContained);
     /************************************************/
-    
+
     installWindowAgent();
 }
 

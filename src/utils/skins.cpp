@@ -90,7 +90,7 @@ bool setAppSkin(QApplication *app, const QString &skinName)
             styleFile.close();
             return false;
         }
-        
+
         // The stylesheets cannot be applied directly,
         // we need to do some path-conversion.
         QString ss{ in.readAll().split(u"--@@##BEGIN##@@--"_s)[1] };
