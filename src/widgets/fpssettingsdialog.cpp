@@ -225,16 +225,16 @@ void fpsSettingsDialog::installWindowAgent()
     m_windowAgent->setup(this);
 
     // Construct window bar
-    auto windowBar{ new QWK::WindowBar };
-    auto titleLabel{ new QLabel };
+    auto windowBar{ new QWK::WindowBar(this) };
+    auto titleLabel{ new QLabel() };
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setObjectName(u"win-title-label"_s);
 
-    auto iconButton{ new QWK::WindowButton };
+    auto iconButton{ new QWK::WindowButton() };
     iconButton->setObjectName(u"icon-button"_s);
     iconButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    auto closeButton{ new QWK::WindowButton };
+    auto closeButton{ new QWK::WindowButton() };
     closeButton->setObjectName(u"close-button"_s);
     closeButton->setProperty("system-button", true);
     closeButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
