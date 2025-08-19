@@ -35,9 +35,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Override variables
 if(WIN32 AND DEPLOY_WINDOWS)
-    set(CMAKE_INSTALL_BINDIR ".")
-    set(CMAKE_INSTALL_LIBDIR ".")
-    set(CMAKE_INSTALL_LIBEXECDIR ".")
+    set(CMAKE_INSTALL_BINDIR "." CACHE PATH "")
+    set(CMAKE_INSTALL_LIBDIR "." CACHE PATH "")
+    set(CMAKE_INSTALL_LIBEXECDIR "." CACHE PATH "")
 endif()
 
 find_package(QT NAMES Qt6 REQUIRED)
@@ -76,5 +76,6 @@ if(WITH_QT_GUI)
     add_subdirectory(src)
     add_subdirectory(lib)
 endif()
+
 
 
