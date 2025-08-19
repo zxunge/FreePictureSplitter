@@ -41,14 +41,14 @@ if(WIN32 AND DEPLOY_WINDOWS)
 endif()
 
 find_package(QT NAMES Qt6 REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent LinguistTools
-    OPTIONAL_COMPONENTS Svg
-)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent LinguistTools Svg)
 
 qt_standard_project_setup(
     REQUIRES 6.9
     I18N_TRANSLATED_LANGUAGES de fr ja pl tr uk zh_TW zh_CN it
 )
+
+message(STATUS "Found Qt " ${Qt6_VERSION})
 
 configure_file(config/config.h.in config.h @ONLY)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
@@ -76,6 +76,7 @@ if(WITH_QT_GUI)
     add_subdirectory(src)
     add_subdirectory(lib)
 endif()
+
 
 
 
