@@ -31,6 +31,8 @@
 
 using namespace Qt::Literals::StringLiterals;
 
+namespace Util {
+
 /* static */ QStringList ImageHandler::getOutputList(const QString &prefix, const QString &suffix,
                                                      int rows, int cols, bool rcContained,
                                                      bool grid)
@@ -259,3 +261,5 @@ using namespace Qt::Literals::StringLiterals;
     for (int j{}; j != rects[0].size() - 1; ++j)
         p.drawLine(rects[0][j].right(), 0, rects[0][j].right(), pixmap->height() - 1);
 }
+
+} // namespace Util

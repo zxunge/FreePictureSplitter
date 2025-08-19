@@ -84,7 +84,7 @@ private:
     QWK::WidgetWindowAgent *m_windowAgent;
 
     QImageReader m_imgReader;
-    RectList m_rects;
+    Util::RectList m_rects;
 };
 
 #endif // FPSMAINWINDOW_H

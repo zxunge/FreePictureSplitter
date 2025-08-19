@@ -48,8 +48,9 @@
 #include <widgetframe/windowbutton.h>
 
 using namespace Qt::Literals::StringLiterals;
+using namespace Util;
 
-extern Util::Config appConfig;
+extern Config appConfig;
 
 fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
 {

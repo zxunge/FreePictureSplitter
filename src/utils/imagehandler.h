@@ -31,6 +31,8 @@
 class fpsGraphicsView;
 class QPixmap;
 
+namespace Util {
+
 typedef QVector<QVector<QRect>> RectList;
 
 /*!
@@ -78,5 +80,7 @@ public:
     static void drawGridLines(QPixmap *pixmap, const RectList &rects, const QColor &color,
                               int size);
 };
+
+} // namespace Util
 
 #endif // IMAGEHANDLER_H

@@ -56,8 +56,9 @@
 #include <widgetframe/windowbutton.h>
 
 using namespace Qt::Literals::StringLiterals;
+using namespace Util;
 
-extern Util::Config appConfig;
+extern Config appConfig;
 
 fpsBatchDialog::fpsBatchDialog(QWidget *parent) : QDialog(parent), ui(new Ui::fpsBatchDialog)
 {
