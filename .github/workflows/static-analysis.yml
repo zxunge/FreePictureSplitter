@@ -29,6 +29,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
+          version: 6.9.*
           arch: linux_gcc_64
           install-deps: true
           modules: "qtimageformats"
