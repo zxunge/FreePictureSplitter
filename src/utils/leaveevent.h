@@ -27,6 +27,8 @@
 #include <QScreen>
 #include <QCursor>
 #include <QCoreApplication>
+#include <QHoverEvent>
+#include <QEvent>
 #include <QtAssert>
 
 namespace Util {
