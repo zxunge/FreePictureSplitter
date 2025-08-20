@@ -43,11 +43,11 @@ jobs:
           
       - name: Analyze
         run: |
-          pvs-studio-analyzer analyze -f build/compile_commands.json -j -e /src/3rdparty/
+          pvs-studio-analyzer analyze -f build/compile_commands.json -j
           
       - name: Convert report
         run: |
-          plog-converter -t sarif -o pvs-report.sarif PVS-Studio.log -d V1042
+          plog-converter -t sarif -o pvs-report.sarif PVS-Studio.log -d V1042 -E ./src/3rdparty/
           
       - name: Publish report
         uses: github/codeql-action/upload-sarif@v3
