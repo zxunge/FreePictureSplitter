@@ -24,6 +24,7 @@
 #include "fpsaboutdialog.h"
 #include "fpsprogressdialog.h"
 #include "jsonconfigitems.h"
+#include "leaveevent.h"
 #include "config.h"
 
 #include <QFileDialog>
@@ -423,7 +424,7 @@ void fpsMainWindow::installWindowAgent()
         // It's a Qt issue that if a QAbstractButton::clicked triggers a window's maximization,
         // the button remains to be hovered until the mouse move. As a result, we need to
         // manually send leave events to the button.
-        // emulateLeaveEvent(maxButton);
+        emulateLeaveEvent(maxButton);
     });
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
 
