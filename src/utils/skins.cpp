@@ -20,6 +20,7 @@
 #include "skins.h"
 #include "stdpaths.h"
 #include "config.h"
+#include "debugutil.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -53,7 +54,6 @@ QStringList getAvailableSkins()
 
 bool setAppSkin(QApplication *app, const QString &skinName)
 {
-    QString realFn;
     QFile styleFile;
 
     // Search for a skin file
@@ -66,40 +66,29 @@ bool setAppSkin(QApplication *app, const QString &skinName)
             const QString header{ in.readLine() };
             const QString placeholder{ in.readLine() };
             if (header.split(u","_s)[0] == skinName && placeholder == u"--@@##BEGIN##@@--"_s) {
-                realFn = fileName;
-                break;
+                const QStringList headerParts{ header.split(u","_s) };
+                // Retrieve palette info from header
+                if (headerParts.size() == 1) // Not changing the palette
+                    app->setPalette(QPalette());
+                else if (headerParts.size() == 2)
+                    app->setPalette(QPalette(headerParts[1]));
+                else { // Corrupted skin file
+                    styleFile.close();
+                    return false;
+                }
+
+                // The stylesheets cannot be applied directly,
+                // we need to do some path-conversion.
+                QString ss{ in.readAll() };
+                ss.replace(u"@SKINS_DIR@"_s, Util::getSkinsDir());
+                app->setStyle(QStyleFactory::create(u"fusion"_s));
+                app->setStyleSheet(ss);
+                styleFile.close();
+                return true;
             }
         }
     }
-    if (realFn.isEmpty())
-        return false;
-
-    app->setStyle(QStyleFactory::create(u"fusion"_s));
-    styleFile.setFileName(Util::getSkinsDir() + u"/"_s + realFn);
-
-    if (styleFile.open(QFile::ReadOnly)) {
-        QTextStream in(&styleFile);
-        const QString header{ in.readLine() };
-        const QStringList headerParts{ header.split(u","_s) };
-        // Retrieve palette info from header
-        if (headerParts.size() == 1) // Not changing the palette
-            app->setPalette(QPalette());
-        else if (headerParts.size() == 2)
-            app->setPalette(QPalette(headerParts[1]));
-        else { // Corrupted skin file
-            styleFile.close();
-            return false;
-        }
-
-        // The stylesheets cannot be applied directly,
-        // we need to do some path-conversion.
-        QString ss{ in.readAll().split(u"--@@##BEGIN##@@--"_s)[1] };
-        ss.replace(u"@SKINS_DIR@"_s, Util::getSkinsDir());
-        app->setStyleSheet(ss);
-        styleFile.close();
-    } else
-        return false;
-    return true;
+    return false;
 }
 
 } // namespace Util

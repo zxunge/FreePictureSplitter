@@ -416,11 +416,11 @@ void fpsMainWindow::installWindowAgent()
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
     connect(windowBar, &QWK::WindowBar::minimizeRequested, this, &QWidget::showMinimized);
     connect(windowBar, &QWK::WindowBar::maximizeRequested, this, [this, maxButton](bool max) {
-        if (max) {
+        if (max)
             showMaximized();
-        } else {
+        else
             showNormal();
-        }
+
         // It's a Qt issue that if a QAbstractButton::clicked triggers a window's maximization,
         // the button remains to be hovered until the mouse move. As a result, we need to
         // manually send leave events to the button.
