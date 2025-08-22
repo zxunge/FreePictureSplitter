@@ -420,11 +420,19 @@ void fpsMainWindow::installWindowAgent()
     m_windowAgent->setTitleBar(windowBar);
 
     // Set properties
-    windowAgent->setHitTestVisible(pinButton, true);
+    m_windowAgent->setHitTestVisible(pinButton, true);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Minimize, minButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Maximize, maxButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
+    connect(windowBar, &QWK::WindowBar::pinRequested, this, [this, pinButton](bool pin) {
+        if (isHidden() || isMinimized() || isMaximized() || isFullScreen()) {
+            return;
+        }
+        setWindowFlag(Qt::WindowStaysOnTopHint, pin);
+        show();
+        pinButton->setChecked(pin);
+    });
     connect(windowBar, &QWK::WindowBar::minimizeRequested, this, &QWidget::showMinimized);
     connect(windowBar, &QWK::WindowBar::maximizeRequested, this, [this, maxButton](bool max) {
         if (max)
