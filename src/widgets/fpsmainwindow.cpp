@@ -55,6 +55,7 @@ extern Config appConfig;
 
 fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
 {
+    setAttribute(Qt::WA_DontCreateNativeAncestors);
     ui->setupUi(this);
     connect(ui->actionAboutQt, &QAction::triggered, qApp, &QApplication::aboutQt);
 
@@ -387,6 +388,12 @@ void fpsMainWindow::installWindowAgent()
     iconButton->setObjectName(u"icon-button"_s);
     iconButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
+    auto pinButton{ new QWK::WindowButton() };
+    pinButton->setCheckable(true);
+    pinButton->setObjectName(QStringLiteral("pin-button"));
+    pinButton->setProperty("system-button", true);
+    pinButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
     auto minButton{ new QWK::WindowButton() };
     minButton->setObjectName(u"min-button"_s);
     minButton->setProperty("system-button", true);
@@ -403,15 +410,17 @@ void fpsMainWindow::installWindowAgent()
     closeButton->setProperty("system-button", true);
     closeButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    windowBar->setHostWidget(this);
     windowBar->setTitleLabel(titleLabel);
     windowBar->setIconButton(iconButton);
+    windowBar->setPinButton(pinButton);
     windowBar->setMinButton(minButton);
     windowBar->setMaxButton(maxButton);
     windowBar->setCloseButton(closeButton);
+    windowBar->setHostWidget(this);
     m_windowAgent->setTitleBar(windowBar);
 
     // Set properties
+    windowAgent->setHitTestVisible(pinButton, true);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Minimize, minButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Maximize, maxButton);
