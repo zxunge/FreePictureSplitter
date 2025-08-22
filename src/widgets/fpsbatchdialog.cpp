@@ -336,7 +336,8 @@ void fpsBatchDialog::on_btnSplit_clicked()
             mode = ImageHandler::SplitMode::Size;
             sequence = ImageHandler::SplitSequence::Right;
         }
-    }
+    } else
+        return; // TODO@25/08/22 Add support for splitting using templates.
 
     fpsProgressDialog dlg(this, m_filesList.size());
     QFutureWatcher<void> watcher;

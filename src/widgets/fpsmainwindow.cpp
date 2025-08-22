@@ -309,7 +309,9 @@ void fpsMainWindow::on_btnReset_clicked()
             mode = ImageHandler::SplitMode::Size;
             sequence = ImageHandler::SplitSequence::Right;
         }
-    }
+    } else
+        return;
+
     m_rects = ImageHandler::getSubRects(
             m_imgReader.size().width(), m_imgReader.size().height(),
             mode == ImageHandler::SplitMode::Size ? ui->sbxHeight->value() : ui->sbxRows->value(),
