@@ -25,6 +25,7 @@
 #include "fpsprogressdialog.h"
 #include "jsonconfigitems.h"
 #include "leaveevent.h"
+#include "hoverevent.h"
 #include "config.h"
 
 #include <QFileDialog>
@@ -426,9 +427,9 @@ void fpsMainWindow::installWindowAgent()
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Maximize, maxButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
     connect(windowBar, &QWK::WindowBar::pinRequested, this, [this, pinButton](bool pin) {
-        if (isHidden() || isMinimized() || isMaximized() || isFullScreen()) {
+        if (isHidden() || isMinimized() || isMaximized() || isFullScreen())
             return;
-        }
+
         setWindowFlag(Qt::WindowStaysOnTopHint, pin);
         show();
         pinButton->setChecked(pin);
@@ -446,6 +447,8 @@ void fpsMainWindow::installWindowAgent()
         emulateLeaveEvent(maxButton);
     });
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
+    ButtonHoverEvent *filter{ new ButtonHoverEvent(QIcon(u":/windowBar/windowBar/close-dark.svg"_s), QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
+    closeButton->installEventFilter(filter);
 
     setMenuWidget(windowBar);
 }

@@ -76,12 +76,6 @@ QWK--WindowBar>QAbstractButton#close-button {
 QWK--WindowBar>QAbstractButton#close-button:hover,
 QWK--WindowBar>QAbstractButton#close-button:pressed {
     background-color: #e81123;
-    qproperty-iconNormal: url(":/windowBar/windowBar/close-dark.svg");
-}
-
-QWK--WindowBar>QAbstractButton#close-button:!hover,
-QWK--WindowBar>QAbstractButton#close-button:!pressed {
-    qproperty-iconNormal: url(":/windowBar/windowBar/close-light.svg");
 }
 
 /* Icon button */
