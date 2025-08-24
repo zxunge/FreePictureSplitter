@@ -22,7 +22,7 @@
 #include "jsonconfigitems.h"
 #include "imagehandler.h"
 #include "fpsprogressdialog.h"
-#include "hoverevent.h"
+#include "hovereventfilter.h"
 #include "debugutil.h"
 
 #include <QButtonGroup>
@@ -515,6 +515,6 @@ void fpsBatchDialog::installWindowAgent()
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
-    ButtonHoverEvent *filter{ new ButtonHoverEvent(QIcon(u":/windowBar/windowBar/close-dark.svg"_s), QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
+    ButtonHoverEventFilter *filter{ new ButtonHoverEventFilter(QIcon(u":/windowBar/windowBar/close-dark.svg"_s), QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
     closeButton->installEventFilter(filter);
 }

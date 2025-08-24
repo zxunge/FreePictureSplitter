@@ -18,27 +18,26 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef HOVEREVENT_H
-#define HOVEREVENT_H
+#ifndef HOVEREVENTFILTER_H
+#define HOVEREVENTFILTER_H
 
 #include <QObject>
 #include <QEvent>
 #include <QIcon>
 #include <QAbstractButton>
 
-using namespace Qt::Literals::StringLiterals;
-
 namespace Util {
 
-class ButtonHoverEvent : public QObject
+class ButtonHoverEventFilter : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ButtonHoverEvent(const QIcon &enter, const QIcon &leave, QObject *parent = nullptr) 
+    explicit ButtonHoverEventFilter(const QIcon &enter, const QIcon &leave, QObject *parent = nullptr) 
         : m_enterIcon(enter), 
           m_leaveIcon(leave),
           QObject(parent) {}
+    ~ButtonHoverEventFilter() {}
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override
@@ -67,4 +66,4 @@ private:
 
 } // namespace Util
 
-#endif // HOVEREVENT_H
+#endif // HOVEREVENTFILTER_H

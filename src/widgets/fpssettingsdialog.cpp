@@ -20,6 +20,7 @@
 #include "fpssettingsdialog.h"
 #include "ui_fpssettingsdialog.h"
 #include "jsonconfigitems.h"
+#include "hovereventfilter.h"
 #include "skins.h"
 
 #include <QImageWriter>
@@ -249,4 +250,6 @@ void fpsSettingsDialog::installWindowAgent()
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
     m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
+    Util::ButtonHoverEventFilter *filter{ new Util::ButtonHoverEventFilter(QIcon(u":/windowBar/windowBar/close-dark.svg"_s), QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
+    closeButton->installEventFilter(filter);
 }

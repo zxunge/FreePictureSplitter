@@ -12,6 +12,7 @@ target_sources(FreePictureSplitter PRIVATE
     imagehandler.cpp
     imagehandler.h
     leaveevent.h
+    hovereventfilter.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

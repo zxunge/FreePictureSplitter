@@ -25,7 +25,7 @@
 #include "fpsprogressdialog.h"
 #include "jsonconfigitems.h"
 #include "leaveevent.h"
-#include "hoverevent.h"
+#include "hovereventfilter.h"
 #include "config.h"
 
 #include <QFileDialog>
@@ -447,7 +447,7 @@ void fpsMainWindow::installWindowAgent()
         emulateLeaveEvent(maxButton);
     });
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
-    ButtonHoverEvent *filter{ new ButtonHoverEvent(QIcon(u":/windowBar/windowBar/close-dark.svg"_s), QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
+    ButtonHoverEventFilter *filter{ new ButtonHoverEventFilter(QIcon(u":/windowBar/windowBar/close-dark.svg"_s), QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
     closeButton->installEventFilter(filter);
 
     setMenuWidget(windowBar);
