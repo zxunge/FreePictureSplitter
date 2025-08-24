@@ -1,18 +1,27 @@
 {
   "name": "Code FreePictureSplitter",
   "image": "mcr.microsoft.com/devcontainers/cpp:ubuntu",
+  "build": { "dockerfile": "Dockerfile" },
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/jungaretti/features/make:1": {}
+    "ghcr.io/jungaretti/features/make:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "toolsToInstall": "aqtinstall"
+    }
   },
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
         "llvm-vs-code-extensions.vscode-clangd",
-        "twxs.cmake",
-        "TheQtCompany.qt"
-      ]
+        "TheQtCompany.qt",
+        "ms-azuretools.vscode-containers"
+      ],
+      "settings": {
+        "editor.fontSize": 16
+      }
     }
-  }
+  },
+  "postCreateCommand": "bash -i aqt install-qt linux desktop 6.9.* linux_gcc_64 --autodesktop --outputdir /workspaces/Qt --modules qtimageformats"
 }
