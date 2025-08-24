@@ -33,11 +33,12 @@ class ButtonHoverEventFilter : public QObject
     Q_OBJECT
 
 public:
-    explicit ButtonHoverEventFilter(const QIcon &enter, const QIcon &leave, QObject *parent = nullptr) 
-        : m_enterIcon(enter), 
-          m_leaveIcon(leave),
-          QObject(parent) {}
-    ~ButtonHoverEventFilter() {}
+    explicit ButtonHoverEventFilter(const QIcon &enter, const QIcon &leave,
+                                    QObject *parent = nullptr)
+        : m_enterIcon(enter), m_leaveIcon(leave), QObject(parent)
+    {
+    }
+    ~ButtonHoverEventFilter() { }
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override

@@ -447,7 +447,9 @@ void fpsMainWindow::installWindowAgent()
         emulateLeaveEvent(maxButton);
     });
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
-    ButtonHoverEventFilter *filter{ new ButtonHoverEventFilter(QIcon(u":/windowBar/windowBar/close-dark.svg"_s), QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
+    ButtonHoverEventFilter *filter{ new ButtonHoverEventFilter(
+            QIcon(u":/windowBar/windowBar/close-dark.svg"_s),
+            QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
     closeButton->installEventFilter(filter);
 
     setMenuWidget(windowBar);
