@@ -23,5 +23,5 @@
       }
     }
   },
-  "postCreateCommand": "bash -i aqt install-qt linux desktop 6.9.* linux_gcc_64 --autodesktop --outputdir /workspaces/Qt --modules qtimageformats"
+  "postCreateCommand": "aqt install-qt linux desktop 6.9.* linux_gcc_64 --autodesktop --outputdir /workspaces/Qt --modules qtimageformats"
 }
