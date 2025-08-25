@@ -17,10 +17,9 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpssettingsdialog.h"
-#include "ui_fpssettingsdialog.h"
+#include "fpspreferenceswidget.h"
+#include "ui_fpspreferenceswidget.h"
 #include "jsonconfigitems.h"
-#include "hovereventfilter.h"
 #include "skins.h"
 
 #include <QImageWriter>
@@ -31,18 +30,15 @@
 #include <QFileSystemModel>
 #include <QStandardPaths>
 
-#include <QWKWidgets/widgetwindowagent.h>
-#include <widgetframe/windowbar.h>
-#include <widgetframe/windowbutton.h>
-
 using namespace Qt::Literals::StringLiterals;
 
 extern Util::Config appConfig;
 
-fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
-    : QDialog(parent), ui(new Ui::fpsSettingsDialog)
+fpsPreferencesWidget::fpsPreferencesWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::fpsPreferencesWidget)
 {
     ui->setupUi(this);
+
     QCompleter *completer{ new QCompleter(this) };
     completer->setModel(new QFileSystemModel(completer));
     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -107,17 +103,16 @@ fpsSettingsDialog::fpsSettingsDialog(QWidget *parent)
     ui->rbtnOriName->setChecked(appConfig.options.nameOpt.prefMode == Util::Prefix::same);
     ui->chbNumberContained->setChecked(appConfig.options.nameOpt.rcContained);
     /************************************************/
-
-    installWindowAgent();
 }
 
-fpsSettingsDialog::~fpsSettingsDialog()
+fpsPreferencesWidget::~fpsPreferencesWidget()
 {
     delete ui;
 }
 
-void fpsSettingsDialog::on_buttonBox_accepted()
+void fpsPreferencesWidget::changed(int index)
 {
+    Q_ASSERT(index != -1);
     // Save configurations
     appConfig.app.style = ui->cbxStyle->currentText().toStdString();
     // Change theme
@@ -148,24 +143,22 @@ void fpsSettingsDialog::on_buttonBox_accepted()
             ui->rbtnSpecified->isChecked() ? Util::Prefix::specified : Util::Prefix::same;
     appConfig.options.nameOpt.prefix = ui->lePrefix->text().toStdString();
     appConfig.options.nameOpt.rcContained = ui->chbNumberContained->isChecked();
-
-    close();
 }
 
-void fpsSettingsDialog::on_cbxLocation_currentIndexChanged(int index)
+void fpsPreferencesWidget::on_cbxLocation_currentIndexChanged(int index)
 {
     // 2 : "The following path:"
     ui->lePath->setEnabled(index == 2);
     ui->tbtnBrowse->setEnabled(index == 2);
 }
 
-void fpsSettingsDialog::on_cbxFormats_currentTextChanged(const QString &text)
+void fpsPreferencesWidget::on_cbxFormats_currentTextChanged(const QString &text)
 {
     ui->sbxQuality->setEnabled(text.compare(u"jpg"_s, Qt::CaseInsensitive) == 0
                                || text.compare(u"jpeg"_s, Qt::CaseInsensitive) == 0);
 }
 
-void fpsSettingsDialog::on_btnSelectColor_clicked()
+void fpsPreferencesWidget::on_btnSelectColor_clicked()
 {
     QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };
     if (color.isValid()) {
@@ -174,17 +167,17 @@ void fpsSettingsDialog::on_btnSelectColor_clicked()
     }
 }
 
-void fpsSettingsDialog::on_buttonBox_rejected()
+void fpsPreferencesWidget::on_buttonBox_rejected()
 {
     close();
 }
 
-void fpsSettingsDialog::on_rbtnSpecified_toggled(bool checked)
+void fpsPreferencesWidget::on_rbtnSpecified_toggled(bool checked)
 {
     ui->lePrefix->setEnabled(checked);
 }
 
-void fpsSettingsDialog::on_chbGrid_toggled(bool checked)
+void fpsPreferencesWidget::on_chbGrid_toggled(bool checked)
 {
     ui->chbGrid->setChecked(checked);
     ui->frColor->setVisible(checked);
@@ -192,19 +185,19 @@ void fpsSettingsDialog::on_chbGrid_toggled(bool checked)
     ui->sbxLineSize->setEnabled(checked);
 }
 
-void fpsSettingsDialog::on_tbtnAppearance_toggled(bool checked)
+void fpsPreferencesWidget::on_tbtnAppearance_toggled(bool checked)
 {
     if (checked)
         ui->wgtOptions->setCurrentIndex(0); // "Appearance"
 }
 
-void fpsSettingsDialog::on_tbtnOutput_toggled(bool checked)
+void fpsPreferencesWidget::on_tbtnOutput_toggled(bool checked)
 {
     if (checked)
         ui->wgtOptions->setCurrentIndex(1); // "Output"
 }
 
-void fpsSettingsDialog::on_tbtnBrowse_clicked()
+void fpsPreferencesWidget::on_tbtnBrowse_clicked()
 {
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
@@ -217,41 +210,4 @@ void fpsSettingsDialog::on_tbtnBrowse_clicked()
     appConfig.dialog.lastSavedToDir = in.toStdString();
     appConfig.options.outputOpt.outPath = in.toStdString();
     ui->lePath->setText(in);
-}
-
-void fpsSettingsDialog::installWindowAgent()
-{
-    // Setup window agent
-    m_windowAgent = new QWK::WidgetWindowAgent(this);
-    m_windowAgent->setup(this);
-
-    // Construct window bar
-    auto windowBar{ new QWK::WindowBar(this) };
-    auto titleLabel{ new QLabel() };
-    titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setObjectName(u"win-title-label"_s);
-
-    auto iconButton{ new QWK::WindowButton() };
-    iconButton->setObjectName(u"icon-button"_s);
-    iconButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-    auto closeButton{ new QWK::WindowButton() };
-    closeButton->setObjectName(u"close-button"_s);
-    closeButton->setProperty("system-button", true);
-    closeButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-    windowBar->setHostWidget(this);
-    windowBar->setTitleLabel(titleLabel);
-    windowBar->setIconButton(iconButton);
-    windowBar->setCloseButton(closeButton);
-    m_windowAgent->setTitleBar(windowBar);
-
-    // Set properties
-    m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
-    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
-    connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
-    Util::ButtonHoverEventFilter *filter{ new Util::ButtonHoverEventFilter(
-            QIcon(u":/windowBar/windowBar/close-dark.svg"_s),
-            QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
-    closeButton->installEventFilter(filter);
 }

@@ -22,7 +22,6 @@
 #include "skins.h"
 #include "stdpaths.h"
 #include "fonts.h"
-#include "debugutil.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -30,6 +29,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QObject>
+#include <QtAssert>
 #if defined(__MINGW32__) || defined(__MINGW64__)
 #  include <QLibrary>
 #endif // __MINGW32__ || __MINGW64__
@@ -41,14 +41,17 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-Util::Config appConfig;
+const QString CONFIG_FILENAME{ u"/conf.json"_s };
+
+Util::Config appConfig; // Global configuration hold
 
 #if defined(__MINGW32__) || defined(__MINGW64__)
 // Loader for crash helper: Dr.MinGW
-[[nodiscard]] bool loadExcHndl()
+[[nodiscard]] inline bool loadExcHndl()
 {
     // Load the DLL
     QLibrary *exchndl{ new QLibrary(u"exchndl.dll"_s) };
+    Q_ASSERT(exchndl);
 
     if (exchndl->load()) {
         typedef void (*ProtoExcHndlInit)();
@@ -76,47 +79,29 @@ failed:
 }
 #endif // __MINGW32__ || __MINGW64__
 
-int main(int argc, char *argv[])
+inline void loadTranslations(QApplication *a)
 {
-    QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
-    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
-            Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
-
-    QApplication a(argc, argv);
-
-#if defined(__MINGW32__) || defined(__MINGW64__)
-    if (!loadExcHndl()) {
-        QMessageBox::warning(nullptr, fpsAppName, QObject::tr("Error loading module: exchndl.dll."),
-                             QMessageBox::Close);
-        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
-    }
-#endif // __MINGW32__ || __MINGW64__
-
-    QCoreApplication::setApplicationName(fpsAppName);
-    QCoreApplication::setOrganizationName(u"zxunge"_s);
-    QGuiApplication::setApplicationDisplayName(fpsAppName);
-    QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
-    Util::setAppFont(QLocale::system(), &a);
-
-    // Load translations
+    Q_ASSERT(a);
     QTranslator qtTranslator, appTranslator;
     if (qtTranslator.load(QLocale::system(), u"qt"_s, u"_"_s, Util::getTranslationsDir()))
-        a.installTranslator(&qtTranslator);
+        a->installTranslator(&qtTranslator);
 
     if (appTranslator.load(QLocale::system(), fpsAppName, u"_"_s, Util::getTranslationsDir()))
-        a.installTranslator(&appTranslator);
+        a->installTranslator(&appTranslator);
+}
 
-    // Load configurations
-    QFile cfgFile(Util::getDataDir() + u"/conf.json"_s);
+[[nodiscard]] inline bool loadConfigurations()
+{
+    QFile cfgFile(Util::getDataDir() + CONFIG_FILENAME);
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);
         jsonCfgStr = ts.readAll();
     } else {
-        QMessageBox::warning(nullptr, fpsAppName,
-                             QObject::tr("Error creating/opening configuration file."),
-                             QMessageBox::Close);
-        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+        QMessageBox::critical(nullptr, fpsAppName,
+                              QObject::tr("Error creating/opening configuration file."),
+                              QMessageBox::Close);
+        return false;
     }
 
     // First run?
@@ -125,11 +110,11 @@ int main(int argc, char *argv[])
     else {
         const auto result{ rfl::json::read<Util::Config>(jsonCfgStr.toStdString()) };
         if (!result) {
-            QMessageBox::warning(nullptr, fpsAppName,
-                                 QObject::tr("Error parsing configuration file: %1.")
-                                         .arg(QString::fromStdString(result.error().what())),
-                                 QMessageBox::Close);
-            QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+            QMessageBox::critical(nullptr, fpsAppName,
+                                  QObject::tr("Error parsing configuration file: %1.")
+                                          .arg(QString::fromStdString(result.error().what())),
+                                  QMessageBox::Close);
+            return false;
         }
         appConfig = result.value();
 
@@ -141,35 +126,82 @@ int main(int argc, char *argv[])
                                  QObject::tr("Configuration file\'s version doesn\'t match, try "
                                              "deleting it after backuping."),
                                  QMessageBox::Close);
-            QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+            return false;
         }
     }
+    return true;
+}
+
+[[nodiscard]] inline bool configureApplication(QApplication *a)
+{
+    Q_ASSERT(a);
+#if defined(__MINGW32__) || defined(__MINGW64__)
+    if (!loadExcHndl()) {
+        QMessageBox::critical(nullptr, fpsAppName,
+                              QObject::tr("Error loading module: exchndl.dll."),
+                              QMessageBox::Close);
+        return false;
+    }
+#endif // __MINGW32__ || __MINGW64__
+    Util::setAppFont(QLocale::system(), a);
+
+    if (!loadConfigurations())
+        return false;
 
     // Load styles
-    if (!Util::setAppSkin(&a, QString::fromStdString(appConfig.app.style))) {
+    if (!Util::setAppSkin(a, QString::fromStdString(appConfig.app.style))) {
         QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error loading skin: %1.").arg(appConfig.app.style),
                              QMessageBox::Close);
-        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+        return false;
     }
+    qInfo("Skin loaded.");
+    return true;
+}
 
-    fpsMainWindow w;
-    w.show();
-
-    int ret{ a.exec() };
-
+[[nodiscard]] inline bool saveConfigurations()
+{
     // Save configuration changes to file
-    jsonCfgStr = QString::fromStdString(rfl::json::write(appConfig));
-    cfgFile.close();
+    const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(appConfig)) };
+    QFile cfgFile(Util::getDataDir() + CONFIG_FILENAME);
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
         QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error writing to configuration file."),
                              QMessageBox::Close);
-        QMetaObject::invokeMethod(&a, &QCoreApplication::quit, Qt::QueuedConnection);
+        return false;
     }
     QTextStream ts(&cfgFile);
     ts << jsonCfgStr;
     cfgFile.close();
+    return true;
+}
 
+//---------- Main Execution ----------
+int main(int argc, char *argv[])
+{
+    qSetMessagePattern(u"%{appname} [%{type}] in %{file}:%{line}: %{message}"_s);
+    QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
+    QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
+            Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
+
+    QCoreApplication::setApplicationVersion(fpsVersionFull);
+    QCoreApplication::setApplicationName(fpsAppName);
+    QCoreApplication::setOrganizationName(u"zxunge"_s);
+    QGuiApplication::setApplicationDisplayName(fpsAppName);
+
+    QApplication a(argc, argv);
+    QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
+
+    if (!configureApplication(&a))
+        return -1;
+
+    qInfo("Application Started...");
+    fpsMainWindow w;
+    w.show();
+    int ret{ a.exec() };
+    if (!saveConfigurations())
+        return -1;
+
+    qInfo("Application has finished successfully.");
     return ret;
 }

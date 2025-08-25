@@ -18,13 +18,25 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef DEBUGUTIL_H
-#define DEBUGUTIL_H
+#ifndef FPSCLICKABLELABEL
+#define FPSCLICKABLELABEL
 
-#include <QtCore/qdebug.h>
+#include <QLabel>
 
-#define fpsDebug(X) qDebug() << "[" << __FUNCTION__ << "]" << #X << " = " << X
+class QMouseEvent;
 
-#define fpsDebugStr(X) qDebug() << "[" << __FUNCTION__ << "]" << X
+class fpsClickableLabel : public QLabel
+{
+    Q_OBJECT
+public:
+    explicit fpsClickableLabel(QWidget *parent = nullptr);
+    ~fpsClickableLabel() { }
 
-#endif // DEBUGUTIL_H
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent *e) override;
+};
+
+#endif // FPSCLICKABLELABEL

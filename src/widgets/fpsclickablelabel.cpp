@@ -16,15 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
-// clang-format Language: Cpp
 
-#ifndef DEBUGUTIL_H
-#define DEBUGUTIL_H
+#include "fpsclickablelabel.h"
+#include <QMouseEvent>
 
-#include <QtCore/qdebug.h>
+fpsClickableLabel::fpsClickableLabel(QWidget *parent) : QLabel(parent) { }
 
-#define fpsDebug(X) qDebug() << "[" << __FUNCTION__ << "]" << #X << " = " << X
-
-#define fpsDebugStr(X) qDebug() << "[" << __FUNCTION__ << "]" << X
-
-#endif // DEBUGUTIL_H
+void fpsClickableLabel::mousePressEvent(QMouseEvent *e)
+{
+    Q_EMIT clicked();
+    QLabel::mousePressEvent(e);
+}

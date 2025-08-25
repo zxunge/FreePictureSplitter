@@ -2,51 +2,34 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_TW" sourcelanguage="en">
 <context>
-    <name>FramelessDialog</name>
-    <message>
-        <location filename="../../3rdparty/FramelessWindow/framelessdialog.ui" line="20"/>
-        <source>Dialog Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../3rdparty/FramelessWindow/framelessdialog.ui" line="146"/>
-        <source>Window Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>FramelessMainWindow</name>
-    <message>
-        <location filename="../../3rdparty/FramelessWindow/framelessmainwindow.ui" line="20"/>
-        <location filename="../../3rdparty/FramelessWindow/framelessmainwindow.ui" line="128"/>
-        <source>Window Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="89"/>
+        <location filename="../../app/main.cpp" line="141"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="117"/>
+        <location filename="../../app/main.cpp" line="102"/>
         <source>Error creating/opening configuration file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="129"/>
+        <location filename="../../app/main.cpp" line="114"/>
         <source>Error parsing configuration file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="141"/>
+        <location filename="../../app/main.cpp" line="126"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="166"/>
+        <location filename="../../app/main.cpp" line="154"/>
+        <source>Error loading skin: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../app/main.cpp" line="169"/>
         <source>Error writing to configuration file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -277,42 +260,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="136"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="144"/>
         <source>Add pictures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="205"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="211"/>
         <source>Choose a directory containing pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="279"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="285"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="367"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="373"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="385"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="391"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="398"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="404"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="411"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="417"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchdialog.cpp" line="418"/>
+        <location filename="../../widgets/fpsbatchdialog.cpp" line="424"/>
         <source>No rule to split picture: %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -540,47 +523,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="71"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="81"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="94"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="104"/>
         <source>%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="113"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="123"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="129"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="139"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="155"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="165"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="168"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="178"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="176"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="186"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="227"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="236"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsmainwindow.cpp" line="236"/>
+        <location filename="../../widgets/fpsmainwindow.cpp" line="245"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>
@@ -757,17 +740,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpssettingsdialog.cpp" line="51"/>
+        <location filename="../../widgets/fpssettingsdialog.cpp" line="56"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpssettingsdialog.cpp" line="163"/>
+        <location filename="../../widgets/fpssettingsdialog.cpp" line="170"/>
         <source>Select a color for grid lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpssettingsdialog.cpp" line="203"/>
+        <location filename="../../widgets/fpssettingsdialog.cpp" line="210"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>

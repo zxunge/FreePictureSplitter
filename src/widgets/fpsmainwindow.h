@@ -21,11 +21,7 @@
 #ifndef FPSMAINWINDOW_H
 #define FPSMAINWINDOW_H
 
-#include "imagehandler.h"
-
 #include <QMainWindow>
-#include <QImageReader>
-#include <QImageWriter>
 
 namespace Ui {
 class fpsMainWindow;
@@ -34,9 +30,6 @@ namespace QWK {
 class WidgetWindowAgent;
 } // namespace QWK
 class QEvent;
-class fpsBatchDialog;
-class fpsAboutDialog;
-class fpsSettingsDialog;
 
 class fpsMainWindow : public QMainWindow
 {
@@ -47,31 +40,7 @@ public:
     ~fpsMainWindow();
 
 private slots:
-    void on_actionOpen_triggered();
-
-    void on_actionSave_triggered();
-
     void on_actionExit_triggered();
-
-    void on_actionBatch_triggered();
-
-    void on_actionSettings_triggered();
-
-    void on_actionHomepage_triggered();
-
-    void on_actionAbout_triggered();
-
-    void on_btnReset_clicked();
-
-    void on_rbtnSize_toggled(bool checked);
-
-    void on_rbtnAver_toggled(bool checked);
-
-    void on_actionZoomIn_triggered();
-
-    void on_actionZoomOut_triggered();
-
-    void on_rbtnManual_toggled(bool checked);
 
 private:
     void installWindowAgent();
@@ -82,9 +51,6 @@ protected:
 private:
     Ui::fpsMainWindow *ui;
     QWK::WidgetWindowAgent *m_windowAgent;
-
-    QImageReader m_imgReader;
-    Util::RectList m_rects;
 };
 
 #endif // FPSMAINWINDOW_H

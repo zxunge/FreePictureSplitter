@@ -19,7 +19,6 @@
 
 #include "skins.h"
 #include "stdpaths.h"
-#include "config.h"
 #include "debugutil.h"
 
 #include <QFile>
@@ -85,7 +84,8 @@ bool setAppSkin(QApplication *app, const QString &skinName)
                 app->setStyleSheet(ss);
                 styleFile.close();
                 return true;
-            }
+            } else
+                styleFile.close();
         }
     }
     return false;

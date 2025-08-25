@@ -1,8 +1,6 @@
 target_sources(FreePictureSplitter PRIVATE
     fpsaboutdialog.cpp
     fpsaboutdialog.h
-    fpsbatchdialog.cpp
-    fpsbatchdialog.h
     fpsdraggableline.cpp
     fpsdraggableline.h
     fpsgraphicsview.cpp
@@ -13,8 +11,14 @@ target_sources(FreePictureSplitter PRIVATE
     fpsprogressdialog.h
     fpsrulerbar.cpp
     fpsrulerbar.h
-    fpssettingsdialog.cpp
-    fpssettingsdialog.h
+    fpsclickablelabel.cpp
+    fpsclickablelabel.h
+    fpssinglewidget.cpp
+    fpssinglewidget.h
+    fpsbatchwidget.cpp
+    fpsbatchwidget.h
+    fpspreferenceswidget.cpp
+    fpspreferenceswidget.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

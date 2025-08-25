@@ -25,6 +25,8 @@
 *.user
 build/
 .venv/
+.cache/
+aqtinstall.log
 
 # Clangd
 *.lock

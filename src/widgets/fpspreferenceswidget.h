@@ -18,37 +18,33 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSSETTINGSDIALOG_H
-#define FPSSETTINGSDIALOG_H
+#ifndef FPSPREFERENCESWIDGET_H
+#define FPSPREFERENCESWIDGET_H
 
-#include <QDialog>
+#include <QWidget>
 #include <QColor>
 
 namespace Ui {
-class fpsSettingsDialog;
-} // namespace Ui
-namespace QWK {
-class WidgetWindowAgent;
-} // namespace QWK
+class fpsPreferencesWidget;
+}
 
-class fpsSettingsDialog : public QDialog
+class fpsPreferencesWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit fpsSettingsDialog(QWidget *parent = nullptr);
-    ~fpsSettingsDialog();
+    explicit fpsPreferencesWidget(QWidget *parent = nullptr);
+    ~fpsPreferencesWidget();
+
+public slots:
+    void changed(int index);
 
 private slots:
-    void on_buttonBox_accepted();
-
     void on_cbxLocation_currentIndexChanged(int index);
 
     void on_cbxFormats_currentTextChanged(const QString &text);
 
     void on_btnSelectColor_clicked();
-
-    void on_buttonBox_rejected();
 
     void on_rbtnSpecified_toggled(bool checked);
 
@@ -61,13 +57,8 @@ private slots:
     void on_tbtnBrowse_clicked();
 
 private:
-    void installWindowAgent();
-
-private:
-    Ui::fpsSettingsDialog *ui;
-    QWK::WidgetWindowAgent *m_windowAgent;
-
+    Ui::fpsPreferencesWidget *ui;
     QColor m_color;
 };
 
-#endif // FPSSETTINGSDIALOG_H
+#endif // FPSPREFERENCESWIDGET_H

@@ -18,13 +18,51 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef DEBUGUTIL_H
-#define DEBUGUTIL_H
+#ifndef FPSSINGLEWIDGET_H
+#define FPSSINGLEWIDGET_H
 
-#include <QtCore/qdebug.h>
+#include "imagehandler.h"
 
-#define fpsDebug(X) qDebug() << "[" << __FUNCTION__ << "]" << #X << " = " << X
+#include <QWidget>
+#include <QImageReader>
 
-#define fpsDebugStr(X) qDebug() << "[" << __FUNCTION__ << "]" << X
+namespace Ui {
+class fpsSingleWidget;
+}
 
-#endif // DEBUGUTIL_H
+class fpsSingleWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit fpsSingleWidget(QWidget *parent = nullptr);
+    ~fpsSingleWidget();
+
+private slots:
+    void on_actionOpen_triggered();
+
+    void on_actionSave_triggered();
+
+    void on_btnReset_clicked();
+
+    void on_rbtnSize_toggled(bool checked);
+
+    void on_rbtnAver_toggled(bool checked);
+
+    void on_actionZoomIn_triggered();
+
+    void on_actionZoomOut_triggered();
+
+    void on_rbtnManual_toggled(bool checked);
+
+signals:
+    void message(const QString &msg, int timeout = 0);
+
+private:
+    Ui::fpsSingleWidget *ui;
+
+    QImageReader m_imgReader;
+    Util::RectList m_rects;
+};
+
+#endif // FPSSINGLEWIDGET_H
