@@ -53,7 +53,7 @@ QWK--WindowBar>QAbstractButton[system-button=true] {
 QWK--WindowBar>QAbstractButton#pin-button {
     qproperty-iconNormal: url(":/windowBar/windowBar/pin.svg");
     qproperty-iconChecked: url(":/windowBar/windowBar/pin-fill.svg");
-    qproperty-iconSize: 15px 15px;
+    qproperty-iconSize: 12px 12px;
 }
 
 QWK--WindowBar>QAbstractButton#pin-button:hover,
