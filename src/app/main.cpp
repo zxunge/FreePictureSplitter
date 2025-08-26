@@ -82,12 +82,13 @@ failed:
 inline void loadTranslations(QApplication *a)
 {
     Q_ASSERT(a);
-    QTranslator qtTranslator, appTranslator;
-    if (qtTranslator.load(QLocale::system(), u"qt"_s, u"_"_s, Util::getTranslationsDir()))
-        a->installTranslator(&qtTranslator);
+    QTranslator *qtTranslator{ new QTranslator() }, *appTranslator{ new QTranslator() };
+    if (qtTranslator->load(QLocale::system(), u"qt"_s, u"_"_s, Util::getTranslationsDir()))
+        a->installTranslator(qtTranslator);
 
-    if (appTranslator.load(QLocale::system(), fpsAppName, u"_"_s, Util::getTranslationsDir()))
-        a->installTranslator(&appTranslator);
+    if (appTranslator->load(QLocale::system(), fpsAppName, u"_"_s, Util::getTranslationsDir()))
+        a->installTranslator(appTranslator);
+    // Do not free translators.
 }
 
 [[nodiscard]] inline bool loadConfigurations()
