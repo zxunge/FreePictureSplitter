@@ -77,7 +77,7 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
         dlg.exec();
     });
 
-    setWindowTitle(fpsAppName);
+    ui->labMark->setText(fpsVersionFull);
     installWindowAgent();
 }
 
@@ -129,13 +129,13 @@ void fpsMainWindow::installWindowAgent()
     closeButton->setProperty("system-button", true);
     closeButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
+    windowBar->setHostWidget(this);
     windowBar->setTitleLabel(titleLabel);
     windowBar->setIconButton(iconButton);
     windowBar->setPinButton(pinButton);
     windowBar->setMinButton(minButton);
     windowBar->setMaxButton(maxButton);
     windowBar->setCloseButton(closeButton);
-    windowBar->setHostWidget(this);
     m_windowAgent->setTitleBar(windowBar);
 
     // Set properties
