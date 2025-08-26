@@ -174,6 +174,8 @@ bool fpsMainWindow::event(QEvent *event)
     switch (event->type()) {
     case QEvent::WindowActivate: {
         auto menu{ menuWidget() };
+        if (!menu)
+            break;
         menu->setProperty("bar-active", true);
         style()->polish(menu);
         break;
@@ -181,6 +183,8 @@ bool fpsMainWindow::event(QEvent *event)
 
     case QEvent::WindowDeactivate: {
         auto menu{ menuWidget() };
+        if (!menu)
+            break;
         menu->setProperty("bar-active", false);
         style()->polish(menu);
         break;

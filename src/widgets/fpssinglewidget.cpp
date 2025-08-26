@@ -22,7 +22,6 @@
 #include "jsonconfigitems.h"
 #include "fpsprogressdialog.h"
 #include "imagehandler.h"
-#include "fpsmainwindow.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -36,6 +35,9 @@
 #include <QApplication>
 #include <QFuture>
 #include <QFutureWatcher>
+#include <QImageReader>
+#include <QImageWriter>
+#include <QGraphicsPixmapItem>
 #include <QPromise>
 #include <QtConcurrent/QtConcurrentRun>
 
