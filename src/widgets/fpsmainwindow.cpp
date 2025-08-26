@@ -31,6 +31,10 @@
 
 #include <QEvent>
 #include <QAction>
+#include <QToolButton>
+#include <QLabel>
+#include <QIcon>
+#include <QStyle>
 #include <QStatusBar>
 #include <QStackedWidget>
 

@@ -37,7 +37,7 @@ public:
     ~fpsPreferencesWidget();
 
 public slots:
-    void changed(int index);
+    void changed(int index); // Save configurations when users change the panel.
 
 private slots:
     void on_cbxLocation_currentIndexChanged(int index);

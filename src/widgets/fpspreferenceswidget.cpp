@@ -167,11 +167,6 @@ void fpsPreferencesWidget::on_btnSelectColor_clicked()
     }
 }
 
-void fpsPreferencesWidget::on_buttonBox_rejected()
-{
-    close();
-}
-
 void fpsPreferencesWidget::on_rbtnSpecified_toggled(bool checked)
 {
     ui->lePrefix->setEnabled(checked);
