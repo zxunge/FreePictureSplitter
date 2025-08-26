@@ -118,7 +118,7 @@ QToolBar {
 QToolButton {
     border: solid;
     padding: 5px 9px 6px 8px;
-    border-radius: 4px;
+    border-radius: 9px;
 }
 
 QToolButton:hover {
@@ -131,6 +131,28 @@ QToolButton:pressed {
 
 QToolButton:checked {
     background: #f7f7f7;
+}
+
+QToolButton#tbtnSingle, QToolButton#tbtnBatch, QToolButton#tbtnPref {
+    border: none;
+    padding: 4px 4px 4px 4px;
+    border-radius: 0px;
+    background: transparent;
+}
+
+QToolButton#tbtnSingle:hover,
+QToolButton#tbtnBatch:hover, 
+QToolButton#tbtnPref:hover,
+QToolButton#tbtnSingle:pressed,
+QToolButton#tbtnBatch:pressed, 
+QToolButton#tbtnPref:pressed {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+QToolButton#tbtnSingle:checked,
+QToolButton#tbtnBatch:checked, 
+QToolButton#tbtnPref:checked {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 QPushButton {
@@ -159,3 +181,4 @@ QPushButton:disabled {
     border: 1px solid rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
+
