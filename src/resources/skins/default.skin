@@ -51,8 +51,8 @@ QWK--WindowBar>QAbstractButton[system-button=true] {
 }
 
 QWK--WindowBar>QAbstractButton#pin-button {
-    qproperty-iconNormal: url(":/windowBar/windowBar/pin.svg");
-    qproperty-iconChecked: url(":/windowBar/windowBar/pin-fill.svg");
+    qproperty-iconNormal: url(":/windowBar/windowBar/pin-light.svg");
+    qproperty-iconChecked: url(":/windowBar/windowBar/pin-fill-light.svg");
     qproperty-iconSize: 12px 12px;
 }
 

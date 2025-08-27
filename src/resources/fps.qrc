@@ -34,7 +34,9 @@
         <file>windowBar/min-light.svg</file>
         <file>windowBar/normal-dark.svg</file>
         <file>windowBar/normal-light.svg</file>
-        <file>windowBar/pin.svg</file>
-        <file>windowBar/pin-fill.svg</file>
+        <file>windowBar/pin-dark.svg</file>
+        <file>windowBar/pin-fill-dark.svg</file>
+        <file>windowBar/pin-light.svg</file>
+        <file>windowBar/pin-fill-light.svg</file>
     </qresource>
 </RCC>
