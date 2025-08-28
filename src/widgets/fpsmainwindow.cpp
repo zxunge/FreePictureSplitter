@@ -56,25 +56,10 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     // Add pages
     int index{};
 
-    // Must be first loaded
-    fpsPreferencesWidget *pgPref{ new fpsPreferencesWidget() };
-    index = ui->wgtMain->addWidget(pgPref);
-    pgPref->setIndex(index);
-    connect(ui->tbtnPref, &QToolButton::clicked, this, [this, index](bool checked) {
-        if (checked)
-            ui->wgtMain->setCurrentIndex(index);
-    });
-    if (index == appConfig.dialog.lastEnteredIndex) {
-        ui->tbtnPref->setChecked(true);
-        ui->wgtMain->setCurrentIndex(index);
-    }
-
     fpsSingleWidget *pgSingle{ new fpsSingleWidget() };
     connect(pgSingle, &fpsSingleWidget::message, ui->statusBar, &QStatusBar::showMessage);
     index = ui->wgtMain->addWidget(pgSingle);
-    connect(ui->tbtnSingle, &QToolButton::clicked, this, [this, index, &pgPref](bool checked) {
-        if (ui->wgtMain->currentIndex() == pgPref->index())
-            pgPref->changed();
+    connect(ui->tbtnSingle, &QToolButton::clicked, this, [this, index](bool checked) {
         if (checked)
             ui->wgtMain->setCurrentIndex(index);
     });
@@ -86,14 +71,23 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     fpsBatchWidget *pgBatch{ new fpsBatchWidget() };
     connect(pgBatch, &fpsBatchWidget::message, ui->statusBar, &QStatusBar::showMessage);
     index = ui->wgtMain->addWidget(pgBatch);
-    connect(ui->tbtnBatch, &QToolButton::clicked, this, [this, index, &pgPref](bool checked) {
-        if (ui->wgtMain->currentIndex() == pgPref->index())
-            pgPref->changed();
+    connect(ui->tbtnBatch, &QToolButton::clicked, this, [this, index](bool checked) {
         if (checked)
             ui->wgtMain->setCurrentIndex(index);
     });
     if (index == appConfig.dialog.lastEnteredIndex) {
         ui->tbtnBatch->setChecked(true);
+        ui->wgtMain->setCurrentIndex(index);
+    }
+
+    fpsPreferencesWidget *pgPref{ new fpsPreferencesWidget() };
+    index = ui->wgtMain->addWidget(pgPref);
+    connect(ui->tbtnPref, &QToolButton::clicked, this, [this, index](bool checked) {
+        if (checked)
+            ui->wgtMain->setCurrentIndex(index);
+    });
+    if (index == appConfig.dialog.lastEnteredIndex) {
+        ui->tbtnPref->setChecked(true);
         ui->wgtMain->setCurrentIndex(index);
     }
 
