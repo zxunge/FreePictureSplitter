@@ -36,8 +36,12 @@ public:
     explicit fpsPreferencesWidget(QWidget *parent = nullptr);
     ~fpsPreferencesWidget();
 
+    // For use with QStackedWidget
+    void setIndex(int index) { m_index = index; }
+    int index() const { return m_index; }
+
 public slots:
-    void changed(int index); // Save configurations when users change the panel.
+    void changed(); // Save configurations when users change the panel.
 
 private slots:
     void on_cbxLocation_currentIndexChanged(int index);
@@ -59,6 +63,7 @@ private slots:
 private:
     Ui::fpsPreferencesWidget *ui;
     QColor m_color;
+    int m_index;
 };
 
 #endif // FPSPREFERENCESWIDGET_H

@@ -53,7 +53,7 @@ QWK--WindowBar>QAbstractButton[system-button=true] {
 QWK--WindowBar>QAbstractButton#pin-button {
     qproperty-iconNormal: url(":/windowBar/windowBar/pin-light.svg");
     qproperty-iconChecked: url(":/windowBar/windowBar/pin-fill-light.svg");
-    qproperty-iconSize: 12px 12px;
+    qproperty-iconSize: 15px 15px;
 }
 
 QWK--WindowBar>QAbstractButton#pin-button:hover,
@@ -150,7 +150,7 @@ QToolButton#tbtnPref:pressed {
 }
 
 QToolButton#tbtnSingle:checked,
-QToolButton#tbtnBatch:checked, 
+QToolButton#tbtnBatch:checked,
 QToolButton#tbtnPref:checked {
     background: rgba(0, 0, 0, 0.3);
 }

@@ -30,6 +30,7 @@ namespace QWK {
 class WidgetWindowAgent;
 } // namespace QWK
 class QEvent;
+class QCloseEvent;
 
 class fpsMainWindow : public QMainWindow
 {
@@ -47,6 +48,7 @@ private:
 
 protected:
     bool event(QEvent *event) override;
+    void closeEvent(QCloseEvent *e) override;
 
 private:
     Ui::fpsMainWindow *ui;

@@ -46,6 +46,7 @@ struct Config
     {
         std::string lastOpenedDir;
         std::string lastSavedToDir;
+        int lastEnteredIndex;
     } dialog;
 
     struct
@@ -91,6 +92,7 @@ inline void setDefConf(Config &s)
                          .minorVersion = fpsVersionMinor,
                          .microVersion = fpsVersionMicro,
                          .style = "Flat Light" },
+                .dialog = { .lastEnteredIndex = 0 },
                 .options = { .outputOpt = { .savingTo = SavingTo::inPlace,
                                             .subDir = false,
                                             .outFormat = "jpg",

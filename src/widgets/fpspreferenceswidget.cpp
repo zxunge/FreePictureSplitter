@@ -29,13 +29,14 @@
 #include <QCompleter>
 #include <QFileSystemModel>
 #include <QStandardPaths>
+#include <QtConcurrent/QtConcurrentRun>
 
 using namespace Qt::Literals::StringLiterals;
 
 extern Util::Config appConfig;
 
 fpsPreferencesWidget::fpsPreferencesWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::fpsPreferencesWidget)
+    : QWidget(parent), ui(new Ui::fpsPreferencesWidget), m_index(-1)
 {
     ui->setupUi(this);
 
@@ -110,9 +111,8 @@ fpsPreferencesWidget::~fpsPreferencesWidget()
     delete ui;
 }
 
-void fpsPreferencesWidget::changed(int index)
+void fpsPreferencesWidget::changed()
 {
-    Q_ASSERT(index != -1);
     // Save configurations
     appConfig.app.style = ui->cbxStyle->currentText().toStdString();
     // Change theme

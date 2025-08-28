@@ -63,7 +63,7 @@ border: none;
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>0</number>
+        <number>9</number>
        </property>
        <item>
         <spacer name="verticalSpacer">
@@ -193,13 +193,19 @@ border: none;
        <item>
         <widget class="fpsClickableLabel" name="labMark">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>About FreePictureSplitter..</string>
+         </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
