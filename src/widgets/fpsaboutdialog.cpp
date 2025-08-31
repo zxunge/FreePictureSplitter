@@ -1,5 +1,5 @@
 /*
- * This file is a part of FreePictureSplitter, a fast and easy-to-use picture splitter.
+ * This file is part of FreePictureSplitter, a fast and easy-to-use picture splitter.
  * Copyright (c) 2024 2025 zxunge
  *
  * This program is free software: you can redistribute it and/or modify
