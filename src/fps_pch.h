@@ -36,9 +36,19 @@
 #  include <QDialog>
 #  include <QGraphicsView>
 #  include <QMainWindow>
+#  include <QPushButton>
+#  include <QLabel>
+#  include <QMenu>
 #  include <QPixmap>
+#  include <QIcon>
+#  include <QAction>
+#  include <QToolButton>
+#  include <QStatusBar>
+#  include <QStackedWidget>
 #  include <QImage>
 #  include <QPainter>
+#  include <QStyle>
+#  include <QEvent>
 #  include <QFileDialog>
 #  include <QMessageBox>
 #  include <QMouseEvent>
@@ -49,20 +59,14 @@
 #  include <QImageWriter>
 #  include <QStringLiteral>
 #  include <QtCore/qdebug.h>
-#  include <QtCore/qvector.h>
+#  include <QtCore/qlist.h>
 #  include <QtCore/qpointer.h>
 #  include <QtCore/qstring.h>
 #  include <QtCore/qrect.h>
 #  include <QtCore/qobject.h>
-#  if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-#    include <QtWidgets>
-#  endif
-
-// Project includes
-#  include "debugutil.h"
 
 // Third-party includes
-#  include <rfl/json.hpp>
+#  include <SingleApplication>
 #endif // __cplusplus
 
 #endif // FPS_PCH_H

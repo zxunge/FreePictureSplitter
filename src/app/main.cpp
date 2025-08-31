@@ -34,10 +34,7 @@
 #  include <QLibrary>
 #endif // __MINGW32__ || __MINGW64__
 
-#include <rfl/Result.hpp>
-#include <rfl/get.hpp>
-#include <rfl/json/read.hpp>
-#include <rfl/json/write.hpp>
+#include <rfl/json.hpp>
 #include <SingleApplication>
 
 using namespace Qt::Literals::StringLiterals;
@@ -65,16 +62,11 @@ Util::Config appConfig; // Global configuration hold
         };
         if (excHndlInit && excHndlSetLogFileNameA) {
             excHndlInit();
-            if (!excHndlSetLogFileNameA("crashreport.rpt"))
-                goto failed;
-            return true;
-            // Do not free the DLL module
-        } else
-            goto failed;
-    } else
-        goto failed;
-
-failed:
+            if (excHndlSetLogFileNameA("crashreport.rpt"))
+                return true;
+                // Do not free the DLL module
+        }
+    }
     delete exchndl;
     return false;
 }

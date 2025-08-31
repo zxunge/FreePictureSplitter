@@ -28,6 +28,7 @@
 #include <QPen>
 
 #include <algorithm>
+#include <cmath>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -76,9 +77,8 @@ namespace Util {
 
         break;
     case SplitMode::Average:
-        // TODO@25/05/04 Use more smooth splitting differences.
-        basicRowHeight = height / rowsOrHeight;
-        basicColWidth = width / colsOrWidth;
+        basicRowHeight = round(static_cast<double>(height) / rowsOrHeight);
+        basicColWidth = round(static_cast<double>(width) / colsOrWidth);
         rows = rowsOrHeight;
         cols = colsOrWidth;
         break;
@@ -144,8 +144,8 @@ namespace Util {
         // ----- Columns: R -> L -----
         for (int i{}; i != rows; ++i)
             for (int j{ cols - 1 }; j != 0; --j) {
-                rects[i][j].setLeft(j * basicColWidth);
-                rects[i][j].setRight((j + 1) * basicColWidth);
+                rects[i][j].setLeft(width - (cols - j) * basicColWidth);
+                rects[i][j].setRight(width - (cols - j - 1) * basicColWidth);
             }
         // Legacy;
         for (int i{}; i != rows; ++i) {

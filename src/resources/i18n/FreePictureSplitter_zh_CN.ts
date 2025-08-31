@@ -4,32 +4,32 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="142"/>
+        <location filename="../../app/main.cpp" line="138"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>加载模块exchndl.dll出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="103"/>
+        <location filename="../../app/main.cpp" line="99"/>
         <source>Error creating/opening configuration file.</source>
         <translation>创建或打开配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="115"/>
+        <location filename="../../app/main.cpp" line="111"/>
         <source>Error parsing configuration file: %1.</source>
         <translation>解析配置文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="127"/>
+        <location filename="../../app/main.cpp" line="123"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>配置文件的版本不匹配，尝试备份后把文件删除。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="155"/>
+        <location filename="../../app/main.cpp" line="151"/>
         <source>Error loading skin: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="170"/>
+        <location filename="../../app/main.cpp" line="166"/>
         <source>Error writing to configuration file.</source>
         <translation>写入配置文件出错。</translation>
     </message>
@@ -308,32 +308,37 @@
         <translation>FreePictureSplitter</translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="61"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="93"/>
         <source>Single Splitting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="87"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="125"/>
         <source>Batch Splitting</source>
         <translation type="unfinished">批量分割</translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="179"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="202"/>
+        <source>About FreePictureSplitter..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fpsmainwindow.ui" line="229"/>
         <source>&amp;Exit</source>
         <translation>退出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="182"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退出FreePictureSplitter。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="185"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="235"/>
         <source>Alt+X</source>
         <translation>Alt+X</translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="113"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="157"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
@@ -371,133 +376,133 @@
         <translation type="unfinished">应用皮肤：</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="196"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="203"/>
         <source>Output File Options</source>
         <translation type="unfinished">输出文件选项</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="202"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="209"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify output path:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;指定输出路径：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="209"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="216"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;对于JPG图片，取值为0 ~ 100，越大的值会使输出具有越高的质量。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="219"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="226"/>
         <source>...</source>
         <translation type="unfinished">...</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="226"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="233"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;输出图片格式：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="236"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Picture scaling:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图片缩放：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="243"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="250"/>
         <source>Create sub-directories under the output path.</source>
         <translation type="unfinished">在输出目录下创建子文件夹。</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="253"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;(Default is 100.00%, that is, no scaling.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;（默认为100.00%，即没有缩放。）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="260"/>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="270"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="267"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="277"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation type="unfinished">点击“保存图片”时指定的目录</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="275"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="282"/>
         <source>The same location as the source picture</source>
         <translation type="unfinished">与每个源图片目录相同</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="280"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="287"/>
         <source>The following path:</source>
         <translation type="unfinished">下列目录：</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="295"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="302"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG质量：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="312"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="319"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存至：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="322"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="329"/>
         <source>Grid Figure</source>
         <translation type="unfinished">网格图</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="331"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="338"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;分割线宽：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="338"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="345"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;网格线颜色：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="358"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="365"/>
         <source>Select Color...</source>
         <translation type="unfinished">选择颜色...</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="403"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="410"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;像素&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="416"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="423"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
         <translation type="unfinished">自动生成一份带网格图标明图片分割情况的图片。</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="426"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="433"/>
         <source>File Name Conventions</source>
         <translation type="unfinished">文件命名规则</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="432"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="439"/>
         <source>Use the original file name as the prefix</source>
         <translation type="unfinished">使用源文件名作为前缀</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="439"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="446"/>
         <source>Use the specified prefix:</source>
         <translation type="unfinished">使用指定前缀：</translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="449"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="456"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
         <translation type="unfinished">在文件名中包含[行数 * 列数]。</translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="52"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="53"/>
         <source>System</source>
         <translation type="unfinished">跟随系统</translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="163"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="129"/>
         <source>Select a color for grid lines</source>
         <translation type="unfinished">为网格线选取一种颜色</translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="203"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="164"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished">选择保存图片的文件夹。</translation>
     </message>

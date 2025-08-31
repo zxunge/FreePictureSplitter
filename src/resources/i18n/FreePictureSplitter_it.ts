@@ -4,32 +4,32 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="142"/>
+        <location filename="../../app/main.cpp" line="138"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="103"/>
+        <location filename="../../app/main.cpp" line="99"/>
         <source>Error creating/opening configuration file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="115"/>
+        <location filename="../../app/main.cpp" line="111"/>
         <source>Error parsing configuration file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="127"/>
+        <location filename="../../app/main.cpp" line="123"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="155"/>
+        <location filename="../../app/main.cpp" line="151"/>
         <source>Error loading skin: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="170"/>
+        <location filename="../../app/main.cpp" line="166"/>
         <source>Error writing to configuration file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -308,32 +308,37 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="61"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="93"/>
         <source>Single Splitting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="87"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="125"/>
         <source>Batch Splitting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="179"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="202"/>
+        <source>About FreePictureSplitter..</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/fpsmainwindow.ui" line="229"/>
         <source>&amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="182"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="232"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="185"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="235"/>
         <source>Alt+X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsmainwindow.ui" line="113"/>
+        <location filename="../../ui/fpsmainwindow.ui" line="157"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
@@ -371,133 +376,133 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="196"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="203"/>
         <source>Output File Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="202"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="209"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify output path:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="209"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="216"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="219"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="226"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="226"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="233"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="236"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="243"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Picture scaling:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="243"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="250"/>
         <source>Create sub-directories under the output path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="253"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="260"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;(Default is 100.00%, that is, no scaling.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="260"/>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="270"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="267"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="277"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="275"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="282"/>
         <source>The same location as the source picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="280"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="287"/>
         <source>The following path:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="295"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="302"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="312"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="319"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="322"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="329"/>
         <source>Grid Figure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="331"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="338"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="338"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="345"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="358"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="365"/>
         <source>Select Color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="403"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="410"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="416"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="423"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="426"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="433"/>
         <source>File Name Conventions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="432"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="439"/>
         <source>Use the original file name as the prefix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="439"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="446"/>
         <source>Use the specified prefix:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpspreferenceswidget.ui" line="449"/>
+        <location filename="../../ui/fpspreferenceswidget.ui" line="456"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="52"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="53"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="163"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="129"/>
         <source>Select a color for grid lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="203"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="164"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
