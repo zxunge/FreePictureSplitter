@@ -46,8 +46,6 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-extern Config appConfig;
-
 fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
 {
     setAttribute(Qt::WA_DontCreateNativeAncestors);

@@ -44,8 +44,6 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-extern Config appConfig;
-
 fpsSingleWidget::fpsSingleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::fpsSingleWidget)
 {
     ui->setupUi(this);

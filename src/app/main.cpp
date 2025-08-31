@@ -46,8 +46,6 @@ using namespace Qt::Literals::StringLiterals;
 
 const QString CONFIG_FILENAME{ u"/conf.json"_s };
 
-Util::Config appConfig; // Global configuration hold
-
 #if defined(__MINGW32__) || defined(__MINGW64__)
 // Loader for crash helper: Dr.MinGW
 [[nodiscard]] inline bool loadExcHndl()

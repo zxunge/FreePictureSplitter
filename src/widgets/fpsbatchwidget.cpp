@@ -52,8 +52,6 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-extern Config appConfig;
-
 fpsBatchWidget::fpsBatchWidget(QWidget *parent) : QWidget(parent), ui(new Ui::fpsBatchWidget)
 {
     ui->setupUi(this);

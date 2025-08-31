@@ -33,8 +33,6 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-extern Util::Config appConfig;
-
 fpsPreferencesWidget::fpsPreferencesWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::fpsPreferencesWidget)
 {

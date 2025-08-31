@@ -33,7 +33,7 @@
 #define fpsVersionMicro @PROJECT_VERSION_PATCH@
 
 #ifdef __cplusplus
-const QVersionNumber fpsVersionNumber(fpsVersionMajor, fpsVersionMinor, fpsVersionMicro);
+inline const QVersionNumber fpsVersionNumber(fpsVersionMajor, fpsVersionMinor, fpsVersionMicro);
 #endif // __cplusplus
 
 #endif // CONFIG_H
