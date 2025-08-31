@@ -21,7 +21,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <QVersionNumber>
+#ifdef __cplusplus
+#  include <QVersionNumber>
+#endif // __cplusplus
 
 #define fpsAppName      "@PROJECT_NAME@"
 #define fpsVersionFull  "@PROJECT_VERSION@"
@@ -30,6 +32,9 @@
 #define fpsVersionMinor @PROJECT_VERSION_MINOR@
 #define fpsVersionMicro @PROJECT_VERSION_PATCH@
 
+#ifdef __cplusplus
 const QVersionNumber fpsVersionNumber(fpsVersionMajor, fpsVersionMinor, fpsVersionMicro);
+#endif // __cplusplus
 
 #endif // CONFIG_H
+
