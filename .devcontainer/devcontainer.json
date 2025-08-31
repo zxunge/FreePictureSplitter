@@ -16,7 +16,8 @@
         "ms-vscode.cmake-tools",
         "llvm-vs-code-extensions.vscode-clangd",
         "TheQtCompany.qt",
-        "ms-azuretools.vscode-containers"
+        "ms-azuretools.vscode-containers",
+        "github.vscode-github-actions"
       ],
       "settings": {
         "editor.fontSize": 16

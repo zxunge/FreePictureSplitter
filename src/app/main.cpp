@@ -34,6 +34,11 @@
 #  include <QLibrary>
 #endif // __MINGW32__ || __MINGW64__
 
+#ifdef Q_OS_WIN
+#  define WIN32_LEAN_AND_MEAN
+#  include <windows.h>
+#  include <cstdio>
+#endif // Q_OS_WIN
 #include <rfl/json.hpp>
 #include <SingleApplication>
 
@@ -173,6 +178,15 @@ inline void loadTranslations(QApplication *a)
 //---------- Main Execution ----------
 int main(int argc, char *argv[])
 {
+#if defined(Q_OS_WIN) && (!defined(Q_CC_MINGW) || __GNUC__ >= 5)
+    // Make console output work on Windows, if running in a console.
+    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+        FILE *dummy = nullptr;
+        freopen_s(&dummy, "CONOUT$", "w", stdout);
+        freopen_s(&dummy, "CONOUT$", "w", stderr);
+    }
+#endif
+
     qSetMessagePattern(u"%{appname} [%{type}] in %{file}:%{line}: %{message}"_s);
     QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
