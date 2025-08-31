@@ -41,7 +41,7 @@ if(WIN32 AND DEPLOY_WINDOWS)
 endif()
 
 find_package(QT NAMES Qt6 REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent LinguistTools Svg)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent LinguistTools Svg Network)
 
 qt_standard_project_setup(
     REQUIRES 6.9

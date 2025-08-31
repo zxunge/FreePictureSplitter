@@ -27,6 +27,7 @@ target_link_libraries(FreePictureSplitter PRIVATE
     QWKCore 
     QWKWidgets
     WidgetFrame
+    SingleApplication::SingleApplication
 )
 
 # Deployment

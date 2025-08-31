@@ -38,6 +38,7 @@
 #include <rfl/get.hpp>
 #include <rfl/json/read.hpp>
 #include <rfl/json/write.hpp>
+#include <SingleApplication>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -190,12 +191,13 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(u"zxunge"_s);
     QGuiApplication::setApplicationDisplayName(fpsAppName);
 
-    QApplication a(argc, argv);
+    SingleApplication a(argc, argv);
     QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
 
     if (!configureApplication(&a))
         return -1;
 
+    qInfo("---------------");
     qInfo("Application Started...");
     fpsMainWindow w;
     w.show();
@@ -204,5 +206,6 @@ int main(int argc, char *argv[])
         return -1;
 
     qInfo("Application has finished successfully.");
+    qInfo("---------------");
     return ret;
 }
