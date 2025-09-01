@@ -101,8 +101,12 @@ QWK--WindowBar>QAbstractButton#icon-button {
 }
 /********************/
 
-QMainWindow, QDialog {
-    background-color: rgb(249, 249, 249);
+QMainWindow {
+    background-color: rgba(249, 249, 249, 0.85);
+}
+
+QWidget#wgtSidebar {
+    background-color: rgba(249, 249, 249, 0.97);
 }
 
 QStatusBar {
@@ -133,7 +137,11 @@ QToolButton:checked {
     background: #f7f7f7;
 }
 
-QToolButton#tbtnSingle, QToolButton#tbtnBatch, QToolButton#tbtnPref {
+QToolButton#tbtnSingle,
+QToolButton#tbtnBatch,
+QToolButton#tbtnPref,
+QToolButton#tbtnAppearance,
+QToolButton#tbtnOutput {
     border: none;
     padding: 4px 4px 4px 4px;
     border-radius: 0px;
@@ -143,16 +151,22 @@ QToolButton#tbtnSingle, QToolButton#tbtnBatch, QToolButton#tbtnPref {
 QToolButton#tbtnSingle:hover,
 QToolButton#tbtnBatch:hover, 
 QToolButton#tbtnPref:hover,
+QToolButton#tbtnAppearance:hover,
+QToolButton#tbtnOutput:hover,
 QToolButton#tbtnSingle:pressed,
 QToolButton#tbtnBatch:pressed, 
-QToolButton#tbtnPref:pressed {
+QToolButton#tbtnPref:pressed,
+QToolButton#tbtnAppearance:pressed,
+QToolButton#tbtnOutput:pressed {
     background: rgba(0, 0, 0, 0.15);
 }
 
 QToolButton#tbtnSingle:checked,
 QToolButton#tbtnBatch:checked,
-QToolButton#tbtnPref:checked {
-    background: rgba(0, 0, 0, 0.3);
+QToolButton#tbtnPref:checked,
+QToolButton#tbtnAppearance:checked,
+QToolButton#tbtnOutput:checked {
+    background: rgba(0, 0, 0, 0.24);
 }
 
 QPushButton {

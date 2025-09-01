@@ -111,7 +111,7 @@
              </sizepolicy>
             </property>
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -229,7 +229,7 @@
       <bool>false</bool>
      </property>
      <property name="toolButtonStyle">
-      <enum>Qt::ToolButtonTextUnderIcon</enum>
+      <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
      </property>
      <property name="floatable">
       <bool>false</bool>
@@ -245,7 +245,7 @@
   <action name="actionOpen">
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/open.png</normaloff>:/toolBar/toolBar/open.png</iconset>
+     <normaloff>:/controls/controls/24x24/image_add.svg</normaloff>:/controls/controls/24x24/image_add.svg</iconset>
    </property>
    <property name="text">
     <string>Open Picture File</string>
@@ -263,7 +263,7 @@
    </property>
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/save.png</normaloff>:/toolBar/toolBar/save.png</iconset>
+     <normaloff>:/controls/controls/24x24/save.svg</normaloff>:/controls/controls/24x24/save.svg</iconset>
    </property>
    <property name="text">
     <string>Save Pictures</string>
@@ -281,8 +281,7 @@
    </property>
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/zoom-in.png</normaloff>
-     <disabledoff>:/toolBar/toolBar/zoom-in-off.png</disabledoff>:/toolBar/toolBar/zoom-in.png</iconset>
+     <normaloff>:/controls/controls/24x24/zoom_in.svg</normaloff>:/controls/controls/24x24/zoom_in.svg</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;In</string>
@@ -300,7 +299,7 @@
    </property>
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/zoom-out.png</normaloff>:/toolBar/toolBar/zoom-out.png</iconset>
+     <normaloff>:/controls/controls/24x24/zoom_out.svg</normaloff>:/controls/controls/24x24/zoom_out.svg</iconset>
    </property>
    <property name="text">
     <string>Zoom &amp;Out</string>

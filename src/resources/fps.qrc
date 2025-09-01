@@ -1,29 +1,6 @@
 <RCC>
-    <qresource prefix="/toolBar">
-        <file>toolBar/open.png</file>
-        <file>toolBar/save.png</file>
-        <file>toolBar/batch.png</file>
-        <file>toolBar/settings.png</file>
-        <file>toolBar/save-off.png</file>
-        <file>toolBar/zoom-in.png</file>
-        <file>toolBar/zoom-out.png</file>
-        <file>toolBar/zoom-out-off.png</file>
-        <file>toolBar/zoom-in-off.png</file>
-        <file>toolBar/add-dir.png</file>
-        <file>toolBar/add-pic.png</file>
-        <file>toolBar/detailed-info.png</file>
-        <file>toolBar/remove-from-list.png</file>
-        <file>toolBar/remove-from-list-off.png</file>
-        <file>toolBar/thumbnail.png</file>
-    </qresource>
     <qresource prefix="/icons">
         <file>fps.ico</file>
-    </qresource>
-    <qresource prefix="/preferences">
-        <file>preferences/appearance.png</file>
-        <file>preferences/appearance-off.png</file>
-        <file>preferences/output.png</file>
-        <file>preferences/output-off.png</file>
     </qresource>
     <qresource prefix="/windowBar">
         <file>windowBar/close-dark.svg</file>
@@ -38,5 +15,24 @@
         <file>windowBar/pin-fill-dark.svg</file>
         <file>windowBar/pin-light.svg</file>
         <file>windowBar/pin-fill-light.svg</file>
+    </qresource>
+    <qresource prefix="/controls">
+        <file>controls/20x20/image_split.svg</file>
+        <file>controls/24x24/delete.svg</file>
+        <file>controls/24x24/folder_add.svg</file>
+        <file>controls/24x24/image_add.svg</file>
+        <file>controls/24x24/image_table.svg</file>
+        <file>controls/24x24/info.svg</file>
+        <file>controls/24x24/save.svg</file>
+        <file>controls/24x24/zoom_in.svg</file>
+        <file>controls/24x24/zoom_out.svg</file>
+        <file>controls/32x32/image.svg</file>
+        <file>controls/32x32/image_multiple.svg</file>
+        <file>controls/32x32/settings.svg</file>
+        <file>controls/32x32/settings_filled.svg</file>
+        <file>controls/20x20/content_view.svg</file>
+        <file>controls/20x20/settings.svg</file>
+        <file>controls/20x20/settings_filled.svg</file>
+        <file>controls/20x20/content_view_filled.svg</file>
     </qresource>
 </RCC>

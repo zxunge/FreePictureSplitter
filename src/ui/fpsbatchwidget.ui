@@ -41,7 +41,7 @@
       <bool>false</bool>
      </property>
      <property name="toolButtonStyle">
-      <enum>Qt::ToolButtonTextUnderIcon</enum>
+      <enum>Qt::ToolButtonStyle::ToolButtonTextUnderIcon</enum>
      </property>
      <property name="floatable">
       <bool>false</bool>
@@ -284,13 +284,13 @@
              </sizepolicy>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="statusTip">
              <string>A list of pictures added.</string>
             </property>
             <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectItems</enum>
+             <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
             </property>
             <property name="iconSize">
              <size>
@@ -299,16 +299,16 @@
              </size>
             </property>
             <property name="movement">
-             <enum>QListView::Static</enum>
+             <enum>QListView::Movement::Static</enum>
             </property>
             <property name="resizeMode">
-             <enum>QListView::Fixed</enum>
+             <enum>QListView::ResizeMode::Fixed</enum>
             </property>
             <property name="spacing">
              <number>10</number>
             </property>
             <property name="viewMode">
-             <enum>QListView::ListMode</enum>
+             <enum>QListView::ViewMode::ListMode</enum>
             </property>
            </widget>
           </item>
@@ -346,13 +346,13 @@
              </sizepolicy>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
             </property>
             <property name="selectionMode">
-             <enum>QAbstractItemView::NoSelection</enum>
+             <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
             </property>
             <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectItems</enum>
+             <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
             </property>
             <property name="columnCount">
              <number>3</number>
@@ -475,6 +475,10 @@
         <property name="text">
          <string>Start Splitting...</string>
         </property>
+        <property name="icon">
+         <iconset resource="../resources/fps.qrc">
+          <normaloff>:/controls/controls/20x20/image_split.svg</normaloff>:/controls/controls/20x20/image_split.svg</iconset>
+        </property>
        </widget>
       </item>
      </layout>
@@ -484,7 +488,7 @@
   <action name="actionAddPicture">
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/add-pic.png</normaloff>:/toolBar/toolBar/add-pic.png</iconset>
+     <normaloff>:/controls/controls/24x24/image_add.svg</normaloff>:/controls/controls/24x24/image_add.svg</iconset>
    </property>
    <property name="text">
     <string>Add pictures</string>
@@ -499,7 +503,7 @@
   <action name="actionAddDirectory">
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/add-dir.png</normaloff>:/toolBar/toolBar/add-dir.png</iconset>
+     <normaloff>:/controls/controls/24x24/folder_add.svg</normaloff>:/controls/controls/24x24/folder_add.svg</iconset>
    </property>
    <property name="text">
     <string>Add directory</string>
@@ -517,7 +521,7 @@
    </property>
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/remove-from-list.png</normaloff>:/toolBar/toolBar/remove-from-list.png</iconset>
+     <normaloff>:/controls/controls/24x24/delete.svg</normaloff>:/controls/controls/24x24/delete.svg</iconset>
    </property>
    <property name="text">
     <string>Remove from list</string>
@@ -538,7 +542,7 @@
    </property>
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/thumbnail.png</normaloff>:/toolBar/toolBar/thumbnail.png</iconset>
+     <normaloff>:/controls/controls/24x24/image_table.svg</normaloff>:/controls/controls/24x24/image_table.svg</iconset>
    </property>
    <property name="text">
     <string>Show thumbnails</string>
@@ -556,7 +560,7 @@
    </property>
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
-     <normaloff>:/toolBar/toolBar/detailed-info.png</normaloff>:/toolBar/toolBar/detailed-info.png</iconset>
+     <normaloff>:/controls/controls/24x24/info.svg</normaloff>:/controls/controls/24x24/info.svg</iconset>
    </property>
    <property name="text">
     <string>Show detailed info</string>

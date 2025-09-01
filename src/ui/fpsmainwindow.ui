@@ -94,7 +94,7 @@ border: none;
          </property>
          <property name="icon">
           <iconset resource="../resources/fps.qrc">
-           <normaloff>:/toolBar/toolBar/add-pic.png</normaloff>:/toolBar/toolBar/add-pic.png</iconset>
+           <normaloff>:/controls/controls/32x32/image.svg</normaloff>:/controls/controls/32x32/image.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -126,7 +126,7 @@ border: none;
          </property>
          <property name="icon">
           <iconset resource="../resources/fps.qrc">
-           <normaloff>:/toolBar/toolBar/batch.png</normaloff>:/toolBar/toolBar/batch.png</iconset>
+           <normaloff>:/controls/controls/32x32/image_multiple.svg</normaloff>:/controls/controls/32x32/image_multiple.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -158,7 +158,8 @@ border: none;
          </property>
          <property name="icon">
           <iconset resource="../resources/fps.qrc">
-           <normaloff>:/toolBar/toolBar/settings.png</normaloff>:/toolBar/toolBar/settings.png</iconset>
+           <normaloff>:/controls/controls/32x32/settings.svg</normaloff>
+           <selectedoff>:/controls/controls/32x32/settings_filled.svg</selectedoff>:/controls/controls/32x32/settings.svg</iconset>
          </property>
          <property name="iconSize">
           <size>

@@ -152,7 +152,6 @@ inline void loadTranslations(QApplication *a)
                              QMessageBox::Close);
         return false;
     }
-    qInfo("Skin loaded.");
     return true;
 }
 
