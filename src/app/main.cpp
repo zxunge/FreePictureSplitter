@@ -67,7 +67,7 @@ const QString CONFIG_FILENAME{ u"/conf.json"_s };
             excHndlInit();
             if (excHndlSetLogFileNameA("crashreport.rpt"))
                 return true;
-                // Do not free the DLL module
+            // Do not free the DLL module
         }
     }
     delete exchndl;
