@@ -61,7 +61,7 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent) : QWidget(parent), ui(new Ui::fp
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     ui->lePath->setCompleter(completer);
 
-    ui->wgtTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->viewTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     ui->sbxCols->setMaximum(std::numeric_limits<int>::max());
     ui->sbxRows->setMaximum(std::numeric_limits<int>::max());
     ui->sbxWidth->setMaximum(std::numeric_limits<int>::max());
@@ -169,20 +169,20 @@ void fpsBatchWidget::addPicture(const QString &fileName)
     listItem->setIcon(QIcon(QPixmap::fromImageReader(&reader)));
     listItem->setText(fileName);
     listItem->setSizeHint(QSize(80, 100));
-    ui->wgtList->addItem(listItem);
+    ui->viewList->addItem(listItem);
 
-    int rowCount{ ui->wgtTable->rowCount() };
-    ui->wgtTable->insertRow(rowCount);
+    int rowCount{ ui->viewTable->rowCount() };
+    ui->viewTable->insertRow(rowCount);
     reader.setFileName(fileName);
     reader.setScaledSize(QSize(15, 25));
     QTableWidgetItem *tableItemName{ new QTableWidgetItem(QIcon(QPixmap::fromImageReader(&reader)),
                                                           QFileInfo(fileName).fileName()) };
-    ui->wgtTable->setItem(rowCount, 0, tableItemName);
+    ui->viewTable->setItem(rowCount, 0, tableItemName);
     QTableWidgetItem *tableItemPath{ new QTableWidgetItem(fileName) };
-    ui->wgtTable->setItem(rowCount, 1, tableItemPath);
+    ui->viewTable->setItem(rowCount, 1, tableItemPath);
     QTableWidgetItem *tableItemSize{ new QTableWidgetItem(
             QString::number(static_cast<long>(QFileInfo(fileName).size() / 1024)) + u" KB"_s) };
-    ui->wgtTable->setItem(rowCount, 2, tableItemSize);
+    ui->viewTable->setItem(rowCount, 2, tableItemSize);
     m_filesList.push_back(fileName);
 }
 
@@ -413,54 +413,54 @@ void fpsBatchWidget::on_btnSplit_clicked()
 
 void fpsBatchWidget::on_wgtTable_customContextMenuRequested(const QPoint &pos)
 {
-    ui->actionRemoveFromList->setEnabled(!ui->wgtTable->selectedItems().isEmpty());
+    ui->actionRemoveFromList->setEnabled(!ui->viewTable->selectedItems().isEmpty());
     m_contextMenu->exec(QCursor::pos());
 }
 
 void fpsBatchWidget::on_wgtTable_itemClicked(QTableWidgetItem *item)
 {
     ui->actionRemoveFromList->setEnabled(true);
-    Q_EMIT message(ui->wgtTable->currentItem()->text());
+    Q_EMIT message(ui->viewTable->currentItem()->text());
 }
 
 void fpsBatchWidget::on_wgtTable_itemSelectionChanged()
 {
-    if (!ui->wgtTable->selectedItems().isEmpty()) {
+    if (!ui->viewTable->selectedItems().isEmpty()) {
         ui->actionRemoveFromList->setEnabled(true);
-        Q_EMIT message(ui->wgtTable->currentItem()->text());
+        Q_EMIT message(ui->viewTable->currentItem()->text());
     }
 }
 
 void fpsBatchWidget::on_wgtList_customContextMenuRequested(const QPoint &pos)
 {
-    ui->actionRemoveFromList->setEnabled(!ui->wgtList->selectedItems().isEmpty());
+    ui->actionRemoveFromList->setEnabled(!ui->viewList->selectedItems().isEmpty());
     m_contextMenu->exec(QCursor::pos());
 }
 
 void fpsBatchWidget::on_wgtList_itemClicked(QListWidgetItem *item)
 {
     ui->actionRemoveFromList->setEnabled(true);
-    Q_EMIT message(ui->wgtList->currentItem()->text());
+    Q_EMIT message(ui->viewList->currentItem()->text());
 }
 
 void fpsBatchWidget::on_wgtList_itemSelectionChanged()
 {
-    if (!ui->wgtList->selectedItems().isEmpty()) {
+    if (!ui->viewList->selectedItems().isEmpty()) {
         ui->actionRemoveFromList->setEnabled(true);
-        Q_EMIT message(ui->wgtList->currentItem()->text());
+        Q_EMIT message(ui->viewList->currentItem()->text());
     }
 }
 
 void fpsBatchWidget::on_actionRemoveFromList_triggered()
 {
-    if (!ui->wgtTable->selectedItems().isEmpty()) { // Selected in table
-        m_filesList.removeAt(ui->wgtTable->selectedItems()[0]->row());
-        delete ui->wgtList->takeItem(ui->wgtTable->selectedItems()[0]->row());
-        ui->wgtTable->removeRow(ui->wgtTable->selectedItems()[0]->row());
+    if (!ui->viewTable->selectedItems().isEmpty()) { // Selected in table
+        m_filesList.removeAt(ui->viewTable->selectedItems()[0]->row());
+        delete ui->viewList->takeItem(ui->viewTable->selectedItems()[0]->row());
+        ui->viewTable->removeRow(ui->viewTable->selectedItems()[0]->row());
     } else {
-        qsizetype index{ m_filesList.indexOf(ui->wgtList->selectedItems()[0]->text()) };
+        qsizetype index{ m_filesList.indexOf(ui->viewList->selectedItems()[0]->text()) };
         m_filesList.removeAt(index);
-        delete ui->wgtList->takeItem(index);
-        ui->wgtTable->removeRow(index);
+        delete ui->viewList->takeItem(index);
+        ui->viewTable->removeRow(index);
     }
 }
