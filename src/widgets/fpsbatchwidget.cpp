@@ -41,6 +41,8 @@
 #include <QListWidgetItem>
 #include <QCompleter>
 #include <QFileSystemModel>
+#include <QStandardItemModel>
+#include <QStandardItem>
 #include <QStandardPaths>
 #include <QCoreApplication>
 #include <QFuture>
@@ -52,7 +54,8 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-fpsBatchWidget::fpsBatchWidget(QWidget *parent) : QWidget(parent), ui(new Ui::fpsBatchWidget)
+fpsBatchWidget::fpsBatchWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::fpsBatchWidget), m_model(new QStandardItemModel)
 {
     ui->setupUi(this);
 
@@ -84,6 +87,9 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent) : QWidget(parent), ui(new Ui::fp
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(ui->actionShowDetailInfo);
     m_contextMenu->addAction(ui->actionShowThumbnails);
+
+    ui->viewList->setModel(m_model);
+    ui->viewTable->setModel(m_model);
 
     // Load configurations
     ui->cbxLocation->setCurrentIndex(
@@ -464,3 +470,11 @@ void fpsBatchWidget::on_actionRemoveFromList_triggered()
         ui->viewTable->removeRow(index);
     }
 }
+
+void fpsBatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos) { }
+
+void fpsBatchWidget::on_viewList_clicked(const QModelIndex &index) { }
+
+void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index) { }
+
+void fpsBatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos) { }

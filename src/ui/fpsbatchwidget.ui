@@ -252,6 +252,9 @@
       </item>
       <item>
        <widget class="QStackedWidget" name="stView">
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
         <widget class="QWidget" name="pgThumbnail">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">

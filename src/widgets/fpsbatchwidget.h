@@ -30,6 +30,7 @@ class fpsBatchWidget;
 }
 class QTableWidgetItem;
 class QListWidgetItem;
+class QStandardItemModel;
 
 class fpsBatchWidget : public QWidget
 {
@@ -76,6 +77,14 @@ private slots:
 
     void on_actionRemoveFromList_triggered();
 
+    void on_viewList_customContextMenuRequested(const QPoint &pos);
+
+    void on_viewList_clicked(const QModelIndex &index);
+
+    void on_viewTable_clicked(const QModelIndex &index);
+
+    void on_viewTable_customContextMenuRequested(const QPoint &pos);
+
 protected:
     void closeEvent(QCloseEvent *event) override;
 
@@ -90,6 +99,7 @@ private:
 
     QStringList m_filesList;
     QMenu *m_contextMenu;
+    QStandardItemModel *m_model;
     // QProgressBar *m_pbLoading;
 };
 
