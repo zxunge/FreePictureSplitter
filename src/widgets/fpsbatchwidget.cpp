@@ -37,8 +37,6 @@
 #include <QPixmap>
 #include <QSize>
 #include <QImage>
-#include <QTableWidgetItem>
-#include <QListWidgetItem>
 #include <QCompleter>
 #include <QFileSystemModel>
 #include <QStandardItemModel>
@@ -55,7 +53,10 @@ using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
 fpsBatchWidget::fpsBatchWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::fpsBatchWidget), m_model(new QStandardItemModel)
+    : QWidget(parent),
+      ui(new Ui::fpsBatchWidget),
+      m_model(new QStandardItemModel),
+      m_contextMenu(new QMenu(this))
 {
     ui->setupUi(this);
 
@@ -79,7 +80,6 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent)
     bg->addButton(ui->rbtnSize);
     bg->addButton(ui->rbtnTemplate);
 
-    m_contextMenu = new QMenu(this);
     m_contextMenu->addAction(ui->actionAddDirectory);
     m_contextMenu->addAction(ui->actionAddPicture);
     m_contextMenu->addSeparator();
@@ -88,6 +88,11 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent)
     m_contextMenu->addAction(ui->actionShowDetailInfo);
     m_contextMenu->addAction(ui->actionShowThumbnails);
 
+    // Set up the model
+    m_model->setColumnCount(3);
+    m_model->setHeaderData(0, Qt::Horizontal, tr("File Name"));
+    m_model->setHeaderData(1, Qt::Horizontal, tr("File Path"));
+    m_model->setHeaderData(2, Qt::Horizontal, tr("File Size"));
     ui->viewList->setModel(m_model);
     ui->viewTable->setModel(m_model);
 
@@ -104,6 +109,7 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent)
 fpsBatchWidget::~fpsBatchWidget()
 {
     delete ui;
+    delete m_model;
 }
 
 void fpsBatchWidget::on_actionShowThumbnails_toggled(bool checked)
@@ -168,28 +174,13 @@ void fpsBatchWidget::closeEvent(QCloseEvent *event)
 
 void fpsBatchWidget::addPicture(const QString &fileName)
 {
-    QListWidgetItem *listItem{ new QListWidgetItem() };
     QImageReader reader(fileName);
-    reader.setScaledSize(QSize(80, 80));
-    reader.setAutoTransform(true);
-    listItem->setIcon(QIcon(QPixmap::fromImageReader(&reader)));
-    listItem->setText(fileName);
-    listItem->setSizeHint(QSize(80, 100));
-    ui->viewList->addItem(listItem);
-
-    int rowCount{ ui->viewTable->rowCount() };
-    ui->viewTable->insertRow(rowCount);
-    reader.setFileName(fileName);
-    reader.setScaledSize(QSize(15, 25));
-    QTableWidgetItem *tableItemName{ new QTableWidgetItem(QIcon(QPixmap::fromImageReader(&reader)),
-                                                          QFileInfo(fileName).fileName()) };
-    ui->viewTable->setItem(rowCount, 0, tableItemName);
-    QTableWidgetItem *tableItemPath{ new QTableWidgetItem(fileName) };
-    ui->viewTable->setItem(rowCount, 1, tableItemPath);
-    QTableWidgetItem *tableItemSize{ new QTableWidgetItem(
+    QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
+                                               QFileInfo(fileName).fileName()) };
+    QStandardItem *itemPath{ new QStandardItem(fileName) };
+    QStandardItem *itemSize{ new QStandardItem(
             QString::number(static_cast<long>(QFileInfo(fileName).size() / 1024)) + u" KB"_s) };
-    ui->viewTable->setItem(rowCount, 2, tableItemSize);
-    m_filesList.push_back(fileName);
+    m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 }
 
 void fpsBatchWidget::on_actionAddDirectory_triggered()
@@ -328,7 +319,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
     } else
         return; // TODO@25/08/22 Add support for splitting using templates.
 
-    fpsProgressDialog dlg(this, m_filesList.size());
+    fpsProgressDialog dlg(this, m_model->rowCount());
     QFutureWatcher<void> watcher;
     connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
         if (progressValue == -1)
@@ -340,12 +331,13 @@ void fpsBatchWidget::on_btnSplit_clicked()
     connect(&dlg, &fpsProgressDialog::cancelled, &watcher, &QFutureWatcher<void>::cancel);
     watcher.setFuture(QtConcurrent::run([&](QPromise<void> &promise) {
         int count{};
-        for (qsizetype i{}; i != m_filesList.size(); ++i) {
+        for (qsizetype i{}; i != m_model->rowCount(); ++i) {
+            const QString path{ m_model->item(i, 1)->text() };
             promise.suspendIfRequested();
             if (promise.isCanceled())
                 return;
 
-            reader.setFileName(m_filesList.at(i));
+            reader.setFileName(path);
 
             rects = ImageHandler::getSubRects(
                     reader.size().width(), reader.size().height(),
@@ -361,14 +353,14 @@ void fpsBatchWidget::on_btnSplit_clicked()
                     return;
                 }
                 // TODO@25/07/04 Add batch splitting related options.
-                outputList = ImageHandler::getOutputList(QFileInfo(m_filesList.at(i)).baseName(),
-                                                         QFileInfo(m_filesList.at(i)).suffix(),
-                                                         rects.size(), rects[0].size());
+                outputList = ImageHandler::getOutputList(QFileInfo(path).baseName(),
+                                                         QFileInfo(path).suffix(), rects.size(),
+                                                         rects[0].size());
 
                 // Get the output directory
                 QDir baseDir;
                 if (ui->cbxLocation->currentIndex() == 0) // "The same"
-                    baseDir = QFileInfo(m_filesList.at(i)).dir();
+                    baseDir = QFileInfo(path).dir();
                 else {
                     if (!ui->lePath->text().isEmpty())
                         baseDir = QDir(ui->lePath->text());
@@ -381,7 +373,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
                     }
                 }
 
-                const QString baseName{ QFileInfo(m_filesList.at(i)).baseName() };
+                const QString baseName{ QFileInfo(path).baseName() };
                 QString outPath;
                 if (ui->chbSubdir->isChecked()) {
                     if (!QFileInfo::exists(baseDir.absolutePath() + '/' + baseName + '/'))
@@ -407,8 +399,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
                     }
                 }
             } else {
-                promise.setProgressValueAndText(
-                        -1, tr("No rule to split picture: %1.").arg(m_filesList.at(i)));
+                promise.setProgressValueAndText(-1, tr("No rule to split picture: %1.").arg(path));
                 return;
             }
             promise.setProgressValue(++count);
@@ -417,7 +408,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
     dlg.exec();
 }
 
-void fpsBatchWidget::on_wgtTable_customContextMenuRequested(const QPoint &pos)
+/* void fpsBatchWidget::on_wgtTable_customContextMenuRequested(const QPoint &pos)
 {
     ui->actionRemoveFromList->setEnabled(!ui->viewTable->selectedItems().isEmpty());
     m_contextMenu->exec(QCursor::pos());
@@ -455,26 +446,35 @@ void fpsBatchWidget::on_wgtList_itemSelectionChanged()
         ui->actionRemoveFromList->setEnabled(true);
         Q_EMIT message(ui->viewList->currentItem()->text());
     }
-}
+} */
 
 void fpsBatchWidget::on_actionRemoveFromList_triggered()
 {
-    if (!ui->viewTable->selectedItems().isEmpty()) { // Selected in table
+    /* if (!ui->viewTable->selectedItems().isEmpty()) { // Selected in table
         m_filesList.removeAt(ui->viewTable->selectedItems()[0]->row());
         delete ui->viewList->takeItem(ui->viewTable->selectedItems()[0]->row());
         ui->viewTable->removeRow(ui->viewTable->selectedItems()[0]->row());
     } else {
         qsizetype index{ m_filesList.indexOf(ui->viewList->selectedItems()[0]->text()) };
-        m_filesList.removeAt(index);
         delete ui->viewList->takeItem(index);
         ui->viewTable->removeRow(index);
-    }
+    } */
 }
 
-void fpsBatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos) { }
+void fpsBatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos)
+{
+    m_contextMenu->exec(QCursor::pos());
+}
 
-void fpsBatchWidget::on_viewList_clicked(const QModelIndex &index) { }
+void fpsBatchWidget::on_viewList_clicked(const QModelIndex &index)
+{
+    ui->actionRemoveFromList->setEnabled(true);
+    Q_EMIT message(m_model->itemData(index).value(0).toString());
+}
 
 void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index) { }
 
-void fpsBatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos) { }
+void fpsBatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos)
+{
+    m_contextMenu->exec(QCursor::pos());
+}

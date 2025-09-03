@@ -144,6 +144,7 @@ inline void loadTranslations(QApplication *a)
 
     if (!loadConfigurations())
         return false;
+    loadTranslations(a);
 
     // Load styles
     if (!Util::setAppSkin(a, QString::fromStdString(appConfig.app.style))) {
@@ -152,6 +153,7 @@ inline void loadTranslations(QApplication *a)
                              QMessageBox::Close);
         return false;
     }
+    qInfo("Skin loaded.");
     return true;
 }
 
@@ -178,7 +180,7 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_WIN) && (!defined(Q_CC_MINGW) || __GNUC__ >= 5)
     // Make console output work on Windows, if running in a console.
     if (AttachConsole(ATTACH_PARENT_PROCESS)) {
-        FILE *dummy = nullptr;
+        FILE *dummy{};
         freopen_s(&dummy, "CONOUT$", "w", stdout);
         freopen_s(&dummy, "CONOUT$", "w", stderr);
     }
@@ -197,10 +199,10 @@ int main(int argc, char *argv[])
     SingleApplication a(argc, argv);
     QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
 
+    qInfo("---------------");
     if (!configureApplication(&a))
         return -1;
 
-    qInfo("---------------");
     qInfo("Application Started...");
     fpsMainWindow w;
     w.show();

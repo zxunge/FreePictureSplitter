@@ -28,8 +28,6 @@
 namespace Ui {
 class fpsBatchWidget;
 }
-class QTableWidgetItem;
-class QListWidgetItem;
 class QStandardItemModel;
 
 class fpsBatchWidget : public QWidget
@@ -63,18 +61,6 @@ private slots:
 
     void on_btnSplit_clicked();
 
-    void on_wgtTable_customContextMenuRequested(const QPoint &pos);
-
-    void on_wgtTable_itemClicked(QTableWidgetItem *item);
-
-    void on_wgtTable_itemSelectionChanged();
-
-    void on_wgtList_customContextMenuRequested(const QPoint &pos);
-
-    void on_wgtList_itemClicked(QListWidgetItem *item);
-
-    void on_wgtList_itemSelectionChanged();
-
     void on_actionRemoveFromList_triggered();
 
     void on_viewList_customContextMenuRequested(const QPoint &pos);
@@ -97,7 +83,6 @@ signals:
 private:
     Ui::fpsBatchWidget *ui;
 
-    QStringList m_filesList;
     QMenu *m_contextMenu;
     QStandardItemModel *m_model;
     // QProgressBar *m_pbLoading;
