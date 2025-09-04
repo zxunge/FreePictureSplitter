@@ -41,6 +41,8 @@
 #include <QFileSystemModel>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QPersistentModelIndex>
+#include <QModelIndex>
 #include <QStandardPaths>
 #include <QCoreApplication>
 #include <QFuture>
@@ -408,61 +410,30 @@ void fpsBatchWidget::on_btnSplit_clicked()
     dlg.exec();
 }
 
-/* void fpsBatchWidget::on_wgtTable_customContextMenuRequested(const QPoint &pos)
-{
-    ui->actionRemoveFromList->setEnabled(!ui->viewTable->selectedItems().isEmpty());
-    m_contextMenu->exec(QCursor::pos());
-}
-
-void fpsBatchWidget::on_wgtTable_itemClicked(QTableWidgetItem *item)
-{
-    ui->actionRemoveFromList->setEnabled(true);
-    Q_EMIT message(ui->viewTable->currentItem()->text());
-}
-
-void fpsBatchWidget::on_wgtTable_itemSelectionChanged()
-{
-    if (!ui->viewTable->selectedItems().isEmpty()) {
-        ui->actionRemoveFromList->setEnabled(true);
-        Q_EMIT message(ui->viewTable->currentItem()->text());
-    }
-}
-
-void fpsBatchWidget::on_wgtList_customContextMenuRequested(const QPoint &pos)
-{
-    ui->actionRemoveFromList->setEnabled(!ui->viewList->selectedItems().isEmpty());
-    m_contextMenu->exec(QCursor::pos());
-}
-
-void fpsBatchWidget::on_wgtList_itemClicked(QListWidgetItem *item)
-{
-    ui->actionRemoveFromList->setEnabled(true);
-    Q_EMIT message(ui->viewList->currentItem()->text());
-}
-
-void fpsBatchWidget::on_wgtList_itemSelectionChanged()
-{
-    if (!ui->viewList->selectedItems().isEmpty()) {
-        ui->actionRemoveFromList->setEnabled(true);
-        Q_EMIT message(ui->viewList->currentItem()->text());
-    }
-} */
-
 void fpsBatchWidget::on_actionRemoveFromList_triggered()
 {
-    /* if (!ui->viewTable->selectedItems().isEmpty()) { // Selected in table
-        m_filesList.removeAt(ui->viewTable->selectedItems()[0]->row());
-        delete ui->viewList->takeItem(ui->viewTable->selectedItems()[0]->row());
-        ui->viewTable->removeRow(ui->viewTable->selectedItems()[0]->row());
-    } else {
-        qsizetype index{ m_filesList.indexOf(ui->viewList->selectedItems()[0]->text()) };
-        delete ui->viewList->takeItem(index);
-        ui->viewTable->removeRow(index);
-    } */
+    if (ui->stView->currentIndex() == 0) { // pgThumbnail
+        if (ui->viewList->selectionModel()->hasSelection()) {
+            QList<QPersistentModelIndex> indexes;
+            foreach (const QModelIndex &i, ui->viewList->selectionModel()->selectedIndexes())
+                indexes << i;
+            foreach (const QPersistentModelIndex &i, indexes)
+                m_model->removeRow(i.row());
+        }
+    } else { // pgTable
+        if (ui->viewTable->selectionModel()->hasSelection()) {
+            QList<QPersistentModelIndex> indexes;
+            foreach (const QModelIndex &i, ui->viewTable->selectionModel()->selectedIndexes())
+                indexes << i;
+            foreach (const QPersistentModelIndex &i, indexes)
+                m_model->removeRow(i.row());
+        }
+    }
 }
 
 void fpsBatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos)
 {
+    ui->actionRemoveFromList->setEnabled(ui->viewList->selectionModel()->hasSelection());
     m_contextMenu->exec(QCursor::pos());
 }
 
@@ -472,9 +443,14 @@ void fpsBatchWidget::on_viewList_clicked(const QModelIndex &index)
     Q_EMIT message(m_model->itemData(index).value(0).toString());
 }
 
-void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index) { }
+void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index) 
+{
+    ui->actionRemoveFromList->setEnabled(true);
+    Q_EMIT message(m_model->itemData(index).value(0).toString());
+}
 
 void fpsBatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos)
 {
+    ui->actionRemoveFromList->setEnabled(ui->viewTable->selectionModel()->hasSelection());
     m_contextMenu->exec(QCursor::pos());
 }
