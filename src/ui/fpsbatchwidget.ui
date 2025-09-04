@@ -287,10 +287,13 @@
              </sizepolicy>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
             </property>
             <property name="statusTip">
              <string>A list of pictures added.</string>
+            </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
             </property>
             <property name="selectionBehavior">
              <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
@@ -311,7 +314,7 @@
              <number>10</number>
             </property>
             <property name="viewMode">
-             <enum>QListView::ViewMode::ListMode</enum>
+             <enum>QListView::ViewMode::IconMode</enum>
             </property>
            </widget>
           </item>
@@ -349,7 +352,7 @@
              </sizepolicy>
             </property>
             <property name="contextMenuPolicy">
-             <enum>Qt::ContextMenuPolicy::NoContextMenu</enum>
+             <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
             </property>
             <property name="selectionMode">
              <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
@@ -357,6 +360,9 @@
             <property name="selectionBehavior">
              <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
             </property>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
            </widget>
           </item>
          </layout>
