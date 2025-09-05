@@ -25,16 +25,25 @@
 
 namespace Util {
 
-/*********** Standard Paths Helper ***********/
-// Get the skins directory
+//---------- Standard Paths Helper ----------
+/*!
+ * \brief getSkinsDir
+ * \return The absolute path of the skins directory.
+ */
 QString getSkinsDir();
 
-// Get the translations directory
+/*!
+ * \brief getTranslationsDir
+ * \return The absolute path of the translations directory.
+ */
 QString getTranslationsDir();
 
-// Get the application's data directory
+/*!
+ * \brief getDataDir
+ * \return The absolute path of the data directory.
+ * \details Data directory contains configuration files.
+ */
 QString getDataDir();
-/*********************************************/
 
 } // namespace Util
 

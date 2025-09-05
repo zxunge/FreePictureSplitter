@@ -29,38 +29,6 @@ namespace Util {
 void setAppFont(QLocale locale, QGuiApplication *app)
 {
     QFont font{ app->font() };
-
-#if defined(Q_OS_WIN)
-    switch (locale.language()) {
-    case QLocale::Afrikaans:
-    case QLocale::Albanian:
-    case QLocale::Arabic:
-    case QLocale::Armenian:
-    case QLocale::English:
-        font.setFamily(u"Segoe UI"_s);
-        break;
-
-    case QLocale::Amharic:
-        font.setFamily(u"Ebrima"_s);
-        break;
-
-    case QLocale::Assamese:
-        font.setFamily(u"Nirmala UI"_s);
-        break;
-
-    case QLocale::Chinese:
-    case QLocale::Turkish:
-    case QLocale::Greek:
-        font.setFamily(u"Microsoft YaHei UI"_s);
-        break;
-
-    default:
-        break;
-    }
-#else
-    // Unix stuff
-#endif
-
     font.setPointSize(9);
     app->setFont(font);
 }

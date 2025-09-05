@@ -84,6 +84,10 @@ struct Config
     } options;
 };
 
+/*!
+ * \brief setDefConf
+ * \details Set the default configuration to \p s.
+ */
 inline void setDefConf(Config &s)
 {
     s = Config{ .app = { .name = fpsAppName,

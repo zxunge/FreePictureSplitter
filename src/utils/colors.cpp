@@ -23,7 +23,7 @@
 
 namespace Util {
 
-QColor getDominantColorHSVWeighted(const QPixmap &pixmap)
+QColor getDominantColor(const QPixmap &pixmap)
 {
     // Reduce the pixmap's size
     const QImage scaled{

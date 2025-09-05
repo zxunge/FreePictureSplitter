@@ -27,10 +27,12 @@ class QGuiApplication;
 
 namespace Util {
 
-/*********** Application Fonts Helper ***********/
-// Automatically set the application's font using a locale.
+//---------- Application Fonts Helper ----------
+/*!
+ * \brief setAppFont
+ * \details Automatically set the application's font using a locale.
+ */
 void setAppFont(QLocale locale, QGuiApplication *app);
-/************************************************/
 
 } // namespace Util
 

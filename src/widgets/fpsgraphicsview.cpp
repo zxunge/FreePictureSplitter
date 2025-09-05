@@ -67,7 +67,7 @@ void fpsGraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
     removeAllDraggableLines();
 
     if (adaptive) { // Set an adaptive background for GraphicsView based on the image's color
-        const QColor dominant{ Util::getDominantColorHSVWeighted(pixmap) };
+        const QColor dominant{ Util::getDominantColor(pixmap) };
         const QColor bgColor{ Util::getContrastColor(dominant) };
 
         viewport()->setStyleSheet(QString("background-color: %1;").arg(bgColor.name()));

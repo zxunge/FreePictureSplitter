@@ -26,10 +26,16 @@
 
 namespace Util {
 
-// Extract a primary hue using HSV color space
-QColor getDominantColorHSVWeighted(const QPixmap &pixmap);
+/*!
+ * \brief getDominantColor
+ * \details Extract a primary hue of the whole \p pixmap.
+ */
+QColor getDominantColor(const QPixmap &pixmap);
 
-// Calculate the contrast color through perceived brightness
+/*!
+ * \brief getContrastColor
+ * \details Calculate the contrast color through perceived brightness.
+ */
 QColor getContrastColor(const QColor &color);
 
 } // namespace Util

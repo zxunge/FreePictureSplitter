@@ -33,9 +33,12 @@
 
 namespace Util {
 
-// It's a Qt issue that if a QAbstractButton::clicked triggers a window's maximization,
-// the button remains to be hovered until the mouse move. As a result, we need to
-// manually send leave events to the button.
+/*!
+ * \brief emulateLeaveEvent
+ * \details It's a Qt issue that if a QAbstractButton::clicked triggers a window's maximization,
+ * the button remains to be hovered until the mouse move. As a result, we need to
+ * manually send leave events to the button.
+ */
 static inline void emulateLeaveEvent(QWidget *widget)
 {
     Q_ASSERT(widget);

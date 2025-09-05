@@ -28,6 +28,10 @@
 
 namespace Util {
 
+/*!
+ * \brief The ButtonHoverEventFilter class
+ * \details An event filter that changes the icon of a button when hovered.
+ */
 class ButtonHoverEventFilter : public QObject
 {
     Q_OBJECT
