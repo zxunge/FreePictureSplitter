@@ -443,7 +443,7 @@ void fpsBatchWidget::on_viewList_clicked(const QModelIndex &index)
     Q_EMIT message(m_model->itemData(index).value(0).toString());
 }
 
-void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index) 
+void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index)
 {
     ui->actionRemoveFromList->setEnabled(true);
     Q_EMIT message(m_model->itemData(index).value(0).toString());

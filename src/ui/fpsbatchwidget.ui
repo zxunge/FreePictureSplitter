@@ -253,7 +253,7 @@
       <item>
        <widget class="QStackedWidget" name="stView">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="pgThumbnail">
          <property name="sizePolicy">
@@ -295,8 +295,11 @@
             <property name="editTriggers">
              <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
             </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
+            </property>
             <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
+             <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
             </property>
             <property name="iconSize">
              <size>
@@ -354,11 +357,14 @@
             <property name="contextMenuPolicy">
              <enum>Qt::ContextMenuPolicy::CustomContextMenu</enum>
             </property>
+            <property name="editTriggers">
+             <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+            </property>
             <property name="selectionMode">
-             <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
+             <enum>QAbstractItemView::SelectionMode::MultiSelection</enum>
             </property>
             <property name="selectionBehavior">
-             <enum>QAbstractItemView::SelectionBehavior::SelectItems</enum>
+             <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
             </property>
             <attribute name="horizontalHeaderStretchLastSection">
              <bool>true</bool>
