@@ -1,6 +1,6 @@
 name: "Feature Request"
-about: "If you want to add a new feature to FPS, please request."
-labels: ["feature"]"
+description: "File a feature request"
+labels: ["feature"]
 title: "[Feature Request]: "
 assignees:
   - zxunge
