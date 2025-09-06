@@ -27,6 +27,7 @@
 namespace Ui {
 class fpsPreferencesWidget;
 }
+class QAbstractButton;
 
 class fpsPreferencesWidget : public QWidget
 {
@@ -63,3 +64,4 @@ private:
 };
 
 #endif // FPSPREFERENCESWIDGET_H
+
