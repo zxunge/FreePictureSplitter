@@ -109,6 +109,37 @@ fpsPreferencesWidget::~fpsPreferencesWidget()
     delete ui;
 }
 
+void fpsPreferencesWidget::saveChanges()
+{
+    // Save configurations
+    appConfig.app.style = ui->cbxStyle->currentText().toStdString();
+    switch (ui->cbxLocation->currentIndex()) {
+    case 0:
+        appConfig.options.outputOpt.savingTo = Util::SavingTo::inPlace;
+        break;
+
+    case 1:
+        appConfig.options.outputOpt.savingTo = Util::SavingTo::same;
+        break;
+
+    case 2:
+        appConfig.options.outputOpt.savingTo = Util::SavingTo::specified;
+        break;
+    }
+    appConfig.options.outputOpt.subDir = ui->chbSubDir->isChecked();
+    appConfig.options.outputOpt.outPath = ui->lePath->text().toStdString();
+    appConfig.options.outputOpt.outFormat = ui->cbxFormats->currentText().toStdString();
+    appConfig.options.outputOpt.jpgQuality = ui->sbxQuality->value();
+    appConfig.options.outputOpt.scalingFactor = ui->dsbxFactor->value() / 100.0;
+    appConfig.options.gridOpt.enabled = ui->chbGrid->isChecked();
+    appConfig.options.gridOpt.lineSize = ui->sbxLineSize->value();
+    appConfig.options.gridOpt.colorRgb = m_color.name().toStdString();
+    appConfig.options.nameOpt.prefMode =
+            ui->rbtnSpecified->isChecked() ? Util::Prefix::specified : Util::Prefix::same;
+    appConfig.options.nameOpt.prefix = ui->lePrefix->text().toStdString();
+    appConfig.options.nameOpt.rcContained = ui->chbNumberContained->isChecked();
+}
+
 void fpsPreferencesWidget::on_cbxLocation_currentIndexChanged(int index)
 {
     // 2 : "The following path:"
@@ -171,36 +202,11 @@ void fpsPreferencesWidget::on_tbtnBrowse_clicked()
     ui->lePath->setText(in);
 }
 
-void fpsPreferencesWidget::on_buttonBox_accepted()
+void fpsPreferencesWidget::on_buttonBox_clicked(QAbstractButton *button)
 {
-    // Save configurations
-    appConfig.app.style = ui->cbxStyle->currentText().toStdString();
-    // Change theme
-    Util::setAppSkin(qApp, QString::fromStdString(appConfig.app.style));
-
-    switch (ui->cbxLocation->currentIndex()) {
-    case 0:
-        appConfig.options.outputOpt.savingTo = Util::SavingTo::inPlace;
-        break;
-
-    case 1:
-        appConfig.options.outputOpt.savingTo = Util::SavingTo::same;
-        break;
-
-    case 2:
-        appConfig.options.outputOpt.savingTo = Util::SavingTo::specified;
-        break;
+    if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole) {
+        saveChanges();
+        // Change theme
+        Util::setAppSkin(qApp, QString::fromStdString(appConfig.app.style));
     }
-    appConfig.options.outputOpt.subDir = ui->chbSubDir->isChecked();
-    appConfig.options.outputOpt.outPath = ui->lePath->text().toStdString();
-    appConfig.options.outputOpt.outFormat = ui->cbxFormats->currentText().toStdString();
-    appConfig.options.outputOpt.jpgQuality = ui->sbxQuality->value();
-    appConfig.options.outputOpt.scalingFactor = ui->dsbxFactor->value() / 100.0;
-    appConfig.options.gridOpt.enabled = ui->chbGrid->isChecked();
-    appConfig.options.gridOpt.lineSize = ui->sbxLineSize->value();
-    appConfig.options.gridOpt.colorRgb = m_color.name().toStdString();
-    appConfig.options.nameOpt.prefMode =
-            ui->rbtnSpecified->isChecked() ? Util::Prefix::specified : Util::Prefix::same;
-    appConfig.options.nameOpt.prefix = ui->lePrefix->text().toStdString();
-    appConfig.options.nameOpt.rcContained = ui->chbNumberContained->isChecked();
 }

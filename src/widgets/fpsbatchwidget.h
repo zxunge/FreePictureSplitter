@@ -23,12 +23,14 @@
 
 #include <QWidget>
 #include <QMenu>
+#include <QItemSelection>
 #include <QtCore/qstringlist.h>
 
 namespace Ui {
 class fpsBatchWidget;
 }
 class QStandardItemModel;
+class QItemSelectionModel;
 
 class fpsBatchWidget : public QWidget
 {
@@ -39,6 +41,8 @@ public:
     ~fpsBatchWidget();
 
 private slots:
+    void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+
     void on_actionShowThumbnails_toggled(bool checked);
 
     void on_actionShowDetailInfo_toggled(bool checked);
@@ -85,6 +89,7 @@ private:
 
     QMenu *m_contextMenu;
     QStandardItemModel *m_model;
+    QItemSelectionModel *m_selModel;
     // QProgressBar *m_pbLoading;
 };
 

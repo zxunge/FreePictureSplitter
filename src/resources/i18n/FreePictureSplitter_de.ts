@@ -130,172 +130,172 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="375"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="387"/>
         <source>Create Sub-directories</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="392"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="404"/>
         <source>The same location as each source picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="397"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="409"/>
         <source>The following path:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="405"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="417"/>
         <source>Output Location:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="415"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="427"/>
         <source>Open in Explorer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="425"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="437"/>
         <source>Change...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="435"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="447"/>
         <source>Specify Output Directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="455"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="467"/>
         <source>Start Splitting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="473"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="485"/>
         <source>Add pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="476"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="488"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a picture to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="479"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="491"/>
         <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="488"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="500"/>
         <source>Add directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="491"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="503"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add all pictures under a directory to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="494"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="506"/>
         <source>Ctrl+D</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="506"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="518"/>
         <source>Remove from list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="509"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="521"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove the specified picture from the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="512"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="524"/>
         <source>Ctrl+R</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="527"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="539"/>
         <source>Show thumbnails</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="530"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="542"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show pictures in thumbnails.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="533"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="545"/>
         <source>Ctrl+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="545"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="557"/>
         <source>Show detailed info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="548"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="560"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show detailed information of each picture.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/fpsbatchwidget.ui" line="551"/>
+        <location filename="../../ui/fpsbatchwidget.ui" line="563"/>
         <source>Ctrl+I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="93"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="99"/>
         <source>File Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="94"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="100"/>
         <source>File Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="95"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="101"/>
         <source>File Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="137"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="154"/>
         <source>Add pictures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="189"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="205"/>
         <source>Choose a directory containing pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="263"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="279"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="352"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="368"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="370"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="386"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="383"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="399"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="396"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="412"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpsbatchwidget.cpp" line="402"/>
+        <location filename="../../widgets/fpsbatchwidget.cpp" line="418"/>
         <source>No rule to split picture: %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -497,12 +497,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="127"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="158"/>
         <source>Select a color for grid lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/fpspreferenceswidget.cpp" line="162"/>
+        <location filename="../../widgets/fpspreferenceswidget.cpp" line="193"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>

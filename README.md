@@ -52,8 +52,9 @@ The latest release can be found at [Github Releases](https://github.com/zxunge/F
 ## Requirements
 It's important to know that our **3.x** versions support Qt >= 5.15, while the incoming version 4 will only support Qt >= 6.9.0. Thus, some users with old computers would need some workaround like a compatibility-layer.
 
-## Acknowlegments
-Some skins are from [QSS-STOCK](https://qss-stock.devsecstudio.com) and [feiyangqingyun](https://github.com/feiyangqingyun), thanks!
+## Credits
+This project includes icons from the [Fluent UI System Icons](https://github.com/microsoft/fluentui-system-icons) project, copyright Microsoft Corporation and used under the MIT License. See the NOTICES file for full license text.
+Some of the skins are from [QSS-STOCK](https://qss-stock.devsecstudio.com) and [feiyangqingyun](https://github.com/feiyangqingyun).
 
 ## Building
 See [Building](docs/en/build.md)

@@ -36,6 +36,8 @@ public:
     explicit fpsPreferencesWidget(QWidget *parent = nullptr);
     ~fpsPreferencesWidget();
 
+    void saveChanges(); // This does not apply skin changes.
+
 private slots:
     void on_cbxLocation_currentIndexChanged(int index);
 
@@ -53,7 +55,7 @@ private slots:
 
     void on_tbtnBrowse_clicked();
 
-    void on_buttonBox_accepted();
+    void on_buttonBox_clicked(QAbstractButton *button);
 
 private:
     Ui::fpsPreferencesWidget *ui;

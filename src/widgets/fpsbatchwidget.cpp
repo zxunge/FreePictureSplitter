@@ -22,6 +22,7 @@
 #include "jsonconfigitems.h"
 #include "imagehandler.h"
 #include "fpsprogressdialog.h"
+#include "fileinfo.h"
 
 #include <QButtonGroup>
 #include <QActionGroup>
@@ -41,6 +42,7 @@
 #include <QFileSystemModel>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QItemSelectionModel>
 #include <QPersistentModelIndex>
 #include <QModelIndex>
 #include <QStandardPaths>
@@ -57,11 +59,13 @@ using namespace Util;
 fpsBatchWidget::fpsBatchWidget(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::fpsBatchWidget),
-      m_model(new QStandardItemModel),
-      m_contextMenu(new QMenu(this))
+      m_contextMenu(new QMenu(this)),
+      m_model(new QStandardItemModel(this)),
+      m_selModel(new QItemSelectionModel(m_model, this))
 {
     ui->setupUi(this);
 
+    // UI preparations
     QCompleter *completer{ new QCompleter(this) };
     completer->setModel(new QFileSystemModel(completer));
     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -97,6 +101,12 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent)
     m_model->setHeaderData(2, Qt::Horizontal, tr("File Size"));
     ui->viewList->setModel(m_model);
     ui->viewTable->setModel(m_model);
+    ui->viewList->setSelectionModel(m_selModel);
+    ui->viewTable->setSelectionModel(m_selModel);
+
+    // Signal connections
+    connect(m_selModel, &QItemSelectionModel::selectionChanged, this,
+            &fpsBatchWidget::selectionChanged);
 
     // Load configurations
     ui->cbxLocation->setCurrentIndex(
@@ -111,7 +121,14 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent)
 fpsBatchWidget::~fpsBatchWidget()
 {
     delete ui;
-    delete m_model;
+}
+
+void fpsBatchWidget::selectionChanged(const QItemSelection &selected,
+                                      const QItemSelection &deselected)
+{
+    Q_UNUSED(selected);
+    Q_UNUSED(deselected);
+    ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
 }
 
 void fpsBatchWidget::on_actionShowThumbnails_toggled(bool checked)
@@ -180,8 +197,7 @@ void fpsBatchWidget::addPicture(const QString &fileName)
     QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
                                                QFileInfo(fileName).fileName()) };
     QStandardItem *itemPath{ new QStandardItem(fileName) };
-    QStandardItem *itemSize{ new QStandardItem(
-            QString::number(static_cast<long>(QFileInfo(fileName).size() / 1024)) + u" KB"_s) };
+    QStandardItem *itemSize{ new QStandardItem(getFileSizeString(fileName)) };
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 }
 
@@ -413,17 +429,17 @@ void fpsBatchWidget::on_btnSplit_clicked()
 void fpsBatchWidget::on_actionRemoveFromList_triggered()
 {
     if (ui->stView->currentIndex() == 0) { // pgThumbnail
-        if (ui->viewList->selectionModel()->hasSelection()) {
+        if (m_selModel->hasSelection()) {
             QList<QPersistentModelIndex> indexes;
-            foreach (const QModelIndex &i, ui->viewList->selectionModel()->selectedIndexes())
+            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
                 indexes << i;
             foreach (const QPersistentModelIndex &i, indexes)
                 m_model->removeRow(i.row());
         }
     } else { // pgTable
-        if (ui->viewTable->selectionModel()->hasSelection()) {
+        if (m_selModel->hasSelection()) {
             QList<QPersistentModelIndex> indexes;
-            foreach (const QModelIndex &i, ui->viewTable->selectionModel()->selectedIndexes())
+            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
                 indexes << i;
             foreach (const QPersistentModelIndex &i, indexes)
                 m_model->removeRow(i.row());
@@ -433,7 +449,7 @@ void fpsBatchWidget::on_actionRemoveFromList_triggered()
 
 void fpsBatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos)
 {
-    ui->actionRemoveFromList->setEnabled(ui->viewList->selectionModel()->hasSelection());
+    ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
     m_contextMenu->exec(QCursor::pos());
 }
 
@@ -451,6 +467,6 @@ void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index)
 
 void fpsBatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos)
 {
-    ui->actionRemoveFromList->setEnabled(ui->viewTable->selectionModel()->hasSelection());
+    ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
     m_contextMenu->exec(QCursor::pos());
 }
