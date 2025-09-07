@@ -29,26 +29,26 @@
 
 struct RulerMetric
 {
-    double ruler_scale[16];
+    double rulerScale[16];
     int subdivide[5];
 };
 
 // Ruler metric for general use.
-static const RulerMetric ruler_metric_general{ { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1'000, 2'500,
-                                                 5'000, 10'000, 25'000, 50'000, 100'000 },
-                                               { 1, 5, 10, 50, 100 } };
+static const RulerMetric rulerMetricGeneral{ { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1'000, 2'500,
+                                               5'000, 10'000, 25'000, 50'000, 100'000 },
+                                             { 1, 5, 10, 50, 100 } };
 
 // Ruler metric for inch scales.
-static const RulerMetric ruler_metric_inches{ { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1'024, 2'048,
-                                                4'096, 8'192, 16'384, 32'768 },
-                                              { 1, 2, 4, 8, 16 } };
+static const RulerMetric rulerMetricInches{ { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1'024, 2'048,
+                                              4'096, 8'192, 16'384, 32'768 },
+                                            { 1, 2, 4, 8, 16 } };
 
 fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
     : QWidget{ parent },
       m_faceColor{ parent->palette().color(QPalette::Window) },
       m_lower{},
       m_upper{},
-      m_maxsize{},
+      m_maxSize{},
       m_lastPos{ QPoint(0, 0) },
       m_direction{ direction }
 {
@@ -59,11 +59,11 @@ fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
     setMouseTracking(true);
 }
 
-void fpsRulerBar::setRange(double lower, double upper, double max_size)
+void fpsRulerBar::setRange(double lower, double upper, double maxSize)
 {
     m_lower = lower;
     m_upper = upper;
-    m_maxsize = max_size;
+    m_maxSize = maxSize;
 }
 
 void fpsRulerBar::updatePosition(const QPoint &pos)
@@ -95,61 +95,61 @@ void fpsRulerBar::paintEvent(QPaintEvent *event)
 
 void fpsRulerBar::drawTicker(QPainter *painter)
 {
-    QRect allocation{ this->rect() };
+    QRect allocation{ rect() };
     int width{ (m_direction == Qt::Horizontal) ? allocation.width() : allocation.height() },
             height{ (m_direction == Qt::Horizontal) ? allocation.height() : allocation.width() };
-    int length{}, ideal_length{};
-    double lower{ m_lower }, upper{ m_upper }; /* Upper and lower limits, in ruler units */
-    double increment; /* Number of pixels per unit */
-    uint scale; /* Number of units per major unit */
-    double start, end, cur;
-    char unit_str[32];
+    int length{}, idealLength{};
+    double lower{ m_lower }, upper{ m_upper }; // Upper and lower limits, in ruler units
+    double increment{}; // Number of pixels per unit
+    unsigned int scale{}; // Number of units per major unit
+    double start{}, end{}, cur{};
+    char unitStr[32]{};
     QFontMetrics fm(font());
-    int digit_height{ fm.height() };
-    int text_size;
-    int pos;
-    double max_size{ m_maxsize };
-    RulerMetric ruler_metric{ ruler_metric_general }; /* The metric to use for this unit system */
+    int digitHeight{ fm.height() };
+    int textSize{};
+    int pos{};
+    RulerMetric rulerMetric{ rulerMetricGeneral }; // The metric to use for this unit system
 
-    if ((upper - lower) == 0)
+    if (upper == lower)
         return;
 
     increment = static_cast<double>(width) / (upper - lower);
 
-    scale = ceil(max_size);
-    sprintf(unit_str, "%d", scale);
-    text_size = strlen(unit_str) * digit_height + 1;
-    for (scale = 0; scale != std::size(ruler_metric.ruler_scale); scale++)
-        if (ruler_metric.ruler_scale[scale] * fabs(increment) > 2 * text_size)
+    scale = ceil(m_maxSize);
+    sprintf(unitStr, "%d", scale);
+    textSize = strlen(unitStr) * digitHeight + 1;
+    for (scale = 0; scale != std::size(rulerMetric.rulerScale); ++scale)
+        if (rulerMetric.rulerScale[scale] * fabs(increment) > 2 * textSize)
             break;
-    if (scale == std::size(ruler_metric.ruler_scale))
-        scale = std::size(ruler_metric.ruler_scale) - 1;
 
-    for (int i{ std::size(ruler_metric.subdivide) - 1 }; i >= 0; --i) {
-        double subd_incr;
+    if (scale == std::size(rulerMetric.rulerScale))
+        scale = std::size(rulerMetric.rulerScale) - 1;
+
+    for (int i{ std::size(rulerMetric.subdivide) - 1 }; i >= 0; --i) {
+        double subdIncr{};
         if (scale == 1 && i == 1)
-            subd_incr = 1.0;
+            subdIncr = 1.0;
         else
-            subd_incr = static_cast<double>(ruler_metric.ruler_scale[scale])
-                    / ruler_metric.subdivide[i];
+            subdIncr =
+                    static_cast<double>(rulerMetric.rulerScale[scale]) / rulerMetric.subdivide[i];
 
-        if (subd_incr * fabs(increment) <= MINIMUM_INCR)
+        if (subdIncr * fabs(increment) <= MINIMUM_INCR)
             continue;
 
-        ideal_length = height / (i + 1) - 1;
+        idealLength = height / (i + 1) - 1;
 
-        if (ideal_length > ++length)
-            length = ideal_length;
+        if (idealLength > ++length)
+            length = idealLength;
         if (lower < upper) {
-            start = floor(lower / subd_incr) * subd_incr;
-            end = ceil(upper / subd_incr) * subd_incr;
+            start = floor(lower / subdIncr) * subdIncr;
+            end = ceil(upper / subdIncr) * subdIncr;
         } else {
-            start = floor(upper / subd_incr) * subd_incr;
-            end = ceil(lower / subd_incr) * subd_incr;
+            start = floor(upper / subdIncr) * subdIncr;
+            end = ceil(lower / subdIncr) * subdIncr;
         }
 
         int tick_index{};
-        for (cur = start; cur <= end; cur += subd_incr) {
+        for (cur = start; cur <= end; cur += subdIncr) {
             pos = static_cast<int>(qRound((cur - lower) * increment + 1e-12));
             if (m_direction == Qt::Horizontal) {
                 QRect rt(pos, height - length, 1, length);
@@ -159,28 +159,28 @@ void fpsRulerBar::drawTicker(QPainter *painter)
                 painter->drawLine(rt.topLeft(), rt.topRight());
             }
 
-            double label_spacing_px{ fabs(increment
-                                          * static_cast<double>(ruler_metric.ruler_scale[scale])
-                                          / ruler_metric.subdivide[i]) };
+            double pxLabelSpacing{ fabs(increment
+                                        * static_cast<double>(rulerMetric.rulerScale[scale])
+                                        / rulerMetric.subdivide[i]) };
 
-            if (i == 0 && (label_spacing_px > 6 * digit_height || tick_index % 2 == 0 || cur == 0)
-                && (label_spacing_px > 3 * digit_height || tick_index % 4 == 0 || cur == 0)) {
+            if (i == 0 && (pxLabelSpacing > 6 * digitHeight || tick_index % 2 == 0 || cur == 0)
+                && (pxLabelSpacing > 3 * digitHeight || tick_index % 4 == 0 || cur == 0)) {
                 if (qAbs(static_cast<int>(cur)) >= 2'000
                     && (static_cast<int>(cur) / 1'000) * 1'000 == static_cast<int>(cur))
-                    sprintf(unit_str, "%dk", static_cast<int>(cur) / 1'000);
+                    sprintf(unitStr, "%dk", static_cast<int>(cur) / 1'000);
                 else
-                    sprintf(unit_str, "%d", static_cast<int>(cur));
+                    sprintf(unitStr, "%d", static_cast<int>(cur));
 
-                int w{ fm.horizontalAdvance(unit_str) };
+                int w{ fm.horizontalAdvance(unitStr) };
                 if (m_direction == Qt::Horizontal)
                     painter->drawText(pos + 2, allocation.top(), w, RULER_SIZE,
-                                      Qt::AlignLeft | Qt::AlignTop, unit_str);
+                                      Qt::AlignLeft | Qt::AlignTop, unitStr);
                 else {
                     QRect textRect(-w / 2, -RULER_SIZE / 2, w, RULER_SIZE);
                     painter->save();
-                    painter->translate(4, pos + w / 2 + 2);
+                    painter->translate(4.0, pos + w / 2.0 + 2.0);
                     painter->rotate(90);
-                    painter->drawText(textRect, Qt::AlignRight, unit_str);
+                    painter->drawText(textRect, Qt::AlignRight, unitStr);
                     painter->restore();
                 }
             }
@@ -191,40 +191,40 @@ void fpsRulerBar::drawTicker(QPainter *painter)
 
 void fpsRulerBar::drawPos(QPainter *painter)
 {
-    int x, y;
-    int width, height;
-    int bs_width, bs_height;
-    QRect allocation{ this->rect() };
-    double position;
+    int x{}, y{};
+    int width{}, height{};
+    int bsWidth{}, bsHeight{};
+    QRect allocation{ rect() };
+    double position{};
     double lower{ m_lower };
     double upper{ m_upper };
 
     if (m_direction == Qt::Horizontal) {
         width = allocation.width();
         height = allocation.height();
-        bs_width = height / 2 + 2;
-        bs_width |= 1; /* make sure it's odd */
-        bs_height = bs_width / 2 + 1;
+        bsWidth = height / 2 + 2;
+        bsWidth |= 1; // Make sure it's odd
+        bsHeight = bsWidth / 2 + 1;
         position = lower + (upper - lower) * m_lastPos.x() / allocation.width();
     } else {
         width = allocation.height();
         height = allocation.width();
-        bs_height = width / 2 + 2;
-        bs_height |= 1; /* make sure it's odd */
-        bs_width = bs_height / 2 + 1;
+        bsHeight = width / 2 + 2;
+        bsHeight |= 1; // Make sure it's odd
+        bsWidth = bsHeight / 2 + 1;
         position = lower + (upper - lower) * m_lastPos.y() / allocation.height();
     }
-    if ((bs_width > 0) && (bs_height > 0)) {
+    if ((bsWidth > 0) && (bsHeight > 0)) {
         double increment{};
         if (m_direction == Qt::Horizontal) {
             increment = static_cast<double>(width) / (upper - lower);
-            x = qRound((position - lower) * increment) + bs_width / 2 - 1;
-            y = (height + bs_height) / 2;
+            x = qRound((position - lower) * increment) + bsWidth / 2 - 1;
+            y = (height + bsHeight) / 2;
             painter->drawLine(m_lastPos.x(), 0, m_lastPos.x(), height);
         } else {
             increment = static_cast<double>(height) / (upper - lower);
-            x = (width + bs_width) / 2;
-            y = qRound((position - lower) * increment) + (bs_height) / 2 - 1;
+            x = (width + bsWidth) / 2;
+            y = qRound((position - lower) * increment) + (bsHeight) / 2 - 1;
             painter->drawLine(0, m_lastPos.y(), width, m_lastPos.y());
         }
     }

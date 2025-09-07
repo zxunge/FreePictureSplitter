@@ -64,4 +64,3 @@ private:
 };
 
 #endif // FPSPREFERENCESWIDGET_H
-

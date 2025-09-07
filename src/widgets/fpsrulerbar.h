@@ -62,7 +62,7 @@ public:
     void setOrientation(Qt::Orientation orientation) { m_direction = orientation; }
     Qt::Orientation getOritation() const { return m_direction; }
 
-    void setRange(double lower, double upper, double max_size);
+    void setRange(double lower, double upper, double maxSize);
     void updatePosition(const QPoint &pos);
 
 protected:
@@ -94,7 +94,7 @@ protected:
 
     double m_lower;
     double m_upper;
-    double m_maxsize;
+    double m_maxSize;
 };
 
 #endif // FPSRULERBAR_H
