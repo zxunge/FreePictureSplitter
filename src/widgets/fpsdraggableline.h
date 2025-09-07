@@ -23,6 +23,8 @@
 
 #include "fpsrulerbar.h"
 #include <QPushButton>
+#include <qnamespace.h>
+#include <qpoint.h>
 
 class QMouseEvent;
 class QEvent;
@@ -36,9 +38,21 @@ class fpsDraggableLine : public QPushButton
 public:
     // According to Qt documentation, the following 2 'pos'es
     // refers to the position in whole GraphicsView.
-    explicit fpsDraggableLine(QGraphicsView *parent = nullptr,
-                              Qt::Orientation orientation = Qt::Horizontal,
-                              const QPoint &pos = QPoint(0, RULER_SIZE));
+    explicit fpsDraggableLine(Qt::Orientation orientation = Qt::Horizontal,
+                              const QPoint &pos = QPoint(0, RULER_SIZE),
+                              QGraphicsView *parent = nullptr);
+    explicit fpsDraggableLine(QGraphicsView *parent = nullptr)
+        : fpsDraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent)
+    {
+    }
+    explicit fpsDraggableLine(Qt::Orientation oritation = Qt::Horizontal,
+                              QGraphicsView *parent = nullptr)
+    {
+        if (oritation == Qt::Horizontal)
+            fpsDraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent);
+        else
+            fpsDraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
+    }
 
     void updateLine(const QPoint &pos); // Move on GraphicsView and update scenePos; pos -> whole
                                         // GraphicsView

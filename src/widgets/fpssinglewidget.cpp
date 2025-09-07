@@ -193,7 +193,7 @@ void fpsSingleWidget::on_actionSave_triggered()
                 m_rects[0].size(), appConfig.options.nameOpt.rcContained,
                 appConfig.options.gridOpt.enabled);
 
-        fpsProgressDialog dlg(this, outputList.size());
+        fpsProgressDialog dlg(outputList.size(), this);
         QFutureWatcher<void> watcher;
         connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
             if (progressValue == -1)

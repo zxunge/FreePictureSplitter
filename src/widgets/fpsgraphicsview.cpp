@@ -151,7 +151,7 @@ void fpsGraphicsView::addDraggableLine(Qt::Orientation orientation, const QPoint
     if (!scene())
         return;
 
-    QPointer<fpsDraggableLine> fl{ new fpsDraggableLine(this, orientation) };
+    QPointer<fpsDraggableLine> fl{ new fpsDraggableLine(orientation, this) };
     fl->updateLine(pos);
     fl->setId(QRandomGenerator64::global()->generate());
     fl->show();
@@ -186,10 +186,10 @@ void fpsGraphicsView::dragStarted(const QPoint &startPos)
 
     // Create a temporary line
     if (qobject_cast<fpsRulerBar *>(sender())->getOritation() == Qt::Horizontal) {
-        m_tempLine = new fpsDraggableLine(this, Qt::Horizontal);
+        m_tempLine = new fpsDraggableLine(Qt::Horizontal, this);
         m_tempLine->updateLine(0, startPos.y());
     } else {
-        m_tempLine = new fpsDraggableLine(this, Qt::Vertical);
+        m_tempLine = new fpsDraggableLine(Qt::Vertical, this);
         m_tempLine->updateLine(startPos.x(), 0);
     }
 

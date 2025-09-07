@@ -337,7 +337,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
     } else
         return; // TODO@25/08/22 Add support for splitting using templates.
 
-    fpsProgressDialog dlg(this, m_model->rowCount());
+    fpsProgressDialog dlg(m_model->rowCount(), this);
     QFutureWatcher<void> watcher;
     connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
         if (progressValue == -1)

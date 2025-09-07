@@ -39,7 +39,7 @@ class fpsGraphicsView : public QGraphicsView
     Q_OBJECT
 
 public:
-    fpsGraphicsView(QWidget *parent);
+    fpsGraphicsView(QWidget *parent = nullptr);
     ~fpsGraphicsView();
 
     void zoomIn();

@@ -24,8 +24,8 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsProgressDialog::fpsProgressDialog(QWidget *parent, int total)
-    : QDialog(parent, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint),
+fpsProgressDialog::fpsProgressDialog(int total, QWidget *parent)
+    : QDialog(parent, Qt::FramelessWindowHint),
       ui(new Ui::fpsProgressDialog),
       m_cancelled(false)
 {

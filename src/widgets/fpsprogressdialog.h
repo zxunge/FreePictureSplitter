@@ -32,7 +32,7 @@ class fpsProgressDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit fpsProgressDialog(QWidget *parent = nullptr, int total = 0);
+    explicit fpsProgressDialog(int total = 0, QWidget *parent = nullptr);
     ~fpsProgressDialog();
 
     bool isCancelled() const { return m_cancelled; }

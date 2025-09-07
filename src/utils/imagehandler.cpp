@@ -20,6 +20,7 @@
 #include "imagehandler.h"
 #include "fpsgraphicsview.h"
 #include "fpsdraggableline.h"
+#include "fpsrulerbar.h"
 
 #include <QImage>
 #include <QRect>
@@ -29,6 +30,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <qnamespace.h>
+#include <qpoint.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -194,7 +197,7 @@ namespace Util {
         line = nullptr;
     }
     for (int i{}; i != rects[0].size() - 1; ++i) {
-        line = new fpsDraggableLine(parent, Qt::Vertical);
+        line = new fpsDraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
         line->setScenePos(rects[0][i].right());
         line->show();
         parent->addDraggableLine(line);

@@ -25,11 +25,12 @@
 #include <QGraphicsView>
 #include <QColor>
 #include <QPalette>
+#include <qwidget.h>
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsDraggableLine::fpsDraggableLine(QGraphicsView *parent, Qt::Orientation orientation,
-                                   const QPoint &pos)
+fpsDraggableLine::fpsDraggableLine(Qt::Orientation orientation, const QPoint &pos,
+                                   QGraphicsView *parent)
     : QPushButton(parent)
 {
     setAutoFillBackground(true);
