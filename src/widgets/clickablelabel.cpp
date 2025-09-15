@@ -16,43 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
-// clang-format Language: Cpp
 
-#ifndef FPSMAINWINDOW_H
-#define FPSMAINWINDOW_H
+#include "clickablelabel.h"
+#include <QMouseEvent>
 
-#include <QMainWindow>
+ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent) { }
 
-namespace Ui {
-class fpsMainWindow;
-} // namespace Ui
-namespace QWK {
-class WidgetWindowAgent;
-} // namespace QWK
-class QEvent;
-class QCloseEvent;
-
-class fpsMainWindow : public QMainWindow
+void ClickableLabel::mousePressEvent(QMouseEvent *e)
 {
-    Q_OBJECT
-
-public:
-    explicit fpsMainWindow(QWidget *parent = nullptr);
-    ~fpsMainWindow();
-
-private slots:
-    void on_actionExit_triggered();
-
-private:
-    void installWindowAgent();
-
-protected:
-    bool event(QEvent *event) override;
-    void closeEvent(QCloseEvent *e) override;
-
-private:
-    Ui::fpsMainWindow *ui;
-    QWK::WidgetWindowAgent *m_windowAgent;
-};
-
-#endif // FPSMAINWINDOW_H
+    Q_EMIT clicked();
+    QLabel::mousePressEvent(e);
+}

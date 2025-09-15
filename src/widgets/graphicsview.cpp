@@ -17,7 +17,7 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsgraphicsview.h"
+#include "graphicsview.h"
 #include "colors.h"
 
 #include <QMouseEvent>
@@ -25,11 +25,11 @@
 #include <QColor>
 #include <QRandomGenerator64>
 
-fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
+GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
-    m_hruler = new fpsRulerBar(this, Qt::Horizontal);
-    m_vruler = new fpsRulerBar(this, Qt::Vertical);
-    m_box = new fpsCornerBox(this);
+    m_hruler = new RulerBar(this, Qt::Horizontal);
+    m_vruler = new RulerBar(this, Qt::Vertical);
+    m_box = new CornerBox(this);
     m_hruler->setVisible(false);
     m_vruler->setVisible(false);
     m_box->setVisible(false);
@@ -39,20 +39,20 @@ fpsGraphicsView::fpsGraphicsView(QWidget *parent) : QGraphicsView(parent)
     setAttribute(Qt::WA_DeleteOnClose);
 
     // Connected for dragging support
-    connect(m_hruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::dragStarted);
-    connect(m_hruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::dragMoved);
-    connect(m_hruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::dragFinished);
-    connect(m_vruler, &fpsRulerBar::dragStarted, this, &fpsGraphicsView::dragStarted);
-    connect(m_vruler, &fpsRulerBar::dragMoved, this, &fpsGraphicsView::dragMoved);
-    connect(m_vruler, &fpsRulerBar::dragFinished, this, &fpsGraphicsView::dragFinished);
+    connect(m_hruler, &RulerBar::dragStarted, this, &GraphicsView::dragStarted);
+    connect(m_hruler, &RulerBar::dragMoved, this, &GraphicsView::dragMoved);
+    connect(m_hruler, &RulerBar::dragFinished, this, &GraphicsView::dragFinished);
+    connect(m_vruler, &RulerBar::dragStarted, this, &GraphicsView::dragStarted);
+    connect(m_vruler, &RulerBar::dragMoved, this, &GraphicsView::dragMoved);
+    connect(m_vruler, &RulerBar::dragFinished, this, &GraphicsView::dragFinished);
 }
 
-fpsGraphicsView::~fpsGraphicsView()
+GraphicsView::~GraphicsView()
 {
     // dtor
 }
 
-void fpsGraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
+void GraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
 {
     if (scene())
         delete scene();
@@ -74,7 +74,7 @@ void fpsGraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
     }
 }
 
-void fpsGraphicsView::mouseMoveEvent(QMouseEvent *event)
+void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
     QGraphicsView::mouseMoveEvent(event);
 
@@ -84,7 +84,7 @@ void fpsGraphicsView::mouseMoveEvent(QMouseEvent *event)
     Q_EMIT positionChanged(pt.x(), pt.y());
 }
 
-void fpsGraphicsView::resizeEvent(QResizeEvent *event)
+void GraphicsView::resizeEvent(QResizeEvent *event)
 {
     QGraphicsView::resizeEvent(event);
 
@@ -102,7 +102,7 @@ void fpsGraphicsView::resizeEvent(QResizeEvent *event)
         l->updateLine();
 }
 
-void fpsGraphicsView::scrollContentsBy(int dx, int dy)
+void GraphicsView::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
     updateRuler();
@@ -110,7 +110,7 @@ void fpsGraphicsView::scrollContentsBy(int dx, int dy)
         l->updateLine();
 }
 
-void fpsGraphicsView::updateRuler()
+void GraphicsView::updateRuler()
 {
     if (!scene())
         return;
@@ -130,7 +130,7 @@ void fpsGraphicsView::updateRuler()
     m_vruler->update();
 }
 
-void fpsGraphicsView::zoomIn()
+void GraphicsView::zoomIn()
 {
     scale(ZOOM_RATIO, ZOOM_RATIO);
     updateRuler();
@@ -138,7 +138,7 @@ void fpsGraphicsView::zoomIn()
         l->updateLine();
 }
 
-void fpsGraphicsView::zoomOut()
+void GraphicsView::zoomOut()
 {
     scale(1 / ZOOM_RATIO, 1 / ZOOM_RATIO);
     updateRuler();
@@ -146,37 +146,37 @@ void fpsGraphicsView::zoomOut()
         l->updateLine();
 }
 
-void fpsGraphicsView::addDraggableLine(Qt::Orientation orientation, const QPoint &pos)
+void GraphicsView::addDraggableLine(Qt::Orientation orientation, const QPoint &pos)
 {
     if (!scene())
         return;
 
-    QPointer<fpsDraggableLine> fl{ new fpsDraggableLine(orientation, this) };
+    QPointer<DraggableLine> fl{ new DraggableLine(orientation, this) };
     fl->updateLine(pos);
     fl->setId(QRandomGenerator64::global()->generate());
     fl->show();
-    connect(fl, &fpsDraggableLine::userDestruction, this, &fpsGraphicsView::lineDestruction);
+    connect(fl, &DraggableLine::userDestruction, this, &GraphicsView::lineDestruction);
     m_plines.push_back(fl);
 }
 
-void fpsGraphicsView::addDraggableLine(fpsDraggableLine *fl)
+void GraphicsView::addDraggableLine(DraggableLine *fl)
 {
     if (!scene())
         return;
 
     fl->setId(QRandomGenerator64::global()->generate());
-    connect(fl, &fpsDraggableLine::userDestruction, this, &fpsGraphicsView::lineDestruction);
+    connect(fl, &DraggableLine::userDestruction, this, &GraphicsView::lineDestruction);
     m_plines.push_back(fl);
 }
 
-void fpsGraphicsView::removeAllDraggableLines()
+void GraphicsView::removeAllDraggableLines()
 {
     for (auto l : m_plines)
         l->deleteLater();
     m_plines.clear();
 }
 
-void fpsGraphicsView::dragStarted(const QPoint &startPos)
+void GraphicsView::dragStarted(const QPoint &startPos)
 {
     if (!scene())
         return;
@@ -185,18 +185,18 @@ void fpsGraphicsView::dragStarted(const QPoint &startPos)
     setCursor(QCursor(Qt::CrossCursor));
 
     // Create a temporary line
-    if (qobject_cast<fpsRulerBar *>(sender())->getOritation() == Qt::Horizontal) {
-        m_tempLine = new fpsDraggableLine(Qt::Horizontal, this);
+    if (qobject_cast<RulerBar *>(sender())->getOritation() == Qt::Horizontal) {
+        m_tempLine = new DraggableLine(Qt::Horizontal, this);
         m_tempLine->updateLine(0, startPos.y());
     } else {
-        m_tempLine = new fpsDraggableLine(Qt::Vertical, this);
+        m_tempLine = new DraggableLine(Qt::Vertical, this);
         m_tempLine->updateLine(startPos.x(), 0);
     }
 
     m_tempLine->show();
 }
 
-void fpsGraphicsView::dragMoved(const QPoint &currentPos)
+void GraphicsView::dragMoved(const QPoint &currentPos)
 {
     if (!m_tempLine)
         return;
@@ -205,13 +205,13 @@ void fpsGraphicsView::dragMoved(const QPoint &currentPos)
     int x{ qBound(0, currentPos.x(), width() - LINE_SIZE) };
     int y{ qBound(0, currentPos.y(), height() - LINE_SIZE) };
 
-    if (qobject_cast<fpsRulerBar *>(sender())->getOritation() == Qt::Horizontal)
+    if (qobject_cast<RulerBar *>(sender())->getOritation() == Qt::Horizontal)
         m_tempLine->updateLine(0, y);
     else
         m_tempLine->updateLine(x, 0);
 }
 
-void fpsGraphicsView::dragFinished(const QPoint &endPos, bool isReal)
+void GraphicsView::dragFinished(const QPoint &endPos, bool isReal)
 {
     if (!m_tempLine)
         return;
@@ -233,9 +233,9 @@ void fpsGraphicsView::dragFinished(const QPoint &endPos, bool isReal)
     setCursor(QCursor(Qt::ArrowCursor));
 }
 
-void fpsGraphicsView::lineDestruction()
+void GraphicsView::lineDestruction()
 {
-    fpsDraggableLine *sd{ qobject_cast<fpsDraggableLine *>(sender()) };
+    DraggableLine *sd{ qobject_cast<DraggableLine *>(sender()) };
     if (sd) {
         for (qsizetype i{}; i != m_plines.size(); ++i)
             if (m_plines[i]->id() == sd->id()) {

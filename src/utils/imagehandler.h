@@ -28,7 +28,7 @@
 #include <QtCore/qrect.h>
 #include <QtCore/qvector.h>
 
-class fpsGraphicsView;
+class GraphicsView;
 class QPixmap;
 
 namespace Util {
@@ -74,8 +74,8 @@ public:
     static QStringList getOutputList(const QString &prefix, const QString &suffix, int rows,
                                      int cols, bool rcContained = false, bool grid = false);
 
-    static void rectsToLines(const RectList &rects, fpsGraphicsView *parent);
-    static RectList linesToRects(fpsGraphicsView *parent);
+    static void rectsToLines(const RectList &rects, GraphicsView *parent);
+    static RectList linesToRects(GraphicsView *parent);
 
     static void drawGridLines(QPixmap *pixmap, const RectList &rects, const QColor &color,
                               int size);

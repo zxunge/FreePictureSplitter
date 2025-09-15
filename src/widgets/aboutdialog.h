@@ -16,14 +16,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
+// clang-format Language: Cpp
 
-#include "fpsclickablelabel.h"
-#include <QMouseEvent>
+#ifndef ABOUTDIALOG_H
+#define ABOUTDIALOG_H
 
-fpsClickableLabel::fpsClickableLabel(QWidget *parent) : QLabel(parent) { }
+#include <QDialog>
 
-void fpsClickableLabel::mousePressEvent(QMouseEvent *e)
+class AboutDialog : public QDialog
 {
-    Q_EMIT clicked();
-    QLabel::mousePressEvent(e);
-}
+    Q_OBJECT
+public:
+    explicit AboutDialog(QWidget *parent = nullptr);
+};
+
+#endif // ABOUTDIALOG_H

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>fpsBatchWidget</class>
- <widget class="QWidget" name="fpsBatchWidget">
+ <class>BatchWidget</class>
+ <widget class="QWidget" name="BatchWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -75,6 +75,9 @@
       </property>
       <item>
        <widget class="QDockWidget" name="dkOptions">
+        <property name="features">
+         <set>QDockWidget::DockWidgetFeature::NoDockWidgetFeatures</set>
+        </property>
         <property name="windowTitle">
          <string>Splitting Settings..</string>
         </property>

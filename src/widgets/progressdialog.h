@@ -18,22 +18,22 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSPROGRESSDIALOG_H
-#define FPSPROGRESSDIALOG_H
+#ifndef PROGRESSDIALOG_H
+#define PROGRESSDIALOG_H
 
 #include <QDialog>
 
 namespace Ui {
-class fpsProgressDialog;
+class ProgressDialog;
 }
 
-class fpsProgressDialog : public QDialog
+class ProgressDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit fpsProgressDialog(int total = 0, QWidget *parent = nullptr);
-    ~fpsProgressDialog();
+    explicit ProgressDialog(int total = 0, QWidget *parent = nullptr);
+    ~ProgressDialog();
 
     bool isCancelled() const { return m_cancelled; }
 
@@ -47,10 +47,10 @@ private slots:
     void on_btnCancel_clicked();
 
 private:
-    Ui::fpsProgressDialog *ui;
+    Ui::ProgressDialog *ui;
 
     int m_total;
     bool m_cancelled;
 };
 
-#endif // FPSPROGRESSDIALOG_H
+#endif // PROGRESSDIALOG_H

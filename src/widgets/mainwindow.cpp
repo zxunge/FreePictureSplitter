@@ -17,17 +17,18 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsmainwindow.h"
-#include "ui_fpsmainwindow.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include "jsonconfigitems.h"
 #include "leaveevent.h"
 #include "config.h"
 #include "hovereventfilter.h"
-#include "fpssinglewidget.h"
-#include "fpsbatchwidget.h"
-#include "fpspreferenceswidget.h"
-#include "fpsaboutdialog.h"
-#include "fpsclickablelabel.h"
+#include "singlewidget.h"
+#include "batchwidget.h"
+#include "preferenceswidget.h"
+#include "aboutdialog.h"
+#include "clickablelabel.h"
+#include "stdpaths.h"
 
 #include <QEvent>
 #include <QCloseEvent>
@@ -38,6 +39,7 @@
 #include <QStyle>
 #include <QStatusBar>
 #include <QStackedWidget>
+#include <QFile>
 
 #include <QWKWidgets/widgetwindowagent.h>
 #include <widgetframe/windowbar.h>
@@ -46,7 +48,7 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::fpsMainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     setAttribute(Qt::WA_DontCreateNativeAncestors);
     ui->setupUi(this);
@@ -54,8 +56,8 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
     // Add pages
     int index{};
 
-    fpsSingleWidget *pgSingle{ new fpsSingleWidget() };
-    connect(pgSingle, &fpsSingleWidget::message, ui->statusBar, &QStatusBar::showMessage);
+    SingleWidget *pgSingle{ new SingleWidget() };
+    connect(pgSingle, &SingleWidget::message, ui->statusBar, &QStatusBar::showMessage);
     index = ui->wgtMain->addWidget(pgSingle);
     connect(ui->tbtnSingle, &QToolButton::clicked, this, [this, index](bool checked) {
         if (checked)
@@ -66,8 +68,8 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
         ui->wgtMain->setCurrentIndex(index);
     }
 
-    fpsBatchWidget *pgBatch{ new fpsBatchWidget() };
-    connect(pgBatch, &fpsBatchWidget::message, ui->statusBar, &QStatusBar::showMessage);
+    BatchWidget *pgBatch{ new BatchWidget() };
+    connect(pgBatch, &BatchWidget::message, ui->statusBar, &QStatusBar::showMessage);
     index = ui->wgtMain->addWidget(pgBatch);
     connect(ui->tbtnBatch, &QToolButton::clicked, this, [this, index](bool checked) {
         if (checked)
@@ -78,7 +80,7 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
         ui->wgtMain->setCurrentIndex(index);
     }
 
-    fpsPreferencesWidget *pgPref{ new fpsPreferencesWidget() };
+    PreferencesWidget *pgPref{ new PreferencesWidget() };
     index = ui->wgtMain->addWidget(pgPref);
     connect(ui->tbtnPref, &QToolButton::clicked, this, [this, index](bool checked) {
         if (checked)
@@ -89,26 +91,30 @@ fpsMainWindow::fpsMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::
         ui->wgtMain->setCurrentIndex(index);
     }
 
-    connect(ui->labMark, &fpsClickableLabel::clicked, this, [this] {
-        fpsAboutDialog dlg(this);
+    connect(ui->labMark, &ClickableLabel::clicked, this, [this] {
+        AboutDialog dlg(this);
         dlg.exec();
     });
 
     ui->labMark->setText(fpsVersionFull);
     installWindowAgent();
+
+    QFile layoutFile(Util::getDataDir() % Util::LAYOUT_FILENAME);
+    if (layoutFile.open(QIODevice::ReadOnly))
+        restoreState(layoutFile.readAll());
 }
 
-fpsMainWindow::~fpsMainWindow()
+MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void fpsMainWindow::on_actionExit_triggered()
+void MainWindow::on_actionExit_triggered()
 {
     close();
 }
 
-void fpsMainWindow::installWindowAgent()
+void MainWindow::installWindowAgent()
 {
     // Setup window agent
     m_windowAgent = new QWK::WidgetWindowAgent(this);
@@ -190,7 +196,7 @@ void fpsMainWindow::installWindowAgent()
     setMenuWidget(windowBar);
 }
 
-bool fpsMainWindow::event(QEvent *event)
+bool MainWindow::event(QEvent *event)
 {
     switch (event->type()) {
     case QEvent::WindowActivate: {
@@ -217,8 +223,11 @@ bool fpsMainWindow::event(QEvent *event)
     return QMainWindow::event(event);
 }
 
-void fpsMainWindow::closeEvent(QCloseEvent *e)
+void MainWindow::closeEvent(QCloseEvent *e)
 {
-    appConfig.dialog.lastEnteredIndex = ui->wgtMain->currentIndex();
+    QFile layoutFile(Util::getDataDir() % Util::LAYOUT_FILENAME);
+    if (layoutFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
+        layoutFile.write(saveState());
+
     QMainWindow::closeEvent(e);
 }

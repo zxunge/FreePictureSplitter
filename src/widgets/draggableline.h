@@ -18,10 +18,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSDRAGGABLELINE_H
-#define FPSDRAGGABLELINE_H
+#ifndef DRAGGABLELINE_H
+#define DRAGGABLELINE_H
 
-#include "fpsrulerbar.h"
+#include "rulerbar.h"
 #include <QPushButton>
 #include <qnamespace.h>
 #include <qpoint.h>
@@ -32,26 +32,26 @@ class QGraphicsView;
 
 constexpr int LINE_SIZE{ 2 };
 
-class fpsDraggableLine : public QPushButton
+class DraggableLine : public QPushButton
 {
     Q_OBJECT
 public:
     // According to Qt documentation, the following 2 'pos'es
     // refers to the position in whole GraphicsView.
-    explicit fpsDraggableLine(Qt::Orientation orientation = Qt::Horizontal,
-                              const QPoint &pos = QPoint(0, RULER_SIZE),
-                              QGraphicsView *parent = nullptr);
-    explicit fpsDraggableLine(QGraphicsView *parent = nullptr)
-        : fpsDraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent)
+    explicit DraggableLine(Qt::Orientation orientation = Qt::Horizontal,
+                           const QPoint &pos = QPoint(0, RULER_SIZE),
+                           QGraphicsView *parent = nullptr);
+    explicit DraggableLine(QGraphicsView *parent = nullptr)
+        : DraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent)
     {
     }
-    explicit fpsDraggableLine(Qt::Orientation oritation = Qt::Horizontal,
-                              QGraphicsView *parent = nullptr)
+    explicit DraggableLine(Qt::Orientation oritation = Qt::Horizontal,
+                           QGraphicsView *parent = nullptr)
     {
         if (oritation == Qt::Horizontal)
-            fpsDraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent);
+            DraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent);
         else
-            fpsDraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
+            DraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
     }
 
     void updateLine(const QPoint &pos); // Move on GraphicsView and update scenePos; pos -> whole
@@ -75,7 +75,7 @@ signals:
     void userDestruction();
 
 protected:
-    // event->pos() -> fpsDraggableLine itself
+    // event->pos() -> DraggableLine itself
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
@@ -88,4 +88,4 @@ private:
     quint64 m_id; // An identifier, enabling us to find it.
 };
 
-#endif // FPSDRAGGABLELINE_H
+#endif // DRAGGABLELINE_H

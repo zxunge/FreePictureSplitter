@@ -18,19 +18,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSRULERBAR_H
-#define FPSRULERBAR_H
+#ifndef RULERBAR_H
+#define RULERBAR_H
 
 #include <QWidget>
 
 constexpr int MINIMUM_INCR{ 5 };
 constexpr int RULER_SIZE{ 24 };
 
-class fpsCornerBox : public QWidget
+class CornerBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit fpsCornerBox(QWidget *parent = nullptr);
+    explicit CornerBox(QWidget *parent = nullptr);
 
     void setFaceColor(const QColor &color)
     {
@@ -46,11 +46,11 @@ private:
     QColor m_faceColor;
 };
 
-class fpsRulerBar : public QWidget
+class RulerBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit fpsRulerBar(QWidget *parent = nullptr, Qt::Orientation direction = Qt::Horizontal);
+    explicit RulerBar(QWidget *parent = nullptr, Qt::Orientation direction = Qt::Horizontal);
 
     void setFaceColor(const QColor &color)
     {
@@ -97,4 +97,4 @@ protected:
     double m_maxSize;
 };
 
-#endif // FPSRULERBAR_H
+#endif // RULERBAR_H

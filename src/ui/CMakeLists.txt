@@ -1,7 +1,7 @@
 target_sources(FreePictureSplitter PRIVATE
-    fpsmainwindow.ui
-    fpsprogressdialog.ui
-    fpssinglewidget.ui
-    fpsbatchwidget.ui
-    fpspreferenceswidget.ui
+    mainwindow.ui
+    progressdialog.ui
+    singlewidget.ui
+    batchwidget.ui
+    preferenceswidget.ui
 )

@@ -17,10 +17,10 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpssinglewidget.h"
-#include "ui_fpssinglewidget.h"
+#include "singlewidget.h"
+#include "ui_singlewidget.h"
 #include "jsonconfigitems.h"
-#include "fpsprogressdialog.h"
+#include "progressdialog.h"
 #include "imagehandler.h"
 
 #include <QFileDialog>
@@ -44,17 +44,17 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-fpsSingleWidget::fpsSingleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::fpsSingleWidget)
+SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::SingleWidget)
 {
     ui->setupUi(this);
 }
 
-fpsSingleWidget::~fpsSingleWidget()
+SingleWidget::~SingleWidget()
 {
     delete ui;
 }
 
-void fpsSingleWidget::on_actionOpen_triggered()
+void SingleWidget::on_actionOpen_triggered()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
@@ -110,7 +110,7 @@ void fpsSingleWidget::on_actionOpen_triggered()
                              QMessageBox::Close);
 }
 
-void fpsSingleWidget::on_actionSave_triggered()
+void SingleWidget::on_actionSave_triggered()
 {
     QVector<QImage> imageList;
     QImageWriter writer;
@@ -193,7 +193,7 @@ void fpsSingleWidget::on_actionSave_triggered()
                 m_rects[0].size(), appConfig.options.nameOpt.rcContained,
                 appConfig.options.gridOpt.enabled);
 
-        fpsProgressDialog dlg(outputList.size(), this);
+        ProgressDialog dlg(outputList.size(), this);
         QFutureWatcher<void> watcher;
         connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
             if (progressValue == -1)
@@ -202,7 +202,7 @@ void fpsSingleWidget::on_actionSave_triggered()
                 dlg.proceed(progressValue);
         });
         connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
-        connect(&dlg, &fpsProgressDialog::cancelled, &watcher, &QFutureWatcher<void>::cancel);
+        connect(&dlg, &ProgressDialog::cancelled, &watcher, &QFutureWatcher<void>::cancel);
         watcher.setFuture(QtConcurrent::run([&](QPromise<void> &promise) {
             for (int i{}; i != imageList.size(); ++i) {
                 promise.suspendIfRequested();
@@ -234,7 +234,7 @@ void fpsSingleWidget::on_actionSave_triggered()
     }
 }
 
-void fpsSingleWidget::on_btnReset_clicked()
+void SingleWidget::on_btnReset_clicked()
 {
     m_imgReader.setFileName(m_imgReader.fileName());
 
@@ -283,7 +283,7 @@ void fpsSingleWidget::on_btnReset_clicked()
     ImageHandler::rectsToLines(m_rects, ui->graphicsView);
 }
 
-void fpsSingleWidget::on_rbtnSize_toggled(bool checked)
+void SingleWidget::on_rbtnSize_toggled(bool checked)
 {
     ui->sbxHeight->setEnabled(checked);
     ui->sbxWidth->setEnabled(checked);
@@ -295,7 +295,7 @@ void fpsSingleWidget::on_rbtnSize_toggled(bool checked)
     }
 }
 
-void fpsSingleWidget::on_rbtnAver_toggled(bool checked)
+void SingleWidget::on_rbtnAver_toggled(bool checked)
 {
     ui->sbxCols->setEnabled(checked);
     ui->sbxRows->setEnabled(checked);
@@ -307,17 +307,17 @@ void fpsSingleWidget::on_rbtnAver_toggled(bool checked)
     }
 }
 
-void fpsSingleWidget::on_actionZoomIn_triggered()
+void SingleWidget::on_actionZoomIn_triggered()
 {
     ui->graphicsView->zoomIn();
 }
 
-void fpsSingleWidget::on_actionZoomOut_triggered()
+void SingleWidget::on_actionZoomOut_triggered()
 {
     ui->graphicsView->zoomOut();
 }
 
-void fpsSingleWidget::on_rbtnManual_toggled(bool checked)
+void SingleWidget::on_rbtnManual_toggled(bool checked)
 {
     if (checked) {
         ui->sbxCols->setEnabled(false);

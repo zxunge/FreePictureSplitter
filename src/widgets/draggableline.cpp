@@ -17,7 +17,7 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsdraggableline.h"
+#include "draggableline.h"
 
 #include <QSizePolicy>
 #include <QMouseEvent>
@@ -25,12 +25,10 @@
 #include <QGraphicsView>
 #include <QColor>
 #include <QPalette>
-#include <qwidget.h>
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsDraggableLine::fpsDraggableLine(Qt::Orientation orientation, const QPoint &pos,
-                                   QGraphicsView *parent)
+DraggableLine::DraggableLine(Qt::Orientation orientation, const QPoint &pos, QGraphicsView *parent)
     : QPushButton(parent)
 {
     setAutoFillBackground(true);
@@ -51,7 +49,7 @@ fpsDraggableLine::fpsDraggableLine(Qt::Orientation orientation, const QPoint &po
     raise(); // Move to top
 }
 
-void fpsDraggableLine::updateLine(const QPoint &pos)
+void DraggableLine::updateLine(const QPoint &pos)
 {
     QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
     if (m_orientation == Qt::Horizontal) {
@@ -65,7 +63,7 @@ void fpsDraggableLine::updateLine(const QPoint &pos)
     }
 }
 
-void fpsDraggableLine::updateLine()
+void DraggableLine::updateLine()
 {
     QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
     // Moving according to the stored scenePos
@@ -78,20 +76,20 @@ void fpsDraggableLine::updateLine()
     }
 }
 
-void fpsDraggableLine::setScenePos(int pos)
+void DraggableLine::setScenePos(int pos)
 {
     m_scenePos = pos;
     updateLine();
 }
 
-void fpsDraggableLine::mousePressEvent(QMouseEvent *event)
+void DraggableLine::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
         m_pressed = true;
     QPushButton::mousePressEvent(event);
 }
 
-void fpsDraggableLine::mouseMoveEvent(QMouseEvent *event)
+void DraggableLine::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton) {
         QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
@@ -110,7 +108,7 @@ void fpsDraggableLine::mouseMoveEvent(QMouseEvent *event)
     QPushButton::mouseMoveEvent(event);
 }
 
-void fpsDraggableLine::mouseReleaseEvent(QMouseEvent *event)
+void DraggableLine::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
@@ -135,7 +133,7 @@ void fpsDraggableLine::mouseReleaseEvent(QMouseEvent *event)
     QPushButton::mouseReleaseEvent(event);
 }
 
-bool fpsDraggableLine::event(QEvent *event)
+bool DraggableLine::event(QEvent *event)
 {
     switch (event->type()) {
     case QEvent::Enter:

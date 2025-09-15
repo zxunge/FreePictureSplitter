@@ -18,24 +18,24 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSPREFERENCESWIDGET_H
-#define FPSPREFERENCESWIDGET_H
+#ifndef PREFERENCESWIDGET_H
+#define PREFERENCESWIDGET_H
 
 #include <QWidget>
 #include <QColor>
 
 namespace Ui {
-class fpsPreferencesWidget;
+class PreferencesWidget;
 }
 class QAbstractButton;
 
-class fpsPreferencesWidget : public QWidget
+class PreferencesWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit fpsPreferencesWidget(QWidget *parent = nullptr);
-    ~fpsPreferencesWidget();
+    explicit PreferencesWidget(QWidget *parent = nullptr);
+    ~PreferencesWidget();
 
     void saveChanges(); // This does not apply skin changes.
 
@@ -59,8 +59,8 @@ private slots:
     void on_buttonBox_clicked(QAbstractButton *button);
 
 private:
-    Ui::fpsPreferencesWidget *ui;
+    Ui::PreferencesWidget *ui;
     QColor m_color;
 };
 
-#endif // FPSPREFERENCESWIDGET_H
+#endif // PREFERENCESWIDGET_H

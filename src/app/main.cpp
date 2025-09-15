@@ -17,7 +17,7 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsmainwindow.h"
+#include "mainwindow.h"
 #include "jsonconfigitems.h"
 #include "skins.h"
 #include "stdpaths.h"
@@ -37,14 +37,12 @@
 #ifdef Q_OS_WIN
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
-#  include <cstdio>
+#  include <cstdlib>
 #endif // Q_OS_WIN
 #include <rfl/json.hpp>
 #include <SingleApplication>
 
 using namespace Qt::Literals::StringLiterals;
-
-const QString CONFIG_FILENAME{ u"/conf.json"_s };
 
 #if defined(__MINGW32__) || defined(__MINGW64__)
 // Loader for crash helper: Dr.MinGW
@@ -89,7 +87,7 @@ inline void loadTranslations(QApplication *a)
 
 [[nodiscard]] inline bool loadConfigurations()
 {
-    QFile cfgFile(Util::getDataDir() + CONFIG_FILENAME);
+    QFile cfgFile(Util::getDataDir() + Util::CONFIG_FILENAME);
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);
@@ -161,7 +159,7 @@ inline void loadTranslations(QApplication *a)
 {
     // Save configuration changes to file
     const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(appConfig)) };
-    QFile cfgFile(Util::getDataDir() + CONFIG_FILENAME);
+    QFile cfgFile(Util::getDataDir() + Util::CONFIG_FILENAME);
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
         QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error writing to configuration file."),
@@ -201,14 +199,15 @@ int main(int argc, char *argv[])
 
     qInfo("---------------");
     if (!configureApplication(&a))
-        return -1;
+        std::exit(EXIT_FAILURE);
 
     qInfo("Application Started...");
-    fpsMainWindow w;
+
+    MainWindow w;
     w.show();
     int ret{ a.exec() };
     if (!saveConfigurations())
-        return -1;
+        std::exit(EXIT_FAILURE);
 
     qInfo("Application has finished successfully.");
     qInfo("---------------");

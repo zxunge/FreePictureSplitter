@@ -17,7 +17,7 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsrulerbar.h"
+#include "rulerbar.h"
 
 #include <QFrame>
 #include <QPaintEvent>
@@ -43,7 +43,7 @@ static const RulerMetric rulerMetricInches{ { 1, 2, 4, 8, 16, 32, 64, 128, 256, 
                                               4'096, 8'192, 16'384, 32'768 },
                                             { 1, 2, 4, 8, 16 } };
 
-fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
+RulerBar::RulerBar(QWidget *parent, Qt::Orientation direction)
     : QWidget{ parent },
       m_faceColor{ parent->palette().color(QPalette::Window) },
       m_lower{},
@@ -59,20 +59,20 @@ fpsRulerBar::fpsRulerBar(QWidget *parent, Qt::Orientation direction)
     setMouseTracking(true);
 }
 
-void fpsRulerBar::setRange(double lower, double upper, double maxSize)
+void RulerBar::setRange(double lower, double upper, double maxSize)
 {
     m_lower = lower;
     m_upper = upper;
     m_maxSize = maxSize;
 }
 
-void fpsRulerBar::updatePosition(const QPoint &pos)
+void RulerBar::updatePosition(const QPoint &pos)
 {
     m_lastPos = pos;
     update();
 }
 
-void fpsRulerBar::paintEvent(QPaintEvent *event)
+void RulerBar::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     QPainter painter(this);
@@ -93,7 +93,7 @@ void fpsRulerBar::paintEvent(QPaintEvent *event)
     drawPos(&painter);
 }
 
-void fpsRulerBar::drawTicker(QPainter *painter)
+void RulerBar::drawTicker(QPainter *painter)
 {
     QRect allocation{ rect() };
     int width{ (m_direction == Qt::Horizontal) ? allocation.width() : allocation.height() },
@@ -189,7 +189,7 @@ void fpsRulerBar::drawTicker(QPainter *painter)
     }
 }
 
-void fpsRulerBar::drawPos(QPainter *painter)
+void RulerBar::drawPos(QPainter *painter)
 {
     int x{}, y{};
     int width{}, height{};
@@ -230,17 +230,17 @@ void fpsRulerBar::drawPos(QPainter *painter)
     }
 }
 
-void fpsRulerBar::mousePressEvent(QMouseEvent *event)
+void RulerBar::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         m_dragging = true;
-        m_dragStartPos = event->pos(); // Coordinate in fpsRulerBar
+        m_dragStartPos = event->pos(); // Coordinate in RulerBar
         Q_EMIT dragStarted(mapToParent(m_dragStartPos)); // Convert to the parent window
     }
     QWidget::mousePressEvent(event);
 }
 
-void fpsRulerBar::mouseMoveEvent(QMouseEvent *event)
+void RulerBar::mouseMoveEvent(QMouseEvent *event)
 {
     if (m_dragging) {
         Q_EMIT dragMoved(mapToParent(event->pos())); // Convert to the parent
@@ -250,7 +250,7 @@ void fpsRulerBar::mouseMoveEvent(QMouseEvent *event)
     QWidget::mouseMoveEvent(event);
 }
 
-void fpsRulerBar::mouseReleaseEvent(QMouseEvent *event)
+void RulerBar::mouseReleaseEvent(QMouseEvent *event)
 {
     // Ensure that the line is moved out of ruler bar
     if (m_dragging && m_moved && event->button() == Qt::LeftButton) {
@@ -266,13 +266,13 @@ void fpsRulerBar::mouseReleaseEvent(QMouseEvent *event)
     QWidget::mouseReleaseEvent(event);
 }
 
-fpsCornerBox::fpsCornerBox(QWidget *parent)
+CornerBox::CornerBox(QWidget *parent)
     : QWidget{ parent }, m_faceColor{ parent->palette().color(QPalette::Window) }
 {
     // ctor
 }
 
-void fpsCornerBox::paintEvent(QPaintEvent *e)
+void CornerBox::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
     QPainter painter(this);

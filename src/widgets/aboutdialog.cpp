@@ -18,7 +18,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "config.h"
-#include "fpsaboutdialog.h"
+#include "aboutdialog.h"
 
 #include <QDialog>
 #include <QLabel>
@@ -33,7 +33,7 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsAboutDialog::fpsAboutDialog(QWidget *parent) : QDialog(parent)
+AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
 {
     // Must be 2 steps
     setWindowFlag(Qt::WindowStaysOnTopHint, true);

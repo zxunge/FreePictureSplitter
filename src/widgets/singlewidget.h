@@ -18,8 +18,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSSINGLEWIDGET_H
-#define FPSSINGLEWIDGET_H
+#ifndef SINGLEWIDGET_H
+#define SINGLEWIDGET_H
 
 #include "imagehandler.h"
 
@@ -27,16 +27,16 @@
 #include <QImageReader>
 
 namespace Ui {
-class fpsSingleWidget;
+class SingleWidget;
 }
 
-class fpsSingleWidget : public QWidget
+class SingleWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit fpsSingleWidget(QWidget *parent = nullptr);
-    ~fpsSingleWidget();
+    explicit SingleWidget(QWidget *parent = nullptr);
+    ~SingleWidget();
 
 private slots:
     void on_actionOpen_triggered();
@@ -59,10 +59,10 @@ signals:
     void message(const QString &msg, int timeout = 0);
 
 private:
-    Ui::fpsSingleWidget *ui;
+    Ui::SingleWidget *ui;
 
     QImageReader m_imgReader;
     Util::RectList m_rects;
 };
 
-#endif // FPSSINGLEWIDGET_H
+#endif // SINGLEWIDGET_H

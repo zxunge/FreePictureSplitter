@@ -22,6 +22,7 @@
 #define JSONCONFIGITEMS_H
 
 #include "config.h"
+#include <QStringLiteral>
 #include <string>
 
 namespace Util {
@@ -83,6 +84,9 @@ struct Config
         } batchOpt;
     } options;
 };
+
+const QString CONFIG_FILENAME{ QStringLiteral("/conf.json") };
+const QString LAYOUT_FILENAME{ QStringLiteral("/state.layout") };
 
 /*!
  * \brief setDefConf

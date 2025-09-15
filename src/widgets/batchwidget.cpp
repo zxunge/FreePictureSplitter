@@ -17,11 +17,11 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsbatchwidget.h"
-#include "ui_fpsbatchwidget.h"
+#include "batchwidget.h"
+#include "ui_batchwidget.h"
 #include "jsonconfigitems.h"
 #include "imagehandler.h"
-#include "fpsprogressdialog.h"
+#include "progressdialog.h"
 #include "fileinfo.h"
 
 #include <QButtonGroup>
@@ -56,9 +56,9 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-fpsBatchWidget::fpsBatchWidget(QWidget *parent)
+BatchWidget::BatchWidget(QWidget *parent)
     : QWidget(parent),
-      ui(new Ui::fpsBatchWidget),
+      ui(new Ui::BatchWidget),
       m_contextMenu(new QMenu(this)),
       m_model(new QStandardItemModel(this)),
       m_selModel(new QItemSelectionModel(m_model, this))
@@ -106,7 +106,7 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent)
 
     // Signal connections
     connect(m_selModel, &QItemSelectionModel::selectionChanged, this,
-            &fpsBatchWidget::selectionChanged);
+            &BatchWidget::selectionChanged);
 
     // Load configurations
     ui->cbxLocation->setCurrentIndex(
@@ -118,32 +118,31 @@ fpsBatchWidget::fpsBatchWidget(QWidget *parent)
     ui->chbSubdir->setChecked(appConfig.options.batchOpt.subDir);
 }
 
-fpsBatchWidget::~fpsBatchWidget()
+BatchWidget::~BatchWidget()
 {
     delete ui;
 }
 
-void fpsBatchWidget::selectionChanged(const QItemSelection &selected,
-                                      const QItemSelection &deselected)
+void BatchWidget::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
 {
     Q_UNUSED(selected);
     Q_UNUSED(deselected);
     ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
 }
 
-void fpsBatchWidget::on_actionShowThumbnails_toggled(bool checked)
+void BatchWidget::on_actionShowThumbnails_toggled(bool checked)
 {
     if (checked)
         ui->stView->setCurrentIndex(0); // pgThumbnail
 }
 
-void fpsBatchWidget::on_actionShowDetailInfo_toggled(bool checked)
+void BatchWidget::on_actionShowDetailInfo_toggled(bool checked)
 {
     if (checked)
         ui->stView->setCurrentIndex(1); // pgTable
 }
 
-void fpsBatchWidget::on_actionAddPicture_triggered()
+void BatchWidget::on_actionAddPicture_triggered()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
@@ -178,7 +177,7 @@ void fpsBatchWidget::on_actionAddPicture_triggered()
         return;
 }
 
-void fpsBatchWidget::closeEvent(QCloseEvent *event)
+void BatchWidget::closeEvent(QCloseEvent *event)
 {
     // Save configurations
     if (ui->cbxLocation->currentIndex() == 0) // "The same"
@@ -191,7 +190,7 @@ void fpsBatchWidget::closeEvent(QCloseEvent *event)
     QWidget::closeEvent(event);
 }
 
-void fpsBatchWidget::addPicture(const QString &fileName)
+void BatchWidget::addPicture(const QString &fileName)
 {
     QImageReader reader(fileName);
     QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
@@ -201,7 +200,7 @@ void fpsBatchWidget::addPicture(const QString &fileName)
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 }
 
-void fpsBatchWidget::on_actionAddDirectory_triggered()
+void BatchWidget::on_actionAddDirectory_triggered()
 {
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory containing pictures."),
@@ -231,7 +230,7 @@ void fpsBatchWidget::on_actionAddDirectory_triggered()
     // m_pbLoading->setVisible(false);
 }
 
-void fpsBatchWidget::on_cbxLocation_currentIndexChanged(int index)
+void BatchWidget::on_cbxLocation_currentIndexChanged(int index)
 {
     if (index == 1) { // "The following path:"
         ui->btnOpen->setEnabled(true);
@@ -244,7 +243,7 @@ void fpsBatchWidget::on_cbxLocation_currentIndexChanged(int index)
     }
 }
 
-void fpsBatchWidget::on_rbtnAverage_toggled(bool checked)
+void BatchWidget::on_rbtnAverage_toggled(bool checked)
 {
     ui->sbxCols->setEnabled(checked);
     ui->sbxRows->setEnabled(checked);
@@ -253,7 +252,7 @@ void fpsBatchWidget::on_rbtnAverage_toggled(bool checked)
         ui->gbxSplitSeq->setEnabled(true);
 }
 
-void fpsBatchWidget::on_rbtnSize_toggled(bool checked)
+void BatchWidget::on_rbtnSize_toggled(bool checked)
 {
     ui->sbxHeight->setEnabled(checked);
     ui->sbxWidth->setEnabled(checked);
@@ -262,7 +261,7 @@ void fpsBatchWidget::on_rbtnSize_toggled(bool checked)
         ui->gbxSplitSeq->setEnabled(true);
 }
 
-void fpsBatchWidget::on_rbtnTemplate_toggled(bool checked)
+void BatchWidget::on_rbtnTemplate_toggled(bool checked)
 {
     ui->cbxTemplate->setEnabled(checked);
 
@@ -275,7 +274,7 @@ void fpsBatchWidget::on_rbtnTemplate_toggled(bool checked)
     }
 }
 
-void fpsBatchWidget::on_btnChange_clicked()
+void BatchWidget::on_btnChange_clicked()
 {
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
@@ -289,12 +288,12 @@ void fpsBatchWidget::on_btnChange_clicked()
     ui->lePath->setText(in);
 }
 
-void fpsBatchWidget::on_btnOpen_clicked()
+void BatchWidget::on_btnOpen_clicked()
 {
     QDesktopServices::openUrl(QUrl(u"file:"_s + ui->lePath->text(), QUrl::TolerantMode));
 }
 
-void fpsBatchWidget::on_btnSplit_clicked()
+void BatchWidget::on_btnSplit_clicked()
 {
     QImageReader reader;
     RectList rects;
@@ -337,7 +336,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
     } else
         return; // TODO@25/08/22 Add support for splitting using templates.
 
-    fpsProgressDialog dlg(m_model->rowCount(), this);
+    ProgressDialog dlg(m_model->rowCount(), this);
     QFutureWatcher<void> watcher;
     connect(&watcher, &QFutureWatcher<void>::progressValueChanged, [&](int progressValue) {
         if (progressValue == -1)
@@ -346,7 +345,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
             dlg.proceed(progressValue);
     });
     connect(&watcher, &QFutureWatcher<void>::finished, &dlg, &QDialog::close);
-    connect(&dlg, &fpsProgressDialog::cancelled, &watcher, &QFutureWatcher<void>::cancel);
+    connect(&dlg, &ProgressDialog::cancelled, &watcher, &QFutureWatcher<void>::cancel);
     watcher.setFuture(QtConcurrent::run([&](QPromise<void> &promise) {
         int count{};
         for (qsizetype i{}; i != m_model->rowCount(); ++i) {
@@ -426,7 +425,7 @@ void fpsBatchWidget::on_btnSplit_clicked()
     dlg.exec();
 }
 
-void fpsBatchWidget::on_actionRemoveFromList_triggered()
+void BatchWidget::on_actionRemoveFromList_triggered()
 {
     if (ui->stView->currentIndex() == 0) { // pgThumbnail
         if (m_selModel->hasSelection()) {
@@ -447,25 +446,25 @@ void fpsBatchWidget::on_actionRemoveFromList_triggered()
     }
 }
 
-void fpsBatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos)
+void BatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos)
 {
     ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
     m_contextMenu->exec(QCursor::pos());
 }
 
-void fpsBatchWidget::on_viewList_clicked(const QModelIndex &index)
+void BatchWidget::on_viewList_clicked(const QModelIndex &index)
 {
     ui->actionRemoveFromList->setEnabled(true);
     Q_EMIT message(m_model->itemData(index).value(0).toString());
 }
 
-void fpsBatchWidget::on_viewTable_clicked(const QModelIndex &index)
+void BatchWidget::on_viewTable_clicked(const QModelIndex &index)
 {
     ui->actionRemoveFromList->setEnabled(true);
     Q_EMIT message(m_model->itemData(index).value(0).toString());
 }
 
-void fpsBatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos)
+void BatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos)
 {
     ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
     m_contextMenu->exec(QCursor::pos());

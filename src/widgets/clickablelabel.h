@@ -18,16 +18,25 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSABOUTDIALOG_H
-#define FPSABOUTDIALOG_H
+#ifndef CLICKABLELABEL
+#define CLICKABLELABEL
 
-#include <QDialog>
+#include <QLabel>
 
-class fpsAboutDialog : public QDialog
+class QMouseEvent;
+
+class ClickableLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit fpsAboutDialog(QWidget *parent = nullptr);
+    explicit ClickableLabel(QWidget *parent = nullptr);
+    ~ClickableLabel() { }
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent *e) override;
 };
 
-#endif // FPSABOUTDIALOG_H
+#endif // CLICKABLELABEL

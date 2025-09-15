@@ -18,8 +18,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSBATCHWIDGET_H
-#define FPSBATCHWIDGET_H
+#ifndef BATCHWIDGET_H
+#define BATCHWIDGET_H
 
 #include <QWidget>
 #include <QMenu>
@@ -27,18 +27,18 @@
 #include <QtCore/qstringlist.h>
 
 namespace Ui {
-class fpsBatchWidget;
+class BatchWidget;
 }
 class QStandardItemModel;
 class QItemSelectionModel;
 
-class fpsBatchWidget : public QWidget
+class BatchWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit fpsBatchWidget(QWidget *parent = nullptr);
-    ~fpsBatchWidget();
+    explicit BatchWidget(QWidget *parent = nullptr);
+    ~BatchWidget();
 
 private slots:
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
@@ -85,7 +85,7 @@ signals:
     void message(const QString &msg, int timeout = 0);
 
 private:
-    Ui::fpsBatchWidget *ui;
+    Ui::BatchWidget *ui;
 
     QMenu *m_contextMenu;
     QStandardItemModel *m_model;
@@ -93,4 +93,4 @@ private:
     // QProgressBar *m_pbLoading;
 };
 
-#endif // FPSBATCHWIDGET_H
+#endif // BATCHWIDGET_H

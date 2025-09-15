@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>fpsMainWindow</class>
- <widget class="QMainWindow" name="fpsMainWindow">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -192,7 +192,7 @@ border: none;
         </spacer>
        </item>
        <item>
-        <widget class="fpsClickableLabel" name="labMark">
+        <widget class="ClickableLabel" name="labMark">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -239,9 +239,9 @@ border: none;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>fpsClickableLabel</class>
+   <class>ClickableLabel</class>
    <extends>QLabel</extends>
-   <header>fpsclickablelabel.h</header>
+   <header>clickablelabel.h</header>
   </customwidget>
  </customwidgets>
  <resources>

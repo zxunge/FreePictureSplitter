@@ -18,29 +18,29 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // clang-format Language: Cpp
 
-#ifndef FPSGRAPHICSVIEW_H
-#define FPSGRAPHICSVIEW_H
+#ifndef GRAPHICSVIEW_H
+#define GRAPHICSVIEW_H
 
-#include "fpsdraggableline.h"
+#include "draggableline.h"
 
 #include <QGraphicsView>
 #include <QImage>
 #include <QtCore/qvector.h>
 #include <QtCore/qpointer.h>
 
-class fpsRulerBar;
-class fpsCornerBox;
+class RulerBar;
+class CornerBox;
 class QMouseEvent;
 
 constexpr double ZOOM_RATIO{ 1.2 }; // Ratio used when zooming in/out.
 
-class fpsGraphicsView : public QGraphicsView
+class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    fpsGraphicsView(QWidget *parent = nullptr);
-    ~fpsGraphicsView();
+    GraphicsView(QWidget *parent = nullptr);
+    ~GraphicsView();
 
     void zoomIn();
     void zoomOut();
@@ -49,10 +49,10 @@ public:
                     bool adaptive = true); // Show an image on the GraphicsView.
     // Create a line using direction and initial position. pos -> whole GraphicsView
     void addDraggableLine(Qt::Orientation ori, const QPoint &pos);
-    void addDraggableLine(fpsDraggableLine *fl); // Add an existing line to list.
+    void addDraggableLine(DraggableLine *fl); // Add an existing line to list.
     void removeAllDraggableLines();
 
-    const QVector<QPointer<fpsDraggableLine>> &getDraggableLines() const { return m_plines; }
+    const QVector<QPointer<DraggableLine>> &getDraggableLines() const { return m_plines; }
 
 public slots:
     void lineDestruction();
@@ -67,10 +67,10 @@ protected:
     void updateRuler();
 
 private:
-    fpsRulerBar *m_hruler;
-    fpsRulerBar *m_vruler;
-    fpsCornerBox *m_box;
-    QVector<QPointer<fpsDraggableLine>> m_plines;
+    RulerBar *m_hruler;
+    RulerBar *m_vruler;
+    CornerBox *m_box;
+    QVector<QPointer<DraggableLine>> m_plines;
 
 private slots:
     void dragStarted(const QPoint &startPos);
@@ -78,8 +78,8 @@ private slots:
     void dragFinished(const QPoint &endPos, bool isReal);
 
 private:
-    fpsDraggableLine *m_tempLine{ nullptr }; // Temporary line widget
+    DraggableLine *m_tempLine{ nullptr }; // Temporary line widget
     QPoint m_dragStartPos; // Position where dragging starts
 };
 
-#endif // FPSGRAPHICSVIEW_H
+#endif // GRAPHICSVIEW_H

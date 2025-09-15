@@ -1,8 +1,4 @@
-target_sources(FreePictureSplitter PRIVATE
-    fps.qrc
-    resources.rc
-)
-
+target_sources(FreePictureSplitter PRIVATE fps.qrc resources.rc)
 qt_add_translations(
     TARGETS FreePictureSplitter
     LUPDATE_OPTIONS -no-obsolete

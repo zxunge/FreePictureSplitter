@@ -18,9 +18,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "imagehandler.h"
-#include "fpsgraphicsview.h"
-#include "fpsdraggableline.h"
-#include "fpsrulerbar.h"
+#include "graphicsview.h"
+#include "draggableline.h"
+#include "rulerbar.h"
 
 #include <QImage>
 #include <QRect>
@@ -30,8 +30,6 @@
 
 #include <algorithm>
 #include <cmath>
-#include <qnamespace.h>
-#include <qpoint.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -183,21 +181,21 @@ namespace Util {
     return true;
 }
 
-/* static */ void ImageHandler::rectsToLines(const RectList &rects, fpsGraphicsView *parent)
+/* static */ void ImageHandler::rectsToLines(const RectList &rects, GraphicsView *parent)
 {
     if (0 == rects.size() || 0 == rects[0].size())
         return;
 
-    fpsDraggableLine *line{};
+    DraggableLine *line{};
     for (qsizetype i{}; i != rects.size() - 1; ++i) {
-        line = new fpsDraggableLine(parent);
+        line = new DraggableLine(parent);
         line->setScenePos(rects[i][0].bottom());
         line->show();
         parent->addDraggableLine(line);
         line = nullptr;
     }
     for (int i{}; i != rects[0].size() - 1; ++i) {
-        line = new fpsDraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
+        line = new DraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
         line->setScenePos(rects[0][i].right());
         line->show();
         parent->addDraggableLine(line);
@@ -205,7 +203,7 @@ namespace Util {
     }
 }
 
-/* static */ RectList ImageHandler::linesToRects(fpsGraphicsView *parent)
+/* static */ RectList ImageHandler::linesToRects(GraphicsView *parent)
 {
     QVector<int> vx, vy;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>fpsSingleWidget</class>
- <widget class="QWidget" name="fpsSingleWidget">
+ <class>SingleWidget</class>
+ <widget class="QWidget" name="SingleWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -36,6 +36,9 @@
        <horstretch>0</horstretch>
        <verstretch>1</verstretch>
       </sizepolicy>
+     </property>
+     <property name="features">
+      <set>QDockWidget::DockWidgetFeature::NoDockWidgetFeatures</set>
      </property>
      <property name="windowTitle">
       <string>Splitting Settings..</string>
@@ -211,7 +214,7 @@
     </widget>
    </item>
    <item row="1" column="2">
-    <widget class="fpsGraphicsView" name="graphicsView">
+    <widget class="GraphicsView" name="graphicsView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>1</horstretch>
@@ -314,9 +317,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>fpsGraphicsView</class>
+   <class>GraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header>fpsgraphicsview.h</header>
+   <header>graphicsview.h</header>
   </customwidget>
  </customwidgets>
  <resources>

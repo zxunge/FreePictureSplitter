@@ -17,8 +17,8 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpspreferenceswidget.h"
-#include "ui_fpspreferenceswidget.h"
+#include "preferenceswidget.h"
+#include "ui_preferenceswidget.h"
 #include "jsonconfigitems.h"
 #include "skins.h"
 
@@ -33,8 +33,8 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsPreferencesWidget::fpsPreferencesWidget(QWidget *parent)
-    : QWidget(parent), ui(new Ui::fpsPreferencesWidget)
+PreferencesWidget::PreferencesWidget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::PreferencesWidget)
 {
     ui->setupUi(this);
 
@@ -104,12 +104,12 @@ fpsPreferencesWidget::fpsPreferencesWidget(QWidget *parent)
     /************************************************/
 }
 
-fpsPreferencesWidget::~fpsPreferencesWidget()
+PreferencesWidget::~PreferencesWidget()
 {
     delete ui;
 }
 
-void fpsPreferencesWidget::saveChanges()
+void PreferencesWidget::saveChanges()
 {
     // Save configurations
     appConfig.app.style = ui->cbxStyle->currentText().toStdString();
@@ -140,20 +140,20 @@ void fpsPreferencesWidget::saveChanges()
     appConfig.options.nameOpt.rcContained = ui->chbNumberContained->isChecked();
 }
 
-void fpsPreferencesWidget::on_cbxLocation_currentIndexChanged(int index)
+void PreferencesWidget::on_cbxLocation_currentIndexChanged(int index)
 {
     // 2 : "The following path:"
     ui->lePath->setEnabled(index == 2);
     ui->tbtnBrowse->setEnabled(index == 2);
 }
 
-void fpsPreferencesWidget::on_cbxFormats_currentTextChanged(const QString &text)
+void PreferencesWidget::on_cbxFormats_currentTextChanged(const QString &text)
 {
     ui->sbxQuality->setEnabled(text.compare(u"jpg"_s, Qt::CaseInsensitive) == 0
                                || text.compare(u"jpeg"_s, Qt::CaseInsensitive) == 0);
 }
 
-void fpsPreferencesWidget::on_btnSelectColor_clicked()
+void PreferencesWidget::on_btnSelectColor_clicked()
 {
     QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };
     if (color.isValid()) {
@@ -162,12 +162,12 @@ void fpsPreferencesWidget::on_btnSelectColor_clicked()
     }
 }
 
-void fpsPreferencesWidget::on_rbtnSpecified_toggled(bool checked)
+void PreferencesWidget::on_rbtnSpecified_toggled(bool checked)
 {
     ui->lePrefix->setEnabled(checked);
 }
 
-void fpsPreferencesWidget::on_chbGrid_toggled(bool checked)
+void PreferencesWidget::on_chbGrid_toggled(bool checked)
 {
     ui->chbGrid->setChecked(checked);
     ui->frColor->setVisible(checked);
@@ -175,19 +175,19 @@ void fpsPreferencesWidget::on_chbGrid_toggled(bool checked)
     ui->sbxLineSize->setEnabled(checked);
 }
 
-void fpsPreferencesWidget::on_tbtnAppearance_toggled(bool checked)
+void PreferencesWidget::on_tbtnAppearance_toggled(bool checked)
 {
     if (checked)
         ui->wgtOptions->setCurrentIndex(0); // "Appearance"
 }
 
-void fpsPreferencesWidget::on_tbtnOutput_toggled(bool checked)
+void PreferencesWidget::on_tbtnOutput_toggled(bool checked)
 {
     if (checked)
         ui->wgtOptions->setCurrentIndex(1); // "Output"
 }
 
-void fpsPreferencesWidget::on_tbtnBrowse_clicked()
+void PreferencesWidget::on_tbtnBrowse_clicked()
 {
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
@@ -202,7 +202,7 @@ void fpsPreferencesWidget::on_tbtnBrowse_clicked()
     ui->lePath->setText(in);
 }
 
-void fpsPreferencesWidget::on_buttonBox_clicked(QAbstractButton *button)
+void PreferencesWidget::on_buttonBox_clicked(QAbstractButton *button)
 {
     if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole) {
         saveChanges();

@@ -17,17 +17,15 @@
  */
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "fpsprogressdialog.h"
-#include "ui_fpsprogressdialog.h"
+#include "progressdialog.h"
+#include "ui_progressdialog.h"
 
 #include <QMessageBox>
 
 using namespace Qt::Literals::StringLiterals;
 
-fpsProgressDialog::fpsProgressDialog(int total, QWidget *parent)
-    : QDialog(parent, Qt::FramelessWindowHint),
-      ui(new Ui::fpsProgressDialog),
-      m_cancelled(false)
+ProgressDialog::ProgressDialog(int total, QWidget *parent)
+    : QDialog(parent, Qt::FramelessWindowHint), ui(new Ui::ProgressDialog), m_cancelled(false)
 {
     ui->setupUi(this);
     ui->progressBar->setFormat(u"%p%"_s);
@@ -38,18 +36,18 @@ fpsProgressDialog::fpsProgressDialog(int total, QWidget *parent)
     ui->labRemaining->setText(QString::number(m_total));
 }
 
-fpsProgressDialog::~fpsProgressDialog()
+ProgressDialog::~ProgressDialog()
 {
     delete ui;
 }
 
-void fpsProgressDialog::proceed(int elapsed)
+void ProgressDialog::proceed(int elapsed)
 {
     ui->progressBar->setValue(elapsed);
     ui->labRemaining->setText(QString::number(m_total - elapsed));
 }
 
-void fpsProgressDialog::on_btnCancel_clicked()
+void ProgressDialog::on_btnCancel_clicked()
 {
     m_cancelled = true;
     Q_EMIT cancelled();
