@@ -23,8 +23,6 @@
 
 #include "rulerbar.h"
 #include <QPushButton>
-#include <qnamespace.h>
-#include <qpoint.h>
 
 class QMouseEvent;
 class QEvent;
@@ -49,9 +47,9 @@ public:
                            QGraphicsView *parent = nullptr)
     {
         if (oritation == Qt::Horizontal)
-            DraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent);
+            this->DraggableLine::DraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent);
         else
-            DraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
+            this->DraggableLine::DraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
     }
 
     void updateLine(const QPoint &pos); // Move on GraphicsView and update scenePos; pos -> whole
