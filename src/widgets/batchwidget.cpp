@@ -104,10 +104,6 @@ BatchWidget::BatchWidget(QWidget *parent)
     ui->viewList->setSelectionModel(m_selModel);
     ui->viewTable->setSelectionModel(m_selModel);
 
-    // Signal connections
-    connect(m_selModel, &QItemSelectionModel::selectionChanged, this,
-            &BatchWidget::selectionChanged);
-
     // Load configurations
     ui->cbxLocation->setCurrentIndex(
             appConfig.options.batchOpt.savingTo == Util::SavingTo::specified ? 1 : 0);
@@ -116,6 +112,8 @@ BatchWidget::BatchWidget(QWidget *parent)
     ui->lePath->setText(QString::fromStdString(appConfig.options.batchOpt.outPath));
     ui->btnChange->setEnabled(appConfig.options.batchOpt.savingTo == Util::SavingTo::specified);
     ui->chbSubdir->setChecked(appConfig.options.batchOpt.subDir);
+
+    connectEvents();
 }
 
 BatchWidget::~BatchWidget()
@@ -123,26 +121,84 @@ BatchWidget::~BatchWidget()
     delete ui;
 }
 
-void BatchWidget::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+void BatchWidget::connectEvents()
 {
-    Q_UNUSED(selected);
-    Q_UNUSED(deselected);
-    ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
-}
-
-void BatchWidget::on_actionShowThumbnails_toggled(bool checked)
-{
-    if (checked)
+    // Signal connections
+    connect(m_selModel, &QItemSelectionModel::selectionChanged, this,
+            [this](const QItemSelection &selected, const QItemSelection &deselected) {
+                ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
+            });
+    connect(ui->viewList, &QListView::clicked, this, [this](const QModelIndex &index) {
+        Q_EMIT message(m_model->itemData(index).value(0).toString());
+    });
+    connect(ui->viewTable, &QTableView::clicked, this, [this](const QModelIndex &index) {
+        Q_EMIT message(m_model->itemData(index).value(0).toString());
+    });
+    connect(ui->viewList, &QWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { m_contextMenu->exec(QCursor::pos()); });
+    connect(ui->viewTable, &QWidget::customContextMenuRequested, this,
+            [this](const QPoint &pos) { m_contextMenu->exec(QCursor::pos()); });
+    connect(ui->actionRemoveFromList, &QAction::triggered, this, &BatchWidget::removeSelectedItems);
+    connect(ui->actionShowThumbnails, &QAction::triggered, this, [this]() {
         ui->stView->setCurrentIndex(0); // pgThumbnail
-}
-
-void BatchWidget::on_actionShowDetailInfo_toggled(bool checked)
-{
-    if (checked)
+    });
+    connect(ui->actionShowDetailInfo, &QAction::triggered, this, [this]() {
         ui->stView->setCurrentIndex(1); // pgTable
+    });
+    connect(ui->actionAddPicture, &QAction::triggered, this, &BatchWidget::openPictures);
+    connect(ui->actionAddDirectory, &QAction::triggered, this, &BatchWidget::openFolder);
+    connect(ui->rbtnAverage, &QRadioButton::toggled, this, [this](bool checked) {
+        ui->sbxCols->setEnabled(checked);
+        ui->sbxRows->setEnabled(checked);
+
+        if (checked)
+            ui->gbxSplitSeq->setEnabled(true);
+    });
+    connect(ui->rbtnSize, &QRadioButton::toggled, this, [this](bool checked) {
+        ui->sbxHeight->setEnabled(checked);
+        ui->sbxWidth->setEnabled(checked);
+
+        if (checked)
+            ui->gbxSplitSeq->setEnabled(true);
+    });
+    connect(ui->rbtnTemplate, &QRadioButton::toggled, this, [this](bool checked) {
+        ui->cbxTemplate->setEnabled(checked);
+
+        if (checked) {
+            ui->sbxCols->setEnabled(false);
+            ui->sbxRows->setEnabled(false);
+            ui->sbxHeight->setEnabled(false);
+            ui->sbxWidth->setEnabled(false);
+            ui->gbxSplitSeq->setEnabled(false);
+        }
+    });
+    connect(ui->btnChange, &QPushButton::clicked, this, &BatchWidget::changePath);
+    connect(ui->btnOpen, &QPushButton::clicked, this, &BatchWidget::openInExplorer);
+    connect(ui->btnSplit, &QPushButton::clicked, this, &BatchWidget::startSplit);
 }
 
-void BatchWidget::on_actionAddPicture_triggered()
+void BatchWidget::removeSelectedItems()
+{
+    if (ui->stView->currentIndex() == 0) { // pgThumbnail
+        if (m_selModel->hasSelection()) {
+            QList<QPersistentModelIndex> indexes;
+            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
+                indexes << i;
+            foreach (const QPersistentModelIndex &i, indexes)
+                m_model->removeRow(i.row());
+        }
+    } else { // pgTable
+        if (m_selModel->hasSelection()) {
+            QList<QPersistentModelIndex> indexes;
+            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
+                indexes << i;
+            foreach (const QPersistentModelIndex &i, indexes)
+                m_model->removeRow(i.row());
+        }
+    }
+}
+
+void BatchWidget::openPictures()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
@@ -177,30 +233,7 @@ void BatchWidget::on_actionAddPicture_triggered()
         return;
 }
 
-void BatchWidget::closeEvent(QCloseEvent *event)
-{
-    // Save configurations
-    if (ui->cbxLocation->currentIndex() == 0) // "The same"
-        appConfig.options.batchOpt.savingTo = Util::SavingTo::same;
-    else
-        appConfig.options.batchOpt.savingTo = Util::SavingTo::specified;
-    appConfig.options.batchOpt.outPath = ui->lePath->text().toStdString();
-    appConfig.options.batchOpt.subDir = ui->chbSubdir->isChecked();
-
-    QWidget::closeEvent(event);
-}
-
-void BatchWidget::addPicture(const QString &fileName)
-{
-    QImageReader reader(fileName);
-    QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
-                                               QFileInfo(fileName).fileName()) };
-    QStandardItem *itemPath{ new QStandardItem(fileName) };
-    QStandardItem *itemSize{ new QStandardItem(getFileSizeString(fileName)) };
-    m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
-}
-
-void BatchWidget::on_actionAddDirectory_triggered()
+void BatchWidget::openFolder()
 {
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory containing pictures."),
@@ -230,7 +263,7 @@ void BatchWidget::on_actionAddDirectory_triggered()
     // m_pbLoading->setVisible(false);
 }
 
-void BatchWidget::on_cbxLocation_currentIndexChanged(int index)
+void BatchWidget::switchButtons(int index)
 {
     if (index == 1) { // "The following path:"
         ui->btnOpen->setEnabled(true);
@@ -243,38 +276,30 @@ void BatchWidget::on_cbxLocation_currentIndexChanged(int index)
     }
 }
 
-void BatchWidget::on_rbtnAverage_toggled(bool checked)
+void BatchWidget::closeEvent(QCloseEvent *event)
 {
-    ui->sbxCols->setEnabled(checked);
-    ui->sbxRows->setEnabled(checked);
+    // Save configurations
+    if (ui->cbxLocation->currentIndex() == 0) // "The same"
+        appConfig.options.batchOpt.savingTo = Util::SavingTo::same;
+    else
+        appConfig.options.batchOpt.savingTo = Util::SavingTo::specified;
+    appConfig.options.batchOpt.outPath = ui->lePath->text().toStdString();
+    appConfig.options.batchOpt.subDir = ui->chbSubdir->isChecked();
 
-    if (checked)
-        ui->gbxSplitSeq->setEnabled(true);
+    QWidget::closeEvent(event);
 }
 
-void BatchWidget::on_rbtnSize_toggled(bool checked)
+void BatchWidget::addPicture(const QString &fileName)
 {
-    ui->sbxHeight->setEnabled(checked);
-    ui->sbxWidth->setEnabled(checked);
-
-    if (checked)
-        ui->gbxSplitSeq->setEnabled(true);
+    QImageReader reader(fileName);
+    QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
+                                               QFileInfo(fileName).fileName()) };
+    QStandardItem *itemPath{ new QStandardItem(fileName) };
+    QStandardItem *itemSize{ new QStandardItem(getFileSizeString(fileName)) };
+    m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 }
 
-void BatchWidget::on_rbtnTemplate_toggled(bool checked)
-{
-    ui->cbxTemplate->setEnabled(checked);
-
-    if (checked) {
-        ui->sbxCols->setEnabled(false);
-        ui->sbxRows->setEnabled(false);
-        ui->sbxHeight->setEnabled(false);
-        ui->sbxWidth->setEnabled(false);
-        ui->gbxSplitSeq->setEnabled(false);
-    }
-}
-
-void BatchWidget::on_btnChange_clicked()
+void BatchWidget::changePath()
 {
     QString in{ QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
@@ -288,12 +313,12 @@ void BatchWidget::on_btnChange_clicked()
     ui->lePath->setText(in);
 }
 
-void BatchWidget::on_btnOpen_clicked()
+void BatchWidget::openInExplorer()
 {
     QDesktopServices::openUrl(QUrl(u"file:"_s + ui->lePath->text(), QUrl::TolerantMode));
 }
 
-void BatchWidget::on_btnSplit_clicked()
+void BatchWidget::startSplit()
 {
     QImageReader reader;
     RectList rects;
@@ -423,49 +448,4 @@ void BatchWidget::on_btnSplit_clicked()
         }
     }));
     dlg.exec();
-}
-
-void BatchWidget::on_actionRemoveFromList_triggered()
-{
-    if (ui->stView->currentIndex() == 0) { // pgThumbnail
-        if (m_selModel->hasSelection()) {
-            QList<QPersistentModelIndex> indexes;
-            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
-                indexes << i;
-            foreach (const QPersistentModelIndex &i, indexes)
-                m_model->removeRow(i.row());
-        }
-    } else { // pgTable
-        if (m_selModel->hasSelection()) {
-            QList<QPersistentModelIndex> indexes;
-            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
-                indexes << i;
-            foreach (const QPersistentModelIndex &i, indexes)
-                m_model->removeRow(i.row());
-        }
-    }
-}
-
-void BatchWidget::on_viewList_customContextMenuRequested(const QPoint &pos)
-{
-    ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
-    m_contextMenu->exec(QCursor::pos());
-}
-
-void BatchWidget::on_viewList_clicked(const QModelIndex &index)
-{
-    ui->actionRemoveFromList->setEnabled(true);
-    Q_EMIT message(m_model->itemData(index).value(0).toString());
-}
-
-void BatchWidget::on_viewTable_clicked(const QModelIndex &index)
-{
-    ui->actionRemoveFromList->setEnabled(true);
-    Q_EMIT message(m_model->itemData(index).value(0).toString());
-}
-
-void BatchWidget::on_viewTable_customContextMenuRequested(const QPoint &pos)
-{
-    ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
-    m_contextMenu->exec(QCursor::pos());
 }

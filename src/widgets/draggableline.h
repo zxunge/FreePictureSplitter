@@ -38,18 +38,23 @@ public:
     // refers to the position in whole GraphicsView.
     explicit DraggableLine(Qt::Orientation orientation = Qt::Horizontal,
                            const QPoint &pos = QPoint(0, RULER_SIZE),
-                           QGraphicsView *parent = nullptr);
-    explicit DraggableLine(QGraphicsView *parent = nullptr)
-        : DraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent)
+                           QGraphicsView *parent = nullptr)
+        : QPushButton(parent)
     {
+        init(orientation, pos);
+    }
+    explicit DraggableLine(QGraphicsView *parent = nullptr) : QPushButton(parent)
+    {
+        init(Qt::Horizontal, QPoint(0, RULER_SIZE));
     }
     explicit DraggableLine(Qt::Orientation oritation = Qt::Horizontal,
                            QGraphicsView *parent = nullptr)
+        : QPushButton(parent)
     {
         if (oritation == Qt::Horizontal)
-            this->DraggableLine::DraggableLine(Qt::Horizontal, QPoint(0, RULER_SIZE), parent);
+            init(Qt::Horizontal, QPoint(0, RULER_SIZE));
         else
-            this->DraggableLine::DraggableLine(Qt::Vertical, QPoint(RULER_SIZE, 0), parent);
+            init(Qt::Vertical, QPoint(RULER_SIZE, 0));
     }
 
     void updateLine(const QPoint &pos); // Move on GraphicsView and update scenePos; pos -> whole
@@ -68,6 +73,9 @@ public:
     // An identifier, enabling us to find it if it is being destroyed.
     void setId(quint64 id) { m_id = id; }
     quint64 id() const { return m_id; }
+
+private:
+    void init(Qt::Orientation orientation, const QPoint &pos);
 
 signals:
     void userDestruction();

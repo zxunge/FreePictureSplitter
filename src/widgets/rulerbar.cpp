@@ -43,14 +43,14 @@ static const RulerMetric rulerMetricInches{ { 1, 2, 4, 8, 16, 32, 64, 128, 256, 
                                               4'096, 8'192, 16'384, 32'768 },
                                             { 1, 2, 4, 8, 16 } };
 
-RulerBar::RulerBar(QWidget *parent, Qt::Orientation direction)
+RulerBar::RulerBar(QWidget *parent, Qt::Orientation orientation)
     : QWidget{ parent },
       m_faceColor{ parent->palette().color(QPalette::Window) },
       m_lower{},
       m_upper{},
       m_maxSize{},
       m_lastPos{ QPoint(0, 0) },
-      m_direction{ direction }
+      m_orientation{ orientation }
 {
     QFont f(font());
     f.setBold(false);
@@ -79,7 +79,7 @@ void RulerBar::paintEvent(QPaintEvent *event)
     QRect rulerRect{ rect() };
     painter.fillRect(rulerRect, m_faceColor);
 
-    if (m_direction == Qt::Horizontal) {
+    if (m_orientation == Qt::Horizontal) {
         painter.drawLine(rulerRect.bottomLeft(), rulerRect.bottomRight());
         painter.drawLine(rulerRect.topLeft(), rulerRect.topRight());
         painter.drawLine(rulerRect.topLeft(), rulerRect.bottomLeft());
@@ -96,8 +96,8 @@ void RulerBar::paintEvent(QPaintEvent *event)
 void RulerBar::drawTicker(QPainter *painter)
 {
     QRect allocation{ rect() };
-    int width{ (m_direction == Qt::Horizontal) ? allocation.width() : allocation.height() },
-            height{ (m_direction == Qt::Horizontal) ? allocation.height() : allocation.width() };
+    int width{ (m_orientation == Qt::Horizontal) ? allocation.width() : allocation.height() },
+            height{ (m_orientation == Qt::Horizontal) ? allocation.height() : allocation.width() };
     int length{}, idealLength{};
     double lower{ m_lower }, upper{ m_upper }; // Upper and lower limits, in ruler units
     double increment{}; // Number of pixels per unit
@@ -151,7 +151,7 @@ void RulerBar::drawTicker(QPainter *painter)
         int tick_index{};
         for (cur = start; cur <= end; cur += subdIncr) {
             pos = static_cast<int>(qRound((cur - lower) * increment + 1e-12));
-            if (m_direction == Qt::Horizontal) {
+            if (m_orientation == Qt::Horizontal) {
                 QRect rt(pos, height - length, 1, length);
                 painter->drawLine(rt.topLeft(), rt.bottomLeft());
             } else {
@@ -172,7 +172,7 @@ void RulerBar::drawTicker(QPainter *painter)
                     sprintf(unitStr, "%d", static_cast<int>(cur));
 
                 int w{ fm.horizontalAdvance(unitStr) };
-                if (m_direction == Qt::Horizontal)
+                if (m_orientation == Qt::Horizontal)
                     painter->drawText(pos + 2, allocation.top(), w, RULER_SIZE,
                                       Qt::AlignLeft | Qt::AlignTop, unitStr);
                 else {
@@ -199,7 +199,7 @@ void RulerBar::drawPos(QPainter *painter)
     double lower{ m_lower };
     double upper{ m_upper };
 
-    if (m_direction == Qt::Horizontal) {
+    if (m_orientation == Qt::Horizontal) {
         width = allocation.width();
         height = allocation.height();
         bsWidth = height / 2 + 2;
@@ -216,7 +216,7 @@ void RulerBar::drawPos(QPainter *painter)
     }
     if ((bsWidth > 0) && (bsHeight > 0)) {
         double increment{};
-        if (m_direction == Qt::Horizontal) {
+        if (m_orientation == Qt::Horizontal) {
             increment = static_cast<double>(width) / (upper - lower);
             x = qRound((position - lower) * increment) + bsWidth / 2 - 1;
             y = (height + bsHeight) / 2;
@@ -255,8 +255,8 @@ void RulerBar::mouseReleaseEvent(QMouseEvent *event)
     // Ensure that the line is moved out of ruler bar
     if (m_dragging && m_moved && event->button() == Qt::LeftButton) {
         m_dragging = false;
-        if ((m_direction == Qt::Horizontal && event->pos().y() >= height())
-            || (m_direction == Qt::Vertical && event->pos().x() >= width()))
+        if ((m_orientation == Qt::Horizontal && event->pos().y() >= height())
+            || (m_orientation == Qt::Vertical && event->pos().x() >= width()))
             Q_EMIT dragFinished(mapToParent(event->pos()),
                                 true); // Convert to the parent
         else

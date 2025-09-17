@@ -40,8 +40,8 @@ public:
     explicit BatchWidget(QWidget *parent = nullptr);
     ~BatchWidget();
 
-private slots:
-    void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
+private:
+    /* void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
 
     void on_actionShowThumbnails_toggled(bool checked);
 
@@ -65,21 +65,19 @@ private slots:
 
     void on_btnSplit_clicked();
 
-    void on_actionRemoveFromList_triggered();
-
-    void on_viewList_customContextMenuRequested(const QPoint &pos);
-
-    void on_viewList_clicked(const QModelIndex &index);
-
-    void on_viewTable_clicked(const QModelIndex &index);
-
-    void on_viewTable_customContextMenuRequested(const QPoint &pos);
+    void on_actionRemoveFromList_triggered(); */
+    void connectEvents();
+    void addPicture(const QString &fileName);
+    void removeSelectedItems();
+    void openPictures();
+    void openFolder();
+    void switchButtons(int index);
+    void changePath();
+    void openInExplorer();
+    void startSplit();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
-
-private:
-    void addPicture(const QString &fileName);
 
 signals:
     void message(const QString &msg, int timeout = 0);

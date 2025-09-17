@@ -185,7 +185,7 @@ void GraphicsView::dragStarted(const QPoint &startPos)
     setCursor(QCursor(Qt::CrossCursor));
 
     // Create a temporary line
-    if (qobject_cast<RulerBar *>(sender())->getOritation() == Qt::Horizontal) {
+    if (qobject_cast<RulerBar *>(sender())->getOrientation() == Qt::Horizontal) {
         m_tempLine = new DraggableLine(Qt::Horizontal, this);
         m_tempLine->updateLine(0, startPos.y());
     } else {
@@ -205,7 +205,7 @@ void GraphicsView::dragMoved(const QPoint &currentPos)
     int x{ qBound(0, currentPos.x(), width() - LINE_SIZE) };
     int y{ qBound(0, currentPos.y(), height() - LINE_SIZE) };
 
-    if (qobject_cast<RulerBar *>(sender())->getOritation() == Qt::Horizontal)
+    if (qobject_cast<RulerBar *>(sender())->getOrientation() == Qt::Horizontal)
         m_tempLine->updateLine(0, y);
     else
         m_tempLine->updateLine(x, 0);

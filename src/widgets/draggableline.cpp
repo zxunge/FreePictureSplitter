@@ -28,27 +28,6 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-DraggableLine::DraggableLine(Qt::Orientation orientation, const QPoint &pos, QGraphicsView *parent)
-    : QPushButton(parent)
-{
-    setAutoFillBackground(true);
-    setStyleSheet(u"background-color: rgb(50, 205, 50);"_s);
-
-    m_orientation = orientation;
-    if (m_orientation == Qt::Horizontal) {
-        setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
-        resize(parent->width(), LINE_SIZE);
-        move(0, pos.y());
-        m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().y();
-    } else {
-        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
-        resize(LINE_SIZE, parent->height());
-        move(pos.x(), 0);
-        m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().x();
-    }
-    raise(); // Move to top
-}
-
 void DraggableLine::updateLine(const QPoint &pos)
 {
     QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
@@ -80,6 +59,28 @@ void DraggableLine::setScenePos(int pos)
 {
     m_scenePos = pos;
     updateLine();
+}
+
+void DraggableLine::init(Qt::Orientation orientation, const QPoint &pos)
+{
+    QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
+
+    setAutoFillBackground(true);
+    setStyleSheet(u"background-color: rgb(50, 205, 50);"_s);
+
+    m_orientation = orientation;
+    if (m_orientation == Qt::Horizontal) {
+        setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
+        resize(parent->width(), LINE_SIZE);
+        move(0, pos.y());
+        m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().y();
+    } else {
+        setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
+        resize(LINE_SIZE, parent->height());
+        move(pos.x(), 0);
+        m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().x();
+    }
+    raise(); // Move to top
 }
 
 void DraggableLine::mousePressEvent(QMouseEvent *event)

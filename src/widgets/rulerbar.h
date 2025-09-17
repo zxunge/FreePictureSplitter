@@ -50,7 +50,7 @@ class RulerBar : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RulerBar(QWidget *parent = nullptr, Qt::Orientation direction = Qt::Horizontal);
+    explicit RulerBar(QWidget *parent = nullptr, Qt::Orientation orientation = Qt::Horizontal);
 
     void setFaceColor(const QColor &color)
     {
@@ -59,8 +59,8 @@ public:
     }
     QColor faceColor() const { return m_faceColor; }
 
-    void setOrientation(Qt::Orientation orientation) { m_direction = orientation; }
-    Qt::Orientation getOritation() const { return m_direction; }
+    void setOrientation(Qt::Orientation orientation) { m_orientation = orientation; }
+    Qt::Orientation getOrientation() const { return m_orientation; }
 
     void setRange(double lower, double upper, double maxSize);
     void updatePosition(const QPoint &pos);
@@ -88,7 +88,7 @@ private:
     QPoint m_dragStartPos;
 
 protected:
-    Qt::Orientation m_direction;
+    Qt::Orientation m_orientation;
     QPoint m_lastPos;
     QColor m_faceColor;
 
