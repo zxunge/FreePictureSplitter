@@ -26,7 +26,7 @@
 
 class QMouseEvent;
 class QEvent;
-class QGraphicsView;
+class QWidget;
 
 constexpr int LINE_SIZE{ 2 };
 
@@ -37,18 +37,16 @@ public:
     // According to Qt documentation, the following 2 'pos'es
     // refers to the position in whole GraphicsView.
     explicit DraggableLine(Qt::Orientation orientation = Qt::Horizontal,
-                           const QPoint &pos = QPoint(0, RULER_SIZE),
-                           QGraphicsView *parent = nullptr)
+                           const QPoint &pos = QPoint(0, RULER_SIZE), QWidget *parent = nullptr)
         : QPushButton(parent)
     {
         init(orientation, pos);
     }
-    explicit DraggableLine(QGraphicsView *parent = nullptr) : QPushButton(parent)
+    explicit DraggableLine(QWidget *parent = nullptr) : QPushButton(parent)
     {
         init(Qt::Horizontal, QPoint(0, RULER_SIZE));
     }
-    explicit DraggableLine(Qt::Orientation oritation = Qt::Horizontal,
-                           QGraphicsView *parent = nullptr)
+    explicit DraggableLine(Qt::Orientation oritation = Qt::Horizontal, QWidget *parent = nullptr)
         : QPushButton(parent)
     {
         if (oritation == Qt::Horizontal)

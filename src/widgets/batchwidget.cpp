@@ -113,16 +113,6 @@ BatchWidget::BatchWidget(QWidget *parent)
     ui->btnChange->setEnabled(appConfig.options.batchOpt.savingTo == Util::SavingTo::specified);
     ui->chbSubdir->setChecked(appConfig.options.batchOpt.subDir);
 
-    connectEvents();
-}
-
-BatchWidget::~BatchWidget()
-{
-    delete ui;
-}
-
-void BatchWidget::connectEvents()
-{
     // Signal connections
     connect(m_selModel, &QItemSelectionModel::selectionChanged, this,
             [this](const QItemSelection &selected, const QItemSelection &deselected) {
@@ -175,6 +165,11 @@ void BatchWidget::connectEvents()
     connect(ui->btnChange, &QPushButton::clicked, this, &BatchWidget::changePath);
     connect(ui->btnOpen, &QPushButton::clicked, this, &BatchWidget::openInExplorer);
     connect(ui->btnSplit, &QPushButton::clicked, this, &BatchWidget::startSplit);
+}
+
+BatchWidget::~BatchWidget()
+{
+    delete ui;
 }
 
 void BatchWidget::removeSelectedItems()

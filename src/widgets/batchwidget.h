@@ -41,32 +41,6 @@ public:
     ~BatchWidget();
 
 private:
-    /* void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
-
-    void on_actionShowThumbnails_toggled(bool checked);
-
-    void on_actionShowDetailInfo_toggled(bool checked);
-
-    void on_actionAddPicture_triggered();
-
-    void on_actionAddDirectory_triggered();
-
-    void on_cbxLocation_currentIndexChanged(int index);
-
-    void on_rbtnAverage_toggled(bool checked);
-
-    void on_rbtnSize_toggled(bool checked);
-
-    void on_rbtnTemplate_toggled(bool checked);
-
-    void on_btnChange_clicked();
-
-    void on_btnOpen_clicked();
-
-    void on_btnSplit_clicked();
-
-    void on_actionRemoveFromList_triggered(); */
-    void connectEvents();
     void addPicture(const QString &fileName);
     void removeSelectedItems();
     void openPictures();
