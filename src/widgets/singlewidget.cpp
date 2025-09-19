@@ -47,6 +47,8 @@ using namespace Util;
 SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::SingleWidget)
 {
     ui->setupUi(this);
+
+    // Signal connections
 }
 
 SingleWidget::~SingleWidget()

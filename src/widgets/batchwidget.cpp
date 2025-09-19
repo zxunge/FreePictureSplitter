@@ -163,8 +163,21 @@ BatchWidget::BatchWidget(QWidget *parent)
         }
     });
     connect(ui->btnChange, &QPushButton::clicked, this, &BatchWidget::changePath);
-    connect(ui->btnOpen, &QPushButton::clicked, this, &BatchWidget::openInExplorer);
+    connect(ui->btnOpen, &QPushButton::clicked, this, [this] {
+        QDesktopServices::openUrl(QUrl(u"file:"_s + ui->lePath->text(), QUrl::TolerantMode));
+    });
     connect(ui->btnSplit, &QPushButton::clicked, this, &BatchWidget::startSplit);
+    connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this, [this](int index) {
+        if (index == 1) { // "The following path:"
+            ui->btnOpen->setEnabled(true);
+            ui->lePath->setEnabled(true);
+            ui->btnChange->setEnabled(true);
+        } else {
+            ui->btnOpen->setEnabled(false);
+            ui->lePath->setEnabled(false);
+            ui->btnChange->setEnabled(false);
+        }
+    });
 }
 
 BatchWidget::~BatchWidget()
@@ -174,23 +187,11 @@ BatchWidget::~BatchWidget()
 
 void BatchWidget::removeSelectedItems()
 {
-    if (ui->stView->currentIndex() == 0) { // pgThumbnail
-        if (m_selModel->hasSelection()) {
-            QList<QPersistentModelIndex> indexes;
-            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
-                indexes << i;
-            foreach (const QPersistentModelIndex &i, indexes)
-                m_model->removeRow(i.row());
-        }
-    } else { // pgTable
-        if (m_selModel->hasSelection()) {
-            QList<QPersistentModelIndex> indexes;
-            foreach (const QModelIndex &i, m_selModel->selectedIndexes())
-                indexes << i;
-            foreach (const QPersistentModelIndex &i, indexes)
-                m_model->removeRow(i.row());
-        }
-    }
+    QList<QPersistentModelIndex> indexes;
+    foreach (const QModelIndex &i, m_selModel->selectedIndexes())
+        indexes << i;
+    foreach (const QPersistentModelIndex &i, indexes)
+        m_model->removeRow(i.row());
 }
 
 void BatchWidget::openPictures()
@@ -258,19 +259,6 @@ void BatchWidget::openFolder()
     // m_pbLoading->setVisible(false);
 }
 
-void BatchWidget::switchButtons(int index)
-{
-    if (index == 1) { // "The following path:"
-        ui->btnOpen->setEnabled(true);
-        ui->lePath->setEnabled(true);
-        ui->btnChange->setEnabled(true);
-    } else {
-        ui->btnOpen->setEnabled(false);
-        ui->lePath->setEnabled(false);
-        ui->btnChange->setEnabled(false);
-    }
-}
-
 void BatchWidget::closeEvent(QCloseEvent *event)
 {
     // Save configurations
@@ -306,11 +294,6 @@ void BatchWidget::changePath()
 
     appConfig.dialog.lastSavedToDir = in.toStdString();
     ui->lePath->setText(in);
-}
-
-void BatchWidget::openInExplorer()
-{
-    QDesktopServices::openUrl(QUrl(u"file:"_s + ui->lePath->text(), QUrl::TolerantMode));
 }
 
 void BatchWidget::startSplit()

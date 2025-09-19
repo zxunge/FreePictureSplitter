@@ -45,9 +45,7 @@ private:
     void removeSelectedItems();
     void openPictures();
     void openFolder();
-    void switchButtons(int index);
     void changePath();
-    void openInExplorer();
     void startSplit();
 
 protected:
