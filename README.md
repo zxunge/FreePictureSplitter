@@ -20,7 +20,7 @@
 English | [简体中文](docs/zh/index.md)
 
 # Introduction
-FreePictureSplitter is a fast, small, and easy-to-use picture splitter!
+Empower your photo processing by splitting to its best :zap:
 
 > [!IMPORTANT]  
 > As we have moved some files out of this repo's history,
