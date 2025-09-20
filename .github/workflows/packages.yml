@@ -40,9 +40,9 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data -B build .
         cmake --build build -j
-        cmake --install build
+        cmake --install build --config Release
         
         # Copy DLLs
         win_dlls=("libb2-1.dll"               \
@@ -81,6 +81,9 @@ jobs:
         do
           cp -f /clang64/bin/$dll /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
         done
+
+        # Clean unnecessary files
+        rm -rf /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/include /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/lib
         
         # Also pack an archive
         cd /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
