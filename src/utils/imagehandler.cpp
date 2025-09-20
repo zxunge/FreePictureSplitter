@@ -46,7 +46,7 @@ namespace Util {
     // Then, cols info.
     if (width * height == 0
         || (mode == SplitMode::Size && (rowsOrHeight > height || colsOrWidth > width))
-        || (mode == SplitMode::Average && rowsOrHeight * colsOrWidth == 0))
+        || (mode == SplitMode::Average && rowsOrHeight * colsOrWidth == 0)) [[unlikely]]
         return RectList();
 
     int basicRowHeight, basicColWidth, legacyRowHeight, legacyColWidth;

@@ -24,6 +24,9 @@
 #include <QGraphicsPixmapItem>
 #include <QPromise>
 #include <QtConcurrent/QtConcurrentRun>
+#include <qaction.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
@@ -33,6 +36,43 @@ SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Single
     ui->setupUi(this);
 
     // Signal connections
+    connect(ui->actionOpen, &QAction::triggered, this, &SingleWidget::openPicture);
+    connect(ui->actionSave, &QAction::triggered, this, &SingleWidget::savePictures);
+    connect(ui->btnReset, &QPushButton::clicked, this, &SingleWidget::resetSplitLines);
+    connect(ui->actionZoomIn, &QAction::triggered, this, [this] { ui->graphicsView->zoomIn(); });
+    connect(ui->actionZoomOut, &QAction::triggered, this, [this] { ui->graphicsView->zoomOut(); });
+    connect(ui->rbtnAver, &QRadioButton::toggled, this, [this](bool checked) {
+        ui->sbxCols->setEnabled(checked);
+        ui->sbxRows->setEnabled(checked);
+
+        if (checked) {
+            ui->gbxSplitSeq->setEnabled(true);
+            if (ui->graphicsView->scene())
+                ui->btnReset->setEnabled(true);
+        }
+    });
+    connect(ui->rbtnSize, &QRadioButton::toggled, this, [this](bool checked) {
+        ui->sbxHeight->setEnabled(checked);
+        ui->sbxWidth->setEnabled(checked);
+
+        if (checked) {
+            ui->gbxSplitSeq->setEnabled(true);
+            if (ui->graphicsView->scene())
+                ui->btnReset->setEnabled(true);
+        }
+    });
+    connect(ui->rbtnManual, &QRadioButton::toggled, this, [this](bool checked) {
+        if (checked) {
+            ui->sbxCols->setEnabled(false);
+            ui->sbxRows->setEnabled(false);
+            ui->sbxHeight->setEnabled(false);
+            ui->sbxWidth->setEnabled(false);
+            ui->btnReset->setEnabled(false);
+            ui->gbxSplitSeq->setEnabled(false);
+            if (ui->graphicsView->scene())
+                ui->actionSave->setEnabled(true);
+        }
+    });
 }
 
 SingleWidget::~SingleWidget()
@@ -40,7 +80,7 @@ SingleWidget::~SingleWidget()
     delete ui;
 }
 
-void SingleWidget::on_actionOpen_triggered()
+void SingleWidget::openPicture()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
@@ -96,7 +136,7 @@ void SingleWidget::on_actionOpen_triggered()
                              QMessageBox::Close);
 }
 
-void SingleWidget::on_actionSave_triggered()
+void SingleWidget::savePictures()
 {
     QVector<QImage> imageList;
     QImageWriter writer;
@@ -220,7 +260,7 @@ void SingleWidget::on_actionSave_triggered()
     }
 }
 
-void SingleWidget::on_btnReset_clicked()
+void SingleWidget::resetSplitLines()
 {
     m_imgReader.setFileName(m_imgReader.fileName());
 
@@ -267,52 +307,4 @@ void SingleWidget::on_btnReset_clicked()
     ui->actionSave->setEnabled(true);
     ui->graphicsView->removeAllDraggableLines();
     ImageHandler::rectsToLines(m_rects, ui->graphicsView);
-}
-
-void SingleWidget::on_rbtnSize_toggled(bool checked)
-{
-    ui->sbxHeight->setEnabled(checked);
-    ui->sbxWidth->setEnabled(checked);
-
-    if (checked) {
-        ui->gbxSplitSeq->setEnabled(true);
-        if (ui->graphicsView->scene())
-            ui->btnReset->setEnabled(true);
-    }
-}
-
-void SingleWidget::on_rbtnAver_toggled(bool checked)
-{
-    ui->sbxCols->setEnabled(checked);
-    ui->sbxRows->setEnabled(checked);
-
-    if (checked) {
-        ui->gbxSplitSeq->setEnabled(true);
-        if (ui->graphicsView->scene())
-            ui->btnReset->setEnabled(true);
-    }
-}
-
-void SingleWidget::on_actionZoomIn_triggered()
-{
-    ui->graphicsView->zoomIn();
-}
-
-void SingleWidget::on_actionZoomOut_triggered()
-{
-    ui->graphicsView->zoomOut();
-}
-
-void SingleWidget::on_rbtnManual_toggled(bool checked)
-{
-    if (checked) {
-        ui->sbxCols->setEnabled(false);
-        ui->sbxRows->setEnabled(false);
-        ui->sbxHeight->setEnabled(false);
-        ui->sbxWidth->setEnabled(false);
-        ui->btnReset->setEnabled(false);
-        ui->gbxSplitSeq->setEnabled(false);
-        if (ui->graphicsView->scene())
-            ui->actionSave->setEnabled(true);
-    }
 }

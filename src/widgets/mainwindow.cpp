@@ -26,6 +26,7 @@
 #include <QFile>
 
 #include <QWKWidgets/widgetwindowagent.h>
+#include <qevent.h>
 #include <widgetframe/windowbar.h>
 #include <widgetframe/windowbutton.h>
 
@@ -79,6 +80,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         AboutDialog dlg(this);
         dlg.exec();
     });
+    connect(ui->actionExit, &QAction::triggered, this, [this] { close(); });
 
     ui->labMark->setText(fpsVersionFull);
     installWindowAgent();
@@ -91,11 +93,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::on_actionExit_triggered()
-{
-    close();
 }
 
 void MainWindow::installWindowAgent()

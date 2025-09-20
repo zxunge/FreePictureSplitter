@@ -86,6 +86,60 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     ui->rbtnOriName->setChecked(appConfig.options.nameOpt.prefMode == Util::Prefix::same);
     ui->chbNumberContained->setChecked(appConfig.options.nameOpt.rcContained);
     /************************************************/
+
+    // Signal connections
+    connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this, [this](int index) {
+        // 2 : "The following path:"
+        ui->lePath->setEnabled(index == 2);
+        ui->tbtnBrowse->setEnabled(index == 2);
+    });
+    connect(ui->cbxFormats, &QComboBox::currentTextChanged, this, [this](const QString &text) {
+        ui->sbxQuality->setEnabled(text.compare(u"jpg"_s, Qt::CaseInsensitive) == 0
+                                   || text.compare(u"jpeg"_s, Qt::CaseInsensitive) == 0);
+    });
+    connect(ui->btnSelectColor, &QPushButton::clicked, this, [this]() {
+        QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };
+        if (color.isValid()) {
+            m_color = color;
+            ui->frColor->setPalette(QPalette(color));
+        }
+    });
+    connect(ui->rbtnSpecified, &QRadioButton::toggled, this,
+            [this](bool checked) { ui->lePrefix->setEnabled(checked); });
+    connect(ui->chbGrid, &QCheckBox::toggled, this, [this](bool checked) {
+        ui->chbGrid->setChecked(checked);
+        ui->frColor->setVisible(checked);
+        ui->btnSelectColor->setEnabled(checked);
+        ui->sbxLineSize->setEnabled(checked);
+    });
+    connect(ui->tbtnAppearance, &QToolButton::toggled, this, [this](bool checked) {
+        if (checked)
+            ui->wgtOptions->setCurrentIndex(0); // "Appearance"
+    });
+    connect(ui->tbtnOutput, &QToolButton::toggled, this, [this](bool checked) {
+        if (checked)
+            ui->wgtOptions->setCurrentIndex(1); // "Output"
+    });
+    connect(ui->tbtnBrowse, &QToolButton::clicked, this, [&, this]() {
+        QString in{ QFileDialog::getExistingDirectory(
+                this, tr("Choose a directory to save pictures."),
+                appConfig.dialog.lastSavedToDir.empty()
+                        ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
+                        : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
+        if (in.isEmpty())
+            return;
+
+        appConfig.dialog.lastSavedToDir = in.toStdString();
+        appConfig.options.outputOpt.outPath = in.toStdString();
+        ui->lePath->setText(in);
+    });
+    connect(ui->buttonBox, &QDialogButtonBox::clicked, this, [&, this](QAbstractButton *button) {
+        if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole) {
+            saveChanges();
+            // Change theme
+            Util::setAppSkin(qApp, QString::fromStdString(appConfig.app.style));
+        }
+    });
 }
 
 PreferencesWidget::~PreferencesWidget()
@@ -122,75 +176,4 @@ void PreferencesWidget::saveChanges()
             ui->rbtnSpecified->isChecked() ? Util::Prefix::specified : Util::Prefix::same;
     appConfig.options.nameOpt.prefix = ui->lePrefix->text().toStdString();
     appConfig.options.nameOpt.rcContained = ui->chbNumberContained->isChecked();
-}
-
-void PreferencesWidget::on_cbxLocation_currentIndexChanged(int index)
-{
-    // 2 : "The following path:"
-    ui->lePath->setEnabled(index == 2);
-    ui->tbtnBrowse->setEnabled(index == 2);
-}
-
-void PreferencesWidget::on_cbxFormats_currentTextChanged(const QString &text)
-{
-    ui->sbxQuality->setEnabled(text.compare(u"jpg"_s, Qt::CaseInsensitive) == 0
-                               || text.compare(u"jpeg"_s, Qt::CaseInsensitive) == 0);
-}
-
-void PreferencesWidget::on_btnSelectColor_clicked()
-{
-    QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };
-    if (color.isValid()) {
-        m_color = color;
-        ui->frColor->setPalette(QPalette(color));
-    }
-}
-
-void PreferencesWidget::on_rbtnSpecified_toggled(bool checked)
-{
-    ui->lePrefix->setEnabled(checked);
-}
-
-void PreferencesWidget::on_chbGrid_toggled(bool checked)
-{
-    ui->chbGrid->setChecked(checked);
-    ui->frColor->setVisible(checked);
-    ui->btnSelectColor->setEnabled(checked);
-    ui->sbxLineSize->setEnabled(checked);
-}
-
-void PreferencesWidget::on_tbtnAppearance_toggled(bool checked)
-{
-    if (checked)
-        ui->wgtOptions->setCurrentIndex(0); // "Appearance"
-}
-
-void PreferencesWidget::on_tbtnOutput_toggled(bool checked)
-{
-    if (checked)
-        ui->wgtOptions->setCurrentIndex(1); // "Output"
-}
-
-void PreferencesWidget::on_tbtnBrowse_clicked()
-{
-    QString in{ QFileDialog::getExistingDirectory(
-            this, tr("Choose a directory to save pictures."),
-            appConfig.dialog.lastSavedToDir.empty()
-                    ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                    : QString::fromStdString(appConfig.dialog.lastSavedToDir)) };
-    if (in.isEmpty())
-        return;
-
-    appConfig.dialog.lastSavedToDir = in.toStdString();
-    appConfig.options.outputOpt.outPath = in.toStdString();
-    ui->lePath->setText(in);
-}
-
-void PreferencesWidget::on_buttonBox_clicked(QAbstractButton *button)
-{
-    if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole) {
-        saveChanges();
-        // Change theme
-        Util::setAppSkin(qApp, QString::fromStdString(appConfig.app.style));
-    }
 }

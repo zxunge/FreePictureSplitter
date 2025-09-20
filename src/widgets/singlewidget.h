@@ -22,22 +22,10 @@ public:
     explicit SingleWidget(QWidget *parent = nullptr);
     ~SingleWidget();
 
-private slots:
-    void on_actionOpen_triggered();
-
-    void on_actionSave_triggered();
-
-    void on_btnReset_clicked();
-
-    void on_rbtnSize_toggled(bool checked);
-
-    void on_rbtnAver_toggled(bool checked);
-
-    void on_actionZoomIn_triggered();
-
-    void on_actionZoomOut_triggered();
-
-    void on_rbtnManual_toggled(bool checked);
+private:
+    void openPicture();
+    void savePictures();
+    void resetSplitLines();
 
 signals:
     void message(const QString &msg, int timeout = 0);

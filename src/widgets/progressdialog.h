@@ -27,9 +27,6 @@ signals:
 public slots:
     void proceed(int elapsed);
 
-private slots:
-    void on_btnCancel_clicked();
-
 private:
     Ui::ProgressDialog *ui;
 

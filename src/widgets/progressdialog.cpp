@@ -5,6 +5,7 @@
 #include "ui_progressdialog.h"
 
 #include <QMessageBox>
+#include <qpushbutton.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -18,6 +19,11 @@ ProgressDialog::ProgressDialog(int total, QWidget *parent)
     m_total = total;
     ui->progressBar->setRange(0, total);
     ui->labRemaining->setText(QString::number(m_total));
+
+    connect(ui->btnCancel, &QPushButton::clicked, this, [this] {
+        m_cancelled = true;
+        Q_EMIT cancelled();
+    });
 }
 
 ProgressDialog::~ProgressDialog()
@@ -29,10 +35,4 @@ void ProgressDialog::proceed(int elapsed)
 {
     ui->progressBar->setValue(elapsed);
     ui->labRemaining->setText(QString::number(m_total - elapsed));
-}
-
-void ProgressDialog::on_btnCancel_clicked()
-{
-    m_cancelled = true;
-    Q_EMIT cancelled();
 }
