@@ -14,6 +14,7 @@
 #include <QFile>
 #include <QObject>
 #include <QtAssert>
+#include <QtLogging>
 #if defined(__MINGW32__) || defined(__MINGW64__)
 #  include <QLibrary>
 #endif // __MINGW32__ || __MINGW64__
@@ -21,10 +22,11 @@
 #ifdef Q_OS_WIN
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
-#  include <cstdlib>
 #endif // Q_OS_WIN
 #include <rfl/json.hpp>
 #include <SingleApplication>
+
+#include <cstdlib>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -56,6 +58,19 @@ using namespace Qt::Literals::StringLiterals;
     return false;
 }
 #endif // __MINGW32__ || __MINGW64__
+
+QtMessageHandler originalHandler{};
+
+void logToFile(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+    QString message{ qFormatLogMessage(type, context, msg) };
+    static FILE *f{ fopen("log.txt", "a") };
+    fprintf(f, "%s\n", qPrintable(message));
+    fflush(f);
+
+    if (originalHandler)
+        originalHandler(type, context, msg);
+}
 
 inline void loadTranslations(QApplication *a)
 {
@@ -168,7 +183,8 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    qSetMessagePattern(u"%{appname} [%{type}] in %{file}:%{line}: %{message}"_s);
+    qSetMessagePattern(u"%{time [yyyy-MM-dd hh:mm:ss.z]} [%{type}] %{message}"_s);
+    originalHandler = qInstallMessageHandler(logToFile);
     QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
             Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);

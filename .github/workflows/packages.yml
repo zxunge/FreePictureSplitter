@@ -83,7 +83,9 @@ jobs:
         done
 
         # Clean unnecessary files
-        rm -rf /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/include /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/lib
+        rm -rf /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/include \
+               /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/lib     \
+               /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/share
         
         # Also pack an archive
         cd /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/

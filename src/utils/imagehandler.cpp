@@ -10,10 +10,12 @@
 #include <QRect>
 #include <QPixmap>
 #include <QPainter>
+#include <QDebug>
 #include <QPen>
 
 #include <algorithm>
 #include <cmath>
+#include <qdebug.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -40,6 +42,8 @@ namespace Util {
 /* static */ RectList ImageHandler::getSubRects(int width, int height, int rowsOrHeight,
                                                 int colsOrWidth, SplitMode mode, SplitSequence seq)
 {
+    qInfo() << "Width: " << width << Qt::endl;
+    qInfo() << "Height: " << height << Qt::endl;
     // TODO@25/05/10 Improve algorithm.
     // There're 2 steps we should follow basically:
     // First, write rows info to `rects'
@@ -140,6 +144,7 @@ namespace Util {
     } else
         return RectList();
 
+    qInfo() << "Rects:" << rects << Qt::endl;
     return rects;
 }
 

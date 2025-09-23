@@ -26,7 +26,7 @@ public:
     {
         setImageFile(fn);
     }
-    ~ImageDocument();
+    ~ImageDocument() { }
 
     inline QString filePath() const { return m_filePath; }
     inline QString fullName() const { return QFileInfo(m_filePath).fileName(); }
