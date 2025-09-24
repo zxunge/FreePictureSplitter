@@ -36,9 +36,11 @@
 #include <QPromise>
 #include <QtConcurrent/QtConcurrentRun>
 #include <QtAssert>
+#include <qobjectdefs.h>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
+using namespace Core;
 
 BatchWidget::BatchWidget(QWidget *parent)
     : QWidget(parent),

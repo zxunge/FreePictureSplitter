@@ -64,7 +64,7 @@ QtMessageHandler originalHandler{};
 void logToFile(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QString message{ qFormatLogMessage(type, context, msg) };
-    static FILE *f{ fopen("log.txt", "a") };
+    static FILE *f{ fopen((Util::getDataDir() % "log.txt").toUtf8().constData(), "a") };
     fprintf(f, "%s\n", qPrintable(message));
     fflush(f);
 
@@ -184,7 +184,6 @@ int main(int argc, char *argv[])
 #endif
 
     qSetMessagePattern(u"%{time [yyyy-MM-dd hh:mm:ss.z]} [%{type}] %{message}"_s);
-    originalHandler = qInstallMessageHandler(logToFile);
     QGuiApplication::setAttribute(Qt::AA_DontCreateNativeWidgetSiblings);
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
             Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
@@ -195,6 +194,7 @@ int main(int argc, char *argv[])
     QGuiApplication::setApplicationDisplayName(fpsAppName);
 
     SingleApplication a(argc, argv);
+    originalHandler = qInstallMessageHandler(logToFile);
     QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
 
     qInfo("---------------");

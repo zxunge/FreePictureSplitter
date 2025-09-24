@@ -34,7 +34,7 @@ private:
     Ui::SingleWidget *ui;
 
     QImageReader m_imgReader;
-    Util::RectList m_rects;
+    Core::RectList m_rects;
 };
 
 #endif // SINGLEWIDGET_H

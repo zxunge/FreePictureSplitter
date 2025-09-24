@@ -9,13 +9,9 @@ target_sources(FreePictureSplitter PRIVATE
     stdpaths.cpp
     fonts.h
     fonts.cpp
-    imagehandler.cpp
-    imagehandler.h
     leaveevent.h
     hovereventfilter.h
     fileinfo.h
-    imagedocument.h
-    imagedocument.cpp
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

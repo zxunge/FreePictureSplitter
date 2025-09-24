@@ -8,6 +8,7 @@ set_target_properties(FreePictureSplitter PROPERTIES
 
 add_subdirectory(3rdparty)
 add_subdirectory(app)
+add_subdirectory(core)
 add_subdirectory(resources)
 add_subdirectory(ui)
 add_subdirectory(utils)

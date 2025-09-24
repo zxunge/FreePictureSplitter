@@ -30,6 +30,7 @@
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
+using namespace Core;
 
 SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::SingleWidget)
 {

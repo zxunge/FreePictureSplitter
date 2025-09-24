@@ -9,7 +9,7 @@
 #include <QFileInfo>
 #include <QDir>
 
-namespace Util {
+namespace Core {
 
 /*!
  * \brief The ImageDocument class
@@ -80,4 +80,4 @@ private:
     } m_splitInfo;
 };
 
-} // namespace Util
+} // namespace Core

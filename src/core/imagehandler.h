@@ -15,7 +15,7 @@
 class GraphicsView;
 class QPixmap;
 
-namespace Util {
+namespace Core {
 
 typedef QVector<QVector<QRect>> RectList;
 
@@ -65,6 +65,6 @@ public:
                               int size);
 };
 
-} // namespace Util
+} // namespace Core
 
 #endif // IMAGEHANDLER_H

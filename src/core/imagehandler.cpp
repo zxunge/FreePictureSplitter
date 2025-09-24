@@ -15,11 +15,10 @@
 
 #include <algorithm>
 #include <cmath>
-#include <qdebug.h>
 
 using namespace Qt::Literals::StringLiterals;
 
-namespace Util {
+namespace Core {
 
 /* static */ QStringList ImageHandler::getOutputList(const QString &prefix, const QString &suffix,
                                                      int rows, int cols, bool rcContained,
@@ -66,8 +65,8 @@ namespace Util {
 
         break;
     case SplitMode::Average:
-        basicRowHeight = round(static_cast<double>(height) / rowsOrHeight);
-        basicColWidth = round(static_cast<double>(width) / colsOrWidth);
+        basicRowHeight = std::round(static_cast<double>(height) / rowsOrHeight);
+        basicColWidth = std::round(static_cast<double>(width) / colsOrWidth);
         rows = rowsOrHeight;
         cols = colsOrWidth;
         break;
@@ -100,7 +99,7 @@ namespace Util {
         for (int i{}; i != rows - 1; ++i)
             for (int j{}; j != cols; ++j) {
                 rects[i][j].setTop(i * basicRowHeight);
-                rects[i][j].setBottom((i + 1) * basicRowHeight);
+                rects[i][j].setHeight(basicRowHeight);
             }
         // Legacy;
         for (int j{}; j != cols; ++j) {
@@ -111,7 +110,7 @@ namespace Util {
         for (int i{}; i != rows; ++i)
             for (int j{}; j != cols - 1; ++j) {
                 rects[i][j].setLeft(j * basicColWidth);
-                rects[i][j].setRight((j + 1) * basicColWidth);
+                rects[i][j].setWidth(basicColWidth);
             }
         // Legacy;
         for (int i{}; i != rows; ++i) {
@@ -123,7 +122,7 @@ namespace Util {
         for (int i{}; i != rows - 1; ++i)
             for (int j{}; j != cols; ++j) {
                 rects[i][j].setTop(i * basicRowHeight);
-                rects[i][j].setBottom((i + 1) * basicRowHeight);
+                rects[i][j].setHeight(basicRowHeight);
             }
         // Legacy;
         for (int j{}; j != cols; ++j) {
@@ -134,7 +133,7 @@ namespace Util {
         for (int i{}; i != rows; ++i)
             for (int j{ cols - 1 }; j != 0; --j) {
                 rects[i][j].setLeft(width - (cols - j) * basicColWidth);
-                rects[i][j].setRight(width - (cols - j - 1) * basicColWidth);
+                rects[i][j].setWidth(basicColWidth);
             }
         // Legacy;
         for (int i{}; i != rows; ++i) {
@@ -252,4 +251,4 @@ namespace Util {
         p.drawLine(rects[0][j].right(), 0, rects[0][j].right(), pixmap->height() - 1);
 }
 
-} // namespace Util
+} // namespace Core
