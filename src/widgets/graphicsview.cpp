@@ -7,7 +7,6 @@
 #include <QMouseEvent>
 #include <QPixmap>
 #include <QColor>
-#include <QRandomGenerator64>
 
 GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
@@ -82,7 +81,7 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
     m_box->move(0, 0);
     updateRuler();
 
-    for (auto l : m_plines)
+    foreach (auto l, m_plines)
         l->updateLine();
 }
 
@@ -90,7 +89,7 @@ void GraphicsView::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
     updateRuler();
-    for (auto l : m_plines)
+    foreach (auto l, m_plines)
         l->updateLine();
 }
 
@@ -118,7 +117,7 @@ void GraphicsView::zoomIn()
 {
     scale(ZOOM_RATIO, ZOOM_RATIO);
     updateRuler();
-    for (auto l : m_plines)
+    foreach(auto l, m_plines)
         l->updateLine();
 }
 
@@ -126,7 +125,7 @@ void GraphicsView::zoomOut()
 {
     scale(1 / ZOOM_RATIO, 1 / ZOOM_RATIO);
     updateRuler();
-    for (auto l : m_plines)
+    foreach (auto l, m_plines)
         l->updateLine();
 }
 
@@ -137,7 +136,6 @@ void GraphicsView::addDraggableLine(Qt::Orientation orientation, const QPoint &p
 
     QPointer<DraggableLine> fl{ new DraggableLine(orientation, this) };
     fl->updateLine(pos);
-    fl->setId(QRandomGenerator64::global()->generate());
     fl->show();
     connect(fl, &DraggableLine::userDestruction, this, &GraphicsView::lineDestruction);
     m_plines.push_back(fl);
@@ -148,14 +146,13 @@ void GraphicsView::addDraggableLine(DraggableLine *fl)
     if (!scene())
         return;
 
-    fl->setId(QRandomGenerator64::global()->generate());
     connect(fl, &DraggableLine::userDestruction, this, &GraphicsView::lineDestruction);
     m_plines.push_back(fl);
 }
 
 void GraphicsView::removeAllDraggableLines()
 {
-    for (auto l : m_plines)
+    foreach (auto l, m_plines)
         l->deleteLater();
     m_plines.clear();
 }

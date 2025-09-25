@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include <QColor>
 #include <QPalette>
+#include <QRandomGenerator64>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -65,6 +66,7 @@ void DraggableLine::init(Qt::Orientation orientation, const QPoint &pos)
         m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().x();
     }
     raise(); // Move to top
+    setId(QRandomGenerator64::global()->generate());
 }
 
 void DraggableLine::mousePressEvent(QMouseEvent *event)
