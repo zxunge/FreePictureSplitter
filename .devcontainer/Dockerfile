@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/devcontainers/cpp:ubuntu
+# Stage 1: Builder - Full environment for Qt installation
+FROM mcr.microsoft.com/devcontainers/cpp:ubuntu AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -17,6 +18,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && find /opt/Qt -name "*.pdb" -delete \
     && find /opt/Qt -name "*_debug*" -delete
 
+# Stage 2: Development runtime - Essential development environment
+FROM mcr.microsoft.com/devcontainers/cpp:ubuntu
+
+ENV DEBIAN_FRONTEND=noninteractive
+# Set UTF-8 locale to prevent Qt encoding warnings
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
