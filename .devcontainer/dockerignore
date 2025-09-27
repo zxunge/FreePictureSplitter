@@ -1,0 +1,12 @@
+# Ignore build artifacts
+build/
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+compile_commands.json
+
+# Ignore git
+.git/
+
+# Keep devcontainer files
+!.devcontainer/

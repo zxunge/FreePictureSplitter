@@ -1,14 +1,15 @@
 {
-  "name": "Code FreePictureSplitter",
+  "name": "FreePictureSplitter Development Environment",
   "image": "mcr.microsoft.com/devcontainers/cpp:ubuntu",
+  
   "build": { "dockerfile": "Dockerfile" },
   "features": {
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/jungaretti/features/make:1": {},
-    "ghcr.io/devcontainers/features/python:1": {
-      "toolsToInstall": "aqtinstall"
-    }
+    "ghcr.io/devcontainers/features/python:1": {}
   },
+  
+  // Configure tool-specific properties
   "customizations": {
     "vscode": {
       "extensions": [
@@ -20,9 +21,16 @@
         "github.vscode-github-actions"
       ],
       "settings": {
-        "editor.fontSize": 16
+        "editor.fontSize": 15,
+        "cmake.configureOnOpen": true,
+        "cmake.generator": "Ninja"
       }
     }
   },
-  "postCreateCommand": "aqt install-qt linux desktop 6.9.* linux_gcc_64 --autodesktop --outputdir /workspaces/Qt --modules qtimageformats"
+  
+  // Container environment variables
+  "containerEnv": {
+      "QTDIR": "/opt/Qt/6.9.2/gcc_64",
+      "QT_PLUGIN_PATH": "/opt/Qt/6.9.2/gcc_64/plugins"
+  }
 }
