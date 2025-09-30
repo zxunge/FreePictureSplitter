@@ -3,16 +3,18 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "jsonconfigitems.h"
-#include "leaveevent.h"
 #include "config.h"
-#include "hovereventfilter.h"
 #include "singlewidget.h"
 #include "batchwidget.h"
 #include "preferenceswidget.h"
 #include "aboutdialog.h"
 #include "clickablelabel.h"
-#include "stdpaths.h"
+#include "globaldefs.h"
+
+#include "utils/jsonconfigitems.h"
+#include "utils/leaveevent.h"
+#include "utils/hovereventfilter.h"
+#include "utils/stdpaths.h"
 
 #include <QEvent>
 #include <QCloseEvent>
@@ -26,7 +28,6 @@
 #include <QFile>
 
 #include <QWKWidgets/widgetwindowagent.h>
-#include <qevent.h>
 #include <widgetframe/windowbar.h>
 #include <widgetframe/windowbutton.h>
 
@@ -85,9 +86,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->labMark->setText(fpsVersionFull);
     installWindowAgent();
 
-    QFile layoutFile(Util::getDataDir() % Util::LAYOUT_FILENAME);
+    QFile layoutFile(Util::getDataDir() % LAYOUT_FILENAME);
     if (layoutFile.open(QIODevice::ReadOnly))
-        restoreState(layoutFile.readAll());
+        restoreGeometry(layoutFile.readAll());
 }
 
 MainWindow::~MainWindow()
@@ -206,9 +207,11 @@ bool MainWindow::event(QEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-    QFile layoutFile(Util::getDataDir() % Util::LAYOUT_FILENAME);
+    QFile layoutFile(Util::getDataDir() % LAYOUT_FILENAME);
     if (layoutFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
-        layoutFile.write(saveState());
+        layoutFile.write(saveGeometry());
+
+    appConfig.dialog.lastEnteredIndex = ui->wgtMain->currentIndex();
 
     QMainWindow::closeEvent(e);
 }

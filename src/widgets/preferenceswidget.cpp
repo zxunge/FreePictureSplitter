@@ -3,8 +3,9 @@
 
 #include "preferenceswidget.h"
 #include "ui_preferenceswidget.h"
-#include "jsonconfigitems.h"
-#include "skins.h"
+
+#include "utils/jsonconfigitems.h"
+#include "utils/skins.h"
 
 #include <QImageWriter>
 #include <QColorDialog>

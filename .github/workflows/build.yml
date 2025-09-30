@@ -10,6 +10,7 @@ on:
       - '.clang-format'
       - 'docs/**'
       - 'config/**'
+      - '.devcontainer/**'
       - '.github/workflows/*.yml'
   pull_request:
     branches:

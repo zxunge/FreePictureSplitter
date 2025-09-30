@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2024 2025 zxunge
 
 #include "graphicsview.h"
-#include "colors.h"
+#include "utils/colors.h"
 
 #include <QMouseEvent>
 #include <QPixmap>
@@ -117,7 +117,7 @@ void GraphicsView::zoomIn()
 {
     scale(ZOOM_RATIO, ZOOM_RATIO);
     updateRuler();
-    foreach(auto l, m_plines)
+    foreach (auto l, m_plines)
         l->updateLine();
 }
 

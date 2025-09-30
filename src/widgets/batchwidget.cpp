@@ -3,10 +3,11 @@
 
 #include "batchwidget.h"
 #include "ui_batchwidget.h"
-#include "jsonconfigitems.h"
-#include "imagehandler.h"
 #include "progressdialog.h"
-#include "fileinfo.h"
+
+#include "utils/jsonconfigitems.h"
+#include "core/imagehandler.h"
+#include "utils/fileinfo.h"
 
 #include <QButtonGroup>
 #include <QActionGroup>

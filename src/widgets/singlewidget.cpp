@@ -3,9 +3,10 @@
 
 #include "singlewidget.h"
 #include "ui_singlewidget.h"
-#include "jsonconfigitems.h"
 #include "progressdialog.h"
-#include "imagehandler.h"
+
+#include "core/imagehandler.h"
+#include "utils/jsonconfigitems.h"
 
 #include <QFileDialog>
 #include <QMessageBox>

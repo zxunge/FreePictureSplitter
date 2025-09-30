@@ -2,10 +2,12 @@
 // SPDX-FileCopyrightText: 2024 2025 zxunge
 
 #include "mainwindow.h"
-#include "jsonconfigitems.h"
-#include "skins.h"
-#include "stdpaths.h"
-#include "fonts.h"
+#include "globaldefs.h"
+
+#include "utils/jsonconfigitems.h"
+#include "utils/skins.h"
+#include "utils/stdpaths.h"
+#include "utils/fonts.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -64,9 +66,11 @@ QtMessageHandler originalHandler{};
 void logToFile(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QString message{ qFormatLogMessage(type, context, msg) };
-    static FILE *f{ fopen((Util::getDataDir() % "log.txt").toUtf8().constData(), "a") };
-    fprintf(f, "%s\n", qPrintable(message));
-    fflush(f);
+    static FILE *f{ fopen((Util::getDataDir() % LOG_FILENAME).toUtf8().constData(), "a") };
+    if (f) {
+        fprintf(f, "%s\n", qPrintable(message));
+        fflush(f);
+    }
 
     if (originalHandler)
         originalHandler(type, context, msg);
@@ -86,7 +90,7 @@ inline void loadTranslations(QApplication *a)
 
 [[nodiscard]] inline bool loadConfigurations()
 {
-    QFile cfgFile(Util::getDataDir() + Util::CONFIG_FILENAME);
+    QFile cfgFile(Util::getDataDir() % CONFIG_FILENAME);
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);
@@ -158,7 +162,7 @@ inline void loadTranslations(QApplication *a)
 {
     // Save configuration changes to file
     const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(appConfig)) };
-    QFile cfgFile(Util::getDataDir() + Util::CONFIG_FILENAME);
+    QFile cfgFile(Util::getDataDir() % CONFIG_FILENAME);
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
         QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error writing to configuration file."),

@@ -1,6 +1,6 @@
 list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_LIST_DIR}/ui")
 
-qt_add_executable(FreePictureSplitter "")
+qt_add_executable(FreePictureSplitter globaldefs.h)
 
 set_target_properties(FreePictureSplitter PROPERTIES
     WIN32_EXECUTABLE TRUE
@@ -17,7 +17,7 @@ add_subdirectory(widgets)
 if(WITH_PCH)
     target_precompile_headers(FreePictureSplitter PRIVATE fps_pch.h)
 endif()
-
+target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Core
     Qt::Gui

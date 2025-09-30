@@ -3,7 +3,6 @@
 
 #include "skins.h"
 #include "stdpaths.h"
-#include "debugutil.h"
 
 #include <QFile>
 #include <QMessageBox>
