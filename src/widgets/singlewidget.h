@@ -5,7 +5,7 @@
 #ifndef SINGLEWIDGET_H
 #define SINGLEWIDGET_H
 
-#include "imagehandler.h"
+#include "core/imagehandler.h"
 
 #include <QWidget>
 #include <QImageReader>
@@ -38,3 +38,4 @@ private:
 };
 
 #endif // SINGLEWIDGET_H
+
