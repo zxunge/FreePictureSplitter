@@ -7,8 +7,8 @@
 
 #include <QStringLiteral>
 
-const QString CONFIG_FILENAME{ QStringLiteral("/conf.json") };
-const QString LAYOUT_FILENAME{ QStringLiteral("/state.layout") };
-const QString LOG_FILENAME{ QStringLiteral("/log.txt") };
+#define CONFIG_FILENAME QStringLiteral("/conf.json")
+#define LAYOUT_FILENAME QStringLiteral("/geometry.layout")
+#define LOG_FILENAME QStringLiteral("/log.txt")
 
 #endif // GLOBALDEFS_H

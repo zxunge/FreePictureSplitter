@@ -5,11 +5,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl wget ca-certificates python3 python3-pip \
-    && pip3 install aqtinstall \
+    curl wget ca-certificates python3 python3-pip pipx \
+    && pipx install aqtinstall \
     && mkdir -p /opt/Qt \
     && cd /opt/Qt \
-    && aqt install-qt linux desktop 6.9.2 linux_gcc_64 \
+    && /root/.local/bin/aqt install-qt linux desktop 6.9.2 linux_gcc_64 \
         -m qtmultimedia \
     && rm -rf /opt/Qt/6.9.2/gcc_64/doc \
     && rm -rf /opt/Qt/6.9.2/gcc_64/examples \
