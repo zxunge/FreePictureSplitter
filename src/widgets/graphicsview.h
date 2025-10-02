@@ -41,7 +41,7 @@ public:
 public slots:
     void lineDestruction();
 
-signals:
+Q_SIGNALS:
     void positionChanged(int x, int y);
 
 protected:

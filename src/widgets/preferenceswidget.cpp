@@ -61,7 +61,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     ui->chbSubDir->setChecked(appConfig.options.outputOpt.subDir);
     ui->lePath->setText(QString::fromStdString(appConfig.options.outputOpt.outPath));
     const QByteArrayList supportedImageFormats{ QImageWriter::supportedImageFormats() };
-    foreach (const QByteArray &imageFormat, supportedImageFormats) {
+    Q_FOREACH (const QByteArray &imageFormat, supportedImageFormats) {
         ui->cbxFormats->addItem(QString(imageFormat));
     }
     // TODO@25/07/01 Add corrupted config item handling.
@@ -107,12 +107,8 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     });
     connect(ui->rbtnSpecified, &QRadioButton::toggled, this,
             [this](bool checked) { ui->lePrefix->setEnabled(checked); });
-    connect(ui->chbGrid, &QCheckBox::toggled, this, [this](bool checked) {
-        ui->chbGrid->setChecked(checked);
-        ui->frColor->setVisible(checked);
-        ui->btnSelectColor->setEnabled(checked);
-        ui->sbxLineSize->setEnabled(checked);
-    });
+    connect(ui->chbGrid, &QCheckBox::toggled, this,
+            [this](bool checked) { ui->gbxGridFigure->setEnabled(checked); });
     connect(ui->tbtnAppearance, &QToolButton::toggled, this, [this](bool checked) {
         if (checked)
             ui->wgtOptions->setCurrentIndex(0); // "Appearance"

@@ -35,7 +35,7 @@ private:
 protected:
     void closeEvent(QCloseEvent *event) override;
 
-signals:
+Q_SIGNALS:
     void message(const QString &msg, int timeout = 0);
 
 private:

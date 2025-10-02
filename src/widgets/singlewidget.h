@@ -27,7 +27,7 @@ private:
     void savePictures();
     void resetSplitLines();
 
-signals:
+Q_SIGNALS:
     void message(const QString &msg, int timeout = 0);
 
 private:
@@ -38,4 +38,3 @@ private:
 };
 
 #endif // SINGLEWIDGET_H
-

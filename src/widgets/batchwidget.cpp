@@ -175,9 +175,9 @@ BatchWidget::~BatchWidget()
 void BatchWidget::removeSelectedItems()
 {
     QList<QPersistentModelIndex> indexes;
-    foreach (const QModelIndex &i, m_selModel->selectedIndexes())
+    Q_FOREACH (const QModelIndex &i, m_selModel->selectedIndexes())
         indexes << i;
-    foreach (const QPersistentModelIndex &i, indexes)
+    Q_FOREACH (const QPersistentModelIndex &i, indexes)
         m_model->removeRow(i.row());
 }
 
@@ -185,7 +185,7 @@ void BatchWidget::openPictures()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    foreach (const QByteArray &mimeTypeName, supportedMimeTypes)
+    Q_FOREACH (const QByteArray &mimeTypeName, supportedMimeTypes)
         mimeTypeFilters.append(mimeTypeName);
 
     mimeTypeFilters.sort();
@@ -206,7 +206,7 @@ void BatchWidget::openPictures()
         // m_pbLoading->setRange(0, list.size());
         // m_pbLoading->setVisible(true);
         int count{};
-        foreach (const auto file, list) {
+        Q_FOREACH (const auto file, list) {
             QCoreApplication::processEvents();
             addPicture(file);
             // m_pbLoading->setValue(++count);
@@ -231,14 +231,14 @@ void BatchWidget::openFolder()
     QDir dir(in);
     QStringList nameFilters;
     const QByteArrayList supportedFormats{ QImageReader::supportedImageFormats() };
-    foreach (const auto format, supportedFormats)
+    Q_FOREACH (const auto format, supportedFormats)
         nameFilters << u"*."_s + QString(format);
 
     const QStringList list{ dir.entryList(nameFilters, QDir::Files) };
     int count{};
     // m_pbLoading->setRange(0, list.size());
     // m_pbLoading->setVisible(true);
-    foreach (const auto file, list) {
+    Q_FOREACH (const auto file, list) {
         QCoreApplication::processEvents();
         addPicture(in + u"/"_s + file);
         // m_pbLoading->setValue(++count);

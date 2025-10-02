@@ -54,8 +54,8 @@ protected:
     void drawTicker(QPainter *painter);
     void drawPos(QPainter *painter);
 
-signals:
-    // Definitions of dragging signals:
+Q_SIGNALS:
+    // Definitions of dragging Q_SIGNALS:
     // Starting, moving and ending
     void dragStarted(const QPoint &startPos);
     void dragMoved(const QPoint &currentPos);

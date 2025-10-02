@@ -21,7 +21,7 @@ public:
 
     bool isCancelled() const { return m_cancelled; }
 
-signals:
+Q_SIGNALS:
     void cancelled();
 
 public slots:

@@ -86,7 +86,7 @@ void SingleWidget::openPicture()
 {
     QStringList mimeTypeFilters;
     const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    foreach (const QByteArray &mimeTypeName, supportedMimeTypes)
+    Q_FOREACH (const QByteArray &mimeTypeName, supportedMimeTypes)
         mimeTypeFilters.append(mimeTypeName);
 
     mimeTypeFilters.sort();
@@ -115,13 +115,14 @@ void SingleWidget::openPicture()
         m_imgReader.setFileName(m_imgReader.fileName());
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
-        Q_EMIT message(tr("%1, %2x%3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
-                               .arg(m_imgReader.fileName())
-                               .arg(m_imgReader.size().width())
-                               .arg(m_imgReader.size().height())
-                               .arg(pixmap.depth())
-                               .arg(pixmap.logicalDpiY())
-                               .arg(pixmap.logicalDpiX()));
+        Q_EMIT message(
+                tr("%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
+                        .arg(m_imgReader.fileName())
+                        .arg(m_imgReader.size().width())
+                        .arg(m_imgReader.size().height())
+                        .arg(pixmap.depth())
+                        .arg(pixmap.logicalDpiY())
+                        .arg(pixmap.logicalDpiX()));
         ui->btnReset->setEnabled(true);
         ui->actionZoomIn->setEnabled(true);
         ui->actionZoomOut->setEnabled(true);

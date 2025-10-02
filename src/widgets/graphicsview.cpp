@@ -81,7 +81,7 @@ void GraphicsView::resizeEvent(QResizeEvent *event)
     m_box->move(0, 0);
     updateRuler();
 
-    foreach (auto l, m_plines)
+    Q_FOREACH (auto l, m_plines)
         l->updateLine();
 }
 
@@ -89,7 +89,7 @@ void GraphicsView::scrollContentsBy(int dx, int dy)
 {
     QGraphicsView::scrollContentsBy(dx, dy);
     updateRuler();
-    foreach (auto l, m_plines)
+    Q_FOREACH (auto l, m_plines)
         l->updateLine();
 }
 
@@ -117,7 +117,7 @@ void GraphicsView::zoomIn()
 {
     scale(ZOOM_RATIO, ZOOM_RATIO);
     updateRuler();
-    foreach (auto l, m_plines)
+    Q_FOREACH (auto l, m_plines)
         l->updateLine();
 }
 
@@ -125,7 +125,7 @@ void GraphicsView::zoomOut()
 {
     scale(1 / ZOOM_RATIO, 1 / ZOOM_RATIO);
     updateRuler();
-    foreach (auto l, m_plines)
+    Q_FOREACH (auto l, m_plines)
         l->updateLine();
 }
 
@@ -152,7 +152,7 @@ void GraphicsView::addDraggableLine(DraggableLine *fl)
 
 void GraphicsView::removeAllDraggableLines()
 {
-    foreach (auto l, m_plines)
+    Q_FOREACH (auto l, m_plines)
         l->deleteLater();
     m_plines.clear();
 }

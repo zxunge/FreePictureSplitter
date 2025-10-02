@@ -27,7 +27,7 @@ Empower your photo processing by splitting to its best :zap:
 > please re-clone this repository if you have previously cloned it before 2025/07/08.
 
 ## Project Demo
-<video src="https://github.com/user-attachments/assets/d36a9fd0-6d29-4a09-a1d4-fe8c469507ec" data-canonical-src="https://github.com/user-attachments/assets/d36a9fd0-6d29-4a09-a1d4-fe8c469507ec" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
+<video src="https://github.com/user-attachments/assets/7e40c6ab-58ca-4f65-9c35-8c9878b08c17" data-canonical-src="https://github.com/user-attachments/assets/7e40c6ab-58ca-4f65-9c35-8c9878b08c17" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
 
 > [!Note]
 > When we introduce something of FreePictureSplitter later, we refer to FPS version 3 and higher.

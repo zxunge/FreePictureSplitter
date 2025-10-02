@@ -19,7 +19,7 @@ QStringList getAvailableSkins()
 {
     QStringList list;
     QDir skinDir(Util::getSkinsDir());
-    foreach (const auto skin, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
+    Q_FOREACH (const auto skin, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
         // Obtain the skin's name
         QFile file(Util::getSkinsDir() + u"/"_s + skin);
         if (file.open(QFile::ReadOnly)) {
@@ -41,7 +41,7 @@ bool setAppSkin(QApplication *app, const QString &skinName)
     // Search for a skin file
     QDir skinDir(Util::getSkinsDir());
 
-    foreach (const auto fileName, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
+    Q_FOREACH (const auto fileName, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
         styleFile.setFileName(Util::getSkinsDir() + u"/"_s + fileName);
         if (styleFile.open(QFile::ReadOnly)) {
             QTextStream in(&styleFile);
