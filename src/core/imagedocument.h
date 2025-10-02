@@ -11,10 +11,15 @@
 #include <QPair>
 #include <QList>
 
+#include <expected>
+
 class GraphicsView;
 class QPixmap;
 
 namespace Core {
+
+template<typename T = void>
+using Result = std::expected<T, QString>;
 
 /*!
  * \brief The ImageDocument class
@@ -26,23 +31,15 @@ class ImageDocument : public QObject
     Q_OBJECT
 
 public:
-    enum ErrorType {
-        ERR_NO_ERROR = 0,
-        ERR_NO_RULE,
-        ERR_WRITING_FILE
-    };
     enum SplitMode { Size, Average };
-
     enum SplitSequence {
         LeftToRight = 0x0001,
         RightToLeft = 0x0002,
         UpToDown = 0x0004,
         DownToUp = 0x0008
     };
-    Q_ENUM(ErrorType)
     Q_ENUM(SplitMode)
     Q_ENUM(SplitSequence)
-    typedef QPair<ErrorType, QString> ErrorInfo; // Error type + extra information.
     typedef QList<QList<QRect>> RectList;
 
 public:
@@ -124,11 +121,6 @@ private:
             int m_splitHeight;
         };
     } m_splitInfo;
-};
-
-inline const QString ERROR_STRINGS[] {
-    [ImageDocument::ERR_NO_RULE] = QObject::tr("No rule to split this picture"),
-    [ImageDocument::ERR_WRITING_FILE] = QObject::tr("Error writing to file")
 };
 
 } // namespace Core
