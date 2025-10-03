@@ -6,6 +6,7 @@
 #include "progressdialog.h"
 
 #include "core/imagehandler.h"
+#include "core/imagedocument.h"
 #include "utils/jsonconfigitems.h"
 
 #include <QFileDialog>
@@ -81,6 +82,64 @@ SingleWidget::~SingleWidget()
 {
     delete ui;
 }
+
+/*
+ * Test code
+void SingleWidget::openPicture()
+{
+    QStringList mimeTypeFilters;
+    const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
+    Q_FOREACH (const QByteArray &mimeTypeName, supportedMimeTypes)
+        mimeTypeFilters.append(mimeTypeName);
+
+    mimeTypeFilters.sort();
+
+    QFileDialog fdlg;
+    fdlg.setWindowTitle(tr("Open a picture..."));
+    fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
+                              ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
+                              : QString::fromStdString(appConfig.dialog.lastOpenedDir));
+    fdlg.setMimeTypeFilters(mimeTypeFilters);
+    fdlg.setFileMode(QFileDialog::ExistingFile);
+    if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
+        && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {
+        m_imgDoc.setImageFile(fdlg.selectedFiles().constFirst());
+        appConfig.dialog.lastOpenedDir =
+                QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
+    } else
+        return;
+
+    if (m_imgDoc.canRead()) {
+        QPixmap pixmap{ QPixmap::fromImageReader(&m_imgReader) };
+        // We need to reset the file name before the calls to size(),
+        // see https://bugreports.qt.io/browse/QTBUG-138530
+        m_imgReader.setFileName(m_imgReader.fileName());
+        // Display image info on StatusBar; they are: file name, width * height, color depth,
+        // vertical DPI, horizontal DPI
+        Q_EMIT message(
+                tr("%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
+                        .arg(m_imgReader.fileName())
+                        .arg(m_imgReader.size().width())
+                        .arg(m_imgReader.size().height())
+                        .arg(pixmap.depth())
+                        .arg(pixmap.logicalDpiY())
+                        .arg(pixmap.logicalDpiX()));
+        ui->btnReset->setEnabled(true);
+        ui->actionZoomIn->setEnabled(true);
+        ui->actionZoomOut->setEnabled(true);
+        ui->sbxCols->setRange(1, m_imgReader.size().width());
+        ui->sbxRows->setRange(1, m_imgReader.size().height());
+        ui->sbxHeight->setRange(1, m_imgReader.size().height());
+        ui->sbxWidth->setRange(1, m_imgReader.size().width());
+        ui->graphicsView->showPixmap(pixmap);
+        if (ui->rbtnManual->isChecked())
+            ui->actionSave->setEnabled(true);
+    } else
+        QMessageBox::warning(this, fpsAppName,
+                             tr("Error loading picture file: %1.").arg(m_imgReader.fileName()),
+                             QMessageBox::Close);
+}
+ */
 
 void SingleWidget::openPicture()
 {

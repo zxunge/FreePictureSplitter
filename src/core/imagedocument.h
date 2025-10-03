@@ -50,19 +50,14 @@ public:
     }
     ~ImageDocument() { }
 
-    inline QString filePath() const { return m_filePath; }
-    inline QString fullName() const { return QFileInfo(m_filePath).fileName(); }
-    inline QString baseName() const { return QFileInfo(m_filePath).baseName(); }
-    inline QString format() const { return QFileInfo(m_filePath).suffix(); }
+    inline QString filePath() const { return m_fileInfo.absoluteFilePath(); }
+    inline QString fullName() const { return m_fileInfo.fileName(); }
+    inline QString baseName() const { return m_fileInfo.baseName(); }
+    inline QString format() const { return m_fileInfo.suffix(); }
 
     inline QImage toImage()
     {
-        m_imgReader.setFileName(m_filePath);
-        return m_imgReader.read();
-    };
-    operator QImage()
-    {
-        m_imgReader.setFileName(m_filePath);
+        m_imgReader.setFileName(filePath());
         return m_imgReader.read();
     };
 
@@ -70,8 +65,9 @@ public:
     {
         m_imgReader.setFileName(fn);
         if (m_imgReader.canRead()) {
-            m_filePath = QDir::cleanPath(fn);
-            Q_EMIT imageChanged(m_filePath);
+            m_imgReader.setAutoTransform(true);
+            m_fileInfo.setFile(QDir::cleanPath(fn));
+            Q_EMIT imageChanged(m_fileInfo.absoluteFilePath());
             return true;
         } else
             return false;
@@ -101,7 +97,7 @@ private:
 private:
     QImageReader m_imgReader;
     QImageWriter m_imgWriter;
-    QString m_filePath;
+    QFileInfo m_fileInfo;
     QString m_savePrefix;
     QString m_saveSuffix;
     QDir m_saveDir;
@@ -112,13 +108,13 @@ private:
     union {
         struct
         {
-            int m_splitRows;
-            int m_splitCols;
+            int rows;
+            int cols;
         };
         struct
         {
-            int m_splitWidth;
-            int m_splitHeight;
+            int width;
+            int height;
         };
     } m_splitInfo;
 };

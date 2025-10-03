@@ -6,6 +6,7 @@
 #define SINGLEWIDGET_H
 
 #include "core/imagehandler.h"
+#include "core/imagedocument.h"
 
 #include <QWidget>
 #include <QImageReader>
@@ -35,6 +36,7 @@ private:
 
     QImageReader m_imgReader;
     Core::RectList m_rects;
+    Core::ImageDocument m_imgDoc;
 };
 
 #endif // SINGLEWIDGET_H

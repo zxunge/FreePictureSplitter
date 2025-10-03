@@ -22,7 +22,7 @@ if(WIN32)
   option(DEPLOY_WINDOWS "Install exes/libs directly to prefix (no GNUInstallDirs)." ON)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -52,3 +52,13 @@ if(WITH_QT_GUI)
     add_subdirectory(src)
     add_subdirectory(lib)
 endif()
+
+message(STATUS "Configuration Options Summary --
+    Target system:          ${CMAKE_SYSTEM}
+    Compiler:
+        Build type:         ${CMAKE_BUILD_TYPE}
+        C compiler:         ${CMAKE_C_COMPILER}
+        C++ compiler:       ${CMAKE_CXX_COMPILER}
+        Qt version:         ${QT_DEFAULT_MAJOR_VERSION}
+        Qt toolchain:       ${QT_QMAKE_EXECUTABLE}"
+)
