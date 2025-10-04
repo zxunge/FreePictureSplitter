@@ -2,6 +2,9 @@
 // SPDX-FileCopyrightText: 2024 2025 zxunge
 // clang-format Language: Cpp
 
+#ifndef IMAGEDOCUMENT_H
+#define IMAGEDOCUMENT_H
+
 #include <QObject>
 #include <QImageReader>
 #include <QImageWriter>
@@ -120,3 +123,5 @@ private:
 };
 
 } // namespace Core
+
+#endif // IMAGEDOCUMENT_H
