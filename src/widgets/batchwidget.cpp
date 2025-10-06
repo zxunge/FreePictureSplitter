@@ -262,6 +262,7 @@ void BatchWidget::closeEvent(QCloseEvent *event)
 void BatchWidget::addPicture(const QString &fileName)
 {
     QImageReader reader(fileName);
+    reader.setScaledSize(QSize(80, 80));
     QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
                                                QFileInfo(fileName).fileName()) };
     QStandardItem *itemPath{ new QStandardItem(fileName) };

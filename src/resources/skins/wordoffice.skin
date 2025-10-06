@@ -29,7 +29,7 @@ QWK--WindowBar[bar-active=true] {
 }
 
 QWK--WindowBar[bar-active=false] {
-    background-color: #2b579a;
+    background-color: #404040;
 }
 
 /* Title label */
@@ -43,35 +43,47 @@ QWK--WindowBar>QLabel#win-title-label {
 
 /* System buttons */
 QWK--WindowBar>QAbstractButton[system-button=true] {
-    qproperty-iconSize: 12px 12px;
+    qproperty-iconSize: 14px 14px;
     min-width: 50px;
     border: none;
+    border-radius: 0px;
     padding: 0;
     background-color: transparent;
 }
 
+QWK--WindowBar>QAbstractButton#pin-button {
+    qproperty-iconNormal: url(":/windowBar/windowBar/pin-light.svg");
+    qproperty-iconChecked: url(":/windowBar/windowBar/pin-fill-light.svg");
+    qproperty-iconSize: 15px 15px;
+}
+
+QWK--WindowBar>QAbstractButton#pin-button:hover,
+QWK--WindowBar>QAbstractButton#pin-button:pressed {
+    background-color: rgba(0, 0, 0, 15%);
+}
+
 QWK--WindowBar>QAbstractButton#min-button {
-    qproperty-iconNormal: url(":/windowBar/windowBar/min-dark.svg");
-    qproperty-iconSize: 12px 12px;
+    qproperty-iconNormal: url(":/windowBar/windowBar/min-light.svg");
+    qproperty-iconSize: 14px 14px;
 }
 
 QWK--WindowBar>QAbstractButton#min-button:hover,
 QWK--WindowBar>QAbstractButton#min-button:pressed {
-    background-color: #f0f5f3;
+    background-color: rgba(0, 0, 0, 15%);
 }
 
 QWK--WindowBar>QAbstractButton#max-button {
-    qproperty-iconNormal: url(":/windowBar/windowBar/max-dark.svg");
-    qproperty-iconChecked: url(":/windowBar/windowBar/normal-dark.svg");
+    qproperty-iconNormal: url(":/windowBar/windowBar/max-light.svg");
+    qproperty-iconChecked: url(":/windowBar/windowBar/normal-light.svg");
 }
 
 QWK--WindowBar>QAbstractButton#max-button:hover,
 QWK--WindowBar>QAbstractButton#max-button:pressed {
-    background-color: #f0f5f3;
+    background-color: rgba(0, 0, 0, 15%);
 }
 
 QWK--WindowBar>QAbstractButton#close-button {
-    qproperty-iconNormal: url(":/windowBar/windowBar/close-dark.svg");
+    qproperty-iconNormal: url(":/windowBar/windowBar/close-light.svg");
 }
 
 QWK--WindowBar>QAbstractButton#close-button:hover,
@@ -89,6 +101,11 @@ QWK--WindowBar>QAbstractButton#icon-button {
     background-color: transparent;
 }
 /********************/
+
+QMainWindow
+{
+    background-color: #2b579a;
+}
 
 /*-----QLabel-----*/
 QLabel
