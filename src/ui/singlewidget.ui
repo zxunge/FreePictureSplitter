@@ -239,6 +239,7 @@
      </property>
      <addaction name="actionOpen"/>
      <addaction name="actionSave"/>
+     <addaction name="actionClosePicture"/>
      <addaction name="separator"/>
      <addaction name="actionZoomIn"/>
      <addaction name="actionZoomOut"/>
@@ -312,6 +313,24 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+O</string>
+   </property>
+  </action>
+  <action name="actionClosePicture">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/fps.qrc">
+     <normaloff>:/windowBar/windowBar/close-light.svg</normaloff>:/windowBar/windowBar/close-light.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Close Picture</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Close the current picture opened.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>

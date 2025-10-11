@@ -26,9 +26,6 @@
 #include <QGraphicsPixmapItem>
 #include <QPromise>
 #include <QtConcurrent/QtConcurrentRun>
-#include <qaction.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
@@ -41,6 +38,7 @@ SingleWidget::SingleWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Single
     // Signal connections
     connect(ui->actionOpen, &QAction::triggered, this, &SingleWidget::openPicture);
     connect(ui->actionSave, &QAction::triggered, this, &SingleWidget::savePictures);
+    connect(ui->actionClosePicture, &QAction::triggered, this, &SingleWidget::closePicture);
     connect(ui->btnReset, &QPushButton::clicked, this, &SingleWidget::resetSplitLines);
     connect(ui->actionZoomIn, &QAction::triggered, this, [this] { ui->graphicsView->zoomIn(); });
     connect(ui->actionZoomOut, &QAction::triggered, this, [this] { ui->graphicsView->zoomOut(); });
@@ -190,6 +188,7 @@ void SingleWidget::openPicture()
         ui->sbxHeight->setRange(1, m_imgReader.size().height());
         ui->sbxWidth->setRange(1, m_imgReader.size().width());
         ui->graphicsView->showPixmap(pixmap);
+        ui->actionClosePicture->setEnabled(true);
         if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
     } else
@@ -369,4 +368,12 @@ void SingleWidget::resetSplitLines()
     ui->actionSave->setEnabled(true);
     ui->graphicsView->removeAllDraggableLines();
     ImageHandler::rectsToLines(m_rects, ui->graphicsView);
+}
+
+void SingleWidget::closePicture()
+{
+    ui->graphicsView->clearScene();
+    m_imgReader.setFileName(QString());
+    ui->graphicsView->setRulersVisibility(false);
+    ui->actionClosePicture->setEnabled(false);
 }

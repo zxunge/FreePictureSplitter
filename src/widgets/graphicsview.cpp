@@ -13,9 +13,7 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
     m_hruler = new RulerBar(this, Qt::Horizontal);
     m_vruler = new RulerBar(this, Qt::Vertical);
     m_box = new CornerBox(this);
-    m_hruler->setVisible(false);
-    m_vruler->setVisible(false);
-    m_box->setVisible(false);
+    setRulersVisibility(false);
 
     setViewport(new QWidget);
     setMouseTracking(true);
@@ -38,14 +36,12 @@ GraphicsView::~GraphicsView()
 void GraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
 {
     if (scene())
-        delete scene();
+        scene()->deleteLater();
     QGraphicsScene *scene{ new QGraphicsScene };
     scene->addPixmap(pixmap);
     setScene(scene);
 
-    m_hruler->setVisible(true);
-    m_vruler->setVisible(true);
-    m_box->setVisible(true);
+    setRulersVisibility(true);
     updateRuler();
     removeAllDraggableLines();
 
@@ -55,6 +51,12 @@ void GraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
 
         viewport()->setStyleSheet(QString("background-color: %1;").arg(bgColor.name()));
     }
+}
+
+void GraphicsView::clearScene()
+{
+    if (scene())
+        scene()->deleteLater();
 }
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
@@ -201,7 +203,7 @@ void GraphicsView::dragFinished(const QPoint &endPos, bool isReal)
     // is not moved out of the visualized part of the scene.
     if (!isReal || !scene()->sceneRect().contains(mapToScene(viewport()->mapFromParent(endPos)))) {
         // Clear temporary widget
-        delete m_tempLine;
+        m_tempLine->deleteLater();
         m_tempLine = nullptr;
         setCursor(QCursor(Qt::ArrowCursor));
         return;

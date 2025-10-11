@@ -27,6 +27,7 @@ private:
     void openPicture();
     void savePictures();
     void resetSplitLines();
+    void closePicture();
 
 Q_SIGNALS:
     void message(const QString &msg, int timeout = 0);

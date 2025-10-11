@@ -685,7 +685,7 @@
     <message>
         <location filename="../../widgets/singlewidget.cpp" line="178"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>%1，宽度：%2，高度：%3，色深：%4，垂直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
         <location filename="../../widgets/singlewidget.cpp" line="197"/>
