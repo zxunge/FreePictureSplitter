@@ -50,7 +50,7 @@ jobs:
           plog-converter -t sarif -o pvs-report.sarif PVS-Studio.log -d V1042 -E ./src/3rdparty/
           
       - name: Publish report
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: pvs-report.sarif
           category: PVS-Studio
