@@ -80,7 +80,9 @@ void Core::ImageDocument::drawGridLines(QPixmap *pixmap, const QColor &color, in
     p.setPen(pen);
 
     for (qsizetype i{}; i != m_rects.size() - 1; ++i)
-        p.drawLine(0, m_rects.at(i).constFirst().bottom(), pixmap->width() - 1, m_rects.at(i).constFirst().bottom());
+        p.drawLine(0, m_rects.at(i).constFirst().bottom(), pixmap->width() - 1,
+                   m_rects.at(i).constFirst().bottom());
     for (qsizetype j{}; j != m_rects.constFirst().size() - 1; ++j)
-        p.drawLine(m_rects.constFirst().at(j).right(), 0, m_rects.constFirst().at(j).right(), pixmap->height() - 1);
+        p.drawLine(m_rects.constFirst().at(j).right(), 0, m_rects.constFirst().at(j).right(),
+                   pixmap->height() - 1);
 }

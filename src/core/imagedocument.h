@@ -13,6 +13,7 @@
 #include <QDir>
 #include <QPair>
 #include <QList>
+#include <QSize>
 
 #include <expected>
 #include <variant>
@@ -22,40 +23,48 @@ class QPixmap;
 
 namespace Core {
 
-template<typename T = void>
+template <typename T = void>
 using Result = std::expected<T, QString>;
 
 struct ImageOption
 {
 public:
-    enum SplitMode { Size, Average };
-    enum SplitSequence {
-        LeftToRight = 0x0001,
-        RightToLeft = 0x0002,
-        UpToDown = 0x0004,
-        DownToUp = 0x0008
-    };
-    ImageOption() {}
-
-    void setSequence(int seq)
-    {
-
-    }
-
-private:
-    typedef struct
-    {
-        int width;
-        int height;
-    } SplitSize;
-
     typedef struct
     {
         int rows;
         int cols;
     } SplitAverage;
 
-    std::variant<SplitAverage, SplitSize> m_info;
+    enum SplitSequence {
+        LeftToRight = 0x0001,
+        RightToLeft = 0x0002,
+        UpToDown = 0x0004,
+        DownToUp = 0x0008
+    };
+    ImageOption() { }
+
+    void setSequence(const int seq) { m_seq = static_cast<SplitSequence>(seq); }
+    int sequence() const { return static_cast<int>(m_seq); }
+
+    void setSize(const QSize size) { m_info = size; }
+    void setAverage(const int rows, const int cols) { m_info = SplitAverage(rows, cols); }
+
+    // If there's no value, then the mode is 'average'.
+    Result<QSize> size() const
+    {
+        return (std::get_if<QSize>(&m_info)) ? Result<QSize>(std::get<QSize>(m_info))
+                                             : std::unexpected(QString());
+    }
+    Result<SplitAverage> average() const
+    {
+        return (std::get_if<SplitAverage>(&m_info))
+                ? Result<SplitAverage>(std::get<SplitAverage>(m_info))
+                : std::unexpected(QString());
+    }
+
+private:
+    std::variant<SplitAverage, QSize> m_info;
+    SplitSequence m_seq;
 };
 
 /*!
@@ -105,7 +114,8 @@ public:
     void setOption(const ImageOption &option) { m_opt = option; }
     void setSequence(int seq) { m_opt.setSequence(seq); }
     void setOutputDir(const QDir &dir) { m_saveDir = dir; }
-    bool setOutputPath(const QString &path) {
+    bool setOutputPath(const QString &path)
+    {
         if (QFileInfo(path).isDir()) {
             m_saveDir.setPath(path);
             return true;
