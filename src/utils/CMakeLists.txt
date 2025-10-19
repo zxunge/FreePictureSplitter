@@ -7,7 +7,6 @@ target_sources(FreePictureSplitter PRIVATE
     stdpaths.h
     stdpaths.cpp
     fonts.h
-    fonts.cpp
     leaveevent.h
     hovereventfilter.h
     fileinfo.h

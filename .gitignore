@@ -31,3 +31,4 @@ aqtinstall.log
 # Clangd
 *.lock
 *.idx
+*.TMP

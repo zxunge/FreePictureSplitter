@@ -15,6 +15,7 @@
 #include <QList>
 
 #include <expected>
+#include <variant>
 
 class GraphicsView;
 class QPixmap;
@@ -23,6 +24,39 @@ namespace Core {
 
 template<typename T = void>
 using Result = std::expected<T, QString>;
+
+struct ImageOption
+{
+public:
+    enum SplitMode { Size, Average };
+    enum SplitSequence {
+        LeftToRight = 0x0001,
+        RightToLeft = 0x0002,
+        UpToDown = 0x0004,
+        DownToUp = 0x0008
+    };
+    ImageOption() {}
+
+    void setSequence(int seq)
+    {
+
+    }
+
+private:
+    typedef struct
+    {
+        int width;
+        int height;
+    } SplitSize;
+
+    typedef struct
+    {
+        int rows;
+        int cols;
+    } SplitAverage;
+
+    std::variant<SplitAverage, SplitSize> m_info;
+};
 
 /*!
  * \brief The ImageDocument class
@@ -34,15 +68,6 @@ class ImageDocument : public QObject
     Q_OBJECT
 
 public:
-    enum SplitMode { Size, Average };
-    enum SplitSequence {
-        LeftToRight = 0x0001,
-        RightToLeft = 0x0002,
-        UpToDown = 0x0004,
-        DownToUp = 0x0008
-    };
-    Q_ENUM(SplitMode)
-    Q_ENUM(SplitSequence)
     typedef QList<QList<QRect>> RectList;
 
 public:
@@ -77,8 +102,8 @@ public:
     }
     bool canRead() const { return m_imgReader.canRead(); }
 
-    void setMode(const SplitMode &mode) { m_mode = mode; }
-    void setSequence(int seq) { m_seq = seq; }
+    void setOption(const ImageOption &option) { m_opt = option; }
+    void setSequence(int seq) { m_opt.setSequence(seq); }
     void setOutputDir(const QDir &dir) { m_saveDir = dir; }
     bool setOutputPath(const QString &path) {
         if (QFileInfo(path).isDir()) {
@@ -88,8 +113,8 @@ public:
         return false;
     }
 
-    void drawLines(GraphicsView *subject);
-    void applyLines(GraphicsView *source);
+    void drawLinesTo(GraphicsView *subject);
+    void applyLinesFrom(GraphicsView *source);
 
 Q_SIGNALS:
     void imageChanged(const QString &fn);
@@ -105,21 +130,7 @@ private:
     QString m_saveSuffix;
     QDir m_saveDir;
     RectList m_rects;
-    SplitMode m_mode;
-    int m_seq;
-
-    union {
-        struct
-        {
-            int rows;
-            int cols;
-        };
-        struct
-        {
-            int width;
-            int height;
-        };
-    } m_splitInfo;
+    ImageOption m_opt;
 };
 
 } // namespace Core

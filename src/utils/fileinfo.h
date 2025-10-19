@@ -12,6 +12,8 @@ using namespace Qt::Literals::StringLiterals;
 
 namespace Util {
 
+inline namespace FileInfo {
+
 inline QString getFileSizeString(const QString &fn)
 {
     constexpr qint64 kilobyte{ 1024 };
@@ -28,6 +30,8 @@ inline QString getFileSizeString(const QString &fn)
     else
         return QString::number(size) % u" Bytes"_s;
 }
+
+} // namespace FileInfo
 
 } // namespace Util
 

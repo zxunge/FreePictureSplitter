@@ -12,7 +12,8 @@ class QApplication;
 
 namespace Util {
 
-//---------- Skins Helper ----------
+inline namespace Skin {
+
 /*!
  * \brief getAvailableSkins
  * \details Get available skins names under skins directory.
@@ -26,6 +27,8 @@ QStringList getAvailableSkins();
  * \details Set application's stylesheet to the corresponding file with name `skinName'.
  */
 bool setAppSkin(QApplication *app, const QString &skinName);
+
+} // namespace Skin
 
 } // namespace Util
 

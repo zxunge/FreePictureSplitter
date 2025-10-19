@@ -7,6 +7,8 @@
 
 namespace Util {
 
+inline namespace Color {
+
 QColor getDominantColor(const QPixmap &pixmap)
 {
     // Reduce the pixmap's size
@@ -75,5 +77,7 @@ QColor getContrastColor(const QColor &color)
 
     return (value > threshold) ? QColor(182, 182, 182) : QColor(240, 240, 240);
 }
+
+} // namespace Color
 
 } // namespace Util

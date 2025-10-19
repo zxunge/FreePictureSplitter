@@ -7,7 +7,7 @@
 
 #include <QRect>
 
-void Core::ImageDocument::drawLines(GraphicsView *subject)
+void Core::ImageDocument::drawLinesTo(GraphicsView *subject)
 {
     if (0 == m_rects.size() || 0 == m_rects.constFirst().size())
         return;
@@ -29,7 +29,7 @@ void Core::ImageDocument::drawLines(GraphicsView *subject)
     }
 }
 
-void Core::ImageDocument::applyLines(GraphicsView *source)
+void Core::ImageDocument::applyLinesFrom(GraphicsView *source)
 {
     QList<int> vx, vy;
 

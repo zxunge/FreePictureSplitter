@@ -10,6 +10,8 @@
 
 namespace Util {
 
+inline namespace Color {
+
 /*!
  * \brief getDominantColor
  * \details Extract a primary hue of the whole \p pixmap.
@@ -21,6 +23,8 @@ QColor getDominantColor(const QPixmap &pixmap);
  * \details Calculate the contrast color through perceived brightness.
  */
 QColor getContrastColor(const QColor &color);
+
+} // namespace Color
 
 } // namespace Util
 

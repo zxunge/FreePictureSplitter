@@ -15,6 +15,8 @@ using namespace Qt::Literals::StringLiterals;
 
 namespace Util {
 
+inline namespace Skin {
+
 QStringList getAvailableSkins()
 {
     QStringList list;
@@ -73,5 +75,7 @@ bool setAppSkin(QApplication *app, const QString &skinName)
     }
     return false;
 }
+
+} // namespace Skin
 
 } // namespace Util

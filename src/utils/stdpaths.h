@@ -9,7 +9,8 @@
 
 namespace Util {
 
-//---------- Standard Paths Helper ----------
+inline namespace StdPaths {
+
 /*!
  * \brief getSkinsDir
  * \return The absolute path of the skins directory.
@@ -28,6 +29,8 @@ QString getTranslationsDir();
  * \details Data directory contains configuration files.
  */
 QString getDataDir();
+
+} // namespace StdPaths
 
 } // namespace Util
 

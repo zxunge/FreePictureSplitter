@@ -10,6 +10,8 @@ using namespace Qt::Literals::StringLiterals;
 
 namespace Util {
 
+inline namespace StdPaths {
+
 QString getSkinsDir()
 {
 #if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
@@ -46,5 +48,7 @@ QString getDataDir()
 #endif
     return QDir::cleanPath(dir.absolutePath());
 }
+
+} // namespace StdPaths
 
 } // namespace Util
