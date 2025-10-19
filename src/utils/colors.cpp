@@ -3,79 +3,47 @@
 
 #include "colors.h"
 
-#include <cmath>
-
 namespace Util {
 
 inline namespace Color {
+
+using namespace Qt::Literals::StringLiterals;
 
 QColor getDominantColor(const QPixmap &pixmap)
 {
     // Reduce the pixmap's size
     const QImage scaled{
-        pixmap.scaled(64, 64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).toImage()
+        pixmap.scaled(32, 32, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).toImage()
     };
 
-    // Store weighted mean
-    double totalWeight{};
-    double sumH{}, sumS{}, sumV{};
+    // Average color
+    int64_t r{}, g{}, b{};
+    int count{};
+    QColor dominant;
 
     for (int y{}; y < scaled.height(); ++y) {
         for (int x{}; x < scaled.width(); ++x) {
             QColor color{ scaled.pixelColor(x, y) };
-            if (color.alpha() < 128)
-                continue;
-
-            float h{ color.hueF() };
-            float s{ color.saturationF() };
-            float v{ color.valueF() };
-
-            if (h < 0)
-                continue; // Skip invalid hue
-
-            // Calculate weight (saturation + brightness enhancement of the perceived emphasis)
-            double weight{ (s + 0.5) * (v + 0.3) };
-
-            // Handle hue loop
-            if (h < 0.25)
-                h += 1.0; // Move red area to continuous intervals
-
-            sumH += h * weight;
-            sumS += s * weight;
-            sumV += v * weight;
-            totalWeight += weight;
+            if (color.alpha() > 128) { // Ignore transparent pixels
+                r += color.red();
+                g += color.green();
+                b += color.blue();
+                count++;
+            }
         }
     }
 
-    if (totalWeight <= 0)
-        return QColor(128, 128, 128);
-
-    // Calculate weighted mean
-    float avgH{ fmodf(sumH / totalWeight, 1.0f) };
-    float avgS{ qBound(0.0f, static_cast<float>(sumS / totalWeight), 1.0f) };
-    float avgV{ qBound(0.0f, static_cast<float>(sumV / totalWeight), 1.0f) };
-
-    return QColor::fromHsvF(avgH, avgS, avgV);
+    if (count == 0)
+        dominant = Qt::gray; // Default
+    dominant.setRgb(r / count, g / count, b / count);
+    return dominant;
 }
 
 QColor getContrastColor(const QColor &color)
 {
-    // Convert to HSV and obtain the brightness component
-    QColor hsv{ color.toHsv() };
-    float value{ hsv.valueF() };
-
-    // Use brightness threshold (adjustable)
-    float threshold{ 0.6f }; // Use dark background if higher
-
-    // Take saturation into account,
-    // high saturation -> enhanced contrast color
-    float saturation{ hsv.saturationF() };
-
-    if (saturation > 0.7) {
-        threshold -= 0.15f; // high saturation -> lower threshold
-    }
-
-    return (value > threshold) ? QColor(182, 182, 182) : QColor(240, 240, 240);
+    // See https://www.w3.org/TR/WCAG20/#relativeluminancedef
+    double luminance{ 0.2126 * color.redF() + 0.7152 * color.greenF() + 0.0722 * color.blueF() };
+    return (luminance > 0.5) ? QColor::fromString(u"#c0c0c0"_s) : QColor::fromString(u"#ffffff"_s);
 }
 
 } // namespace Color

@@ -76,9 +76,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     ui->frColor->setPalette(QPalette(m_color));
     ui->sbxLineSize->setValue(appConfig.options.gridOpt.lineSize);
     ui->chbGrid->setChecked(appConfig.options.gridOpt.enabled);
-    ui->frColor->setVisible(appConfig.options.gridOpt.enabled);
-    ui->btnSelectColor->setEnabled(appConfig.options.gridOpt.enabled);
-    ui->sbxLineSize->setEnabled(appConfig.options.gridOpt.enabled);
+    ui->gbxGridFigure->setEnabled(appConfig.options.gridOpt.enabled);
 
     // ----- Naming Conventions -----
     ui->rbtnSpecified->setChecked(appConfig.options.nameOpt.prefMode == Util::Prefix::specified);

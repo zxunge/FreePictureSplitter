@@ -309,21 +309,27 @@
             </widget>
            </item>
            <item>
+            <widget class="QCheckBox" name="chbGrid">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Auto-generate an image with a grid illustrating how the pictures are splited.</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <widget class="QGroupBox" name="gbxGridFigure">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="title">
               <string>Grid Figure</string>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
-              <item row="1" column="1">
-               <widget class="QSpinBox" name="sbxLineSize"/>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-               </widget>
-              </item>
               <item row="2" column="0">
                <widget class="QLabel" name="label_9">
                 <property name="text">
@@ -331,23 +337,10 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="3">
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Vertical</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item row="2" column="2">
-               <widget class="QPushButton" name="btnSelectColor">
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_8">
                 <property name="text">
-                 <string>Select Color...</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -389,25 +382,35 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="2">
-               <widget class="QLabel" name="label_8">
+              <item row="2" column="3">
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Orientation::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_7">
                 <property name="text">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0" colspan="4">
-               <widget class="QCheckBox" name="chbGrid">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
+              <item row="2" column="2">
+               <widget class="QPushButton" name="btnSelectColor">
                 <property name="text">
-                 <string>Auto-generate an image with a grid illustrating how the pictures are splited.</string>
+                 <string>Select Color...</string>
                 </property>
                </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSpinBox" name="sbxLineSize"/>
               </item>
              </layout>
             </widget>
