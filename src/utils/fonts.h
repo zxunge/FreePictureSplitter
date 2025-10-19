@@ -6,8 +6,7 @@
 #define FONTS_H
 
 #include <QLocale>
-
-class QGuiApplication;
+#include <QGuiApplication>
 
 namespace Util {
 
