@@ -16,6 +16,7 @@
 #include <QSize>
 
 #include <expected>
+#include <optional>
 #include <variant>
 
 class GraphicsView;
@@ -50,16 +51,16 @@ public:
     void setAverage(const int rows, const int cols) { m_info = SplitAverage(rows, cols); }
 
     // If there's no value, then the mode is 'average'.
-    Result<QSize> size() const
+    std::optional<QSize> size() const
     {
-        return (std::get_if<QSize>(&m_info)) ? Result<QSize>(std::get<QSize>(m_info))
-                                             : std::unexpected(QString());
+        return (std::get_if<QSize>(&m_info)) ? std::optional<QSize>(std::get<QSize>(m_info))
+                                             : std::nullopt;
     }
-    Result<SplitAverage> average() const
+    std::optional<SplitAverage> average() const
     {
         return (std::get_if<SplitAverage>(&m_info))
-                ? Result<SplitAverage>(std::get<SplitAverage>(m_info))
-                : std::unexpected(QString());
+                ? std::optional<SplitAverage>(std::get<SplitAverage>(m_info))
+                : std::nullopt;
     }
 
 private:
@@ -91,6 +92,14 @@ public:
     inline QString fullName() const { return m_fileInfo.fileName(); }
     inline QString baseName() const { return m_fileInfo.baseName(); }
     inline QString format() const { return m_fileInfo.suffix(); }
+
+    std::optional<QSize> size()
+    {
+        // We need to reset the file name before the calls to size(),
+        // see https://bugreports.qt.io/browse/QTBUG-138530
+        m_imgReader.setFileName(m_imgReader.fileName());
+        return canRead() ? std::optional<QSize>(m_imgReader.size()) : std::nullopt;
+    }
 
     inline QImage toImage()
     {
