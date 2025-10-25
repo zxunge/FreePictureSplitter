@@ -409,52 +409,52 @@
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存至：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="314"/>
+        <location filename="../../ui/preferenceswidget.ui" line="330"/>
         <source>Grid Figure</source>
         <translation>网格图</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="323"/>
+        <location filename="../../ui/preferenceswidget.ui" line="401"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;分割线宽：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="330"/>
+        <location filename="../../ui/preferenceswidget.ui" line="336"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;网格线颜色：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="350"/>
+        <location filename="../../ui/preferenceswidget.ui" line="408"/>
         <source>Select Color...</source>
         <translation>选择颜色...</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="395"/>
+        <location filename="../../ui/preferenceswidget.ui" line="343"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;像素&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="408"/>
+        <location filename="../../ui/preferenceswidget.ui" line="320"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
         <translation>自动生成一份带网格图标明图片分割情况的图片。</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="418"/>
+        <location filename="../../ui/preferenceswidget.ui" line="421"/>
         <source>File Name Conventions</source>
         <translation>文件命名规则</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="424"/>
+        <location filename="../../ui/preferenceswidget.ui" line="427"/>
         <source>Use the original file name as the prefix</source>
         <translation>使用源文件名作为前缀</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="431"/>
+        <location filename="../../ui/preferenceswidget.ui" line="434"/>
         <source>Use the specified prefix:</source>
         <translation>使用指定前缀：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="441"/>
+        <location filename="../../ui/preferenceswidget.ui" line="444"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
         <translation>在文件名中包含[行数 * 列数]。</translation>
     </message>
@@ -464,12 +464,12 @@
         <translation>跟随系统</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="102"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="100"/>
         <source>Select a color for grid lines</source>
         <translation>为网格线选取一种颜色</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
@@ -618,107 +618,117 @@
         <translation>toolBar</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="254"/>
+        <location filename="../../ui/singlewidget.ui" line="255"/>
         <source>Open Picture File</source>
         <translation>打开图片文件</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="257"/>
+        <location filename="../../ui/singlewidget.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open a picture file to split.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;打开欲分割的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="260"/>
+        <location filename="../../ui/singlewidget.ui" line="261"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="272"/>
+        <location filename="../../ui/singlewidget.ui" line="273"/>
         <source>Save Pictures</source>
         <translation>保存图片</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="275"/>
+        <location filename="../../ui/singlewidget.ui" line="276"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save the splitted pictures.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存已分割的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="278"/>
+        <location filename="../../ui/singlewidget.ui" line="279"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="290"/>
+        <location filename="../../ui/singlewidget.ui" line="291"/>
         <source>Zoom &amp;In</source>
         <translation>放大(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="293"/>
+        <location filename="../../ui/singlewidget.ui" line="294"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed in.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;放大显示的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="296"/>
+        <location filename="../../ui/singlewidget.ui" line="297"/>
         <source>Ctrl+Alt+I</source>
         <translation>Ctrl+Alt+I</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="308"/>
+        <location filename="../../ui/singlewidget.ui" line="309"/>
         <source>Zoom &amp;Out</source>
         <translation>缩小(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="311"/>
+        <location filename="../../ui/singlewidget.ui" line="312"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed out.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;缩小显示的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="314"/>
+        <location filename="../../ui/singlewidget.ui" line="315"/>
         <source>Ctrl+Alt+O</source>
         <translation>Ctrl+Alt+O</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="154"/>
+        <location filename="../../ui/singlewidget.ui" line="327"/>
+        <source>Close Picture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/singlewidget.ui" line="330"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Close the current picture opened.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/singlewidget.cpp" line="148"/>
         <source>Open a picture...</source>
         <translation>打开一张图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="178"/>
+        <location filename="../../widgets/singlewidget.cpp" line="172"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation>%1，宽度：%2，高度：%3，色深：%4，垂直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="197"/>
+        <location filename="../../widgets/singlewidget.cpp" line="192"/>
         <source>Error loading picture file: %1.</source>
         <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="213"/>
+        <location filename="../../widgets/singlewidget.cpp" line="208"/>
         <source>Choose the output directory.</source>
         <translation>选择输出文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="239"/>
+        <location filename="../../widgets/singlewidget.cpp" line="234"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="252"/>
+        <location filename="../../widgets/singlewidget.cpp" line="247"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="260"/>
+        <location filename="../../widgets/singlewidget.cpp" line="255"/>
         <source>Error splitting picture.</source>
         <translation>分割图片出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="310"/>
+        <location filename="../../widgets/singlewidget.cpp" line="305"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation>写入到文件&apos;%1&apos;出错: %2。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="319"/>
+        <location filename="../../widgets/singlewidget.cpp" line="314"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
     </message>

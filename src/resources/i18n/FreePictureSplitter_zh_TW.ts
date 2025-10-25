@@ -409,52 +409,52 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="314"/>
+        <location filename="../../ui/preferenceswidget.ui" line="330"/>
         <source>Grid Figure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="323"/>
+        <location filename="../../ui/preferenceswidget.ui" line="401"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="330"/>
+        <location filename="../../ui/preferenceswidget.ui" line="336"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="350"/>
+        <location filename="../../ui/preferenceswidget.ui" line="408"/>
         <source>Select Color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="395"/>
+        <location filename="../../ui/preferenceswidget.ui" line="343"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="408"/>
+        <location filename="../../ui/preferenceswidget.ui" line="320"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="418"/>
+        <location filename="../../ui/preferenceswidget.ui" line="421"/>
         <source>File Name Conventions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="424"/>
+        <location filename="../../ui/preferenceswidget.ui" line="427"/>
         <source>Use the original file name as the prefix</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="431"/>
+        <location filename="../../ui/preferenceswidget.ui" line="434"/>
         <source>Use the specified prefix:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="441"/>
+        <location filename="../../ui/preferenceswidget.ui" line="444"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -464,12 +464,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="102"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="100"/>
         <source>Select a color for grid lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -618,107 +618,117 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="254"/>
+        <location filename="../../ui/singlewidget.ui" line="255"/>
         <source>Open Picture File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="257"/>
+        <location filename="../../ui/singlewidget.ui" line="258"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Open a picture file to split.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="260"/>
+        <location filename="../../ui/singlewidget.ui" line="261"/>
         <source>Ctrl+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="272"/>
+        <location filename="../../ui/singlewidget.ui" line="273"/>
         <source>Save Pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="275"/>
+        <location filename="../../ui/singlewidget.ui" line="276"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save the splitted pictures.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="278"/>
+        <location filename="../../ui/singlewidget.ui" line="279"/>
         <source>Ctrl+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="290"/>
+        <location filename="../../ui/singlewidget.ui" line="291"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="293"/>
+        <location filename="../../ui/singlewidget.ui" line="294"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed in.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="296"/>
+        <location filename="../../ui/singlewidget.ui" line="297"/>
         <source>Ctrl+Alt+I</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="308"/>
+        <location filename="../../ui/singlewidget.ui" line="309"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="311"/>
+        <location filename="../../ui/singlewidget.ui" line="312"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zoom the picture showed out.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/singlewidget.ui" line="314"/>
+        <location filename="../../ui/singlewidget.ui" line="315"/>
         <source>Ctrl+Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="154"/>
+        <location filename="../../ui/singlewidget.ui" line="327"/>
+        <source>Close Picture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/singlewidget.ui" line="330"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Close the current picture opened.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/singlewidget.cpp" line="148"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="178"/>
+        <location filename="../../widgets/singlewidget.cpp" line="172"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="197"/>
+        <location filename="../../widgets/singlewidget.cpp" line="192"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="213"/>
+        <location filename="../../widgets/singlewidget.cpp" line="208"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="239"/>
+        <location filename="../../widgets/singlewidget.cpp" line="234"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="252"/>
+        <location filename="../../widgets/singlewidget.cpp" line="247"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="260"/>
+        <location filename="../../widgets/singlewidget.cpp" line="255"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="310"/>
+        <location filename="../../widgets/singlewidget.cpp" line="305"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="319"/>
+        <location filename="../../widgets/singlewidget.cpp" line="314"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>
