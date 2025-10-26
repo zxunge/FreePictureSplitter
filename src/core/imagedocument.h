@@ -27,25 +27,30 @@ namespace Core {
 template <typename T = void>
 using Result = std::expected<T, QString>;
 
-struct ImageOption
+class ImageOption
 {
+    Q_GADGET
 public:
-    typedef struct
+    struct SplitAverage
     {
         int rows;
         int cols;
-    } SplitAverage;
+    };
 
     enum SplitSequence {
-        LeftToRight = 0x0001,
-        RightToLeft = 0x0002,
-        UpToDown = 0x0004,
-        DownToUp = 0x0008
+        LeftToRight = 0x0,
+        RightToLeft = 0x1,
+        UpToDown = 0x2,
+        DownToUp = 0x4
     };
+    Q_ENUM(SplitSequence)
+    Q_DECLARE_FLAGS(SplitSequences, SplitSequence)
+    Q_FLAG(SplitSequences)
+
     ImageOption() { }
 
-    void setSequence(const int seq) { m_seq = static_cast<SplitSequence>(seq); }
-    int sequence() const { return static_cast<int>(m_seq); }
+    void setSequence(const SplitSequences seq) { m_seq = seq; }
+    SplitSequences sequence() const { return m_seq; }
 
     void setSize(const QSize size) { m_info = size; }
     void setAverage(const int rows, const int cols) { m_info = SplitAverage(rows, cols); }
@@ -65,8 +70,9 @@ public:
 
 private:
     std::variant<SplitAverage, QSize> m_info;
-    SplitSequence m_seq;
+    SplitSequences m_seq;
 };
+Q_DECLARE_OPERATORS_FOR_FLAGS(ImageOption::SplitSequences)
 
 /*!
  * \brief The ImageDocument class
@@ -121,7 +127,7 @@ public:
     bool canRead() const { return m_imgReader.canRead(); }
 
     void setOption(const ImageOption &option) { m_opt = option; }
-    void setSequence(int seq) { m_opt.setSequence(seq); }
+    void setSequence(ImageOption::SplitSequences seq) { m_opt.setSequence(seq); }
     void setOutputDir(const QDir &dir) { m_saveDir = dir; }
     bool setOutputPath(const QString &path)
     {
