@@ -104,14 +104,14 @@ jobs:
         binarycreator --offline-only -t /clang64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup-win64
 
     - name: Upload Installer Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: FreePictureSplitterSetup-win64
         path: FreePictureSplitterSetup-win64.exe
         compression-level: 9
         
     - name: Upload Archive Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: FreePictureSplitter-portable-win64
         path: FreePictureSplitter-portable-win64.tar.xz
