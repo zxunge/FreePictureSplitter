@@ -47,6 +47,7 @@ HTML generation | ❎
 Quality control | ✅
 
 ## Releases
+**Recommended**: The latest built package for FreePictureSplitter can be downloaded from [GitHub Actions](https://github.com/zxunge/FreePictureSplitter/actions/workflows/packages.yml).
 The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
 
 ## Requirements
@@ -54,7 +55,6 @@ It's important to know that our **3.x** versions support Qt >= 5.15, while the i
 
 ## Credits
 This project includes icons from the [Fluent UI System Icons](https://github.com/microsoft/fluentui-system-icons) project, copyright Microsoft Corporation and used under the MIT License. See the NOTICES file for full license text.
-Some of the skins are from [QSS-STOCK](https://qss-stock.devsecstudio.com) and [feiyangqingyun](https://github.com/feiyangqingyun).
 
 ## Building
 See [Building](docs/en/build.md)
@@ -66,4 +66,3 @@ See [Building](docs/en/build.md)
 ## SAST Tools
 
 [PVS-Studio](https://pvs-studio.com/en/pvs-studio/?utm_source=website&utm_medium=github&utm_campaign=open_source) - static analyzer for C, C++, C#, and Java code.
-
