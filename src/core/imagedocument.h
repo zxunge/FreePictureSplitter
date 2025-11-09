@@ -37,12 +37,7 @@ public:
         int cols;
     };
 
-    enum SplitSequence {
-        LeftToRight = 0x0,
-        RightToLeft = 0x1,
-        UpToDown = 0x2,
-        DownToUp = 0x4
-    };
+    enum SplitSequence { LeftToRight = 0x0, RightToLeft = 0x1, UpToDown = 0x2, DownToUp = 0x4 };
     Q_ENUM(SplitSequence)
     Q_DECLARE_FLAGS(SplitSequences, SplitSequence)
     Q_FLAG(SplitSequences)
@@ -58,12 +53,12 @@ public:
     // If there's no value, then the mode is 'average'.
     std::optional<QSize> size() const
     {
-        return (std::get_if<QSize>(&m_info)) ? std::optional<QSize>(std::get<QSize>(m_info))
-                                             : std::nullopt;
+        return std::holds_alternative<QSize>(m_info) ? std::optional<QSize>(std::get<QSize>(m_info))
+                                                     : std::nullopt;
     }
     std::optional<SplitAverage> average() const
     {
-        return (std::get_if<SplitAverage>(&m_info))
+        return std::holds_alternative<SplitAverage>(m_info)
                 ? std::optional<SplitAverage>(std::get<SplitAverage>(m_info))
                 : std::nullopt;
     }
@@ -126,8 +121,7 @@ public:
     }
     bool canRead() const { return m_imgReader.canRead(); }
 
-    void setOption(const ImageOption &option) { m_opt = option; }
-    void setSequence(ImageOption::SplitSequences seq) { m_opt.setSequence(seq); }
+    ImageOption &option() { return m_opt; }
     void setOutputDir(const QDir &dir) { m_saveDir = dir; }
     bool setOutputPath(const QString &path)
     {

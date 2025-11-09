@@ -15,20 +15,20 @@ inline namespace StdPaths {
  * \brief getSkinsDir
  * \return The absolute path of the skins directory.
  */
-QString getSkinsDir();
+QString skinsDir();
 
 /*!
  * \brief getTranslationsDir
  * \return The absolute path of the translations directory.
  */
-QString getTranslationsDir();
+QString translationsDir();
 
 /*!
  * \brief getDataDir
  * \return The absolute path of the data directory.
  * \details Data directory contains configuration files.
  */
-QString getDataDir();
+QString dataDir();
 
 } // namespace StdPaths
 

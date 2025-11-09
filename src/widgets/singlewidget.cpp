@@ -7,6 +7,7 @@
 
 #include "core/imagehandler.h"
 #include "core/imagedocument.h"
+#include "utils/fileinfo.h"
 #include "utils/jsonconfigitems.h"
 
 #include <QFileDialog>
@@ -96,7 +97,7 @@ void SingleWidget::openPicture()
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
                               ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
-    fdlg.setMimeTypeFilters(mimeTypeFilters);
+    fdlg.setMimeTypeFilters(mimeTypesToFilters(QImageReader::supportedMimeTypes()));
     fdlg.setFileMode(QFileDialog::ExistingFile);
     if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
         && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {
@@ -137,19 +138,12 @@ void SingleWidget::openPicture()
 
 void SingleWidget::openPicture()
 {
-    QStringList mimeTypeFilters;
-    const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    Q_FOREACH (const QByteArray &mimeTypeName, supportedMimeTypes)
-        mimeTypeFilters.append(mimeTypeName);
-
-    mimeTypeFilters.sort();
-
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
                               ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
-    fdlg.setMimeTypeFilters(mimeTypeFilters);
+    fdlg.setMimeTypeFilters(Util::mimeTypesToFilters(QImageReader::supportedMimeTypes()));
     fdlg.setFileMode(QFileDialog::ExistingFile);
     if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
         && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {

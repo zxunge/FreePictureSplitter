@@ -12,7 +12,7 @@ namespace Util {
 
 inline namespace StdPaths {
 
-QString getSkinsDir()
+QString skinsDir()
 {
 #if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
@@ -25,7 +25,7 @@ QString getSkinsDir()
     return QDir::cleanPath(dir.absolutePath());
 }
 
-QString getTranslationsDir()
+QString translationsDir()
 {
 #if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
     QDir dir(QLibraryInfo::path(QLibraryInfo::PrefixPath));
@@ -38,7 +38,7 @@ QString getTranslationsDir()
     return QDir::cleanPath(dir.absolutePath());
 }
 
-QString getDataDir()
+QString dataDir()
 {
 #if defined(Q_OS_WIN) && !defined(WIN32_GNU_DEPLOY)
     QDir dir(QLibraryInfo::path(QLibraryInfo::BinariesPath));

@@ -227,42 +227,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="194"/>
+        <location filename="../../widgets/batchwidget.cpp" line="187"/>
         <source>Add pictures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="222"/>
+        <location filename="../../widgets/batchwidget.cpp" line="215"/>
         <source>Choose a directory containing pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="276"/>
+        <location filename="../../widgets/batchwidget.cpp" line="269"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="360"/>
+        <location filename="../../widgets/batchwidget.cpp" line="353"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="378"/>
+        <location filename="../../widgets/batchwidget.cpp" line="371"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="391"/>
+        <location filename="../../widgets/batchwidget.cpp" line="384"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="404"/>
+        <location filename="../../widgets/batchwidget.cpp" line="397"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="410"/>
+        <location filename="../../widgets/batchwidget.cpp" line="403"/>
         <source>No rule to split picture: %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -464,12 +464,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="100"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="101"/>
         <source>Select a color for grid lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -688,47 +688,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="148"/>
+        <location filename="../../widgets/singlewidget.cpp" line="142"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="172"/>
+        <location filename="../../widgets/singlewidget.cpp" line="166"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="192"/>
+        <location filename="../../widgets/singlewidget.cpp" line="186"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="208"/>
+        <location filename="../../widgets/singlewidget.cpp" line="202"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="234"/>
+        <location filename="../../widgets/singlewidget.cpp" line="228"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="247"/>
+        <location filename="../../widgets/singlewidget.cpp" line="241"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="255"/>
+        <location filename="../../widgets/singlewidget.cpp" line="249"/>
         <source>Error splitting picture.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="305"/>
+        <location filename="../../widgets/singlewidget.cpp" line="299"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="314"/>
+        <location filename="../../widgets/singlewidget.cpp" line="308"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>

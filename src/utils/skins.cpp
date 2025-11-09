@@ -17,13 +17,13 @@ namespace Util {
 
 inline namespace Skin {
 
-QStringList getAvailableSkins()
+QStringList availableSkins()
 {
     QStringList list;
-    QDir skinDir(Util::getSkinsDir());
+    QDir skinDir(Util::skinsDir());
     Q_FOREACH (const auto skin, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
         // Obtain the skin's name
-        QFile file(Util::getSkinsDir() + u"/"_s + skin);
+        QFile file(Util::skinsDir() + u"/"_s + skin);
         if (file.open(QFile::ReadOnly)) {
             QTextStream in(&file);
             const QString header{ in.readLine() };
@@ -41,10 +41,10 @@ bool setAppSkin(QApplication *app, const QString &skinName)
     QFile styleFile;
 
     // Search for a skin file
-    QDir skinDir(Util::getSkinsDir());
+    QDir skinDir(Util::skinsDir());
 
     Q_FOREACH (const auto fileName, skinDir.entryList(QStringList{ u"*.skin"_s }, QDir::Files)) {
-        styleFile.setFileName(Util::getSkinsDir() + u"/"_s + fileName);
+        styleFile.setFileName(Util::skinsDir() + u"/"_s + fileName);
         if (styleFile.open(QFile::ReadOnly)) {
             QTextStream in(&styleFile);
             const QString header{ in.readLine() };
@@ -64,7 +64,7 @@ bool setAppSkin(QApplication *app, const QString &skinName)
                 // The stylesheets cannot be applied directly,
                 // we need to do some path-conversion.
                 QString ss{ in.readAll() };
-                ss.replace(u"@SKINS_DIR@"_s, Util::getSkinsDir());
+                ss.replace(u"@SKINS_DIR@"_s, Util::skinsDir());
                 app->setStyle(QStyleFactory::create(u"fusion"_s));
                 app->setStyleSheet(ss);
                 styleFile.close();

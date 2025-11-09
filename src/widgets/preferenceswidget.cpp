@@ -30,7 +30,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
 
     // Load configurations
     /****************** Appearance ******************/
-    ui->cbxStyle->addItems(Util::getAvailableSkins());
+    ui->cbxStyle->addItems(Util::availableSkins());
     ui->cbxStyle->setCurrentText(QString::fromStdString(appConfig.app.style));
     // `Language' is now fixed
     ui->cbxLang->addItem(tr("System"));
@@ -67,6 +67,8 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     // TODO@25/07/01 Add corrupted config item handling.
     ui->cbxFormats->setCurrentIndex(ui->cbxFormats->findText(
             QString::fromStdString(appConfig.options.outputOpt.outFormat)));
+    ui->sbxQuality->setEnabled(appConfig.options.outputOpt.outFormat == "jpg"
+                               || appConfig.options.outputOpt.outFormat == "jpeg");
     ui->sbxQuality->setValue(appConfig.options.outputOpt.jpgQuality);
     ui->dsbxFactor->setValue(appConfig.options.outputOpt.scalingFactor * 100.0);
 
@@ -93,8 +95,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
         ui->tbtnBrowse->setEnabled(index == 2);
     });
     connect(ui->cbxFormats, &QComboBox::currentTextChanged, this, [this](const QString &text) {
-        ui->sbxQuality->setEnabled(text.compare(u"jpg"_s, Qt::CaseInsensitive) == 0
-                                   || text.compare(u"jpeg"_s, Qt::CaseInsensitive) == 0);
+        ui->sbxQuality->setEnabled(text == u"jpg"_s || text == u"jpeg"_s);
     });
     connect(ui->btnSelectColor, &QPushButton::clicked, this, [this]() {
         QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };

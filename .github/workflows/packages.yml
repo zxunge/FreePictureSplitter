@@ -53,21 +53,21 @@ jobs:
                   "libwebp-7.dll"             \  
                   "libzstd.dll"               \
                   "libbrotlicommon.dll"       \
-                  "libicudt77.dll"            \
+                  "libicudt78.dll"            \
                   "libjpeg-8.dll"             \
                   "libpng16-16.dll"           \
                   "libwebpdecoder-3.dll"      \
                   "vulkan-1.dll"              \
                   "libbrotlidec.dll"          \   
                   "libglib-2.0-0.dll"         \
-                  "libicuin77.dll"            \
+                  "libicuin78.dll"            \
                   "libmd4c.dll"               \
                   "libsharpyuv-0.dll"         \
                   "libwebpdemux-2.dll"        \ 
                   "zlib1.dll"                 \
                   "libbz2-1.dll"              \
                   "libgraphite2.dll"          \
-                  "libicuuc77.dll"            \
+                  "libicuuc78.dll"            \
                   "libmng-2.dll"              \
                   "libwebpmux-3.dll"          \
                   "libdouble-conversion.dll"  \
@@ -76,7 +76,11 @@ jobs:
                   "libpcre2-16-0.dll"         \
                   "libturbojpeg.dll"          \
                   "libwinpthread-1.dll"       \
-                  "libc++.dll")
+                  "libc++.dll"                \
+                  "libdbus-1-3.dll"           \
+                  "libcrypto-3-x64.dll"       \
+                  "libssl-3-x64.dll"          \
+                  "libsqlite3-0.dll")
         for dll in ${win_dlls[@]};
         do
           cp -f /clang64/bin/$dll /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/

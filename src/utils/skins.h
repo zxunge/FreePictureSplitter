@@ -18,7 +18,7 @@ inline namespace Skin {
  * \brief getAvailableSkins
  * \details Get available skins names under skins directory.
  */
-QStringList getAvailableSkins();
+QStringList availableSkins();
 
 /*!
  * \brief setAppSkin

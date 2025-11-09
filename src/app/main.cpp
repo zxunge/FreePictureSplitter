@@ -66,7 +66,7 @@ QtMessageHandler originalHandler{};
 void logToFile(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QString message{ qFormatLogMessage(type, context, msg) };
-    static FILE *f{ fopen((Util::getDataDir() % LOG_FILENAME).toUtf8().constData(), "a") };
+    static FILE *f{ fopen((Util::dataDir() % LOG_FILENAME).toUtf8().constData(), "a") };
     if (f) {
         fprintf(f, "%s\n", qPrintable(message));
         fflush(f);
@@ -80,17 +80,17 @@ inline void loadTranslations(QApplication *a)
 {
     Q_ASSERT(a);
     QTranslator *qtTranslator{ new QTranslator() }, *appTranslator{ new QTranslator() };
-    if (qtTranslator->load(QLocale::system(), u"qt"_s, u"_"_s, Util::getTranslationsDir()))
+    if (qtTranslator->load(QLocale::system(), u"qt"_s, u"_"_s, Util::translationsDir()))
         a->installTranslator(qtTranslator);
 
-    if (appTranslator->load(QLocale::system(), fpsAppName, u"_"_s, Util::getTranslationsDir()))
+    if (appTranslator->load(QLocale::system(), fpsAppName, u"_"_s, Util::translationsDir()))
         a->installTranslator(appTranslator);
     // Do not free translators.
 }
 
 [[nodiscard]] inline bool loadConfigurations()
 {
-    QFile cfgFile(Util::getDataDir() % CONFIG_FILENAME);
+    QFile cfgFile(Util::dataDir() % CONFIG_FILENAME);
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);
@@ -162,7 +162,7 @@ inline void loadTranslations(QApplication *a)
 {
     // Save configuration changes to file
     const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(appConfig)) };
-    QFile cfgFile(Util::getDataDir() % CONFIG_FILENAME);
+    QFile cfgFile(Util::dataDir() % CONFIG_FILENAME);
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
         QMessageBox::warning(nullptr, fpsAppName,
                              QObject::tr("Error writing to configuration file."),

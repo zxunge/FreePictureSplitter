@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->labMark->setText(fpsVersionFull);
     installWindowAgent();
 
-    QFile layoutFile(Util::getDataDir() % LAYOUT_FILENAME);
+    QFile layoutFile(Util::dataDir() % LAYOUT_FILENAME);
     if (layoutFile.open(QIODevice::ReadOnly))
         restoreGeometry(layoutFile.readAll());
 }
@@ -207,7 +207,7 @@ bool MainWindow::event(QEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-    QFile layoutFile(Util::getDataDir() % LAYOUT_FILENAME);
+    QFile layoutFile(Util::dataDir() % LAYOUT_FILENAME);
     if (layoutFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
         layoutFile.write(saveGeometry());
 

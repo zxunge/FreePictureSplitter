@@ -6,6 +6,7 @@
 #define FILEINFO_H
 
 #include <QString>
+#include <QStringList>
 #include <QFileInfo>
 
 using namespace Qt::Literals::StringLiterals;
@@ -14,7 +15,7 @@ namespace Util {
 
 inline namespace FileInfo {
 
-inline QString getFileSizeString(const QString &fn)
+inline QString fileSizeString(const QString &fn)
 {
     constexpr qint64 kilobyte{ 1024 };
     constexpr qint64 megabyte{ 1048576 };
@@ -29,6 +30,15 @@ inline QString getFileSizeString(const QString &fn)
         return QString::number(static_cast<double>(size) / kilobyte, 'f', 2) % u" KB"_s;
     else
         return QString::number(size) % u" Bytes"_s;
+}
+
+inline QStringList mimeTypesToFilters(const QByteArrayList &types)
+{
+    QStringList filters;
+    filters.append(u"application/octet-stream"_s);
+    Q_FOREACH (const QByteArray &mimeTypeName, types)
+        filters.append(mimeTypeName);
+    return filters;
 }
 
 } // namespace FileInfo

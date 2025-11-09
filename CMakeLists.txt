@@ -26,6 +26,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(QT_NO_PRIVATE_MODULE_WARNING ON CACHE BOOL "")
 
 # Override variables
 if(WIN32 AND DEPLOY_WINDOWS)
@@ -35,7 +36,10 @@ if(WIN32 AND DEPLOY_WINDOWS)
 endif()
 
 find_package(QT NAMES Qt6 REQUIRED)
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets Concurrent LinguistTools Svg Network)
+find_package(Qt6 REQUIRED COMPONENTS
+    Core Gui Widgets Concurrent LinguistTools Svg Network
+    CorePrivate GuiPrivate WidgetsPrivate
+)
 
 qt_standard_project_setup(
     REQUIRES 6.9

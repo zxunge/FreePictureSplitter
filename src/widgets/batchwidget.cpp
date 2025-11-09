@@ -183,19 +183,12 @@ void BatchWidget::removeSelectedItems()
 
 void BatchWidget::openPictures()
 {
-    QStringList mimeTypeFilters;
-    const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    Q_FOREACH (const QByteArray &mimeTypeName, supportedMimeTypes)
-        mimeTypeFilters.append(mimeTypeName);
-
-    mimeTypeFilters.sort();
-
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Add pictures..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
                               ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                               : QString::fromStdString(appConfig.dialog.lastOpenedDir));
-    fdlg.setMimeTypeFilters(mimeTypeFilters);
+    fdlg.setMimeTypeFilters(mimeTypesToFilters(QImageReader::supportedMimeTypes()));
     fdlg.setFileMode(QFileDialog::ExistingFiles);
     if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
         && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {
@@ -266,7 +259,7 @@ void BatchWidget::addPicture(const QString &fileName)
     QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
                                                QFileInfo(fileName).fileName()) };
     QStandardItem *itemPath{ new QStandardItem(fileName) };
-    QStandardItem *itemSize{ new QStandardItem(getFileSizeString(fileName)) };
+    QStandardItem *itemSize{ new QStandardItem(fileSizeString(fileName)) };
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 }
 

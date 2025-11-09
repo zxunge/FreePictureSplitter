@@ -227,42 +227,42 @@
         <translation>文件大小</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="194"/>
+        <location filename="../../widgets/batchwidget.cpp" line="187"/>
         <source>Add pictures...</source>
         <translation>添加图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="222"/>
+        <location filename="../../widgets/batchwidget.cpp" line="215"/>
         <source>Choose a directory containing pictures.</source>
         <translation>选择包含图片的文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="276"/>
+        <location filename="../../widgets/batchwidget.cpp" line="269"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="360"/>
+        <location filename="../../widgets/batchwidget.cpp" line="353"/>
         <source>Error splitting picture.</source>
         <translation>分割图片出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="378"/>
+        <location filename="../../widgets/batchwidget.cpp" line="371"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation>您还没有指定输出文件夹，请重试。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="391"/>
+        <location filename="../../widgets/batchwidget.cpp" line="384"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="404"/>
+        <location filename="../../widgets/batchwidget.cpp" line="397"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation>写入到文件&apos;%1&apos;出错: %2。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="410"/>
+        <location filename="../../widgets/batchwidget.cpp" line="403"/>
         <source>No rule to split picture: %1.</source>
         <translation>没有提供分割图片%1的规则。</translation>
     </message>
@@ -464,12 +464,12 @@
         <translation>跟随系统</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="100"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="101"/>
         <source>Select a color for grid lines</source>
         <translation>为网格线选取一种颜色</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
@@ -688,47 +688,47 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="148"/>
+        <location filename="../../widgets/singlewidget.cpp" line="142"/>
         <source>Open a picture...</source>
         <translation>打开一张图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="172"/>
+        <location filename="../../widgets/singlewidget.cpp" line="166"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation>%1，宽度：%2，高度：%3，色深：%4，垂直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="192"/>
+        <location filename="../../widgets/singlewidget.cpp" line="186"/>
         <source>Error loading picture file: %1.</source>
         <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="208"/>
+        <location filename="../../widgets/singlewidget.cpp" line="202"/>
         <source>Choose the output directory.</source>
         <translation>选择输出文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="234"/>
+        <location filename="../../widgets/singlewidget.cpp" line="228"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="247"/>
+        <location filename="../../widgets/singlewidget.cpp" line="241"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="255"/>
+        <location filename="../../widgets/singlewidget.cpp" line="249"/>
         <source>Error splitting picture.</source>
         <translation>分割图片出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="305"/>
+        <location filename="../../widgets/singlewidget.cpp" line="299"/>
         <source>Error writing to file &apos;%1&apos;: %2.</source>
         <translation>写入到文件&apos;%1&apos;出错: %2。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="314"/>
+        <location filename="../../widgets/singlewidget.cpp" line="308"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
     </message>
