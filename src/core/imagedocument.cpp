@@ -13,9 +13,9 @@ void Core::ImageDocument::drawLinesTo(GraphicsView *subject)
         return;
 
     DraggableLine *line{};
-    Q_FOREACH (auto m_rects, m_rects) {
+    Q_FOREACH (auto rects, m_rects) {
         line = new DraggableLine(subject);
-        line->setScenePos(m_rects.constFirst().bottom());
+        line->setScenePos(rects.constFirst().bottom());
         line->show();
         subject->addDraggableLine(line);
         line = nullptr;
