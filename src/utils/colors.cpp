@@ -17,8 +17,7 @@ QColor getDominantColor(const QPixmap &pixmap)
     };
 
     // Average color
-    int64_t r{}, g{}, b{};
-    int count{};
+    qint64 r{}, g{}, b{}, count{};
     QColor dominant;
 
     for (int y{}; y < scaled.height(); ++y) {
@@ -28,7 +27,7 @@ QColor getDominantColor(const QPixmap &pixmap)
                 r += color.red();
                 g += color.green();
                 b += color.blue();
-                count++;
+                ++count;
             }
         }
     }
@@ -49,3 +48,4 @@ QColor getContrastColor(const QColor &color)
 } // namespace Color
 
 } // namespace Util
+
