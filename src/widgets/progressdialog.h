@@ -26,6 +26,7 @@ Q_SIGNALS:
 
 public slots:
     void proceed(int elapsed);
+    void proceed();
 
 private:
     Ui::ProgressDialog *ui;

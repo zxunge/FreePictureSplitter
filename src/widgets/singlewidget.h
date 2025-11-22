@@ -5,11 +5,10 @@
 #ifndef SINGLEWIDGET_H
 #define SINGLEWIDGET_H
 
-#include "core/imagehandler.h"
 #include "core/imagedocument.h"
 
 #include <QWidget>
-#include <QImageReader>
+#include <QThread>
 
 namespace Ui {
 class SingleWidget;
@@ -34,10 +33,8 @@ Q_SIGNALS:
 
 private:
     Ui::SingleWidget *ui;
-
-    QImageReader m_imgReader;
-    Core::RectList m_rects;
-    Core::ImageDocument m_imgDoc;
+    Core::ImageDocument *m_imgDoc;
+    QThread m_imgThread;
 };
 
 #endif // SINGLEWIDGET_H

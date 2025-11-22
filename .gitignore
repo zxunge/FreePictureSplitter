@@ -26,6 +26,7 @@
 build/
 .venv/
 .cache/
+.qtcreator/
 aqtinstall.log
 
 # Clangd

@@ -36,3 +36,10 @@ void ProgressDialog::proceed(int elapsed)
     ui->progressBar->setValue(elapsed);
     ui->labRemaining->setText(QString::number(m_total - elapsed));
 }
+
+void ProgressDialog::proceed()
+{
+    static int elapsed{};
+    ui->progressBar->setValue(elapsed++);
+    ui->labRemaining->setText(QString::number(m_total - elapsed));
+}

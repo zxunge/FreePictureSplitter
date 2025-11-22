@@ -18,6 +18,8 @@
 #include <expected>
 #include <optional>
 #include <variant>
+#include <tuple>
+#include <string_view>
 
 class GraphicsView;
 class QPixmap;
@@ -36,13 +38,14 @@ public:
         int rows;
         int cols;
     };
+    using GridInfo = std::tuple<bool, QColor, int>;
 
     enum SplitSequence { LeftToRight = 0x0, RightToLeft = 0x1, UpToDown = 0x2, DownToUp = 0x4 };
     Q_ENUM(SplitSequence)
     Q_DECLARE_FLAGS(SplitSequences, SplitSequence)
     Q_FLAG(SplitSequences)
 
-    ImageOption() { }
+    ImageOption() : m_scalingFactor(1.0), m_rcContained(false) { setGridEnabled(false); }
 
     void setSequence(const SplitSequences seq) { m_seq = seq; }
     SplitSequences sequence() const { return m_seq; }
@@ -62,10 +65,32 @@ public:
                 ? std::optional<SplitAverage>(std::get<SplitAverage>(m_info))
                 : std::nullopt;
     }
+    void setGridEnabled(bool enabled, const QColor &color = Qt::green, int lineSize = 3)
+    {
+        m_grid = std::make_tuple(enabled, color, lineSize);
+    }
+    bool isGridEnabled() const { return std::get<bool>(m_grid); }
+    GridInfo gridInfo() const { return m_grid; }
+
+    QString savePrefix() const { return m_savePrefix; }
+    void setSavePrefix(const QString &savePrefix) { m_savePrefix = savePrefix; }
+    QString saveSuffix() const { return m_saveSuffix; }
+    void setSaveSuffix(const QString &saveSuffix) { m_saveSuffix = saveSuffix; }
+
+    double scalingFactor() const { return m_scalingFactor; }
+    void setScalingFactor(double ScalingFactor) { m_scalingFactor = ScalingFactor; }
+
+    bool rowColContained() const { return m_rcContained; }
+    void setRowColContained(bool rcContained) { m_rcContained = rcContained; }
 
 private:
     std::variant<SplitAverage, QSize> m_info;
     SplitSequences m_seq;
+    GridInfo m_grid;
+    QString m_savePrefix;
+    QString m_saveSuffix;
+    bool m_rcContained;
+    double m_scalingFactor;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(ImageOption::SplitSequences)
 
@@ -85,21 +110,22 @@ public:
     explicit ImageDocument(QObject *parent = nullptr) : QObject(parent) { }
     explicit ImageDocument(const QString &fn, QObject *parent = nullptr) : QObject(parent)
     {
-        setImageFile(fn);
+        openImageFile(fn);
     }
     ~ImageDocument() { }
 
     inline QString filePath() const { return m_fileInfo.absoluteFilePath(); }
     inline QString fullName() const { return m_fileInfo.fileName(); }
     inline QString baseName() const { return m_fileInfo.baseName(); }
+    inline QString parentPath() const { return m_fileInfo.absoluteDir().path(); }
     inline QString format() const { return m_fileInfo.suffix(); }
 
-    std::optional<QSize> size()
+    QSize size()
     {
         // We need to reset the file name before the calls to size(),
         // see https://bugreports.qt.io/browse/QTBUG-138530
         m_imgReader.setFileName(m_imgReader.fileName());
-        return canRead() ? std::optional<QSize>(m_imgReader.size()) : std::nullopt;
+        return m_imgReader.size();
     }
 
     inline QImage toImage()
@@ -108,7 +134,7 @@ public:
         return m_imgReader.read();
     };
 
-    bool setImageFile(const QString &fn)
+    bool openImageFile(const QString &fn)
     {
         m_imgReader.setFileName(fn);
         if (m_imgReader.canRead()) {
@@ -122,6 +148,7 @@ public:
     bool canRead() const { return m_imgReader.canRead(); }
 
     ImageOption &option() { return m_opt; }
+    ImageOption constOption() const { return m_opt; }
     void setOutputDir(const QDir &dir) { m_saveDir = dir; }
     bool setOutputPath(const QString &path)
     {
@@ -132,21 +159,35 @@ public:
         return false;
     }
 
+    QImageWriter &writer() { return m_imgWriter; }
+    qsizetype totalCount() const
+    {
+        if (!m_rects.isEmpty())
+            return m_rects.size() * m_rects[0].size() + constOption().isGridEnabled();
+        else
+            return 0;
+    }
+    Result<> saveImages();
+
+    void setupSplitLines();
     void drawLinesTo(GraphicsView *subject);
     void applyLinesFrom(GraphicsView *source);
+    bool isValid() const { return canRead() && !m_rects.isEmpty(); }
+
+    void close() { m_imgReader.setFileName(QString()); }
 
 Q_SIGNALS:
     void imageChanged(const QString &fn);
+    void imageSaved(const QString &path);
 
 private:
-    void drawGridLines(QPixmap *pixmap, const QColor &color, int size);
+    void drawGridLines(QPixmap *pixmap, const ImageOption::GridInfo &gridInfo);
+    Result<QList<QPair<QString, QImage>>> split();
 
 private:
     QImageReader m_imgReader;
     QImageWriter m_imgWriter;
     QFileInfo m_fileInfo;
-    QString m_savePrefix;
-    QString m_saveSuffix;
     QDir m_saveDir;
     RectList m_rects;
     ImageOption m_opt;

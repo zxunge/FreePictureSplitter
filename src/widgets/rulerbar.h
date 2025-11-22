@@ -44,7 +44,7 @@ public:
     QColor faceColor() const { return m_faceColor; }
 
     void setOrientation(Qt::Orientation orientation) { m_orientation = orientation; }
-    Qt::Orientation getOrientation() const { return m_orientation; }
+    Qt::Orientation orientation() const { return m_orientation; }
 
     void setRange(double lower, double upper, double maxSize);
     void updatePosition(const QPoint &pos);

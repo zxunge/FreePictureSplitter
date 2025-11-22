@@ -48,4 +48,3 @@ QColor getContrastColor(const QColor &color)
 } // namespace Color
 
 } // namespace Util
-
