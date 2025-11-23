@@ -268,6 +268,24 @@
     </message>
 </context>
 <context>
+    <name>Core::ImageDocument</name>
+    <message>
+        <location filename="../../core/imagedocument.cpp" line="23"/>
+        <source>Image saving failed: %1: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/imagedocument.cpp" line="222"/>
+        <source>Null rectangle list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/imagedocument.cpp" line="232"/>
+        <source>Null image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../../ui/mainwindow.ui" line="20"/>
@@ -688,47 +706,42 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="142"/>
+        <location filename="../../widgets/singlewidget.cpp" line="86"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="166"/>
+        <location filename="../../widgets/singlewidget.cpp" line="106"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="186"/>
+        <location filename="../../widgets/singlewidget.cpp" line="125"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="202"/>
+        <location filename="../../widgets/singlewidget.cpp" line="138"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="228"/>
+        <location filename="../../widgets/singlewidget.cpp" line="164"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="241"/>
+        <location filename="../../widgets/singlewidget.cpp" line="177"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="249"/>
-        <source>Error splitting picture.</source>
+        <location filename="../../widgets/singlewidget.cpp" line="205"/>
+        <source>Error occurred: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="299"/>
-        <source>Error writing to file &apos;%1&apos;: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/singlewidget.cpp" line="308"/>
+        <location filename="../../widgets/singlewidget.cpp" line="219"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>

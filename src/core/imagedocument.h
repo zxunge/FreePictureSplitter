@@ -19,7 +19,6 @@
 #include <optional>
 #include <variant>
 #include <tuple>
-#include <string_view>
 
 class GraphicsView;
 class QPixmap;
@@ -40,7 +39,7 @@ public:
     };
     using GridInfo = std::tuple<bool, QColor, int>;
 
-    enum SplitSequence { LeftToRight = 0x0, RightToLeft = 0x1, UpToDown = 0x2, DownToUp = 0x4 };
+    enum SplitSequence { LeftToRight = 0x1, RightToLeft = 0x2, UpToDown = 0x4, DownToUp = 0x8 };
     Q_ENUM(SplitSequence)
     Q_DECLARE_FLAGS(SplitSequences, SplitSequence)
     Q_FLAG(SplitSequences)

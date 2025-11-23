@@ -268,6 +268,24 @@
     </message>
 </context>
 <context>
+    <name>Core::ImageDocument</name>
+    <message>
+        <location filename="../../core/imagedocument.cpp" line="23"/>
+        <source>Image saving failed: %1: %2.</source>
+        <translation>保存图像失败：%1：%2.</translation>
+    </message>
+    <message>
+        <location filename="../../core/imagedocument.cpp" line="222"/>
+        <source>Null rectangle list</source>
+        <translation>矩形列表为空</translation>
+    </message>
+    <message>
+        <location filename="../../core/imagedocument.cpp" line="232"/>
+        <source>Null image</source>
+        <translation>图像为空</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../../ui/mainwindow.ui" line="20"/>
@@ -680,55 +698,50 @@
     <message>
         <location filename="../../ui/singlewidget.ui" line="327"/>
         <source>Close Picture</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭图片</translation>
     </message>
     <message>
         <location filename="../../ui/singlewidget.ui" line="330"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Close the current picture opened.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;关闭当前打开的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="142"/>
+        <location filename="../../widgets/singlewidget.cpp" line="86"/>
         <source>Open a picture...</source>
         <translation>打开一张图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="166"/>
+        <location filename="../../widgets/singlewidget.cpp" line="106"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation>%1，宽度：%2，高度：%3，色深：%4，垂直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="186"/>
+        <location filename="../../widgets/singlewidget.cpp" line="125"/>
         <source>Error loading picture file: %1.</source>
         <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="202"/>
+        <location filename="../../widgets/singlewidget.cpp" line="138"/>
         <source>Choose the output directory.</source>
         <translation>选择输出文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="228"/>
+        <location filename="../../widgets/singlewidget.cpp" line="164"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="241"/>
+        <location filename="../../widgets/singlewidget.cpp" line="177"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="249"/>
-        <source>Error splitting picture.</source>
-        <translation>分割图片出错。</translation>
+        <location filename="../../widgets/singlewidget.cpp" line="205"/>
+        <source>Error occurred: %1.</source>
+        <translation>发生错误：%1.</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="299"/>
-        <source>Error writing to file &apos;%1&apos;: %2.</source>
-        <translation>写入到文件&apos;%1&apos;出错: %2。</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/singlewidget.cpp" line="308"/>
+        <location filename="../../widgets/singlewidget.cpp" line="219"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
     </message>

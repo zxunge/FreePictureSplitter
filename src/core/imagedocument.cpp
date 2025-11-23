@@ -71,7 +71,7 @@ void ImageDocument::setupSplitLines()
     for (auto &i : m_rects)
         i.resize(cols);
 
-    if (option().sequence().testFlag(ImageOption::DownToUp)) {
+    if (option().sequence().testAnyFlag(ImageOption::DownToUp)) {
         // ----- Rows: Down -> Up -----
         for (int i{ rows - 1 }; i != 0; --i)
             for (int j{}; j != cols; ++j) {
@@ -83,7 +83,7 @@ void ImageDocument::setupSplitLines()
             m_rects[0][j].setTop(0);
             m_rects[0][j].setHeight(legacyRowHeight);
         }
-    } else if (option().sequence().testFlag(ImageOption::UpToDown)) {
+    } else if (option().sequence().testAnyFlag(ImageOption::UpToDown)) {
         // ----- Rows: Up -> Down -----
         for (int i{}; i != rows - 1; ++i)
             for (int j{}; j != cols; ++j) {
@@ -96,7 +96,7 @@ void ImageDocument::setupSplitLines()
             m_rects[rows - 1][j].setHeight(legacyRowHeight);
         }
     }
-    if (option().sequence().testFlag(ImageOption::LeftToRight)) {
+    if (option().sequence().testAnyFlag(ImageOption::LeftToRight)) {
         // ----- Columns: L -> R -----
         for (int i{}; i != rows; ++i)
             for (int j{}; j != cols - 1; ++j) {
@@ -108,7 +108,7 @@ void ImageDocument::setupSplitLines()
             m_rects[i][cols - 1].setLeft((cols - 1) * basicColWidth);
             m_rects[i][cols - 1].setWidth(legacyColWidth);
         }
-    } else if (option().sequence().testFlag(ImageOption::RightToLeft)) {
+    } else if (option().sequence().testAnyFlag(ImageOption::RightToLeft)) {
         // ----- Columns: R -> L -----
         for (int i{}; i != rows; ++i)
             for (int j{ cols - 1 }; j != 0; --j) {
@@ -217,6 +217,7 @@ Result<QList<QPair<QString, QImage>>> ImageDocument::split()
     // (optional) + '_grid'
     // + format
     QList<QPair<QString, QImage>> output;
+    setupSplitLines();
     if (m_rects.isEmpty())
         return std::unexpected(tr("Null rectangle list"));
 
@@ -235,7 +236,7 @@ Result<QList<QPair<QString, QImage>>> ImageDocument::split()
             output.push_back(QPair<QString, QImage>(
                     // Output file's name
                     (option().savePrefix().isEmpty() ? baseName() : option().savePrefix())
-                            % QString::asprintf("_%0*lld", static_cast<int>(fieldWidth), i)
+                            % QString::asprintf("_%0*lld", static_cast<int>(fieldWidth), i + 1)
                             % (option().rowColContained() ? QString::asprintf("_%lldx%lld", i, j)
                                                           : u""_s)
                             % (option().saveSuffix().isEmpty() ? u""_s

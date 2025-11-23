@@ -21,6 +21,9 @@
 #include <QDir>
 #include <QApplication>
 #include <QGraphicsPixmapItem>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QtConcurrentRun>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
@@ -30,8 +33,6 @@ SingleWidget::SingleWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::SingleWidget), m_imgDoc(new ImageDocument)
 {
     ui->setupUi(this);
-
-    m_imgDoc->moveToThread(&m_imgThread);
 
     // Signal connections
     connect(ui->actionOpen, &QAction::triggered, this, &SingleWidget::openPicture);
@@ -81,13 +82,6 @@ SingleWidget::~SingleWidget()
 
 void SingleWidget::openPicture()
 {
-    QStringList mimeTypeFilters;
-    const QByteArrayList supportedMimeTypes{ QImageReader::supportedMimeTypes() };
-    Q_FOREACH (const QByteArray &mimeTypeName, supportedMimeTypes)
-        mimeTypeFilters.append(mimeTypeName);
-
-    mimeTypeFilters.sort();
-
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
     fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
@@ -187,16 +181,40 @@ void SingleWidget::savePictures()
     }
 
     if (m_imgDoc->isValid()) {
-        m_imgDoc->option().setGridEnabled(appConfig.options.gridOpt.enabled);
+        m_imgDoc->option().setGridEnabled(appConfig.options.gridOpt.enabled,
+                                          QColor::fromString(appConfig.options.gridOpt.colorRgb),
+                                          appConfig.options.gridOpt.lineSize);
         m_imgDoc->writer().setFormat(
                 QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
         m_imgDoc->writer().setQuality(appConfig.options.outputOpt.jpgQuality);
-        ProgressDialog dlg(m_imgDoc->totalCount(), this);
-        connect(m_imgDoc, &ImageDocument::imageSaved, &dlg,
-                static_cast<void (ProgressDialog::*)()>(&ProgressDialog::proceed));
-        connect(&m_imgThread, &QThread::finished, &dlg, &QDialog::close);
-        m_imgThread.start();
-        dlg.exec();
+        m_imgDoc->setOutputPath(finalPath);
+
+        ProgressDialog *dlg{ new ProgressDialog(m_imgDoc->totalCount(), this) };
+        dlg->setAttribute(Qt::WA_DeleteOnClose);
+
+        QFuture<Core::Result<>> future{ QtConcurrent::run(
+                [this]() { return m_imgDoc->saveImages(); }) };
+
+        QFutureWatcher<Core::Result<>> *watcher{ new QFutureWatcher<Core::Result<>>(this) };
+
+        connect(watcher, &QFutureWatcher<Core::Result<>>::finished, this, [this, &dlg, &watcher]() {
+            auto result{ watcher->result() };
+            dlg->close();
+            if (!result.has_value())
+                QMessageBox::critical(this, fpsAppName,
+                                      tr("Error occurred: %1.").arg(result.error()),
+                                      QMessageBox::Close);
+            watcher->deleteLater();
+        });
+        connect(dlg, &ProgressDialog::cancelled, watcher,
+                static_cast<void (QFutureWatcher<Core::Result<>>::*)()>(
+                        &QFutureWatcher<Core::Result<>>::cancel));
+        connect(m_imgDoc, &ImageDocument::imageSaved, dlg,
+                static_cast<void (ProgressDialog::*)()>(&ProgressDialog::proceed),
+                Qt::QueuedConnection);
+        watcher->setFuture(future);
+
+        dlg->exec();
     } else {
         QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),
                              QMessageBox::Close);

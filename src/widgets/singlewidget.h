@@ -8,7 +8,6 @@
 #include "core/imagedocument.h"
 
 #include <QWidget>
-#include <QThread>
 
 namespace Ui {
 class SingleWidget;
@@ -34,7 +33,6 @@ Q_SIGNALS:
 private:
     Ui::SingleWidget *ui;
     Core::ImageDocument *m_imgDoc;
-    QThread m_imgThread;
 };
 
 #endif // SINGLEWIDGET_H
