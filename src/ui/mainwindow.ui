@@ -45,25 +45,23 @@
        </sizepolicy>
       </property>
       <property name="styleSheet">
-       <string notr="true">QToolButton {
-border: none;
-}</string>
+       <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>5</number>
        </property>
        <property name="bottomMargin">
-        <number>9</number>
+        <number>5</number>
        </property>
        <item>
         <spacer name="verticalSpacer">
@@ -158,8 +156,7 @@ border: none;
          </property>
          <property name="icon">
           <iconset resource="../resources/fps.qrc">
-           <normaloff>:/controls/controls/32x32/settings.svg</normaloff>
-           <selectedoff>:/controls/controls/32x32/settings_filled.svg</selectedoff>:/controls/controls/32x32/settings.svg</iconset>
+           <normaloff>:/controls/controls/32x32/settings.svg</normaloff>:/controls/controls/32x32/settings.svg</iconset>
          </property>
          <property name="iconSize">
           <size>

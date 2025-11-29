@@ -148,6 +148,7 @@ void ImageDocument::drawLinesTo(GraphicsView *subject)
 void ImageDocument::applyLinesFrom(GraphicsView *source)
 {
     QList<int> vx, vy;
+    m_rects.clear();
 
     Q_FOREACH (auto l, source->getDraggableLines())
         if (l->getOrientation() == Qt::Horizontal)

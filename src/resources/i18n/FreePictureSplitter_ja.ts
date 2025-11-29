@@ -275,12 +275,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="222"/>
+        <location filename="../../core/imagedocument.cpp" line="223"/>
         <source>Null rectangle list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="232"/>
+        <location filename="../../core/imagedocument.cpp" line="233"/>
         <source>Null image</source>
         <translation type="unfinished"></translation>
     </message>

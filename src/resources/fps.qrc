@@ -29,10 +29,7 @@
         <file>controls/32x32/image.svg</file>
         <file>controls/32x32/image_multiple.svg</file>
         <file>controls/32x32/settings.svg</file>
-        <file>controls/32x32/settings_filled.svg</file>
         <file>controls/20x20/content_view.svg</file>
         <file>controls/20x20/settings.svg</file>
-        <file>controls/20x20/settings_filled.svg</file>
-        <file>controls/20x20/content_view_filled.svg</file>
     </qresource>
 </RCC>

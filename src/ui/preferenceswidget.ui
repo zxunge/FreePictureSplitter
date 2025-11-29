@@ -64,8 +64,7 @@
             </property>
             <property name="icon">
              <iconset resource="../resources/fps.qrc">
-              <normaloff>:/controls/controls/20x20/content_view.svg</normaloff>
-              <selectedoff>:/controls/controls/20x20/content_view_filled.svg</selectedoff>:/controls/controls/20x20/content_view.svg</iconset>
+              <normaloff>:/controls/controls/20x20/content_view.svg</normaloff>:/controls/controls/20x20/content_view.svg</iconset>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -94,8 +93,7 @@
             </property>
             <property name="icon">
              <iconset resource="../resources/fps.qrc">
-              <normaloff>:/controls/controls/20x20/settings.svg</normaloff>
-              <selectedoff>:/controls/controls/20x20/settings_filled.svg</selectedoff>:/controls/controls/20x20/settings.svg</iconset>
+              <normaloff>:/controls/controls/20x20/settings.svg</normaloff>:/controls/controls/20x20/settings.svg</iconset>
             </property>
             <property name="checkable">
              <bool>true</bool>

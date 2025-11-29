@@ -142,10 +142,19 @@ QToolButton#tbtnBatch,
 QToolButton#tbtnPref,
 QToolButton#tbtnAppearance,
 QToolButton#tbtnOutput {
+    /* padding: 4px 4px 4px 4px; */
     border: none;
-    padding: 4px 4px 4px 4px;
-    border-radius: 0px;
-    background: transparent;
+    padding: 3px 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+QToolButton#tbtnSingle:!checked,
+QToolButton#tbtnBatch:!checked,
+QToolButton#tbtnPref:!checked,
+QToolButton#tbtnAppearance:!checked,
+QToolButton#tbtnOutput:!checked {
+    background-color: transparent;
 }
 
 QToolButton#tbtnSingle:hover,
@@ -158,7 +167,7 @@ QToolButton#tbtnBatch:pressed,
 QToolButton#tbtnPref:pressed,
 QToolButton#tbtnAppearance:pressed,
 QToolButton#tbtnOutput:pressed {
-    background: rgba(0, 0, 0, 0.15);
+    background-color: #FDE6E0;
 }
 
 QToolButton#tbtnSingle:checked,
@@ -166,7 +175,9 @@ QToolButton#tbtnBatch:checked,
 QToolButton#tbtnPref:checked,
 QToolButton#tbtnAppearance:checked,
 QToolButton#tbtnOutput:checked {
-    background: rgba(0, 0, 0, 0.24);
+    background-color: #FDE6E0;
+    font-weight: bold;
+    border-left: 3px solid #cc5bce;
 }
 
 QPushButton {

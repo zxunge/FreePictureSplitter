@@ -275,12 +275,12 @@
         <translation>保存图像失败：%1：%2.</translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="222"/>
+        <location filename="../../core/imagedocument.cpp" line="223"/>
         <source>Null rectangle list</source>
         <translation>矩形列表为空</translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="232"/>
+        <location filename="../../core/imagedocument.cpp" line="233"/>
         <source>Null image</source>
         <translation>图像为空</translation>
     </message>
