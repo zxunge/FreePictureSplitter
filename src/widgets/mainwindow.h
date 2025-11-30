@@ -16,7 +16,7 @@ class WidgetWindowAgent;
 class QEvent;
 class QCloseEvent;
 
-class MainWindow : public QMainWindow
+class MainWindow final : public QMainWindow
 {
     Q_OBJECT
 

@@ -6,26 +6,35 @@
 #include "draggableline.h"
 
 #include <QRect>
+#include <QtConcurrentMap>
 
 using namespace Qt::Literals::StringLiterals;
 
 namespace Core {
 
-Result<> ImageDocument::saveImages()
+Result<QFuture<QList<Result<>>>> ImageDocument::saveImages()
 {
-    return split().and_then([this](auto imageList) -> Result<> {
-        // Process the image list
-        for (const auto &[filename, image] : imageList) {
-            m_imgWriter.setFileName(m_saveDir.filePath(filename));
-            if (!m_imgWriter.write(image.scaled(image.width() * option().scalingFactor(),
-                                                image.height() * option().scalingFactor(),
-                                                Qt::IgnoreAspectRatio, Qt::SmoothTransformation)))
-                return std::unexpected(tr("Image saving failed: %1: %2.")
-                                               .arg(filename, m_imgWriter.errorString()));
-            else
-                Q_EMIT imageSaved(m_imgWriter.fileName());
-        }
-        return {};
+    return split().and_then([this](auto imageList) -> Result<QFuture<QList<Result<>>>> {
+        QFuture<QList<Result<>>> future{ QtConcurrent::mappedReduced(
+                imageList,
+                [this](const QPair<QString, QImage> &imageInfo) -> Result<> {
+                    const auto &[filename, image]{ imageInfo };
+                    QImageWriter writer(m_saveDir.filePath(filename));
+                    m_wopt.applyToWriter(writer);
+                    qInfo() << u"Saving Image: "_s << writer.fileName();
+                    if (!writer.canWrite())
+                        return std::unexpected(tr("Cannot write to ").arg(filename));
+                    if (!writer.write(image.scaled(image.width() * option().scalingFactor(),
+                                                   image.height() * option().scalingFactor(),
+                                                   Qt::IgnoreAspectRatio,
+                                                   Qt::SmoothTransformation)))
+                        return std::unexpected(tr("Image saving failed: %1: %2.")
+                                                       .arg(filename, writer.errorString()));
+                    return {};
+                },
+                [](QList<Result<>> &results, const Result<> &result) { results.push_back(result); },
+                QtConcurrent::OrderedReduce) };
+        return future;
     });
 }
 
@@ -218,7 +227,7 @@ Result<QList<QPair<QString, QImage>>> ImageDocument::split()
     // (optional) + '_grid'
     // + format
     QList<QPair<QString, QImage>> output;
-    setupSplitLines();
+
     if (m_rects.isEmpty())
         return std::unexpected(tr("Null rectangle list"));
 
@@ -237,12 +246,13 @@ Result<QList<QPair<QString, QImage>>> ImageDocument::split()
             output.push_back(QPair<QString, QImage>(
                     // Output file's name
                     (option().savePrefix().isEmpty() ? baseName() : option().savePrefix())
-                            % QString::asprintf("_%0*lld", static_cast<int>(fieldWidth), i + 1)
+                            % QString::asprintf("_%0*lld", static_cast<int>(fieldWidth),
+                                                i * cCols + j + 1)
                             % (option().rowColContained() ? QString::asprintf("_%lldx%lld", i, j)
                                                           : u""_s)
                             % (option().saveSuffix().isEmpty() ? u""_s
                                                                : u"_"_s % option().saveSuffix())
-                            % u"."_s % m_imgWriter.format(),
+                            % u"."_s % m_wopt.format(),
                     // Splited image
                     img.copy(m_rects[i][j])));
         }
@@ -250,7 +260,7 @@ Result<QList<QPair<QString, QImage>>> ImageDocument::split()
         output.push_back(QPair<QString, QImage>(
                 (option().savePrefix().isEmpty() ? baseName() : option().savePrefix())
                         % (option().saveSuffix().isEmpty() ? u""_s : u"_"_s % option().saveSuffix())
-                        % u"_grid."_s % m_imgWriter.format(),
+                        % u"_grid."_s % m_wopt.format(),
                 (drawGridLines(&p, option().gridInfo()), p.toImage())));
 
     return output;

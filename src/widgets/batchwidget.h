@@ -16,7 +16,7 @@ class BatchWidget;
 class QStandardItemModel;
 class QItemSelectionModel;
 
-class BatchWidget : public QWidget
+class BatchWidget final : public QWidget
 {
     Q_OBJECT
 

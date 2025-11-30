@@ -13,7 +13,7 @@ namespace Ui {
 class SingleWidget;
 }
 
-class SingleWidget : public QWidget
+class SingleWidget final : public QWidget
 {
     Q_OBJECT
 

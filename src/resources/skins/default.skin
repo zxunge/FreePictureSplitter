@@ -142,7 +142,6 @@ QToolButton#tbtnBatch,
 QToolButton#tbtnPref,
 QToolButton#tbtnAppearance,
 QToolButton#tbtnOutput {
-    /* padding: 4px 4px 4px 4px; */
     border: none;
     padding: 3px 10px;
     border-top-left-radius: 10px;

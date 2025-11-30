@@ -289,7 +289,7 @@ void BatchWidget::startSplit()
     // Detect splitting sequence and mode
     ImageHandler::SplitMode mode;
     ImageHandler::SplitSequence sequence;
-    if (ui->rbtnAverage->isChecked()) {
+    /* if (ui->rbtnAverage->isChecked()) {
         if (ui->rbtnHoriLeft->isChecked()) {
             mode = ImageHandler::SplitMode::Average;
             sequence = ImageHandler::SplitSequence::Left;
@@ -318,7 +318,7 @@ void BatchWidget::startSplit()
             sequence = ImageHandler::SplitSequence::Right;
         }
     } else
-        return; // TODO@25/08/22 Add support for splitting using templates.
+        return; // TODO@25/08/22 Add support for splitting using templates. */
 
     ProgressDialog dlg(m_model->rowCount(), this);
     QFutureWatcher<void> watcher;

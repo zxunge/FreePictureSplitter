@@ -166,16 +166,18 @@
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="1" column="0">
-           <widget class="QRadioButton" name="rbtnHoriRight">
+           <widget class="QRadioButton" name="rbtnRLTB">
             <property name="text">
-             <string>Right horizontally</string>
+             <string>Right to Left, 
+Top to Bottom</string>
             </property>
            </widget>
           </item>
           <item row="0" column="0">
-           <widget class="QRadioButton" name="rbtnHoriLeft">
+           <widget class="QRadioButton" name="rbtnLRTB">
             <property name="text">
-             <string>Left horizontally</string>
+             <string>Left to Right, 
+Top to Bottom</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -183,16 +185,18 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QRadioButton" name="rbtnVertRight">
+           <widget class="QRadioButton" name="rbtnRLBT">
             <property name="text">
-             <string>Right vertically</string>
+             <string>Right to Left, 
+Bottom to Top</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QRadioButton" name="rbtnVertLeft">
+           <widget class="QRadioButton" name="rbtnLRBT">
             <property name="text">
-             <string>Left vertically</string>
+             <string>Left to Right, 
+Bottom to Top</string>
             </property>
            </widget>
           </item>

@@ -25,6 +25,8 @@
 #include <QFutureWatcher>
 #include <QtConcurrentRun>
 
+#include <type_traits>
+
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 using namespace Core;
@@ -184,37 +186,30 @@ void SingleWidget::savePictures()
         m_imgDoc->option().setGridEnabled(appConfig.options.gridOpt.enabled,
                                           QColor::fromString(appConfig.options.gridOpt.colorRgb),
                                           appConfig.options.gridOpt.lineSize);
-        m_imgDoc->writer().setFormat(
+        m_imgDoc->writerOption().setFormat(
                 QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
-        m_imgDoc->writer().setQuality(appConfig.options.outputOpt.jpgQuality);
+        m_imgDoc->writerOption().setQuality(appConfig.options.outputOpt.jpgQuality);
         m_imgDoc->setOutputPath(finalPath);
 
-        ProgressDialog *dlg{ new ProgressDialog(m_imgDoc->totalCount(), this) };
-        dlg->setAttribute(Qt::WA_DeleteOnClose);
+        if (auto result = m_imgDoc->saveImages(); result.has_value()) {
+            ProgressDialog *dlg{ new ProgressDialog(m_imgDoc->totalCount(), this) };
+            dlg->setAttribute(Qt::WA_DeleteOnClose);
+            QFutureWatcher<QList<Result<>>> watcher(this);
 
-        QFuture<Core::Result<>> future{ QtConcurrent::run(
-                [this]() { return m_imgDoc->saveImages(); }) };
+            connect(&watcher, &QFutureWatcher<QList<Result<>>>::finished, dlg, &QDialog::close);
+            connect(&watcher, &QFutureWatcher<QList<Result<>>>::progressRangeChanged, dlg,
+                    &ProgressDialog::setRange);
+            connect(&watcher, &QFutureWatcher<QList<Result<>>>::progressValueChanged, dlg,
+                    &ProgressDialog::setValue);
+            connect(dlg, &ProgressDialog::cancelled, &watcher,
+                    &QFutureWatcher<QList<Result<>>>::cancel);
 
-        QFutureWatcher<Core::Result<>> *watcher{ new QFutureWatcher<Core::Result<>>(this) };
-
-        connect(watcher, &QFutureWatcher<Core::Result<>>::finished, this, [this, &dlg, &watcher]() {
-            auto result{ watcher->result() };
-            dlg->close();
-            if (!result.has_value())
-                QMessageBox::critical(this, fpsAppName,
-                                      tr("Error occurred: %1.").arg(result.error()),
-                                      QMessageBox::Close);
-            watcher->deleteLater();
-        });
-        connect(dlg, &ProgressDialog::cancelled, watcher,
-                static_cast<void (QFutureWatcher<Core::Result<>>::*)()>(
-                        &QFutureWatcher<Core::Result<>>::cancel));
-        connect(m_imgDoc, &ImageDocument::imageSaved, dlg,
-                static_cast<void (ProgressDialog::*)()>(&ProgressDialog::proceed),
-                Qt::QueuedConnection);
-        watcher->setFuture(future);
-
-        dlg->exec();
+            watcher.setFuture(result.value());
+            dlg->exec();
+        } else {
+            QMessageBox::warning(this, fpsAppName, result.error(), QMessageBox::Close);
+            return;
+        }
     } else {
         QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),
                              QMessageBox::Close);
@@ -225,13 +220,13 @@ void SingleWidget::savePictures()
 void SingleWidget::resetSplitLines()
 {
     // Detect splitting sequence and mode
-    if (ui->rbtnHoriLeft->isChecked())
+    if (ui->rbtnLRTB->isChecked())
         m_imgDoc->option().setSequence(ImageOption::LeftToRight | ImageOption::UpToDown);
-    else if (ui->rbtnHoriRight->isChecked())
+    else if (ui->rbtnRLTB->isChecked())
         m_imgDoc->option().setSequence(ImageOption::RightToLeft | ImageOption::UpToDown);
-    else if (ui->rbtnVertLeft->isChecked())
+    else if (ui->rbtnLRBT->isChecked())
         m_imgDoc->option().setSequence(ImageOption::LeftToRight | ImageOption::DownToUp);
-    else
+    else if (ui->rbtnRLBT->isChecked())
         m_imgDoc->option().setSequence(ImageOption::RightToLeft | ImageOption::DownToUp);
 
     if (ui->rbtnAver->isChecked())

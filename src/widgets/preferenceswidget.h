@@ -12,7 +12,7 @@ namespace Ui {
 class PreferencesWidget;
 }
 
-class PreferencesWidget : public QWidget
+class PreferencesWidget final : public QWidget
 {
     Q_OBJECT
 

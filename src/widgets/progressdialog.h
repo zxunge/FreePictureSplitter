@@ -11,7 +11,7 @@ namespace Ui {
 class ProgressDialog;
 }
 
-class ProgressDialog : public QDialog
+class ProgressDialog final : public QDialog
 {
     Q_OBJECT
 
@@ -27,6 +27,8 @@ Q_SIGNALS:
 public slots:
     void proceed(int elapsed);
     void proceed();
+    void setRange(int minimum, int maximum);
+    void setValue(int value);
 
 private:
     Ui::ProgressDialog *ui;

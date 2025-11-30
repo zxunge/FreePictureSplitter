@@ -11,9 +11,11 @@
 #include <QString>
 #include <QFileInfo>
 #include <QDir>
+#include <QByteArray>
 #include <QPair>
 #include <QList>
 #include <QSize>
+#include <QFuture>
 
 #include <expected>
 #include <optional>
@@ -28,7 +30,7 @@ namespace Core {
 template <typename T = void>
 using Result = std::expected<T, QString>;
 
-class ImageOption
+class ImageOption final
 {
     Q_GADGET
 public:
@@ -92,6 +94,31 @@ private:
     double m_scalingFactor;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(ImageOption::SplitSequences)
+
+class WriterOption final
+{
+public:
+    WriterOption() { }
+
+    const QByteArray &format() const { return m_format; }
+
+    void setFormat(const QByteArray &format) { m_format = format; }
+    int quality() const { return m_quality; }
+    void setQuality(int quality) { m_quality = quality; }
+
+private:
+    void applyToWriter(QImageWriter &writer)
+    {
+        writer.setFormat(m_format);
+        writer.setQuality(m_quality);
+    }
+
+private:
+    QByteArray m_format;
+    int m_quality;
+
+    friend class ImageDocument;
+};
 
 /*!
  * \brief The ImageDocument class
@@ -158,7 +185,7 @@ public:
         return false;
     }
 
-    QImageWriter &writer() { return m_imgWriter; }
+    WriterOption &writerOption() { return m_wopt; }
     qsizetype totalCount() const
     {
         if (!m_rects.isEmpty())
@@ -166,7 +193,7 @@ public:
         else
             return 0;
     }
-    Result<> saveImages();
+    Result<QFuture<QList<Result<>>>> saveImages();
 
     void setupSplitLines();
     void drawLinesTo(GraphicsView *subject);
@@ -185,11 +212,11 @@ private:
 
 private:
     QImageReader m_imgReader;
-    QImageWriter m_imgWriter;
     QFileInfo m_fileInfo;
     QDir m_saveDir;
     RectList m_rects;
     ImageOption m_opt;
+    WriterOption m_wopt;
 };
 
 } // namespace Core

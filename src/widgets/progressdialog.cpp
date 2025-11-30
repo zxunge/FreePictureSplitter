@@ -43,3 +43,13 @@ void ProgressDialog::proceed()
     ui->progressBar->setValue(elapsed++);
     ui->labRemaining->setText(QString::number(m_total - elapsed));
 }
+
+void ProgressDialog::setRange(int minimum, int maximum)
+{
+    ui->progressBar->setRange(minimum, maximum);
+}
+
+void ProgressDialog::setValue(int value)
+{
+    ui->progressBar->setValue(value);
+}

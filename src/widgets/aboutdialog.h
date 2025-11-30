@@ -7,7 +7,7 @@
 
 #include <QDialog>
 
-class AboutDialog : public QDialog
+class AboutDialog final : public QDialog
 {
     Q_OBJECT
 public:
