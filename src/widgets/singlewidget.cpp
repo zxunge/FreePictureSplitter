@@ -18,6 +18,7 @@
 #include <QFileInfo>
 #include <QColor>
 #include <QStyle>
+#include <QStatusBar>
 #include <QDir>
 #include <QApplication>
 #include <QGraphicsPixmapItem>
