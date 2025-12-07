@@ -95,6 +95,6 @@ inline void setDefConf(Config &s)
 
 } // namespace Util
 
-inline Util::Config appConfig; // Global configuration holder
+inline Util::Config g_appConfig; // Global configuration holder
 
 #endif // JSONCONFIGITEMS_H

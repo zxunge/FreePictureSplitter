@@ -104,7 +104,7 @@ inline void loadTranslations(QApplication *a)
 
     // First run?
     if (jsonCfgStr.isEmpty())
-        Util::setDefConf(appConfig);
+        Util::setDefConf(g_appConfig);
     else {
         const auto result{ rfl::json::read<Util::Config>(jsonCfgStr.toStdString()) };
         if (!result) {
@@ -114,12 +114,12 @@ inline void loadTranslations(QApplication *a)
                                   QMessageBox::Close);
             return false;
         }
-        appConfig = result.value();
+        g_appConfig = result.value();
 
         // Check for version differences, as they will cause weird compatibility problems.
         // We promise not to change the interfaces when updating the micro version.
-        if (appConfig.app.majorVersion != fpsVersionMajor
-            || appConfig.app.minorVersion != fpsVersionMinor) {
+        if (g_appConfig.app.majorVersion != fpsVersionMajor
+            || g_appConfig.app.minorVersion != fpsVersionMinor) {
             QMessageBox::warning(nullptr, fpsAppName,
                                  QObject::tr("Configuration file\'s version doesn\'t match, try "
                                              "deleting it after backuping."),
@@ -148,9 +148,9 @@ inline void loadTranslations(QApplication *a)
     loadTranslations(a);
 
     // Load styles
-    if (!Util::setAppSkin(a, QString::fromStdString(appConfig.app.style))) {
+    if (!Util::setAppSkin(a, QString::fromStdString(g_appConfig.app.style))) {
         QMessageBox::warning(nullptr, fpsAppName,
-                             QObject::tr("Error loading skin: %1.").arg(appConfig.app.style),
+                             QObject::tr("Error loading skin: %1.").arg(g_appConfig.app.style),
                              QMessageBox::Close);
         return false;
     }
@@ -161,7 +161,7 @@ inline void loadTranslations(QApplication *a)
 [[nodiscard]] inline bool saveConfigurations()
 {
     // Save configuration changes to file
-    const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(appConfig)) };
+    const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(g_appConfig)) };
     QFile cfgFile(Util::dataDir() % CONFIG_FILENAME);
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
         QMessageBox::warning(nullptr, fpsAppName,
@@ -174,6 +174,8 @@ inline void loadTranslations(QApplication *a)
     cfgFile.close();
     return true;
 }
+
+MainWindow *g_mainWnd;
 
 //---------- Main Execution ----------
 int main(int argc, char *argv[])
@@ -207,9 +209,10 @@ int main(int argc, char *argv[])
 
     qInfo("Application Started...");
 
-    MainWindow w;
-    w.show();
+    g_mainWnd = new MainWindow();
+    g_mainWnd->show();
     int ret{ a.exec() };
+    delete g_mainWnd;
     if (!saveConfigurations())
         std::exit(EXIT_FAILURE);
 

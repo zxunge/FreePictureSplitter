@@ -43,25 +43,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     int index{};
 
     SingleWidget *pgSingle{ new SingleWidget() };
-    connect(pgSingle, &SingleWidget::message, ui->statusBar, &QStatusBar::showMessage);
     index = ui->wgtMain->addWidget(pgSingle);
     connect(ui->tbtnSingle, &QToolButton::clicked, this, [this, index](bool checked) {
         if (checked)
             ui->wgtMain->setCurrentIndex(index);
     });
-    if (index == appConfig.dialog.lastEnteredIndex) {
+    if (index == g_appConfig.dialog.lastEnteredIndex) {
         ui->tbtnSingle->setChecked(true);
         ui->wgtMain->setCurrentIndex(index);
     }
 
     BatchWidget *pgBatch{ new BatchWidget() };
-    connect(pgBatch, &BatchWidget::message, ui->statusBar, &QStatusBar::showMessage);
     index = ui->wgtMain->addWidget(pgBatch);
     connect(ui->tbtnBatch, &QToolButton::clicked, this, [this, index](bool checked) {
         if (checked)
             ui->wgtMain->setCurrentIndex(index);
     });
-    if (index == appConfig.dialog.lastEnteredIndex) {
+    if (index == g_appConfig.dialog.lastEnteredIndex) {
         ui->tbtnBatch->setChecked(true);
         ui->wgtMain->setCurrentIndex(index);
     }
@@ -72,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         if (checked)
             ui->wgtMain->setCurrentIndex(index);
     });
-    if (index == appConfig.dialog.lastEnteredIndex) {
+    if (index == g_appConfig.dialog.lastEnteredIndex) {
         ui->tbtnPref->setChecked(true);
         ui->wgtMain->setCurrentIndex(index);
     }
@@ -211,7 +209,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     if (layoutFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
         layoutFile.write(saveGeometry());
 
-    appConfig.dialog.lastEnteredIndex = ui->wgtMain->currentIndex();
+    g_appConfig.dialog.lastEnteredIndex = ui->wgtMain->currentIndex();
 
     QMainWindow::closeEvent(e);
 }

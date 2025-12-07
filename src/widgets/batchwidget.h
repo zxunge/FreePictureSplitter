@@ -15,13 +15,14 @@ class BatchWidget;
 }
 class QStandardItemModel;
 class QItemSelectionModel;
+class QMainWindow;
 
 class BatchWidget final : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit BatchWidget(QWidget *parent = nullptr);
+    explicit BatchWidget(QMainWindow *parent = nullptr);
     ~BatchWidget();
 
 private:
@@ -34,9 +35,6 @@ private:
 
 protected:
     void closeEvent(QCloseEvent *event) override;
-
-Q_SIGNALS:
-    void message(const QString &msg, int timeout = 0);
 
 private:
     Ui::BatchWidget *ui;

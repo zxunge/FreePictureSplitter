@@ -46,7 +46,14 @@ public:
     Q_DECLARE_FLAGS(SplitSequences, SplitSequence)
     Q_FLAG(SplitSequences)
 
-    ImageOption() : m_scalingFactor(1.0), m_rcContained(false) { setGridEnabled(false); }
+    ImageOption()
+        : m_scalingFactor(1.0),
+          m_rcContained(false),
+          m_seq(LeftToRight | UpToDown),
+          m_info(SplitAverage{ 3, 3 })
+    {
+        setGridEnabled(false);
+    }
 
     void setSequence(const SplitSequences seq) { m_seq = seq; }
     SplitSequences sequence() const { return m_seq; }
@@ -75,8 +82,16 @@ public:
 
     QString savePrefix() const { return m_savePrefix; }
     void setSavePrefix(const QString &savePrefix) { m_savePrefix = savePrefix; }
+    void setSavePrefix(const std::string &savePrefix)
+    {
+        m_savePrefix = QString::fromStdString(savePrefix);
+    }
     QString saveSuffix() const { return m_saveSuffix; }
     void setSaveSuffix(const QString &saveSuffix) { m_saveSuffix = saveSuffix; }
+    void setSaveSuffix(const std::string &saveSuffix)
+    {
+        m_saveSuffix = QString::fromStdString(saveSuffix);
+    }
 
     double scalingFactor() const { return m_scalingFactor; }
     void setScalingFactor(double ScalingFactor) { m_scalingFactor = ScalingFactor; }
@@ -98,7 +113,7 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(ImageOption::SplitSequences)
 class WriterOption final
 {
 public:
-    WriterOption() { }
+    WriterOption() : m_quality(80), m_format(QByteArrayLiteral("jpg")) { }
 
     const QByteArray &format() const { return m_format; }
 
@@ -138,7 +153,7 @@ public:
     {
         openImageFile(fn);
     }
-    ~ImageDocument() { }
+    ~ImageDocument() { close(); }
 
     inline QString filePath() const { return m_fileInfo.absoluteFilePath(); }
     inline QString fullName() const { return m_fileInfo.fileName(); }

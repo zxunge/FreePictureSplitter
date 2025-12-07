@@ -12,13 +12,14 @@
 namespace Ui {
 class SingleWidget;
 }
+class QMainWindow;
 
 class SingleWidget final : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SingleWidget(QWidget *parent = nullptr);
+    explicit SingleWidget(QMainWindow *parent = nullptr);
     ~SingleWidget();
 
 private:
@@ -26,9 +27,6 @@ private:
     void savePictures();
     void resetSplitLines();
     void closePicture();
-
-Q_SIGNALS:
-    void message(const QString &msg, int timeout = 0);
 
 private:
     Ui::SingleWidget *ui;

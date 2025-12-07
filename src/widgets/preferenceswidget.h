@@ -11,13 +11,14 @@
 namespace Ui {
 class PreferencesWidget;
 }
+class QMainWindow;
 
 class PreferencesWidget final : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PreferencesWidget(QWidget *parent = nullptr);
+    explicit PreferencesWidget(QMainWindow *parent = nullptr);
     ~PreferencesWidget();
 
     void saveChanges(); // This does not apply skin changes.

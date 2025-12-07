@@ -2,10 +2,10 @@
 // SPDX-FileCopyrightText: 2024 2025 zxunge
 
 #include "singlewidget.h"
+#include "globaldefs.h"
 #include "ui_singlewidget.h"
 #include "progressdialog.h"
 
-#include "core/imagehandler.h"
 #include "core/imagedocument.h"
 #include "utils/fileinfo.h"
 #include "utils/jsonconfigitems.h"
@@ -25,13 +25,11 @@
 #include <QFutureWatcher>
 #include <QtConcurrentRun>
 
-#include <type_traits>
-
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 using namespace Core;
 
-SingleWidget::SingleWidget(QWidget *parent)
+SingleWidget::SingleWidget(QMainWindow *parent)
     : QWidget(parent), ui(new Ui::SingleWidget), m_imgDoc(new ImageDocument)
 {
     ui->setupUi(this);
@@ -80,21 +78,22 @@ SingleWidget::SingleWidget(QWidget *parent)
 SingleWidget::~SingleWidget()
 {
     delete ui;
+    delete m_imgDoc;
 }
 
 void SingleWidget::openPicture()
 {
     QFileDialog fdlg;
     fdlg.setWindowTitle(tr("Open a picture..."));
-    fdlg.setDirectory(appConfig.dialog.lastOpenedDir.empty()
+    fdlg.setDirectory(g_appConfig.dialog.lastOpenedDir.empty()
                               ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                              : QString::fromStdString(appConfig.dialog.lastOpenedDir));
+                              : QString::fromStdString(g_appConfig.dialog.lastOpenedDir));
     fdlg.setMimeTypeFilters(mimeTypesToFilters(QImageReader::supportedMimeTypes()));
     fdlg.setFileMode(QFileDialog::ExistingFile);
     if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
         && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {
         m_imgDoc->openImageFile(fdlg.selectedFiles().constFirst());
-        appConfig.dialog.lastOpenedDir =
+        g_appConfig.dialog.lastOpenedDir =
                 QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
     } else
         return;
@@ -104,7 +103,7 @@ void SingleWidget::openPicture()
         int width{ m_imgDoc->size().width() }, height{ m_imgDoc->size().height() };
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
-        Q_EMIT message(
+        g_mainWnd->statusBar()->showMessage(
                 tr("%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
                         .arg(m_imgDoc->fullName())
                         .arg(width)
@@ -134,17 +133,17 @@ void SingleWidget::savePictures()
 
     // Check for user's selection: output folder
     QString basePath, finalPath;
-    switch (appConfig.options.outputOpt.savingTo) {
+    switch (g_appConfig.options.outputOpt.savingTo) {
     case Util::SavingTo::inPlace:
         basePath = QFileDialog::getExistingDirectory(
                 this, tr("Choose the output directory."),
-                appConfig.dialog.lastSavedToDir.empty()
+                g_appConfig.dialog.lastSavedToDir.empty()
                         ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                        : QString::fromStdString(appConfig.dialog.lastSavedToDir));
+                        : QString::fromStdString(g_appConfig.dialog.lastSavedToDir));
         break;
 
     case Util::SavingTo::specified:
-        basePath = QString::fromStdString(appConfig.options.outputOpt.outPath);
+        basePath = QString::fromStdString(g_appConfig.options.outputOpt.outPath);
         break;
 
     case Util::SavingTo::same:
@@ -155,7 +154,7 @@ void SingleWidget::savePictures()
     if (basePath.isEmpty())
         return;
 
-    if (!appConfig.options.outputOpt.subDir)
+    if (!g_appConfig.options.outputOpt.subDir)
         finalPath = basePath;
     else {
         QDir dir(basePath);
@@ -170,7 +169,7 @@ void SingleWidget::savePictures()
         finalPath = basePath + u"/"_s + baseName;
     }
 
-    appConfig.dialog.lastSavedToDir = finalPath.toStdString();
+    g_appConfig.dialog.lastSavedToDir = finalPath.toStdString();
 
     if (ui->rbtnManual->isChecked())
         m_imgDoc->applyLinesFrom(ui->graphicsView);
@@ -183,12 +182,14 @@ void SingleWidget::savePictures()
     }
 
     if (m_imgDoc->isValid()) {
-        m_imgDoc->option().setGridEnabled(appConfig.options.gridOpt.enabled,
-                                          QColor::fromString(appConfig.options.gridOpt.colorRgb),
-                                          appConfig.options.gridOpt.lineSize);
+        m_imgDoc->option().setGridEnabled(g_appConfig.options.gridOpt.enabled,
+                                          QColor::fromString(g_appConfig.options.gridOpt.colorRgb),
+                                          g_appConfig.options.gridOpt.lineSize);
         m_imgDoc->writerOption().setFormat(
-                QString::fromStdString(appConfig.options.outputOpt.outFormat).toUtf8());
-        m_imgDoc->writerOption().setQuality(appConfig.options.outputOpt.jpgQuality);
+                QString::fromStdString(g_appConfig.options.outputOpt.outFormat).toUtf8());
+        m_imgDoc->writerOption().setQuality(g_appConfig.options.outputOpt.jpgQuality);
+        m_imgDoc->option().setSavePrefix(g_appConfig.options.nameOpt.prefix);
+        m_imgDoc->option().setRowColContained(g_appConfig.options.nameOpt.rcContained);
         m_imgDoc->setOutputPath(finalPath);
 
         if (auto result = m_imgDoc->saveImages(); result.has_value()) {
@@ -248,4 +249,5 @@ void SingleWidget::closePicture()
     m_imgDoc->close();
     ui->graphicsView->setRulersVisibility(false);
     ui->actionClosePicture->setEnabled(false);
+    g_mainWnd->statusBar()->clearMessage();
 }
