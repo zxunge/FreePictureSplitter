@@ -18,7 +18,7 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-PreferencesWidget::PreferencesWidget(QMainWindow *parent)
+PreferencesWidget::PreferencesWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::PreferencesWidget)
 {
     ui->setupUi(this);

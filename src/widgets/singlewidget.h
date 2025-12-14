@@ -12,14 +12,13 @@
 namespace Ui {
 class SingleWidget;
 }
-class QMainWindow;
 
 class SingleWidget final : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SingleWidget(QMainWindow *parent = nullptr);
+    explicit SingleWidget(QWidget *parent = nullptr);
     ~SingleWidget();
 
 private:

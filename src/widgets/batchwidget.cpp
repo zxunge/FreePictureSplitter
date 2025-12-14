@@ -40,7 +40,7 @@ using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 using namespace Core;
 
-BatchWidget::BatchWidget(QMainWindow *parent)
+BatchWidget::BatchWidget(QWidget *parent)
     : QWidget(parent),
       ui(new Ui::BatchWidget),
       m_contextMenu(new QMenu(this)),

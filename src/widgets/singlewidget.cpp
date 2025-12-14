@@ -30,7 +30,7 @@ using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 using namespace Core;
 
-SingleWidget::SingleWidget(QMainWindow *parent)
+SingleWidget::SingleWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::SingleWidget), m_imgDoc(new ImageDocument)
 {
     ui->setupUi(this);

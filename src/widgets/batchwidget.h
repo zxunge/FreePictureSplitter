@@ -15,14 +15,13 @@ class BatchWidget;
 }
 class QStandardItemModel;
 class QItemSelectionModel;
-class QMainWindow;
 
 class BatchWidget final : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit BatchWidget(QMainWindow *parent = nullptr);
+    explicit BatchWidget(QWidget *parent = nullptr);
     ~BatchWidget();
 
 private:
