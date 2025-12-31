@@ -89,7 +89,7 @@ void SingleWidget::openPicture()
     fdlg.setDirectory(g_appConfig.dialog.lastOpenedDir.empty()
                               ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
                               : QString::fromStdString(g_appConfig.dialog.lastOpenedDir));
-    fdlg.setMimeTypeFilters(mimeTypesToFilters(QImageReader::supportedMimeTypes()));
+    fdlg.setNameFilters(mimeTypesToNameFilters(QImageReader::supportedMimeTypes()));
     fdlg.setFileMode(QFileDialog::ExistingFile);
     if (QDialog::Accepted == fdlg.exec() && !fdlg.selectedFiles().isEmpty()
         && QFileInfo(fdlg.selectedFiles().constFirst()).isFile()) {

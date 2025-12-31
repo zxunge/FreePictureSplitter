@@ -3,7 +3,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "config.h"
 #include "singlewidget.h"
 #include "batchwidget.h"
 #include "preferenceswidget.h"
@@ -39,49 +38,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setAttribute(Qt::WA_DontCreateNativeAncestors);
     ui->setupUi(this);
 
-    // Add pages
-    int index{};
+    SingleWidget *pgSingle{ new SingleWidget(this) };
+    BatchWidget *pgBatch{ new BatchWidget(this) };
+    PreferencesWidget *pgPref{ new PreferencesWidget(this) };
+    ui->tabWidget->addTab(pgSingle, QIcon(u":/controls/controls/32x32/image.svg"_s),
+                          tr("Single Splitting"));
+    ui->tabWidget->addTab(pgBatch, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),
+                          tr("Batch Splitting"));
+    ui->tabWidget->addTab(pgPref, QIcon(u":/controls/controls/32x32/settings.svg"_s),
+                          tr("Preferences"));
+    ui->tabWidget->setCurrentIndex(g_appConfig.dialog.lastEnteredIndex);
 
-    SingleWidget *pgSingle{ new SingleWidget() };
-    index = ui->wgtMain->addWidget(pgSingle);
-    connect(ui->tbtnSingle, &QToolButton::clicked, this, [this, index](bool checked) {
-        if (checked)
-            ui->wgtMain->setCurrentIndex(index);
-    });
-    if (index == g_appConfig.dialog.lastEnteredIndex) {
-        ui->tbtnSingle->setChecked(true);
-        ui->wgtMain->setCurrentIndex(index);
-    }
-
-    BatchWidget *pgBatch{ new BatchWidget() };
-    index = ui->wgtMain->addWidget(pgBatch);
-    connect(ui->tbtnBatch, &QToolButton::clicked, this, [this, index](bool checked) {
-        if (checked)
-            ui->wgtMain->setCurrentIndex(index);
-    });
-    if (index == g_appConfig.dialog.lastEnteredIndex) {
-        ui->tbtnBatch->setChecked(true);
-        ui->wgtMain->setCurrentIndex(index);
-    }
-
-    PreferencesWidget *pgPref{ new PreferencesWidget() };
-    index = ui->wgtMain->addWidget(pgPref);
-    connect(ui->tbtnPref, &QToolButton::clicked, this, [this, index](bool checked) {
-        if (checked)
-            ui->wgtMain->setCurrentIndex(index);
-    });
-    if (index == g_appConfig.dialog.lastEnteredIndex) {
-        ui->tbtnPref->setChecked(true);
-        ui->wgtMain->setCurrentIndex(index);
-    }
-
-    connect(ui->labMark, &ClickableLabel::clicked, this, [this] {
+    QIcon icon(u":/icons/version.ico"_s);
+    ClickableLabel *labMark{ new ClickableLabel(ui->tabWidget) };
+    labMark->resize(32, 32);
+    labMark->setPixmap(icon.pixmap(icon.actualSize(QSize(32, 32))));
+    ui->statusBar->addPermanentWidget(labMark);
+    connect(labMark, &ClickableLabel::clicked, this, [this] {
         AboutDialog dlg(this);
         dlg.exec();
     });
     connect(ui->actionExit, &QAction::triggered, this, [this] { close(); });
 
-    ui->labMark->setText(fpsVersionFull);
     installWindowAgent();
 
     QFile layoutFile(Util::dataDir() % LAYOUT_FILENAME);
@@ -209,7 +187,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     if (layoutFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
         layoutFile.write(saveGeometry());
 
-    g_appConfig.dialog.lastEnteredIndex = ui->wgtMain->currentIndex();
+    g_appConfig.dialog.lastEnteredIndex = ui->tabWidget->currentIndex();
 
     QMainWindow::closeEvent(e);
 }

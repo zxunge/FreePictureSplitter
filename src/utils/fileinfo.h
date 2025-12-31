@@ -7,6 +7,8 @@
 
 #include <QString>
 #include <QStringList>
+#include <QMimeDatabase>
+#include <QMimeType>
 #include <QFileInfo>
 
 using namespace Qt::Literals::StringLiterals;
@@ -32,12 +34,28 @@ inline QString fileSizeString(const QString &fn)
         return QString::number(size) % u" Bytes"_s;
 }
 
-inline QStringList mimeTypesToFilters(const QByteArrayList &types)
+inline QStringList mimeTypesToNameFilters(const QByteArrayList &types)
 {
     QStringList filters;
-    filters.append(u"application/octet-stream"_s);
-    Q_FOREACH (const QByteArray &mimeTypeName, types)
-        filters.append(mimeTypeName);
+    QMimeDatabase db;
+    QString all{ QObject::tr("All supported file types (") };
+
+    Q_FOREACH (const QByteArray &mimeType, types) {
+        QMimeType mime(db.mimeTypeForName(mimeType));
+        if (mime.isValid()) {
+            if (mime.isDefault()) {
+                filters.clear();
+                filters.append(QFileDialog::tr("All files (*)"));
+                return filters;
+            } else {
+                const QString patterns{ mime.globPatterns().join(u' ') };
+                filters.append(mime.comment() + " ("_L1 + patterns + u')');
+                all += patterns + u' ';
+            }
+        }
+    }
+    all += u')';
+    filters.push_front(all);
     return filters;
 }
 

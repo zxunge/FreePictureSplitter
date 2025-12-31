@@ -1,23 +1,6 @@
 Flat Light
 --@@##BEGIN##@@--
-/*
- * This file is a part of FreePictureSplitter, a fast and easy-to-use picture splitter.
- * Copyright (c) 2024 2025 zxunge
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
-/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* SPDX-License-Identifier: GPL-3.0-only */
 
 /* FreePictureSplitter Default Skin Style */
 
@@ -105,10 +88,6 @@ QMainWindow {
     background-color: rgba(249, 249, 249, 0.85);
 }
 
-QWidget#wgtSidebar {
-    background-color: rgba(249, 249, 249, 0.97);
-}
-
 QStatusBar {
     background-color: rgba(243, 243, 243, 0.6);
     color: rgb(0, 0, 0);
@@ -137,9 +116,6 @@ QToolButton:checked {
     background: #f7f7f7;
 }
 
-QToolButton#tbtnSingle,
-QToolButton#tbtnBatch,
-QToolButton#tbtnPref,
 QToolButton#tbtnAppearance,
 QToolButton#tbtnOutput {
     border: none;
@@ -148,30 +124,18 @@ QToolButton#tbtnOutput {
     border-bottom-left-radius: 10px;
 }
 
-QToolButton#tbtnSingle:!checked,
-QToolButton#tbtnBatch:!checked,
-QToolButton#tbtnPref:!checked,
 QToolButton#tbtnAppearance:!checked,
 QToolButton#tbtnOutput:!checked {
     background-color: transparent;
 }
 
-QToolButton#tbtnSingle:hover,
-QToolButton#tbtnBatch:hover, 
-QToolButton#tbtnPref:hover,
 QToolButton#tbtnAppearance:hover,
 QToolButton#tbtnOutput:hover,
-QToolButton#tbtnSingle:pressed,
-QToolButton#tbtnBatch:pressed, 
-QToolButton#tbtnPref:pressed,
 QToolButton#tbtnAppearance:pressed,
 QToolButton#tbtnOutput:pressed {
     background-color: #FDE6E0;
 }
 
-QToolButton#tbtnSingle:checked,
-QToolButton#tbtnBatch:checked,
-QToolButton#tbtnPref:checked,
 QToolButton#tbtnAppearance:checked,
 QToolButton#tbtnOutput:checked {
     background-color: #FDE6E0;
@@ -206,3 +170,20 @@ QPushButton:disabled {
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
+QTabWidget#tabWidget::pane {
+    border: none;
+}
+
+QTabWidget#tabWidget::tab {
+    border: none;
+    padding: 3px 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #FDE6E0;
+}
+
+QTabWidget#tabWidget::tab:selected {
+    background-color: #FDE6E0;
+    font-weight: bold;
+    border-left: 3px solid #cc5bce;
+}
