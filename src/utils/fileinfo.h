@@ -10,6 +10,7 @@
 #include <QMimeDatabase>
 #include <QMimeType>
 #include <QFileInfo>
+#include <QFileDialog>
 
 using namespace Qt::Literals::StringLiterals;
 
