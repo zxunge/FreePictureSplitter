@@ -17,12 +17,9 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-AboutDialog::AboutDialog(QWidget *parent) : QDialog(parent)
+AboutDialog::AboutDialog(QWidget *parent)
+    : QDialog(parent, Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint)
 {
-    // Must be 2 steps
-    setWindowFlag(Qt::WindowStaysOnTopHint, true);
-    setWindowFlag(Qt::FramelessWindowHint, true);
-
     auto mainLayout{ new QVBoxLayout(this) };
 
     auto iconLabel{ new QLabel(this) };
