@@ -4,9 +4,6 @@
 #define MyAppURL "https://github.com/zxunge/FreePictureSplitter"
 #define MyAppExeName "FreePictureSplitter.exe"
 
-; Your built binaries' path here
-#define MyAppPath ""
-
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
@@ -66,4 +63,5 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
 
