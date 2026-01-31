@@ -80,6 +80,7 @@ jobs:
         do
           cp -f /clang64/bin/$dll /opt/freepicturesplitter/
         done
+        cp -f LICENSE /opt/freepicturesplitter/
 
     - name: Create an installer using Inno Setup
       shell: pwsh
