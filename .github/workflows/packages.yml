@@ -5,7 +5,7 @@ on:
   
 jobs:
   win64:
-    # We create an installer in MSYS2 CLANG64 environment on Windows.
+    # We create an installer on Windows.
     runs-on: windows-latest
 
     steps:
@@ -25,7 +25,6 @@ jobs:
           qt6-translations:p
           qt6-imageformats:p
           qt6-svg:p
-          qt-installer-framework:p
 
     - name: Checkout
       uses: actions/checkout@v6
@@ -40,7 +39,7 @@ jobs:
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data -B build .
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
         cmake --build build -j
         cmake --install build --config Release
         
@@ -76,47 +75,20 @@ jobs:
                   "libpcre2-16-0.dll"         \
                   "libturbojpeg.dll"          \
                   "libwinpthread-1.dll"       \
-                  "libc++.dll"                \
-                  "libdbus-1-3.dll"           \
-                  "libcrypto-3-x64.dll"       \
-                  "libssl-3-x64.dll"          \
-                  "libsqlite3-0.dll")
+                  "libc++.dll")
         for dll in ${win_dlls[@]};
         do
-          cp -f /clang64/bin/$dll /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
+          cp -f /clang64/bin/$dll /opt/freepicturesplitter/
         done
 
-        # Clean unnecessary files
-        rm -rf /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/include \
-               /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/lib     \
-               /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/share
-        
-        # Also pack an archive
-        cd /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/data/
-        tar -Jcf $(cygpath -u '${{ github.workspace }}')/FreePictureSplitter-portable-win64.tar.xz *
-        
-    - name: Create an installer using Qt IFW
-      shell: msys2 {0}
+    - name: Create an installer using Inno Setup
+      shell: pwsh
       run: |
-        mkdir -p /opt/freepicturesplitter/config
-        mkdir -p /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta
-        cp -f FreePictureSplitter/config/qtifw/config.xml /opt/freepicturesplitter/config/
-        cp -f FreePictureSplitter/config/qtifw/package.xml /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
-        cp -f FreePictureSplitter/LICENSE /opt/freepicturesplitter/packages/com.zxunge.freepicturesplitter.app/meta/
-        cp -f FreePictureSplitter/src/resources/fps.ico /opt/freepicturesplitter/config/
-        cp -f FreePictureSplitter/src/resources/fps.png /opt/freepicturesplitter/config/
-        binarycreator --offline-only -t /clang64/bin/installerbase.exe -p /opt/freepicturesplitter/packages -c /opt/freepicturesplitter/config/config.xml FreePictureSplitterSetup-win64
+        choco install -y innosetup
+        iscc /O. /FFreePictureSplitter-setup-win64 FreePictureSplitter/dist/setup-win.iss /DMyAppPath="D:\msys64\opt\freepicturesplitter"
 
-    - name: Upload Installer Artifact
+    - name: Upload the installer
       uses: actions/upload-artifact@v6
       with:
-        name: FreePictureSplitterSetup-win64
-        path: FreePictureSplitterSetup-win64.exe
-        compression-level: 9
-        
-    - name: Upload Archive Artifact
-      uses: actions/upload-artifact@v6
-      with:
-        name: FreePictureSplitter-portable-win64
-        path: FreePictureSplitter-portable-win64.tar.xz
-        compression-level: 9
+        name: FreePictureSplitter-setup-win64
+        path: FreePictureSplitter-setup-win64.exe

@@ -39,7 +39,6 @@ WizardStyle=modern windows11
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "chinesesimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
@@ -53,54 +52,10 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 
 [Files]
 Source: "{#MyAppPath}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\D3Dcompiler_47.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\dbgcore.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\dbghelp.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\exchndl.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libb2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libbrotlicommon.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libbrotlidec.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libbz2-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libdouble-conversion.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libgcc_s_seh-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libglib-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libgraphite2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libharfbuzz-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libiconv-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libicudt78.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libicuin78.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libicuuc78.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libintl-8.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libjasper.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libjpeg-8.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libmd4c.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libmng-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libpcre2-16-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libpcre2-8-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libpng16-16.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libsharpyuv-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libstdc++-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libturbojpeg.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libwebp-7.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libwebpdecoder-3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libwebpdemux-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libwebpmux-3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libwinpthread-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\libzstd.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\mgwhelp.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\Qt6Concurrent.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\Qt6Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\Qt6Gui.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\Qt6Network.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\Qt6Svg.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\Qt6Widgets.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\symsrv.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\symsrv.yes"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\vulkan-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\plugins\*"; DestDir: "{app}\plugins"; Flags: recursesubdirs createallsubdirs
 Source: "{#MyAppPath}\skins\*"; DestDir: "{app}\skins"; Flags: recursesubdirs createallsubdirs
 Source: "{#MyAppPath}\translations\*"; DestDir: "{app}\translations"; Flags: recursesubdirs createallsubdirs
