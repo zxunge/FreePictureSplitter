@@ -10,6 +10,8 @@ target_sources(FreePictureSplitter PRIVATE
     leaveevent.h
     hovereventfilter.h
     fileinfo.h
+    fancytabbarstyle.cpp
+    fancytabbarstyle.h
 )
 
 if(WIN32 AND (NOT DEPLOY_WINDOWS))

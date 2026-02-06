@@ -113,6 +113,7 @@ void SingleWidget::openPicture()
                         .arg(pixmap.logicalDpiY())
                         .arg(pixmap.logicalDpiX()));
         ui->btnReset->setEnabled(true);
+        ui->actionClosePicture->setEnabled(true);
         ui->actionZoomIn->setEnabled(true);
         ui->actionZoomOut->setEnabled(true);
         ui->sbxCols->setRange(1, width);
