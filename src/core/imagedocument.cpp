@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-// SPDX-FileCopyrightText: 2024 2025 zxunge
+// SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "graphicsview.h"
 #include "imagedocument.h"
@@ -130,6 +130,7 @@ void ImageDocument::setupSplitLines()
             m_rects[i][0].setWidth(legacyColWidth);
         }
     }
+    qDebug() << "Rectangles: " << m_rects;
 }
 
 void ImageDocument::drawLinesTo(GraphicsView *subject)

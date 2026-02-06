@@ -1,3 +1,6 @@
+; SPDX-License-Identifier: GPL-3.0-only
+; SPDX-FileCopyrightText: 2024-2026 zxunge
+
 #define MyAppName "FreePictureSplitter"
 #define MyAppVersion "4.0.0"
 #define MyAppPublisher "zxunge"

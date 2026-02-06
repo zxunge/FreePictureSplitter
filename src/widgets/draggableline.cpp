@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-// SPDX-FileCopyrightText: 2024 2025 zxunge
+// SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "draggableline.h"
 
@@ -9,6 +9,7 @@
 #include <QGraphicsView>
 #include <QColor>
 #include <QPalette>
+#include <QToolTip>
 #include <QRandomGenerator64>
 
 using namespace Qt::Literals::StringLiterals;
@@ -126,6 +127,7 @@ bool DraggableLine::event(QEvent *event)
     case QEvent::Enter:
         setStyleSheet(u"background-color: rgba(50, 205, 50, 0.5);"_s); // Highlighting
         setCursor(QCursor(m_orientation == Qt::Horizontal ? Qt::SizeVerCursor : Qt::SizeHorCursor));
+        QToolTip::showText(QCursor::pos(), QString::number(m_scenePos), this);
         break;
     case QEvent::Leave:
         setCursor(QCursor(Qt::ArrowCursor));

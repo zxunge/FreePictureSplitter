@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-only
-// SPDX-FileCopyrightText: 2024 2025 zxunge
+// SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
