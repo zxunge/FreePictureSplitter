@@ -4,17 +4,17 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="43"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="40"/>
         <source>&lt;strong&gt;Version: %1&lt;/strong&gt;&lt;br /&gt;An efficient, small but powerful picture splitting application.&lt;br /&gt;Most common formats are supported.</source>
         <translation>&lt;strong&gt;版本： %1&lt;/strong&gt;&lt;br /&gt;高效、小巧且强大的图片分割应用程序。&lt;br /&gt;支持常见图片格式。</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="70"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="67"/>
         <source>&lt;a href=&quot;%1&quot;&gt;GitHub Repository&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;%1&quot;&gt;GitHub仓库&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="75"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="72"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -292,12 +292,12 @@ Top to Bottom</source>
         <translation>保存图像失败：%1：%2.</translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="232"/>
+        <location filename="../../core/imagedocument.cpp" line="233"/>
         <source>Null rectangle list</source>
         <translation>矩形列表为空</translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="242"/>
+        <location filename="../../core/imagedocument.cpp" line="243"/>
         <source>Null image</source>
         <translation>图像为空</translation>
     </message>
@@ -310,37 +310,32 @@ Top to Bottom</source>
         <translation>FreePictureSplitter</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="91"/>
+        <location filename="../../widgets/mainwindow.cpp" line="46"/>
         <source>Single Splitting</source>
         <translation>单图片分割</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="123"/>
+        <location filename="../../widgets/mainwindow.cpp" line="48"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="155"/>
+        <location filename="../../widgets/mainwindow.cpp" line="50"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="200"/>
-        <source>About FreePictureSplitter..</source>
-        <translation>关于FreePictureSplitter..</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="227"/>
+        <location filename="../../ui/mainwindow.ui" line="67"/>
         <source>&amp;Exit</source>
         <translation>退出(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="230"/>
+        <location filename="../../ui/mainwindow.ui" line="70"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退出FreePictureSplitter。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="233"/>
+        <location filename="../../ui/mainwindow.ui" line="73"/>
         <source>Alt+X</source>
         <translation>Alt+X</translation>
     </message>
@@ -533,6 +528,14 @@ Top to Bottom</source>
     </message>
 </context>
 <context>
+    <name>QFileDialog</name>
+    <message>
+        <location filename="../../utils/fileinfo.h" line="49"/>
+        <source>All files (*)</source>
+        <translation>所有文件 (*)</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../../app/main.cpp" line="139"/>
@@ -563,6 +566,11 @@ Top to Bottom</source>
         <location filename="../../app/main.cpp" line="168"/>
         <source>Error writing to configuration file.</source>
         <translation>写入配置文件出错。</translation>
+    </message>
+    <message>
+        <location filename="../../utils/fileinfo.h" line="42"/>
+        <source>All supported file types (</source>
+        <translation>所有受支持的文件类型 (</translation>
     </message>
 </context>
 <context>
@@ -731,37 +739,37 @@ Bottom to Top</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;关闭当前打开的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="87"/>
+        <location filename="../../widgets/singlewidget.cpp" line="88"/>
         <source>Open a picture...</source>
         <translation>打开一张图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="107"/>
+        <location filename="../../widgets/singlewidget.cpp" line="108"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation>%1，宽度：%2，高度：%3，色深：%4，垂直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="126"/>
+        <location filename="../../widgets/singlewidget.cpp" line="128"/>
         <source>Error loading picture file: %1.</source>
         <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="139"/>
+        <location filename="../../widgets/singlewidget.cpp" line="141"/>
         <source>Choose the output directory.</source>
         <translation>选择输出文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="165"/>
+        <location filename="../../widgets/singlewidget.cpp" line="167"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="178"/>
+        <location filename="../../widgets/singlewidget.cpp" line="180"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="215"/>
+        <location filename="../../widgets/singlewidget.cpp" line="217"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
     </message>

@@ -4,17 +4,17 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="43"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="40"/>
         <source>&lt;strong&gt;Version: %1&lt;/strong&gt;&lt;br /&gt;An efficient, small but powerful picture splitting application.&lt;br /&gt;Most common formats are supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="70"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="67"/>
         <source>&lt;a href=&quot;%1&quot;&gt;GitHub Repository&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="75"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="72"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -288,12 +288,12 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="232"/>
+        <location filename="../../core/imagedocument.cpp" line="233"/>
         <source>Null rectangle list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="242"/>
+        <location filename="../../core/imagedocument.cpp" line="243"/>
         <source>Null image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -306,37 +306,32 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="91"/>
+        <location filename="../../widgets/mainwindow.cpp" line="46"/>
         <source>Single Splitting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="123"/>
+        <location filename="../../widgets/mainwindow.cpp" line="48"/>
         <source>Batch Splitting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="155"/>
+        <location filename="../../widgets/mainwindow.cpp" line="50"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="200"/>
-        <source>About FreePictureSplitter..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="227"/>
+        <location filename="../../ui/mainwindow.ui" line="67"/>
         <source>&amp;Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="230"/>
+        <location filename="../../ui/mainwindow.ui" line="70"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="233"/>
+        <location filename="../../ui/mainwindow.ui" line="73"/>
         <source>Alt+X</source>
         <translation type="unfinished"></translation>
     </message>
@@ -529,6 +524,14 @@ Top to Bottom</source>
     </message>
 </context>
 <context>
+    <name>QFileDialog</name>
+    <message>
+        <location filename="../../utils/fileinfo.h" line="49"/>
+        <source>All files (*)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../../app/main.cpp" line="139"/>
@@ -558,6 +561,11 @@ Top to Bottom</source>
     <message>
         <location filename="../../app/main.cpp" line="168"/>
         <source>Error writing to configuration file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../utils/fileinfo.h" line="42"/>
+        <source>All supported file types (</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -723,37 +731,37 @@ Bottom to Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="87"/>
+        <location filename="../../widgets/singlewidget.cpp" line="88"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="107"/>
+        <location filename="../../widgets/singlewidget.cpp" line="108"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="126"/>
+        <location filename="../../widgets/singlewidget.cpp" line="128"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="139"/>
+        <location filename="../../widgets/singlewidget.cpp" line="141"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="165"/>
+        <location filename="../../widgets/singlewidget.cpp" line="167"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="178"/>
+        <location filename="../../widgets/singlewidget.cpp" line="180"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="215"/>
+        <location filename="../../widgets/singlewidget.cpp" line="217"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>
