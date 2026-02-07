@@ -22,16 +22,8 @@ QSize FancyTabBarStyle::sizeFromContents(ContentsType type, const QStyleOption *
                 || tabOption->shape == QTabBar::TriangularWest
                 || tabOption->shape == QTabBar::TriangularEast)) {
 
-            QFont font;
-            if (widget) {
-                font = widget->font();
-            } else {
-                font = QApplication::font();
-            }
-
-            QFontMetrics fm(font);
-            int textWidth = fm.horizontalAdvance(tabOption->text);
-            int textHeight = fm.height();
+            int textWidth = option->fontMetrics.horizontalAdvance(tabOption->text);
+            int textHeight = option->fontMetrics.height();
 
             int iconSizeInt = pixelMetric(PM_TabBarIconSize, option, widget);
             QSize iconSize(iconSizeInt, iconSizeInt);
@@ -70,28 +62,37 @@ void FancyTabBarStyle::drawControl(ControlElement element, const QStyleOption *o
 void FancyTabBarStyle::drawTabBarTab(const QStyleOptionTab *option, QPainter *painter,
                                      const QWidget *widget) const
 {
-    if (!option || !painter)
-        return;
+    Q_ASSERT(option);
+    Q_ASSERT(painter);
 
     painter->save();
     QRect rect = option->rect;
 
-    QColor backgroundColor;
+    // Obtain colors from QSS
+    QColor bgColor;
+    QColor textColor;
+    QColor borderColor;
+
+    // Use colors defined in QPalette
+    QPalette palette = option->palette;
+
     if (option->state & State_Selected) {
-        backgroundColor = option->palette.highlight().color().lighter(180);
+        bgColor = palette.color(QPalette::Highlight);
+        textColor = palette.color(QPalette::HighlightedText);
+        borderColor = bgColor.darker(120);
     } else if (option->state & State_MouseOver) {
-        backgroundColor = option->palette.highlight().color().lighter(220);
+        bgColor = palette.color(QPalette::Highlight);
+        bgColor.setAlpha(50);
+        textColor = palette.color(QPalette::Text);
+        borderColor = palette.color(QPalette::Mid);
     } else {
-        backgroundColor = option->palette.window().color();
+        bgColor = palette.color(QPalette::Window);
+        textColor = palette.color(QPalette::Text);
+        borderColor = palette.color(QPalette::Mid);
     }
 
-    painter->fillRect(rect, backgroundColor);
-
-    if (option->state & State_Selected) {
-        painter->setPen(option->palette.highlight().color().darker(150));
-    } else {
-        painter->setPen(option->palette.mid().color());
-    }
+    painter->fillRect(rect, bgColor);
+    painter->setPen(borderColor);
     painter->drawRect(rect.adjusted(0, 0, -1, -1));
 
     QRect contentRect = rect.adjusted(8, 8, -8, -8);
@@ -101,9 +102,9 @@ void FancyTabBarStyle::drawTabBarTab(const QStyleOptionTab *option, QPainter *pa
         int iconSizeInt = pixelMetric(PM_TabBarIconSize, option, widget);
         QSize iconSize(iconSizeInt, iconSizeInt);
 
-        if (iconSizeInt < 32) {
+        // Enlarge the icons
+        if (iconSizeInt < 32)
             iconSize = QSize(32, 32);
-        }
 
         int iconX = contentRect.left() + (contentRect.width() - iconSize.width()) / 2;
         int iconY = iconTop;
@@ -125,13 +126,7 @@ void FancyTabBarStyle::drawTabBarTab(const QStyleOptionTab *option, QPainter *pa
     }
 
     if (!option->text.isEmpty()) {
-        if (!(option->state & State_Enabled)) {
-            painter->setPen(option->palette.mid().color());
-        } else if (option->state & State_Selected) {
-            painter->setPen(option->palette.highlightedText().color());
-        } else {
-            painter->setPen(option->palette.text().color());
-        }
+        painter->setPen(textColor);
 
         QFont font = painter->font();
         if (font.pointSize() < 9) {
