@@ -37,7 +37,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="FancyTabWidget" name="tabWidget">
       <property name="tabPosition">
        <enum>QTabWidget::TabPosition::West</enum>
       </property>
@@ -74,6 +74,14 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FancyTabWidget</class>
+   <extends>QTabWidget</extends>
+   <header>fancytabwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/fps.qrc"/>
  </resources>

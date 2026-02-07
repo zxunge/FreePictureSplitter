@@ -19,6 +19,8 @@ target_sources(FreePictureSplitter PRIVATE
     batchwidget.h
     preferenceswidget.cpp
     preferenceswidget.h
+    fancytabwidget.cpp
+    fancytabwidget.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

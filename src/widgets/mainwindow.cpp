@@ -6,6 +6,7 @@
 #include "singlewidget.h"
 #include "batchwidget.h"
 #include "preferenceswidget.h"
+#include "fancytabwidget.h"
 #include "aboutdialog.h"
 #include "clickablelabel.h"
 #include "globaldefs.h"
@@ -14,7 +15,6 @@
 #include "utils/leaveevent.h"
 #include "utils/hovereventfilter.h"
 #include "utils/stdpaths.h"
-#include "utils/fancytabbarstyle.h"
 
 #include <QEvent>
 #include <QCloseEvent>
@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     SingleWidget *pgSingle{ new SingleWidget(this) };
     BatchWidget *pgBatch{ new BatchWidget(this) };
     PreferencesWidget *pgPref{ new PreferencesWidget(this) };
-    ui->tabWidget->tabBar()->setStyle(new FancyTabBarStyle());
     ui->tabWidget->addTab(pgSingle, QIcon(u":/controls/controls/32x32/image.svg"_s),
                           tr("Single Splitting"));
     ui->tabWidget->addTab(pgBatch, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),

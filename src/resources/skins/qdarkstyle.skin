@@ -190,7 +190,7 @@ QAbstractItemView
 
 QWidget:focus, QMenuBar:focus
 {
-    border: 1px solid rgba(48, 86, 111);
+    border: 1px solid rgb(48, 86, 111);
 }
 
 QTabWidget:focus, QCheckBox:focus, QRadioButton:focus
@@ -247,7 +247,7 @@ QScrollBar::handle:horizontal
 
 QScrollBar::add-line:horizontal
 {
-    border-image: url(@SKINS_DIR@/right_arrow_disabled.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/right_arrow_disabled.png);
     width: 10px;
     height: 10px;
     subcontrol-position: right;
@@ -256,7 +256,7 @@ QScrollBar::add-line:horizontal
 
 QScrollBar::sub-line:horizontal
 {
-    border-image: url(@SKINS_DIR@/left_arrow_disabled.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/left_arrow_disabled.png);
     height: 10px;
     width: 10px;
     subcontrol-position: left;
@@ -265,7 +265,7 @@ QScrollBar::sub-line:horizontal
 
 QScrollBar::add-line:horizontal:hover,QScrollBar::add-line:horizontal:on
 {
-    border-image: url(@SKINS_DIR@/right_arrow.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/right_arrow.png);
     height: 10px;
     width: 10px;
     subcontrol-position: right;
@@ -275,7 +275,7 @@ QScrollBar::add-line:horizontal:hover,QScrollBar::add-line:horizontal:on
 
 QScrollBar::sub-line:horizontal:hover, QScrollBar::sub-line:horizontal:on
 {
-    border-image: url(@SKINS_DIR@/left_arrow.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/left_arrow.png);
     height: 10px;
     width: 10px;
     subcontrol-position: left;
@@ -313,7 +313,7 @@ QScrollBar::handle:vertical
 
 QScrollBar::sub-line:vertical
 {
-    border-image: url(@SKINS_DIR@/up_arrow_disabled.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/up_arrow_disabled.png);
     height: 10px;
     width: 10px;
     subcontrol-position: top;
@@ -323,7 +323,7 @@ QScrollBar::sub-line:vertical
 QScrollBar::add-line:vertical
 {
 
-    border-image: url(@SKINS_DIR@/down_arrow_disabled.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/down_arrow_disabled.png);
     height: 10px;
     width: 10px;
     subcontrol-position: bottom;
@@ -333,7 +333,7 @@ QScrollBar::add-line:vertical
 QScrollBar::sub-line:vertical:hover,QScrollBar::sub-line:vertical:on
 {
 
-    border-image: url(@SKINS_DIR@/up_arrow.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/up_arrow.png);
     height: 10px;
     width: 10px;
     subcontrol-position: top;
@@ -343,7 +343,7 @@ QScrollBar::sub-line:vertical:hover,QScrollBar::sub-line:vertical:on
 
 QScrollBar::add-line:vertical:hover, QScrollBar::add-line:vertical:on
 {
-    border-image: url(@SKINS_DIR@/down_arrow.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/down_arrow.png);
     height: 10px;
     width: 10px;
     subcontrol-position: bottom;
@@ -390,7 +390,7 @@ QCheckBox:disabled
 }
 
 QSizeGrip {
-    image: url(@SKINS_DIR@/sizegrip.png);
+    image: url(@SKINS_DIR@/qdarkstyle/sizegrip.png);
     width: 12px;
     height: 12px;
 }
@@ -485,7 +485,7 @@ QRadioButton::indicator:hover, QCheckBox::indicator:hover
 
 QCheckBox::indicator:checked, QGroupBox::indicator:checked, QMenu::indicator:non-exclusive:checked
 {
-    image:url(@SKINS_DIR@/checkbox.png);
+    image:url(@SKINS_DIR@/qdarkstyle/checkbox.png);
 }
 
 QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
@@ -494,7 +494,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
 }
 
 QCheckBox::indicator:indeterminate {
-    image: url(@SKINS_DIR@/checkbox_indeterminate.png);
+    image: url(@SKINS_DIR@/qdarkstyle/checkbox_indeterminate.png);
 }
 
 QFrame
@@ -514,16 +514,16 @@ QToolBar {
 }
 
 QToolBar::handle:horizontal {
-    image: url(@SKINS_DIR@/Hmovetoolbar.png);
+    image: url(@SKINS_DIR@/qdarkstyle/Hmovetoolbar.png);
 }
 QToolBar::handle:vertical {
-    image: url(@SKINS_DIR@/Vmovetoolbar.png);
+    image: url(@SKINS_DIR@/qdarkstyle/Vmovetoolbar.png);
 }
 QToolBar::separator:horizontal {
-    image: url(@SKINS_DIR@/Hsepartoolbar.png);
+    image: url(@SKINS_DIR@/qdarkstyle/Hsepartoolbar.png);
 }
 QToolBar::separator:vertical {
-    image: url(@SKINS_DIR@/Vsepartoolbars.png);
+    image: url(@SKINS_DIR@/qdarkstyle/Vsepartoolbars.png);
 }
 
 QPushButton
@@ -605,13 +605,13 @@ QComboBox::drop-down
 
 QComboBox::down-arrow
 {
-    image: url(@SKINS_DIR@/down_arrow_disabled.png);
+    image: url(@SKINS_DIR@/qdarkstyle/down_arrow_disabled.png);
 }
 
 QComboBox::down-arrow:on, QComboBox::down-arrow:hover,
 QComboBox::down-arrow:focus
 {
-    image: url(@SKINS_DIR@/down_arrow.png);
+    image: url(@SKINS_DIR@/qdarkstyle/down_arrow.png);
 }
 
 QPushButton:pressed
@@ -645,25 +645,25 @@ QAbstractSpinBox:down-button
 }
 
 QAbstractSpinBox::up-arrow,QAbstractSpinBox::up-arrow:disabled,QAbstractSpinBox::up-arrow:off {
-    image: url(@SKINS_DIR@/up_arrow_disabled.png);
+    image: url(@SKINS_DIR@/qdarkstyle/up_arrow_disabled.png);
     width: 10px;
     height: 10px;
 }
 QAbstractSpinBox::up-arrow:hover
 {
-    image: url(@SKINS_DIR@/up_arrow.png);
+    image: url(@SKINS_DIR@/qdarkstyle/up_arrow.png);
 }
 
 
 QAbstractSpinBox::down-arrow,QAbstractSpinBox::down-arrow:disabled,QAbstractSpinBox::down-arrow:off
 {
-    image: url(@SKINS_DIR@/down_arrow_disabled.png);
+    image: url(@SKINS_DIR@/qdarkstyle/down_arrow_disabled.png);
     width: 10px;
     height: 10px;
 }
 QAbstractSpinBox::down-arrow:hover
 {
-    image: url(@SKINS_DIR@/down_arrow.png);
+    image: url(@SKINS_DIR@/qdarkstyle/down_arrow.png);
 }
 
 
@@ -681,6 +681,7 @@ QTabBar
 {
     qproperty-drawBase: 0;
     padding-right: 15px;
+    color: silver;
 }
 
 QTabBar:focus
@@ -689,7 +690,7 @@ QTabBar:focus
 }
 
 QTabBar::close-button  {
-    image: url(@SKINS_DIR@/close.png);
+    image: url(@SKINS_DIR@/qdarkstyle/close.png);
     background: transparent;
     icon-size: 10px;
     padding: 5px;
@@ -825,26 +826,26 @@ QTabBar::tab:right:selected
 }
 
 QTabBar QToolButton::right-arrow:enabled {
-     image: url(@SKINS_DIR@/right_arrow.png);
+     image: url(@SKINS_DIR@/qdarkstyle/right_arrow.png);
 }
 
 QTabBar QToolButton::left-arrow:enabled {
-     image: url(@SKINS_DIR@/left_arrow.png);
+     image: url(@SKINS_DIR@/qdarkstyle/left_arrow.png);
 }
 
 QTabBar QToolButton::right-arrow:disabled {
-     image: url(@SKINS_DIR@/right_arrow_disabled.png);
+     image: url(@SKINS_DIR@/qdarkstyle/right_arrow_disabled.png);
 }
 
 QTabBar QToolButton::left-arrow:disabled {
-     image: url(@SKINS_DIR@/left_arrow_disabled.png);
+     image: url(@SKINS_DIR@/qdarkstyle/left_arrow_disabled.png);
 }
 
 
 QDockWidget {
     border: 1px solid #403F3F;
-    titlebar-close-icon: url(@SKINS_DIR@/close.png);
-    titlebar-normal-icon: url(@SKINS_DIR@/undock.png);
+    titlebar-close-icon: url(@SKINS_DIR@/qdarkstyle/close.png);
+    titlebar-normal-icon: url(@SKINS_DIR@/qdarkstyle/undock.png);
 }
 
 QDockWidget::close-button, QDockWidget::float-button {
@@ -871,39 +872,39 @@ QTreeView, QListView
 
 QTreeView:branch:selected, QTreeView:branch:hover
 {
-    background: url(@SKINS_DIR@/transparent.png);
+    background: url(@SKINS_DIR@/qdarkstyle/transparent.png);
 }
 
 QTreeView::branch:has-siblings:!adjoins-item {
-    border-image: url(@SKINS_DIR@/transparent.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/transparent.png);
 }
 
 QTreeView::branch:has-siblings:adjoins-item {
-    border-image: url(@SKINS_DIR@/transparent.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/transparent.png);
 }
 
 QTreeView::branch:!has-children:!has-siblings:adjoins-item {
-    border-image: url(@SKINS_DIR@/transparent.png);
+    border-image: url(@SKINS_DIR@/qdarkstyle/transparent.png);
 }
 
 QTreeView::branch:has-children:!has-siblings:closed,
 QTreeView::branch:closed:has-children:has-siblings {
-    image: url(@SKINS_DIR@/branch_closed.png);
+    image: url(@SKINS_DIR@/qdarkstyle/branch_closed.png);
 }
 
 QTreeView::branch:open:has-children:!has-siblings,
 QTreeView::branch:open:has-children:has-siblings  {
-    image: url(@SKINS_DIR@/branch_open.png);
+    image: url(@SKINS_DIR@/qdarkstyle/branch_open.png);
 }
 
 QTreeView::branch:has-children:!has-siblings:closed:hover,
 QTreeView::branch:closed:has-children:has-siblings:hover {
-    image: url(@SKINS_DIR@/branch_closed-on.png);
+    image: url(@SKINS_DIR@/qdarkstyle/branch_closed-on.png);
     }
 
 QTreeView::branch:open:has-children:!has-siblings:hover,
 QTreeView::branch:open:has-children:has-siblings:hover  {
-    image: url(@SKINS_DIR@/branch_open-on.png);
+    image: url(@SKINS_DIR@/qdarkstyle/branch_open-on.png);
     }
 
 QListView::item:!selected:hover, QListView::item:!selected:hover, QTreeView::item:!selected:hover  {
@@ -986,7 +987,7 @@ QToolButton::menu-button {
 }
 
 QToolButton::menu-arrow {
- image: url(@SKINS_DIR@/down_arrow.png);
+ image: url(@SKINS_DIR@/qdarkstyle/down_arrow.png);
 }
 
 QToolButton::menu-arrow:open {
@@ -1066,11 +1067,11 @@ QHeaderView::section:checked
 }
 
 QHeaderView::down-arrow {
-    image: url(@SKINS_DIR@/down_arrow.png);
+    image: url(@SKINS_DIR@/qdarkstyle/down_arrow.png);
 }
 
 QHeaderView::up-arrow {
-    image: url(@SKINS_DIR@/up_arrow.png);
+    image: url(@SKINS_DIR@/qdarkstyle/up_arrow.png);
 }
 
 
