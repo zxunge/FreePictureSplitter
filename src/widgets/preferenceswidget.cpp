@@ -73,9 +73,9 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     ui->dsbxFactor->setValue(g_appConfig.options.outputOpt.scalingFactor * 100.0);
 
     // ----- Grid Figure -----
-    ui->frColor->setAutoFillBackground(true);
     m_color = QColor::fromString(QString::fromStdString(g_appConfig.options.gridOpt.colorRgb));
-    ui->frColor->setPalette(QPalette(m_color));
+    ui->labColor->setAutoFillBackground(true);
+    ui->labColor->setStyleSheet("background-color: " % m_color.name() % ";");
     ui->sbxLineSize->setValue(g_appConfig.options.gridOpt.lineSize);
     ui->chbGrid->setChecked(g_appConfig.options.gridOpt.enabled);
     ui->gbxGridFigure->setEnabled(g_appConfig.options.gridOpt.enabled);
@@ -101,7 +101,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
         QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };
         if (color.isValid()) {
             m_color = color;
-            ui->frColor->setPalette(QPalette(color));
+            ui->labColor->setStyleSheet("background-color: " % m_color.name() % ";");
         }
     });
     connect(ui->rbtnSpecified, &QRadioButton::toggled, this,
