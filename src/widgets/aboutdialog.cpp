@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "aboutdialog.h"
+#include "clickablelabel.h"
 
 #include <QDialog>
 #include <QLabel>
@@ -14,6 +15,7 @@
 #include <QPixmap>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QApplication>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -69,6 +71,11 @@ AboutDialog::AboutDialog(QWidget *parent)
     linkLabel->setOpenExternalLinks(true);
     linkLabel->setAlignment(Qt::AlignCenter);
 
+    auto aboutQtLabel{ new ClickableLabel(this) };
+    aboutQtLabel->setText(tr("About Qt..."));
+    aboutQtLabel->setAlignment(Qt::AlignCenter);
+    connect(aboutQtLabel, &ClickableLabel::clicked, qApp, &QApplication::aboutQt);
+
     auto closeButton{ new QPushButton(tr("Close"), this) };
     connect(closeButton, &QPushButton::clicked, this, [this]() { this->close(); });
 
@@ -79,6 +86,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     mainLayout->addWidget(copyrightLabel);
     mainLayout->addStretch();
     mainLayout->addWidget(linkLabel);
+    mainLayout->addWidget(aboutQtLabel);
     mainLayout->addStretch();
     mainLayout->addWidget(closeButton);
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
