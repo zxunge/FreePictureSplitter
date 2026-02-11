@@ -5,6 +5,7 @@
 #include "globaldefs.h"
 #include "ui_batchwidget.h"
 #include "progressdialog.h"
+#include "errorlogdialog.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/fileinfo.h"
@@ -355,6 +356,17 @@ void BatchWidget::startSplit()
 
         if (auto result = imgDoc.saveImages(); result.has_value()) {
             result.value().waitForFinished();
+
+            if (!result.value().result().empty()) {
+                // Show errors
+                ErrorLogDialog *dlgErr{ new ErrorLogDialog(this) };
+                Q_FOREACH (auto &result, result.value().result()) {
+                    if (!result.has_value())
+                        dlgErr->addErrorInfo(
+                                { std::make_tuple(imgDoc.filePath(), u""_s, result.error()) });
+                }
+            }
+
             QCoreApplication::processEvents();
             dlg.proceed();
         } else {

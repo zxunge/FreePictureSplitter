@@ -14,7 +14,6 @@
 #include <QCompleter>
 #include <QFileSystemModel>
 #include <QStandardPaths>
-#include <QtConcurrent/QtConcurrentRun>
 
 using namespace Qt::Literals::StringLiterals;
 

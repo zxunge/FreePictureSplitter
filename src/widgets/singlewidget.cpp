@@ -5,6 +5,7 @@
 #include "globaldefs.h"
 #include "ui_singlewidget.h"
 #include "progressdialog.h"
+#include "errorlogdialog.h"
 
 #include "core/imagedocument.h"
 #include "utils/fileinfo.h"
@@ -199,7 +200,19 @@ void SingleWidget::savePictures()
             dlg->setAttribute(Qt::WA_DeleteOnClose);
             QFutureWatcher<QList<Result<>>> watcher(this);
 
-            connect(&watcher, &QFutureWatcher<QList<Result<>>>::finished, dlg, &QDialog::close);
+            connect(&watcher, &QFutureWatcher<QList<Result<>>>::finished, this,
+                    [this, &watcher, &dlg] {
+                        dlg->close();
+                        if (!watcher.result().empty()) {
+                            // Show errors
+                            ErrorLogDialog *dlgErr{ new ErrorLogDialog(this) };
+                            Q_FOREACH (auto &result, watcher.result()) {
+                                if (!result.has_value())
+                                    dlgErr->addErrorInfo({ std::make_tuple(
+                                            m_imgDoc->filePath(), u""_s, result.error()) });
+                            }
+                        }
+                    });
             connect(&watcher, &QFutureWatcher<QList<Result<>>>::progressRangeChanged, dlg,
                     &ProgressDialog::setRange);
             connect(&watcher, &QFutureWatcher<QList<Result<>>>::progressValueChanged, dlg,

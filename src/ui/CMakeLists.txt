@@ -4,4 +4,5 @@ target_sources(FreePictureSplitter PRIVATE
     singlewidget.ui
     batchwidget.ui
     preferenceswidget.ui
+    errorlogdialog.ui
 )
