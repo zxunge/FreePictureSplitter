@@ -208,9 +208,10 @@ void SingleWidget::savePictures()
                             ErrorLogDialog *dlgErr{ new ErrorLogDialog(this) };
                             Q_FOREACH (auto &result, watcher.result()) {
                                 if (!result.has_value())
-                                    dlgErr->addErrorInfo({ std::make_tuple(
-                                            m_imgDoc->filePath(), u""_s, result.error()) });
+                                    dlgErr->addErrorInfo({ std::make_tuple(m_imgDoc->filePath(),
+                                                                           result.error()) });
                             }
+                            dlgErr->exec();
                         }
                     });
             connect(&watcher, &QFutureWatcher<QList<Result<>>>::progressRangeChanged, dlg,

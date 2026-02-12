@@ -23,7 +23,7 @@ Result<QFuture<QList<Result<>>>> ImageDocument::saveImages()
                     m_wopt.applyToWriter(writer);
                     qInfo() << u"Saving Image: "_s << writer.fileName();
                     if (!writer.canWrite())
-                        return std::unexpected(tr("Cannot write to ").arg(filename));
+                        return std::unexpected(tr("Cannot write to %1.").arg(filename));
                     if (!writer.write(image.scaled(image.width() * option().scalingFactor(),
                                                    image.height() * option().scalingFactor(),
                                                    Qt::IgnoreAspectRatio,
@@ -130,7 +130,7 @@ void ImageDocument::setupSplitLines()
             m_rects[i][0].setWidth(legacyColWidth);
         }
     }
-    qDebug() << "Rectangles: " << m_rects;
+    // qDebug() << "Rectangles: " << m_rects;
 }
 
 void ImageDocument::drawLinesTo(GraphicsView *subject)

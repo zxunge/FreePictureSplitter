@@ -363,8 +363,9 @@ void BatchWidget::startSplit()
                 Q_FOREACH (auto &result, result.value().result()) {
                     if (!result.has_value())
                         dlgErr->addErrorInfo(
-                                { std::make_tuple(imgDoc.filePath(), u""_s, result.error()) });
+                                { std::make_tuple(imgDoc.filePath(), result.error()) });
                 }
+                dlgErr->exec();
             }
 
             QCoreApplication::processEvents();

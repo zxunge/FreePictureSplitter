@@ -17,8 +17,7 @@ class ErrorLogDialog : public QDialog
     Q_OBJECT
 
 public:
-    using ErrorInfo = std::tuple<QString, QString, QString>; // For original file path, output file
-                                                             // path and error message
+    using ErrorInfo = std::tuple<QString, QString>; // For object description and error message
 
     explicit ErrorLogDialog(QWidget *parent = nullptr);
     explicit ErrorLogDialog(const QList<ErrorInfo> &infolist, QWidget *parent = nullptr);
@@ -26,6 +25,8 @@ public:
 
     void addErrorInfo(const QList<ErrorInfo> &infolist);
     QList<ErrorInfo> errorInfoList() const;
+
+    int exec() override; // Use our custom exec() to decide whether to show or not
 
 private:
     Ui::ErrorLogDialog *ui;
