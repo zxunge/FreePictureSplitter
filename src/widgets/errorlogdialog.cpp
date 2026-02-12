@@ -11,6 +11,8 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include <QFile>
+#include <QTextStream>
+#include <QMessageBox>
 
 using namespace Qt::Literals::StringLiterals;
 

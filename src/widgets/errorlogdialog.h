@@ -6,6 +6,8 @@
 #define ERRORLOGDIALOG_H
 
 #include <QDialog>
+#include <QList>
+
 #include <tuple>
 
 namespace Ui {
