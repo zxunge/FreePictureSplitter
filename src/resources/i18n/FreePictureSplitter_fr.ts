@@ -4,17 +4,22 @@
 <context>
     <name>AboutDialog</name>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="40"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="42"/>
         <source>&lt;strong&gt;Version: %1&lt;/strong&gt;&lt;br /&gt;An efficient, small but powerful picture splitting application.&lt;br /&gt;Most common formats are supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="67"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="69"/>
         <source>&lt;a href=&quot;%1&quot;&gt;GitHub Repository&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="72"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="75"/>
+        <source>About Qt...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/aboutdialog.cpp" line="79"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -216,61 +221,61 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="83"/>
+        <location filename="../../widgets/batchwidget.cpp" line="84"/>
         <source>File Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="84"/>
+        <location filename="../../widgets/batchwidget.cpp" line="85"/>
         <source>File Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="85"/>
+        <location filename="../../widgets/batchwidget.cpp" line="86"/>
         <source>File Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="184"/>
+        <location filename="../../widgets/batchwidget.cpp" line="185"/>
         <source>Add pictures...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="212"/>
+        <location filename="../../widgets/batchwidget.cpp" line="213"/>
         <source>Choose a directory containing pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="266"/>
+        <location filename="../../widgets/batchwidget.cpp" line="267"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="304"/>
-        <location filename="../../widgets/batchwidget.cpp" line="319"/>
-        <location filename="../../widgets/batchwidget.cpp" line="331"/>
-        <location filename="../../widgets/batchwidget.cpp" line="342"/>
-        <location filename="../../widgets/batchwidget.cpp" line="361"/>
+        <location filename="../../widgets/batchwidget.cpp" line="305"/>
+        <location filename="../../widgets/batchwidget.cpp" line="320"/>
+        <location filename="../../widgets/batchwidget.cpp" line="332"/>
+        <location filename="../../widgets/batchwidget.cpp" line="343"/>
+        <location filename="../../widgets/batchwidget.cpp" line="374"/>
         <source>Batch Splitting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="305"/>
+        <location filename="../../widgets/batchwidget.cpp" line="306"/>
         <source>Cannot open file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="342"/>
+        <location filename="../../widgets/batchwidget.cpp" line="343"/>
         <source>No rule to split the picture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="320"/>
+        <location filename="../../widgets/batchwidget.cpp" line="321"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="332"/>
+        <location filename="../../widgets/batchwidget.cpp" line="333"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -279,7 +284,7 @@ Top to Bottom</source>
     <name>Core::ImageDocument</name>
     <message>
         <location filename="../../core/imagedocument.cpp" line="26"/>
-        <source>Cannot write to </source>
+        <source>Cannot write to %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -295,6 +300,34 @@ Top to Bottom</source>
     <message>
         <location filename="../../core/imagedocument.cpp" line="243"/>
         <source>Null image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ErrorLogDialog</name>
+    <message>
+        <location filename="../../ui/errorlogdialog.ui" line="20"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/errorlogdialog.ui" line="55"/>
+        <source>Original File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/errorlogdialog.ui" line="60"/>
+        <source>Error Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/errorlogdialog.ui" line="90"/>
+        <source>Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/errorlogdialog.cpp" line="25"/>
+        <source>Choose a directory to save the error logs.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -440,22 +473,22 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="399"/>
+        <location filename="../../ui/preferenceswidget.ui" line="377"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="334"/>
+        <location filename="../../ui/preferenceswidget.ui" line="354"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="406"/>
+        <location filename="../../ui/preferenceswidget.ui" line="409"/>
         <source>Select Color...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="341"/>
+        <location filename="../../ui/preferenceswidget.ui" line="347"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -485,17 +518,17 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="36"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="35"/>
         <source>System</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="101"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="100"/>
         <source>Select a color for grid lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
         <source>Choose a directory to save pictures.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -566,6 +599,11 @@ Top to Bottom</source>
     <message>
         <location filename="../../utils/fileinfo.h" line="42"/>
         <source>All supported file types (</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/errorlogdialog.cpp" line="43"/>
+        <source>Error writing to file %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -731,37 +769,37 @@ Bottom to Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="88"/>
+        <location filename="../../widgets/singlewidget.cpp" line="89"/>
         <source>Open a picture...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="108"/>
+        <location filename="../../widgets/singlewidget.cpp" line="109"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="128"/>
+        <location filename="../../widgets/singlewidget.cpp" line="129"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="141"/>
+        <location filename="../../widgets/singlewidget.cpp" line="142"/>
         <source>Choose the output directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="167"/>
+        <location filename="../../widgets/singlewidget.cpp" line="168"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="180"/>
+        <location filename="../../widgets/singlewidget.cpp" line="181"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="217"/>
+        <location filename="../../widgets/singlewidget.cpp" line="231"/>
         <source>No rule to split this picture</source>
         <translation type="unfinished"></translation>
     </message>
