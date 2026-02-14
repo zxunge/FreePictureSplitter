@@ -28,6 +28,9 @@ public:
     }
     ~ButtonHoverEventFilter() { }
 
+    void setEnterIcon(const QIcon &enter) { m_enterIcon = enter; }
+    void setLeaveIcon(const QIcon &leave) { m_leaveIcon = leave; }
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override
     {

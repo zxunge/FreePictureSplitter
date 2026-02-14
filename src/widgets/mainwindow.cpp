@@ -13,7 +13,7 @@
 
 #include "utils/jsonconfigitems.h"
 #include "utils/leaveevent.h"
-#include "utils/hovereventfilter.h"
+#include "utils/thememanager.h"
 #include "utils/stdpaths.h"
 
 #include <QEvent>
@@ -147,10 +147,8 @@ void MainWindow::installWindowAgent()
         emulateLeaveEvent(maxButton);
     });
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
-    ButtonHoverEventFilter *filter{ new ButtonHoverEventFilter(
-            QIcon(u":/windowBar/windowBar/close-dark.svg"_s),
-            QIcon(u":/windowBar/windowBar/close-light.svg"_s), this) };
-    closeButton->installEventFilter(filter);
+    ThemeManager::instance().setTheme(ThemeManager::Theme::Light);
+    ThemeManager::instance().setCloseButton(closeButton);
 
     setMenuWidget(windowBar);
 }
