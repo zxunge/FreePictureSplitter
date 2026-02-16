@@ -6,7 +6,6 @@
 #include "utils/hovereventfilter.h"
 
 using namespace Qt::Literals::StringLiterals;
-using namespace Util;
 
 namespace Util {
 

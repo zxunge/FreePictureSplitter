@@ -48,9 +48,6 @@
 #  include <QtCore/qstring.h>
 #  include <QtCore/qrect.h>
 #  include <QtCore/qobject.h>
-
-// Third-party includes
-#  include <SingleApplication>
 #endif // __cplusplus
 
 #endif // FPS_PCH_H

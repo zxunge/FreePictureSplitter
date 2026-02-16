@@ -40,7 +40,7 @@ private:
     ButtonHoverEventFilter *m_filter;
 
 signals:
-    void themeChanged(Theme theme);
+    void themeChanged(Util::ThemeManager::Theme theme);
 };
 
 } // namespace Util

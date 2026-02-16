@@ -37,7 +37,7 @@ endif()
 
 find_package(QT NAMES Qt6 REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS
-    Core Gui Widgets Concurrent LinguistTools Svg Network
+    Core Gui Widgets Concurrent LinguistTools Svg
     CorePrivate GuiPrivate WidgetsPrivate
 )
 

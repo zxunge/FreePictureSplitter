@@ -4,6 +4,3 @@
 [submodule "src/3rdparty/qwindowkit"]
 	path = src/3rdparty/qwindowkit
 	url = https://github.com/stdware/qwindowkit.git
-[submodule "src/3rdparty/SingleApplication"]
-	path = src/3rdparty/SingleApplication
-	url = https://github.com/itay-grudev/SingleApplication.git

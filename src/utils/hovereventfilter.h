@@ -35,7 +35,9 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override
     {
         QAbstractButton *btn{ qobject_cast<QAbstractButton *>(obj) };
-        Q_ASSERT(btn);
+        if (!btn)
+            return false;
+
         switch (event->type()) {
         case QEvent::HoverEnter:
             btn->setIcon(m_enterIcon);

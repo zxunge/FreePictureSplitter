@@ -26,7 +26,6 @@
 #  include <windows.h>
 #endif // Q_OS_WIN
 #include <rfl/json.hpp>
-#include <SingleApplication>
 
 #include <cstdlib>
 
@@ -199,7 +198,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName(u"zxunge"_s);
     QGuiApplication::setApplicationDisplayName(fpsAppName);
 
-    SingleApplication a(argc, argv);
+    QApplication a(argc, argv);
     originalHandler = qInstallMessageHandler(logToFile);
     QGuiApplication::setWindowIcon(QIcon(u":/icons/fps.ico"_s));
 
