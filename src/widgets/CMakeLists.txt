@@ -23,6 +23,8 @@ target_sources(FreePictureSplitter PRIVATE
     fancytabwidget.h
     errorlogdialog.cpp
     errorlogdialog.h
+    skinoptionsdialog.cpp
+    skinoptionsdialog.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

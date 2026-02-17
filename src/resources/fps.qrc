@@ -32,5 +32,6 @@
         <file>controls/32x32/settings.svg</file>
         <file>controls/20x20/content_view.svg</file>
         <file>controls/20x20/settings.svg</file>
+        <file>controls/16x16/add.svg</file>
     </qresource>
 </RCC>

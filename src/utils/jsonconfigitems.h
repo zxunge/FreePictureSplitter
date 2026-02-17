@@ -6,7 +6,10 @@
 #define JSONCONFIGITEMS_H
 
 #include "config.h"
+#include "utils/thememanager.h"
+
 #include <string>
+#include <vector>
 
 namespace Util {
 
@@ -23,8 +26,10 @@ struct Config
         int majorVersion;
         int minorVersion;
         int microVersion;
-        std::string style;
+        std::string skin;
     } app;
+
+    std::vector<ThemeManager::SkinInfo> skinList;
 
     struct
     {
@@ -79,7 +84,9 @@ inline void setDefConf(Config &s)
                          .majorVersion = fpsVersionMajor,
                          .minorVersion = fpsVersionMinor,
                          .microVersion = fpsVersionMicro,
-                         .style = "Flat Light" },
+                         .skin = "Flat Light" },
+                .skinList = { std::make_tuple("Flat Light", "default.skin",
+                                              ThemeManager::Theme::Light) },
                 .dialog = { .lastEnteredIndex = 0 },
                 .options = { .outputOpt = { .savingTo = SavingTo::inPlace,
                                             .subDir = false,

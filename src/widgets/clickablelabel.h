@@ -14,6 +14,10 @@ class ClickableLabel : public QLabel
     Q_OBJECT
 public:
     explicit ClickableLabel(QWidget *parent = nullptr);
+    explicit ClickableLabel(const QString &text, QWidget *parent = nullptr) : ClickableLabel(parent)
+    {
+        setText(text);
+    }
     ~ClickableLabel() { }
 
 Q_SIGNALS:

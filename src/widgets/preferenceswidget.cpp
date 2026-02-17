@@ -3,9 +3,9 @@
 
 #include "preferenceswidget.h"
 #include "ui_preferenceswidget.h"
+#include "skinoptionsdialog.h"
 
 #include "utils/jsonconfigitems.h"
-#include "utils/skins.h"
 
 #include <QImageWriter>
 #include <QColorDialog>
@@ -29,8 +29,8 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
 
     // Load configurations
     /****************** Appearance ******************/
-    ui->cbxStyle->addItems(Util::availableSkins());
-    ui->cbxStyle->setCurrentText(QString::fromStdString(g_appConfig.app.style));
+    ui->cbxStyle->addItems(Util::ThemeManager::availableSkins());
+    ui->cbxStyle->setCurrentText(QString::fromStdString(g_appConfig.app.skin));
     // `Language' is now fixed
     ui->cbxLang->addItem(tr("System"));
     ui->cbxLang->setCurrentIndex(0);
@@ -132,7 +132,15 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
         if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole) {
             saveChanges();
             // Change theme
-            Util::setAppSkin(qApp, QString::fromStdString(g_appConfig.app.style));
+            Util::ThemeManager::instance().setAppSkin(g_appConfig.app.skin);
+        }
+    });
+    connect(ui->tbtnAddSkin, &QToolButton::clicked, this, [this] {
+        SkinOptionsDialog *dlg{ new SkinOptionsDialog(this) };
+        if (dlg->exec() == QDialog::Accepted && !std::get<0>(dlg->skinInfo()).empty()
+            && !std::get<1>(dlg->skinInfo()).empty()) {
+            ui->cbxStyle->addItem(QString::fromStdString(std::get<0>(dlg->skinInfo())));
+            g_appConfig.skinList.push_back(dlg->skinInfo());
         }
     });
 }
@@ -145,7 +153,7 @@ PreferencesWidget::~PreferencesWidget()
 void PreferencesWidget::saveChanges()
 {
     // Save configurations
-    g_appConfig.app.style = ui->cbxStyle->currentText().toStdString();
+    g_appConfig.app.skin = ui->cbxStyle->currentText().toStdString();
     switch (ui->cbxLocation->currentIndex()) {
     case 0:
         g_appConfig.options.outputOpt.savingTo = Util::SavingTo::inPlace;

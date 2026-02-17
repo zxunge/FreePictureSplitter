@@ -9,6 +9,11 @@
 #include <QIcon>
 #include <QAbstractButton>
 
+#include <tuple>
+#include <string>
+
+class QApplication;
+
 namespace Util {
 
 class ButtonHoverEventFilter;
@@ -21,12 +26,27 @@ class ThemeManager : public QObject
 {
     Q_OBJECT
 public:
+    enum class Theme { Dark, Light };
+    using SkinInfo =
+            std::tuple<std::string, std::string,
+                       Util::ThemeManager::Theme>; // Skin name, skin file's name, skin's theme
+
     explicit ThemeManager(QObject *parent = nullptr);
     ~ThemeManager();
 
-    enum class Theme { Dark, Light };
-    Theme theme() const { return m_theme; }
-    void setTheme(Theme theme);
+    Theme theme() const { return std::get<2>(m_skinInfo); }
+
+    /*!
+     * \brief getAvailableSkins
+     * \details Get available skins names under skins directory.
+     */
+    static QStringList availableSkins();
+    /*!
+     * \brief setAppSkin
+     * \param skinName Name of the skin, written in the header.
+     * \details Set application's stylesheet to the corresponding file with name `skinName'.
+     */
+    bool setAppSkin(const std::string &skinName);
 
     static ThemeManager &instance();
 
@@ -35,7 +55,10 @@ public:
     QAbstractButton *closeButton() const { return m_closeBtn; }
 
 private:
-    Theme m_theme;
+    SkinInfo infoFromSkinName(const std::string &name);
+
+private:
+    SkinInfo m_skinInfo;
     QAbstractButton *m_closeBtn;
     ButtonHoverEventFilter *m_filter;
 

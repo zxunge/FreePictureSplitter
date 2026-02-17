@@ -2,8 +2,6 @@ target_sources(FreePictureSplitter PRIVATE
     jsonconfigitems.h
     colors.h
     colors.cpp
-    skins.h
-    skins.cpp
     stdpaths.h
     stdpaths.cpp
     fonts.h

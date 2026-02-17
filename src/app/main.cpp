@@ -5,7 +5,7 @@
 #include "globaldefs.h"
 
 #include "utils/jsonconfigitems.h"
-#include "utils/skins.h"
+#include "utils/thememanager.h"
 #include "utils/stdpaths.h"
 #include "utils/fonts.h"
 
@@ -147,9 +147,9 @@ inline void loadTranslations(QApplication *a)
     loadTranslations(a);
 
     // Load styles
-    if (!Util::setAppSkin(a, QString::fromStdString(g_appConfig.app.style))) {
+    if (!Util::ThemeManager::instance().setAppSkin(g_appConfig.app.skin)) {
         QMessageBox::warning(nullptr, fpsAppName,
-                             QObject::tr("Error loading skin: %1.").arg(g_appConfig.app.style),
+                             QObject::tr("Could NOT load skin %1.").arg(g_appConfig.app.skin),
                              QMessageBox::Close);
         return false;
     }
@@ -211,7 +211,8 @@ int main(int argc, char *argv[])
     g_mainWnd = new MainWindow();
     g_mainWnd->show();
     int ret{ a.exec() };
-    delete g_mainWnd;
+    if (g_mainWnd)
+        g_mainWnd->deleteLater();
     if (!saveConfigurations())
         std::exit(EXIT_FAILURE);
 

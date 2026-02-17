@@ -147,7 +147,6 @@ void MainWindow::installWindowAgent()
         emulateLeaveEvent(maxButton);
     });
     connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
-    ThemeManager::instance().setTheme(ThemeManager::Theme::Light);
     ThemeManager::instance().setCloseButton(closeButton);
 
     setMenuWidget(windowBar);
