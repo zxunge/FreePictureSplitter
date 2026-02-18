@@ -25,7 +25,6 @@ set(QT_DEPLOY_TRANSLATIONS_DIR \"${CMAKE_INSTALL_DATADIR}/fps/translations\")
 
 include(\"${QT_DEPLOY_SUPPORT}\")
 set(__QT_DEPLOY_I18N_CATALOGS \"qtbase\")
-set(__QT_DEPLOY_USE_PATCHELF ON)
 qt_deploy_runtime_dependencies(
     EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:${arg_TARGET}>\"
 )

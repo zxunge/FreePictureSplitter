@@ -56,6 +56,10 @@ else()    # Win32 && DEPLOY_WINDOWS
         OUTPUT_SCRIPT deploy_script
     )
 endif()
+if (UNIX)
+    # Workaround for non-core Qt libraries, see https://github.com/lxqt/libqtxdg/issues/329
+    set(QT_DEPLOY_USE_PATCHELF ON)
+endif()
 install(SCRIPT ${deploy_script})
 # Note that we need to deploy Dr.MinGW dlls manually,
 # including exchndl.dll, mgwhelp.dll, dbghelp.dll, dbgcore.dll, symsrv.dll, and symsrv.yes.
