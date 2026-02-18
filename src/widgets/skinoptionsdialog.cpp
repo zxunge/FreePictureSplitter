@@ -13,6 +13,7 @@
 #include <QFileDialog>
 #include <QLineEdit>
 #include <QFileInfo>
+#include <QDialogButtonBox>
 
 using namespace Qt::Literals::StringLiterals;
 

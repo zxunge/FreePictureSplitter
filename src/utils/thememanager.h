@@ -31,9 +31,6 @@ public:
             std::tuple<std::string, std::string,
                        Util::ThemeManager::Theme>; // Skin name, skin file's name, skin's theme
 
-    explicit ThemeManager(QObject *parent = nullptr);
-    ~ThemeManager();
-
     Theme theme() const { return std::get<2>(m_skinInfo); }
 
     /*!
@@ -58,6 +55,9 @@ private:
     SkinInfo infoFromSkinName(const std::string &name);
 
 private:
+    explicit ThemeManager(QObject *parent = nullptr);
+    ~ThemeManager();
+
     SkinInfo m_skinInfo;
     QAbstractButton *m_closeBtn;
     ButtonHoverEventFilter *m_filter;

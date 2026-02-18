@@ -25,9 +25,18 @@ set(QT_DEPLOY_TRANSLATIONS_DIR \"${CMAKE_INSTALL_DATADIR}/fps/translations\")
 
 include(\"${QT_DEPLOY_SUPPORT}\")
 set(__QT_DEPLOY_I18N_CATALOGS \"qtbase\")
+set(__QT_DEPLOY_USE_PATCHELF ON)
 qt_deploy_runtime_dependencies(
     EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:${arg_TARGET}>\"
-    GENERATE_QT_CONF
+)
+
+# Manually generate our custom qt.conf file
+qt6_deploy_qt_conf(\"\${QT_DEPLOY_PREFIX}/\${QT_DEPLOY_BIN_DIR}/qt.conf\"
+    PREFIX \"..\"
+    BIN_DIR \"\${QT_DEPLOY_BIN_DIR}\"
+    LIB_DIR \"\${QT_DEPLOY_LIB_DIR}\"
+    PLUGINS_DIR \"\${QT_DEPLOY_PLUGINS_DIR}\"
+    DATA_DIR \"share\"
 )
         ")
     endif()

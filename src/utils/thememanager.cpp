@@ -46,7 +46,7 @@ QStringList ThemeManager::availableSkins()
 {
     QStringList list;
     // We DO NOT check the existence of the skin files.
-    Q_FOREACH (const auto &skin, g_appConfig.skinList)
+    for (const auto &skin : g_appConfig.skinList)
         list.push_back(QString::fromStdString(std::get<0>(skin)));
     return list;
 }
@@ -90,7 +90,7 @@ ThemeManager &ThemeManager::instance()
 void ThemeManager::setCloseButton(QAbstractButton *btn)
 {
     if (m_closeBtn)
-        m_closeBtn->installEventFilter(nullptr);
+        m_closeBtn->removeEventFilter(m_filter);
     m_closeBtn = btn;
     m_closeBtn->installEventFilter(m_filter);
 }
