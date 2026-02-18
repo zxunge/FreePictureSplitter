@@ -64,8 +64,8 @@ void ImageDocument::setupSplitLines()
         basicRowHeight = option().size()->height();
         rows = (height % option().size()->height() == 0) ? height / option().size()->height()
                                                          : height / option().size()->height() + 1;
-        cols = (width % option().size()->width()) ? width / option().size()->width()
-                                                  : width / option().size()->width() + 1;
+        cols = (width % option().size()->width() == 0) ? width / option().size()->width()
+                                                       : width / option().size()->width() + 1;
     } else if (option().average() != std::nullopt) {
         basicRowHeight = std::round(static_cast<double>(height) / option().average()->rows);
         basicColWidth = std::round(static_cast<double>(width) / option().average()->cols);
@@ -130,7 +130,7 @@ void ImageDocument::setupSplitLines()
             m_rects[i][0].setWidth(legacyColWidth);
         }
     }
-    // qDebug() << "Rectangles: " << m_rects;
+    qDebug() << "Rectangles: " << m_rects;
 }
 
 void ImageDocument::drawLinesTo(GraphicsView *subject)
@@ -139,16 +139,16 @@ void ImageDocument::drawLinesTo(GraphicsView *subject)
         return;
 
     DraggableLine *line{};
-    Q_FOREACH (auto rects, m_rects) {
+    for (qsizetype i{}; i != m_rects.size() - 1; ++i) {
         line = new DraggableLine(subject);
-        line->setScenePos(rects.constFirst().bottom());
+        line->setScenePos(m_rects[i].constFirst().y() + m_rects[i].constFirst().height());
         line->show();
         subject->addDraggableLine(line);
         line = nullptr;
     }
-    Q_FOREACH (auto rect, m_rects.constFirst()) {
+    for (qsizetype i{}; i != m_rects.constFirst().size() - 1; ++i) {
         line = new DraggableLine(Qt::Vertical, subject);
-        line->setScenePos(rect.right());
+        line->setScenePos(m_rects.constFirst()[i].x() + m_rects.constFirst()[i].width());
         line->show();
         subject->addDraggableLine(line);
         line = nullptr;
