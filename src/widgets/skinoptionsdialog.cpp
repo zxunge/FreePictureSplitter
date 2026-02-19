@@ -25,7 +25,7 @@ SkinOptionsDialog::SkinOptionsDialog(QWidget *parent)
     auto leName{ new QLineEdit(tr("Your skin name"), this) };
     auto label2{ new ClickableLabel(tr("Skin file name: "), this) };
     auto label3{ new QLabel(tr("<em>Your skin file\'s name</em>"), this) };
-    label2->setStyleSheet("text-decoration: underline;");
+    label2->setStyleSheet("text-decoration: underline; color: blue;");
     QHBoxLayout *layout{ new QHBoxLayout(this) };
     layout->addWidget(label2);
     layout->addWidget(label3);

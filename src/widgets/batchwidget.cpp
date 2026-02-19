@@ -66,6 +66,11 @@ BatchWidget::BatchWidget(QWidget *parent)
     ag->addAction(ui->actionShowDetailInfo);
     ag->addAction(ui->actionShowThumbnails);
 
+    QActionGroup *agRm{ new QActionGroup(this) };
+    agRm->addAction(ui->actionRemoveFromDisk);
+    agRm->addAction(ui->actionRemoveFromList);
+    agRm->setEnabled(false);
+
     QButtonGroup *bg{ new QButtonGroup(this) };
     bg->addButton(ui->rbtnAverage);
     bg->addButton(ui->rbtnSize);
@@ -75,6 +80,7 @@ BatchWidget::BatchWidget(QWidget *parent)
     m_contextMenu->addAction(ui->actionAddPicture);
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(ui->actionRemoveFromList);
+    m_contextMenu->addAction(ui->actionRemoveFromDisk);
     m_contextMenu->addSeparator();
     m_contextMenu->addAction(ui->actionShowDetailInfo);
     m_contextMenu->addAction(ui->actionShowThumbnails);
@@ -100,8 +106,8 @@ BatchWidget::BatchWidget(QWidget *parent)
 
     // Signal connections
     connect(m_selModel, &QItemSelectionModel::selectionChanged, this,
-            [this](const QItemSelection &selected, const QItemSelection &deselected) {
-                ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
+            [this, agRm](const QItemSelection &selected, const QItemSelection &deselected) {
+                agRm->setEnabled(m_selModel->hasSelection());
             });
     connect(ui->viewList, &QListView::clicked, this, [this](const QModelIndex &index) {
         MainWindow::get().statusBar()->showMessage(m_model->itemData(index).value(0).toString());
@@ -114,6 +120,7 @@ BatchWidget::BatchWidget(QWidget *parent)
     connect(ui->viewTable, &QWidget::customContextMenuRequested, this,
             [this](const QPoint &pos) { m_contextMenu->exec(QCursor::pos()); });
     connect(ui->actionRemoveFromList, &QAction::triggered, this, &BatchWidget::removeSelectedItems);
+    connect(ui->actionRemoveFromDisk, &QAction::triggered, this, &BatchWidget::deleteSelectedItems);
     connect(ui->actionShowThumbnails, &QAction::triggered, this, [this]() {
         ui->stView->setCurrentIndex(0); // pgThumbnail
     });
@@ -177,6 +184,25 @@ void BatchWidget::removeSelectedItems()
         indexes << i;
     Q_FOREACH (const QPersistentModelIndex &i, indexes)
         m_model->removeRow(i.row());
+}
+
+void BatchWidget::deleteSelectedItems()
+{
+    if (QMessageBox::information(this, tr("Deleting files"),
+                                 tr("Are you sure to remove these %1 file(s)?")
+                                         .arg(m_selModel->selectedRows().size()),
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No)
+        == QMessageBox::No)
+        return;
+
+    Q_FOREACH (const QModelIndex &i, m_selModel->selectedRows()) {
+        QString filePath{ m_model->item(i.row(), 1)->text() };
+        QFile::setPermissions(filePath, QFile::WriteOwner);
+        if (!QFile::remove(filePath))
+            QMessageBox::critical(this, tr("Deleting files"),
+                                  tr("Failed to delete file: %1.").arg(filePath));
+    }
+    removeSelectedItems();
 }
 
 void BatchWidget::openPictures()

@@ -27,6 +27,7 @@ public:
 private:
     void addPicture(const QString &fileName);
     void removeSelectedItems();
+    void deleteSelectedItems();
     void openPictures();
     void openFolder();
     void changePath();

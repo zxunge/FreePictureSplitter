@@ -50,6 +50,7 @@
      <addaction name="actionAddDirectory"/>
      <addaction name="separator"/>
      <addaction name="actionRemoveFromList"/>
+     <addaction name="actionRemoveFromDisk"/>
      <addaction name="separator"/>
      <addaction name="actionShowThumbnails"/>
      <addaction name="actionShowDetailInfo"/>
@@ -515,7 +516,7 @@ Top to Bottom</string>
   </action>
   <action name="actionRemoveFromList">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon">
     <iconset resource="../resources/fps.qrc">
@@ -568,6 +569,27 @@ Top to Bottom</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="actionRemoveFromDisk">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resources/fps.qrc">
+     <normaloff>:/windowBar/windowBar/close-light.svg</normaloff>:/windowBar/windowBar/close-light.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Remove from disk</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove the selected file(s) from disk.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
    </property>
   </action>
  </widget>
