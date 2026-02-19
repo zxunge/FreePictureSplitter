@@ -71,7 +71,8 @@ void ImageDocument::setupSplitLines()
         basicColWidth = std::round(static_cast<double>(width) / option().average()->cols);
         rows = option().average()->rows;
         cols = option().average()->cols;
-    }
+    } else
+        return;
     legacyColWidth = width - basicColWidth * (cols - 1);
     legacyRowHeight = height - basicRowHeight * (rows - 1);
 

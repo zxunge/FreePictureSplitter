@@ -15,14 +15,15 @@ class WidgetWindowAgent;
 } // namespace QWK
 class QEvent;
 class QCloseEvent;
+class QProgressBar;
 
 class MainWindow final : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    static MainWindow &get();
+    QProgressBar *progressBar() const { return m_pbar; }
 
 private:
     void installWindowAgent();
@@ -32,8 +33,12 @@ protected:
     void closeEvent(QCloseEvent *e) override;
 
 private:
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
     Ui::MainWindow *ui;
     QWK::WidgetWindowAgent *m_windowAgent;
+    QProgressBar *m_pbar;
 };
 
 #endif // MAINWINDOW_H

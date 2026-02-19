@@ -174,8 +174,6 @@ inline void loadTranslations(QApplication *a)
     return true;
 }
 
-MainWindow *g_mainWnd;
-
 //---------- Main Execution ----------
 int main(int argc, char *argv[])
 {
@@ -208,11 +206,8 @@ int main(int argc, char *argv[])
 
     qInfo("Application Started...");
 
-    g_mainWnd = new MainWindow();
-    g_mainWnd->show();
+    MainWindow::get().show();
     int ret{ a.exec() };
-    if (g_mainWnd)
-        g_mainWnd->deleteLater();
     if (!saveConfigurations())
         std::exit(EXIT_FAILURE);
 

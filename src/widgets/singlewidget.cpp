@@ -2,10 +2,10 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "singlewidget.h"
-#include "globaldefs.h"
 #include "ui_singlewidget.h"
 #include "progressdialog.h"
 #include "errorlogdialog.h"
+#include "mainwindow.h"
 
 #include "core/imagedocument.h"
 #include "utils/fileinfo.h"
@@ -41,8 +41,8 @@ SingleWidget::SingleWidget(QWidget *parent)
     connect(ui->actionSave, &QAction::triggered, this, &SingleWidget::savePictures);
     connect(ui->actionClosePicture, &QAction::triggered, this, &SingleWidget::closePicture);
     connect(ui->btnReset, &QPushButton::clicked, this, &SingleWidget::resetSplitLines);
-    connect(ui->actionZoomIn, &QAction::triggered, this, [this] { ui->graphicsView->zoomIn(); });
-    connect(ui->actionZoomOut, &QAction::triggered, this, [this] { ui->graphicsView->zoomOut(); });
+    connect(ui->actionZoomIn, &QAction::triggered, ui->graphicsView, &GraphicsView::zoomIn);
+    connect(ui->actionZoomOut, &QAction::triggered, ui->graphicsView, &GraphicsView::zoomOut);
     connect(ui->rbtnAver, &QRadioButton::toggled, this, [this](bool checked) {
         ui->sbxCols->setEnabled(checked);
         ui->sbxRows->setEnabled(checked);
@@ -105,7 +105,7 @@ void SingleWidget::openPicture()
         int width{ m_imgDoc->size().width() }, height{ m_imgDoc->size().height() };
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
-        g_mainWnd->statusBar()->showMessage(
+        MainWindow::get().statusBar()->showMessage(
                 tr("%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
                         .arg(m_imgDoc->fullName())
                         .arg(width)
@@ -265,5 +265,5 @@ void SingleWidget::closePicture()
     m_imgDoc->close();
     ui->graphicsView->setRulersVisibility(false);
     ui->actionClosePicture->setEnabled(false);
-    g_mainWnd->statusBar()->clearMessage();
+    MainWindow::get().statusBar()->clearMessage();
 }

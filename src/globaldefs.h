@@ -6,13 +6,10 @@
 #define GLOBALDEFS_H
 
 #include <QStringLiteral>
-#include "mainwindow.h"
 
 #define CONFIG_FILENAME QStringLiteral("/conf.json")
 #define LAYOUT_FILENAME QStringLiteral("/geometry.layout")
 #define LOG_FILENAME QStringLiteral("/app.log")
 #define ERRORLOG_FILENAME QStringLiteral("/error.log")
-
-extern MainWindow *g_mainWnd;
 
 #endif // GLOBALDEFS_H

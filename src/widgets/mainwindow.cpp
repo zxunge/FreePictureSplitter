@@ -26,6 +26,7 @@
 #include <QStatusBar>
 #include <QStackedWidget>
 #include <QFile>
+#include <QProgressBar>
 
 #include <QWKWidgets/widgetwindowagent.h>
 #include <widgetframe/windowbar.h>
@@ -54,7 +55,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ClickableLabel *labMark{ new ClickableLabel(ui->tabWidget) };
     labMark->resize(32, 32);
     labMark->setPixmap(icon.pixmap(icon.actualSize(QSize(32, 32))));
+    m_pbar = new QProgressBar(this);
+    m_pbar->setMaximumWidth(80);
+    ui->statusBar->addPermanentWidget(m_pbar);
     ui->statusBar->addPermanentWidget(labMark);
+    m_pbar->setVisible(false);
+
     connect(labMark, &ClickableLabel::clicked, this, [this] {
         AboutDialog dlg(this);
         dlg.exec();
@@ -71,6 +77,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+MainWindow &MainWindow::get()
+{
+    static MainWindow instance;
+    return instance;
 }
 
 void MainWindow::installWindowAgent()

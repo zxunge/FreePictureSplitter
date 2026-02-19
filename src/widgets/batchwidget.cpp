@@ -2,10 +2,10 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "batchwidget.h"
-#include "globaldefs.h"
 #include "ui_batchwidget.h"
 #include "progressdialog.h"
 #include "errorlogdialog.h"
+#include "mainwindow.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/fileinfo.h"
@@ -104,10 +104,10 @@ BatchWidget::BatchWidget(QWidget *parent)
                 ui->actionRemoveFromList->setEnabled(m_selModel->hasSelection());
             });
     connect(ui->viewList, &QListView::clicked, this, [this](const QModelIndex &index) {
-        g_mainWnd->statusBar()->showMessage(m_model->itemData(index).value(0).toString());
+        MainWindow::get().statusBar()->showMessage(m_model->itemData(index).value(0).toString());
     });
     connect(ui->viewTable, &QTableView::clicked, this, [this](const QModelIndex &index) {
-        g_mainWnd->statusBar()->showMessage(m_model->itemData(index).value(0).toString());
+        MainWindow::get().statusBar()->showMessage(m_model->itemData(index).value(0).toString());
     });
     connect(ui->viewList, &QWidget::customContextMenuRequested, this,
             [this](const QPoint &pos) { m_contextMenu->exec(QCursor::pos()); });
@@ -194,15 +194,15 @@ void BatchWidget::openPictures()
                 QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
 
         const QStringList list{ fdlg.selectedFiles() };
-        // m_pbLoading->setRange(0, list.size());
-        // m_pbLoading->setVisible(true);
+        MainWindow::get().progressBar()->setRange(0, list.size());
+        MainWindow::get().progressBar()->setVisible(true);
         int count{};
         Q_FOREACH (const auto file, list) {
             QCoreApplication::processEvents();
             addPicture(file);
-            // m_pbLoading->setValue(++count);
+            MainWindow::get().progressBar()->setValue(++count);
         }
-        // m_pbLoading->setVisible(false);
+        MainWindow::get().progressBar()->setVisible(false);
     } else
         return;
 }
@@ -227,14 +227,14 @@ void BatchWidget::openFolder()
 
     const QStringList list{ dir.entryList(nameFilters, QDir::Files) };
     int count{};
-    // m_pbLoading->setRange(0, list.size());
-    // m_pbLoading->setVisible(true);
+    MainWindow::get().progressBar()->setRange(0, list.size());
+    MainWindow::get().progressBar()->setVisible(true);
     Q_FOREACH (const auto file, list) {
         QCoreApplication::processEvents();
         addPicture(in + u"/"_s + file);
-        // m_pbLoading->setValue(++count);
+        MainWindow::get().progressBar()->setValue(++count);
     }
-    // m_pbLoading->setVisible(false);
+    MainWindow::get().progressBar()->setVisible(false);
 }
 
 void BatchWidget::closeEvent(QCloseEvent *event)
@@ -258,6 +258,8 @@ void BatchWidget::addPicture(const QString &fileName)
                                                QFileInfo(fileName).fileName()) };
     QStandardItem *itemPath{ new QStandardItem(fileName) };
     QStandardItem *itemSize{ new QStandardItem(fileSizeString(fileName)) };
+    ImageDocument *imgDoc{ new ImageDocument(fileName, this) };
+    itemName->setData(QVariant::fromValue(static_cast<void *>(imgDoc)));
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 }
 
@@ -277,42 +279,51 @@ void BatchWidget::changePath()
 
 void BatchWidget::startSplit()
 {
-    ImageDocument imgDoc;
-    // Detect splitting sequence and mode
-    if (ui->rbtnLRTB->isChecked())
-        imgDoc.option().setSequence(ImageOption::LeftToRight | ImageOption::UpToDown);
-    else if (ui->rbtnRLTB->isChecked())
-        imgDoc.option().setSequence(ImageOption::RightToLeft | ImageOption::UpToDown);
-    else if (ui->rbtnLRBT->isChecked())
-        imgDoc.option().setSequence(ImageOption::LeftToRight | ImageOption::DownToUp);
-    else if (ui->rbtnRLBT->isChecked())
-        imgDoc.option().setSequence(ImageOption::RightToLeft | ImageOption::DownToUp);
-
-    if (ui->rbtnAverage->isChecked())
-        imgDoc.option().setAverage(ui->sbxRows->value(), ui->sbxCols->value());
-    else if (ui->rbtnSize->isChecked())
-        imgDoc.option().setSize(QSize(ui->sbxWidth->value(), ui->sbxHeight->value()));
-    else
-        return;
+    ImageDocument *imgDoc{};
 
     ProgressDialog dlg(m_model->rowCount(), this);
     dlg.show();
     dlg.raise();
 
     for (qsizetype i{}; i != m_model->rowCount(); ++i) {
-        imgDoc.openImageFile(m_model->item(i, 1)->text());
-        if (!imgDoc.canRead()) {
+        imgDoc = static_cast<ImageDocument *>(m_model->item(i, 0)->data().value<void *>());
+        Q_ASSERT(imgDoc);
+        if (!imgDoc->canRead()) {
             QMessageBox::critical(this, tr("Batch Splitting"),
-                                  tr("Cannot open file: %1.").arg(imgDoc.filePath()),
+                                  tr("Cannot open file: %1.").arg(imgDoc->filePath()),
                                   QMessageBox::Close);
             return;
         }
-        imgDoc.setupSplitLines();
+        // Detect splitting sequence and mode
+        if (ui->rbtnLRTB->isChecked())
+            imgDoc->option().setSequence(ImageOption::LeftToRight | ImageOption::UpToDown);
+        else if (ui->rbtnRLTB->isChecked())
+            imgDoc->option().setSequence(ImageOption::RightToLeft | ImageOption::UpToDown);
+        else if (ui->rbtnLRBT->isChecked())
+            imgDoc->option().setSequence(ImageOption::LeftToRight | ImageOption::DownToUp);
+        else if (ui->rbtnRLBT->isChecked())
+            imgDoc->option().setSequence(ImageOption::RightToLeft | ImageOption::DownToUp);
+        else {
+            QMessageBox::critical(this, tr("Batch Splitting"), tr("Unsupported"),
+                                  QMessageBox::Close);
+            break;
+        }
+
+        if (ui->rbtnAverage->isChecked())
+            imgDoc->option().setAverage(ui->sbxRows->value(), ui->sbxCols->value());
+        else if (ui->rbtnSize->isChecked())
+            imgDoc->option().setSize(QSize(ui->sbxWidth->value(), ui->sbxHeight->value()));
+        else {
+            QMessageBox::critical(this, tr("Batch Splitting"), tr("Unsupported"),
+                                  QMessageBox::Close);
+            break;
+        }
+        imgDoc->setupSplitLines();
 
         // Get the output directory
         QDir baseDir;
         if (ui->cbxLocation->currentIndex() == 0) // "The same"
-            baseDir = imgDoc.parentPath();
+            baseDir = imgDoc->parentPath();
         else {
             if (!ui->lePath->text().isEmpty())
                 baseDir = ui->lePath->text();
@@ -326,35 +337,35 @@ void BatchWidget::startSplit()
         }
         QString finalPath;
         if (ui->chbSubdir->isChecked()) {
-            if (!QFileInfo::exists(baseDir.absolutePath() % '/' % imgDoc.baseName() % '/'))
-                if (!baseDir.mkdir(imgDoc.baseName())) {
+            if (!QFileInfo::exists(baseDir.absolutePath() % '/' % imgDoc->baseName() % '/'))
+                if (!baseDir.mkdir(imgDoc->baseName())) {
                     QMessageBox::warning(
                             this, tr("Batch Splitting"),
                             tr("QDir::mkdir \'%1\' error!")
-                                    .arg(baseDir.absolutePath() % '/' % imgDoc.baseName()),
+                                    .arg(baseDir.absolutePath() % '/' % imgDoc->baseName()),
                             QMessageBox::Close);
                     break;
                 }
-            finalPath = baseDir.absolutePath() % '/' % imgDoc.baseName();
+            finalPath = baseDir.absolutePath() % '/' % imgDoc->baseName();
         } else
             finalPath = baseDir.absolutePath();
 
-        if (!imgDoc.isValid()) {
+        if (!imgDoc->isValid()) {
             QMessageBox::warning(this, tr("Batch Splitting"), tr("No rule to split the picture"),
                                  QMessageBox::Close);
             return;
         }
-        imgDoc.option().setGridEnabled(g_appConfig.options.gridOpt.enabled,
-                                       QColor::fromString(g_appConfig.options.gridOpt.colorRgb),
-                                       g_appConfig.options.gridOpt.lineSize);
-        imgDoc.writerOption().setFormat(
+        imgDoc->option().setGridEnabled(g_appConfig.options.gridOpt.enabled,
+                                        QColor::fromString(g_appConfig.options.gridOpt.colorRgb),
+                                        g_appConfig.options.gridOpt.lineSize);
+        imgDoc->writerOption().setFormat(
                 QString::fromStdString(g_appConfig.options.outputOpt.outFormat).toUtf8());
-        imgDoc.writerOption().setQuality(g_appConfig.options.outputOpt.jpgQuality);
-        imgDoc.option().setSavePrefix(g_appConfig.options.nameOpt.prefix);
-        imgDoc.option().setRowColContained(g_appConfig.options.nameOpt.rcContained);
-        imgDoc.setOutputPath(finalPath);
+        imgDoc->writerOption().setQuality(g_appConfig.options.outputOpt.jpgQuality);
+        imgDoc->option().setSavePrefix(g_appConfig.options.nameOpt.prefix);
+        imgDoc->option().setRowColContained(g_appConfig.options.nameOpt.rcContained);
+        imgDoc->setOutputPath(finalPath);
 
-        if (auto result = imgDoc.saveImages(); result.has_value()) {
+        if (auto result = imgDoc->saveImages(); result.has_value()) {
             result.value().waitForFinished();
 
             if (!result.value().result().empty()) {
@@ -363,7 +374,7 @@ void BatchWidget::startSplit()
                 Q_FOREACH (auto &result, result.value().result()) {
                     if (!result.has_value())
                         dlgErr->addErrorInfo(
-                                { std::make_tuple(imgDoc.filePath(), result.error()) });
+                                { std::make_tuple(imgDoc->filePath(), result.error()) });
                 }
                 dlgErr->exec();
             }

@@ -103,10 +103,8 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
             ui->labColor->setStyleSheet("background-color: " % m_color.name() % ";");
         }
     });
-    connect(ui->rbtnSpecified, &QRadioButton::toggled, this,
-            [this](bool checked) { ui->lePrefix->setEnabled(checked); });
-    connect(ui->chbGrid, &QCheckBox::toggled, this,
-            [this](bool checked) { ui->gbxGridFigure->setEnabled(checked); });
+    connect(ui->rbtnSpecified, &QRadioButton::toggled, ui->lePrefix, &QLineEdit::setEnabled);
+    connect(ui->chbGrid, &QCheckBox::toggled, ui->gbxGridFigure, &QGroupBox::setEnabled);
     connect(ui->tbtnAppearance, &QToolButton::toggled, this, [this](bool checked) {
         if (checked)
             ui->wgtOptions->setCurrentIndex(0); // "Appearance"
