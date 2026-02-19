@@ -34,7 +34,8 @@ QColor getDominantColor(const QPixmap &pixmap)
 
     if (count == 0)
         dominant = Qt::gray; // Default
-    dominant.setRgb(r / count, g / count, b / count);
+    else
+        dominant.setRgb(r / count, g / count, b / count);
     return dominant;
 }
 
@@ -42,7 +43,7 @@ QColor getContrastColor(const QColor &color)
 {
     // See https://www.w3.org/TR/WCAG20/#relativeluminancedef
     double luminance{ 0.2126 * color.redF() + 0.7152 * color.greenF() + 0.0722 * color.blueF() };
-    return (luminance > 0.5) ? QColor::fromString(u"#c0c0c0"_s) : QColor::fromString(u"#ffffff"_s);
+    return (luminance > 0.5) ? QColor::fromRgb(0xC0, 0xC0, 0xC0) : Qt::white;
 }
 
 } // namespace Color

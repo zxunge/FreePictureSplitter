@@ -141,14 +141,14 @@ void ImageDocument::drawLinesTo(GraphicsView *subject)
     DraggableLine *line{};
     for (qsizetype i{}; i != m_rects.size() - 1; ++i) {
         line = new DraggableLine(subject);
-        line->setScenePos(m_rects[i].constFirst().y() + m_rects[i].constFirst().height());
+        line->setScenePos(m_rects.at(i).constFirst().y() + m_rects.at(i).constFirst().height());
         line->show();
         subject->addDraggableLine(line);
         line = nullptr;
     }
     for (qsizetype i{}; i != m_rects.constFirst().size() - 1; ++i) {
         line = new DraggableLine(Qt::Vertical, subject);
-        line->setScenePos(m_rects.constFirst()[i].x() + m_rects.constFirst()[i].width());
+        line->setScenePos(m_rects.constFirst().at(i).x() + m_rects.constFirst().at(i).width());
         line->show();
         subject->addDraggableLine(line);
         line = nullptr;
@@ -232,7 +232,7 @@ Result<QList<QPair<QString, QImage>>> ImageDocument::split()
     if (m_rects.isEmpty())
         return std::unexpected(tr("Null rectangle list"));
 
-    auto cRows{ m_rects.size() }, cCols{ m_rects[0].size() };
+    auto cRows{ m_rects.size() }, cCols{ m_rects.constFirst().size() };
     auto fieldWidth{ QString::asprintf("%lld", totalCount()).size() };
     // Avoid has been read
     m_imgReader.setFileName(m_imgReader.fileName());

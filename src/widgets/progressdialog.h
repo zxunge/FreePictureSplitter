@@ -24,7 +24,7 @@ public:
 Q_SIGNALS:
     void cancelled();
 
-public slots:
+public Q_SLOTS:
     void proceed(int elapsed);
     void proceed();
     void setRange(int minimum, int maximum);

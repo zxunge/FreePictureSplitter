@@ -45,7 +45,7 @@ public:
         m_box->setVisible(visible);
     }
 
-public slots:
+public Q_SLOTS:
     void lineDestruction();
 
 Q_SIGNALS:
@@ -57,7 +57,7 @@ protected:
     void scrollContentsBy(int dx, int dy) override;
     void updateRuler();
 
-private slots:
+private Q_SLOTS:
     void dragStarted(const QPoint &startPos);
     void dragMoved(const QPoint &currentPos);
     void dragFinished(const QPoint &endPos, bool isReal);

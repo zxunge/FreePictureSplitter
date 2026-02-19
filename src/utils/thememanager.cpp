@@ -56,8 +56,6 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
     m_skinInfo = infoFromSkinName(skinName);
 
     QFile styleFile;
-    QDir skinDir(Util::skinsDir());
-
     styleFile.setFileName(Util::skinsDir() + u"/"_s
                           + QString::fromStdString(std::get<1>(m_skinInfo)));
     if (styleFile.open(QFile::ReadOnly)) {

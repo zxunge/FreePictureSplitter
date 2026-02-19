@@ -86,7 +86,7 @@ void RulerBar::drawTicker(QPainter *painter)
     double lower{ m_lower }, upper{ m_upper }; // Upper and lower limits, in ruler units
     double increment{}; // Number of pixels per unit
     unsigned int scale{}; // Number of units per major unit
-    double start{}, end{}, cur{};
+    double start{}, end{};
     char unitStr[32]{};
     QFontMetrics fm(font());
     int digitHeight{ fm.height() };
@@ -114,8 +114,7 @@ void RulerBar::drawTicker(QPainter *painter)
         if (scale == 1 && i == 1)
             subdIncr = 1.0;
         else
-            subdIncr =
-                    static_cast<double>(rulerMetric.rulerScale[scale]) / rulerMetric.subdivide[i];
+            subdIncr = rulerMetric.rulerScale[scale] / rulerMetric.subdivide[i];
 
         if (subdIncr * fabs(increment) <= MINIMUM_INCR)
             continue;
@@ -133,8 +132,8 @@ void RulerBar::drawTicker(QPainter *painter)
         }
 
         int tick_index{};
-        for (cur = start; cur <= end; cur += subdIncr) {
-            pos = static_cast<int>(qRound((cur - lower) * increment + 1e-12));
+        for (long long cur = start; cur <= end; cur += subdIncr) {
+            pos = qRound((cur - lower) * increment + 1e-12);
             if (m_orientation == Qt::Horizontal) {
                 QRect rt(pos, height - length, 1, length);
                 painter->drawLine(rt.topLeft(), rt.bottomLeft());
@@ -143,17 +142,15 @@ void RulerBar::drawTicker(QPainter *painter)
                 painter->drawLine(rt.topLeft(), rt.topRight());
             }
 
-            double pxLabelSpacing{ fabs(increment
-                                        * static_cast<double>(rulerMetric.rulerScale[scale])
+            double pxLabelSpacing{ fabs(increment * rulerMetric.rulerScale[scale]
                                         / rulerMetric.subdivide[i]) };
 
             if (i == 0 && (pxLabelSpacing > 6 * digitHeight || tick_index % 2 == 0 || cur == 0)
                 && (pxLabelSpacing > 3 * digitHeight || tick_index % 4 == 0 || cur == 0)) {
-                if (qAbs(static_cast<int>(cur)) >= 2'000
-                    && (static_cast<int>(cur) / 1'000) * 1'000 == static_cast<int>(cur))
-                    sprintf(unitStr, "%dk", static_cast<int>(cur) / 1'000);
+                if (qAbs(cur) >= 2'000 && (cur / 1'000) * 1'000 == cur)
+                    sprintf(unitStr, "%lldk", cur / 1'000);
                 else
-                    sprintf(unitStr, "%d", static_cast<int>(cur));
+                    sprintf(unitStr, "%lld", cur);
 
                 int w{ fm.horizontalAdvance(unitStr) };
                 if (m_orientation == Qt::Horizontal)
@@ -175,13 +172,9 @@ void RulerBar::drawTicker(QPainter *painter)
 
 void RulerBar::drawPos(QPainter *painter)
 {
-    int x{}, y{};
     int width{}, height{};
     int bsWidth{}, bsHeight{};
     QRect allocation{ rect() };
-    double position{};
-    double lower{ m_lower };
-    double upper{ m_upper };
 
     if (m_orientation == Qt::Horizontal) {
         width = allocation.width();
@@ -189,28 +182,18 @@ void RulerBar::drawPos(QPainter *painter)
         bsWidth = height / 2 + 2;
         bsWidth |= 1; // Make sure it's odd
         bsHeight = bsWidth / 2 + 1;
-        position = lower + (upper - lower) * m_lastPos.x() / allocation.width();
     } else {
         width = allocation.height();
         height = allocation.width();
         bsHeight = width / 2 + 2;
         bsHeight |= 1; // Make sure it's odd
         bsWidth = bsHeight / 2 + 1;
-        position = lower + (upper - lower) * m_lastPos.y() / allocation.height();
     }
     if ((bsWidth > 0) && (bsHeight > 0)) {
-        double increment{};
-        if (m_orientation == Qt::Horizontal) {
-            increment = static_cast<double>(width) / (upper - lower);
-            x = qRound((position - lower) * increment) + bsWidth / 2 - 1;
-            y = (height + bsHeight) / 2;
+        if (m_orientation == Qt::Horizontal)
             painter->drawLine(m_lastPos.x(), 0, m_lastPos.x(), height);
-        } else {
-            increment = static_cast<double>(height) / (upper - lower);
-            x = (width + bsWidth) / 2;
-            y = qRound((position - lower) * increment) + (bsHeight) / 2 - 1;
+        else
             painter->drawLine(0, m_lastPos.y(), width, m_lastPos.y());
-        }
     }
 }
 
