@@ -89,3 +89,10 @@ int ErrorLogDialog::exec()
     else
         return QDialog::exec();
 }
+
+void ErrorLogDialog::changeEvent(QEvent *e)
+{
+    QDialog::changeEvent(e);
+    if (e->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+}

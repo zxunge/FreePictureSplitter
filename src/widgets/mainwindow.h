@@ -31,6 +31,7 @@ private:
 protected:
     bool event(QEvent *event) override;
     void closeEvent(QCloseEvent *e) override;
+    void changeEvent(QEvent *e) override;
 
 private:
     explicit MainWindow(QWidget *parent = nullptr);

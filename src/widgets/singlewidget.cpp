@@ -267,3 +267,10 @@ void SingleWidget::closePicture()
     ui->actionClosePicture->setEnabled(false);
     MainWindow::get().statusBar()->clearMessage();
 }
+
+void SingleWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    if (e->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+}

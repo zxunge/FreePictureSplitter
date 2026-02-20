@@ -13,6 +13,7 @@
 namespace Ui {
 class ErrorLogDialog;
 }
+class QEvent;
 
 class ErrorLogDialog : public QDialog
 {
@@ -29,6 +30,9 @@ public:
     QList<ErrorInfo> errorInfoList() const;
 
     int exec() override; // Use our custom exec() to decide whether to show or not
+
+protected:
+    void changeEvent(QEvent *e) override;
 
 private:
     Ui::ErrorLogDialog *ui;

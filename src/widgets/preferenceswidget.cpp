@@ -92,34 +92,30 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     /************************************************/
 
     // Signal connections
-    connect(ui->cbxLang, &QComboBox::currentIndexChanged, this, [this, &g_appConfig](int index) {
+    connect(ui->cbxLang, &QComboBox::currentIndexChanged, this, [&, this](int index) {
         g_appConfig.app.lang = ui->cbxLang->itemData(index).toString().toStdString();
         Util::LanguageManager::instance().installTranslators();
     });
-    connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this,
-            [this, &g_appConfig](int index) {
-                g_appConfig.options.outputOpt.savingTo =
-                        ui->cbxLang->itemData(index).value<Util::SavingTo>();
-                ui->lePath->setEnabled(g_appConfig.options.outputOpt.savingTo
-                                       == Util::SavingTo::specified);
-                ui->tbtnBrowse->setEnabled(ui->lePath->isEnabled());
-            });
-    connect(ui->cbxFormats, &QComboBox::currentTextChanged, this,
-            [this, &g_appConfig](const QString &text) {
-                ui->sbxQuality->setEnabled(text == u"jpg"_s || text == u"jpeg"_s);
-                g_appConfig.options.outputOpt.outFormat = text.toStdString();
-            });
-    connect(ui->cbxStyle, &QComboBox::currentTextChanged, this,
-            [&g_appConfig](const QString &text) {
-                g_appConfig.app.skin = text.toStdString();
-                Util::ThemeManager::instance().setAppSkin(text.toStdString());
-            });
-    connect(ui->lePath, &QLineEdit::textChanged, this, [&g_appConfig](const QString &text) {
+    connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this, [&, this](int index) {
+        g_appConfig.options.outputOpt.savingTo =
+                ui->cbxLang->itemData(index).value<Util::SavingTo>();
+        ui->lePath->setEnabled(g_appConfig.options.outputOpt.savingTo == Util::SavingTo::specified);
+        ui->tbtnBrowse->setEnabled(ui->lePath->isEnabled());
+    });
+    connect(ui->cbxFormats, &QComboBox::currentTextChanged, this, [&, this](const QString &text) {
+        ui->sbxQuality->setEnabled(text == u"jpg"_s || text == u"jpeg"_s);
+        g_appConfig.options.outputOpt.outFormat = text.toStdString();
+    });
+    connect(ui->cbxStyle, &QComboBox::currentTextChanged, this, [&](const QString &text) {
+        g_appConfig.app.skin = text.toStdString();
+        Util::ThemeManager::instance().setAppSkin(text.toStdString());
+    });
+    connect(ui->lePath, &QLineEdit::textChanged, this, [&](const QString &text) {
         g_appConfig.options.outputOpt.outPath = text.toStdString();
     });
     connect(ui->chbSubDir, &QCheckBox::toggled, this,
-            [&g_appConfig](bool checked) { g_appConfig.options.outputOpt.subDir = checked; });
-    connect(ui->btnSelectColor, &QPushButton::clicked, this, [this, &g_appConfig]() {
+            [&](bool checked) { g_appConfig.options.outputOpt.subDir = checked; });
+    connect(ui->btnSelectColor, &QPushButton::clicked, this, [&, this]() {
         QColor color{ QColorDialog::getColor(
                 QColor::fromString(QString::fromStdString(g_appConfig.options.gridOpt.colorRgb)),
                 this, tr("Select a color for grid lines")) };
@@ -129,24 +125,23 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
         }
     });
     connect(ui->sbxQuality, &QSpinBox::valueChanged, this,
-            [&g_appConfig](int value) { g_appConfig.options.outputOpt.jpgQuality = value; });
+            [&](int value) { g_appConfig.options.outputOpt.jpgQuality = value; });
     connect(ui->dsbxFactor, &QDoubleSpinBox::valueChanged, this,
-            [&g_appConfig](double value) { g_appConfig.options.outputOpt.scalingFactor = value; });
-    connect(ui->rbtnSpecified, &QRadioButton::toggled, this, [&g_appConfig](bool checked) {
+            [&](double value) { g_appConfig.options.outputOpt.scalingFactor = value; });
+    connect(ui->rbtnSpecified, &QRadioButton::toggled, this, [&](bool checked) {
         g_appConfig.options.nameOpt.prefMode =
                 checked ? Util::Prefix::specified : Util::Prefix::same;
     });
     connect(ui->rbtnSpecified, &QRadioButton::toggled, ui->lePrefix, &QLineEdit::setEnabled);
     connect(ui->chbGrid, &QCheckBox::toggled, ui->gbxGridFigure, &QGroupBox::setEnabled);
     connect(ui->chbGrid, &QCheckBox::toggled, this,
-            [&g_appConfig](bool checked) { g_appConfig.options.gridOpt.enabled = checked; });
+            [&](bool checked) { g_appConfig.options.gridOpt.enabled = checked; });
     connect(ui->sbxLineSize, &QSpinBox::valueChanged, this,
-            [&g_appConfig](int value) { g_appConfig.options.gridOpt.lineSize = value; });
-    connect(ui->lePrefix, &QLineEdit::textChanged, this, [&g_appConfig](const QString &text) {
-        g_appConfig.options.nameOpt.prefix = text.toStdString();
-    });
+            [&](int value) { g_appConfig.options.gridOpt.lineSize = value; });
+    connect(ui->lePrefix, &QLineEdit::textChanged, this,
+            [&](const QString &text) { g_appConfig.options.nameOpt.prefix = text.toStdString(); });
     connect(ui->chbNumberContained, &QCheckBox::toggled, this,
-            [&g_appConfig](bool checked) { g_appConfig.options.nameOpt.rcContained = checked; });
+            [&](bool checked) { g_appConfig.options.nameOpt.rcContained = checked; });
     connect(ui->tbtnAppearance, &QToolButton::toggled, this, [this](bool checked) {
         if (checked)
             ui->wgtOptions->setCurrentIndex(0); // "Appearance"

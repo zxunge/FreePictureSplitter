@@ -57,10 +57,6 @@ BatchWidget::BatchWidget(QWidget *parent)
     ui->lePath->setCompleter(completer);
 
     ui->viewTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-    ui->sbxCols->setMaximum(std::numeric_limits<int>::max());
-    ui->sbxRows->setMaximum(std::numeric_limits<int>::max());
-    ui->sbxWidth->setMaximum(std::numeric_limits<int>::max());
-    ui->sbxHeight->setMaximum(std::numeric_limits<int>::max());
 
     QActionGroup *ag{ new QActionGroup(this) };
     ag->addAction(ui->actionShowDetailInfo);
@@ -276,9 +272,18 @@ void BatchWidget::closeEvent(QCloseEvent *event)
     QWidget::closeEvent(event);
 }
 
+void BatchWidget::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    if (e->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+}
+
 void BatchWidget::addPicture(const QString &fileName)
 {
     QImageReader reader(fileName);
+    if (!reader.canRead())
+        return;
     reader.setScaledSize(QSize(80, 80));
     QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
                                                QFileInfo(fileName).fileName()) };
@@ -287,6 +292,16 @@ void BatchWidget::addPicture(const QString &fileName)
     ImageDocument *imgDoc{ new ImageDocument(fileName, this) };
     itemName->setData(QVariant::fromValue(static_cast<void *>(imgDoc)));
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
+
+    // Adjust input range if the original range is bigger
+    if (ui->sbxHeight->value() > reader.size().height())
+        ui->sbxHeight->setMaximum(reader.size().height());
+    if (ui->sbxWidth->value() > reader.size().width())
+        ui->sbxWidth->setMaximum(reader.size().width());
+    if (ui->sbxRows->value() > reader.size().height())
+        ui->sbxRows->setMaximum(reader.size().height());
+    if (ui->sbxCols->value() > reader.size().width())
+        ui->sbxCols->setMaximum(reader.size().width());
 }
 
 void BatchWidget::changePath()

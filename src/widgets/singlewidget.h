@@ -12,6 +12,7 @@
 namespace Ui {
 class SingleWidget;
 }
+class QEvent;
 
 class SingleWidget final : public QWidget
 {
@@ -26,6 +27,9 @@ private:
     void savePictures();
     void resetSplitLines();
     void closePicture();
+
+protected:
+    void changeEvent(QEvent *e) override;
 
 private:
     Ui::SingleWidget *ui;

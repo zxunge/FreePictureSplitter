@@ -8,13 +8,14 @@
 #include <QWidget>
 #include <QMenu>
 #include <QItemSelection>
-#include <QtCore/qstringlist.h>
+#include <QStringList>
 
 namespace Ui {
 class BatchWidget;
 }
 class QStandardItemModel;
 class QItemSelectionModel;
+class QEvent;
 
 class BatchWidget final : public QWidget
 {
@@ -35,6 +36,7 @@ private:
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void changeEvent(QEvent *e) override;
 
 private:
     Ui::BatchWidget *ui;
