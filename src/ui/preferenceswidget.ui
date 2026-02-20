@@ -258,29 +258,14 @@
               <item row="0" column="1" colspan="3">
                <widget class="QComboBox" name="cbxLocation">
                 <property name="currentText">
-                 <string>The path specified when clicking &quot;Save pictures&quot;</string>
+                 <string/>
                 </property>
                 <property name="currentIndex">
-                 <number>0</number>
+                 <number>-1</number>
                 </property>
                 <property name="maxVisibleItems">
                  <number>3</number>
                 </property>
-                <item>
-                 <property name="text">
-                  <string>The path specified when clicking &quot;Save pictures&quot;</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>The same location as the source picture</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>The following path:</string>
-                 </property>
-                </item>
                </widget>
               </item>
               <item row="2" column="1" colspan="3">
@@ -463,13 +448,6 @@
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::StandardButton::Apply</set>
-     </property>
     </widget>
    </item>
   </layout>

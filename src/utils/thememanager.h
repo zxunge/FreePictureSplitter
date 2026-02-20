@@ -67,5 +67,6 @@ Q_SIGNALS:
 };
 
 } // namespace Util
+Q_DECLARE_METATYPE(Util::ThemeManager::Theme)
 
 #endif // THEMEMANAGER_H

@@ -10,6 +10,8 @@ target_sources(FreePictureSplitter PRIVATE
     fileinfo.h
     thememanager.cpp
     thememanager.h
+    languagemanager.cpp
+    languagemanager.h
 )
 
 if(WIN32 AND (NOT DEPLOY_WINDOWS))

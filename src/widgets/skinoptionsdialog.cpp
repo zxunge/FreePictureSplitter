@@ -31,8 +31,8 @@ SkinOptionsDialog::SkinOptionsDialog(QWidget *parent)
     layout->addWidget(label3);
     auto label4{ new QLabel(tr("Theme"), this) };
     auto cbxTheme{ new QComboBox(this) };
-    cbxTheme->addItem(tr("Light"));
-    cbxTheme->addItem(tr("Dark"));
+    cbxTheme->addItem(tr("Light"), QVariant::fromValue(Util::ThemeManager::Theme::Light));
+    cbxTheme->addItem(tr("Dark"), QVariant::fromValue(Util::ThemeManager::Theme::Dark));
     QDialogButtonBox *buttonBox{ new QDialogButtonBox(
             QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this) };
     connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
@@ -48,9 +48,8 @@ SkinOptionsDialog::SkinOptionsDialog(QWidget *parent)
             label3->setText(fileInfo.fileName());
         }
     });
-    connect(cbxTheme, &QComboBox::currentTextChanged, this, [this](const QString &text) {
-        std::get<2>(m_info) = (text == u"Dark"_s) ? Util::ThemeManager::Theme::Dark
-                                                  : Util::ThemeManager::Theme::Light;
+    connect(cbxTheme, &QComboBox::currentIndexChanged, this, [this, cbxTheme](int index) {
+        std::get<2>(m_info) = cbxTheme->itemData(index).value<Util::ThemeManager::Theme>();
     });
 
     mainLayout->addWidget(label1);

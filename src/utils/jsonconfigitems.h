@@ -27,6 +27,7 @@ struct Config
         int minorVersion;
         int microVersion;
         std::string skin;
+        std::string lang;
     } app;
 
     std::vector<ThemeManager::SkinInfo> skinList;
@@ -101,7 +102,8 @@ inline void setDefConf(Config &s)
 }
 
 } // namespace Util
-
+Q_DECLARE_METATYPE(Util::Prefix)
+Q_DECLARE_METATYPE(Util::SavingTo)
 inline Util::Config g_appConfig; // Global configuration holder
 
 #endif // JSONCONFIGITEMS_H

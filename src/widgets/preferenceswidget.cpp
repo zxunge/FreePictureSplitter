@@ -6,6 +6,7 @@
 #include "skinoptionsdialog.h"
 
 #include "utils/jsonconfigitems.h"
+#include "utils/languagemanager.h"
 
 #include <QImageWriter>
 #include <QColorDialog>
@@ -13,6 +14,9 @@
 #include <QFileDialog>
 #include <QCompleter>
 #include <QFileSystemModel>
+#include <QAbstractItemModel>
+#include <QLocale>
+#include <QVariant>
 #include <QStandardPaths>
 
 using namespace Qt::Literals::StringLiterals;
@@ -31,32 +35,31 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     /****************** Appearance ******************/
     ui->cbxStyle->addItems(Util::ThemeManager::availableSkins());
     ui->cbxStyle->setCurrentText(QString::fromStdString(g_appConfig.app.skin));
-    // `Language' is now fixed
-    ui->cbxLang->addItem(tr("System"));
-    ui->cbxLang->setCurrentIndex(0);
+    Q_FOREACH (const QString &name, Util::LanguageManager::availableLanguages()) {
+        QLocale locale(name);
+        QString string{ QStringLiteral("%1 (%2)").arg(
+                QLocale::languageToString(locale.language()),
+                QLocale::territoryToString(locale.territory())) };
+        ui->cbxLang->addItem(string, name);
+    }
+    ui->cbxLang->model()->sort(0);
+    ui->cbxLang->insertItem(0, tr("System default"));
+    int languageIndex{ ui->cbxLang->findData(QString::fromStdString(g_appConfig.app.lang)) };
+    if (languageIndex == -1)
+        languageIndex = 0;
+    ui->cbxLang->setCurrentIndex(languageIndex);
     /************************************************/
 
     /******************** Output ********************/
     // ----- Output File Options -----
-    switch (g_appConfig.options.outputOpt.savingTo) {
-    case Util::SavingTo::inPlace:
-        ui->cbxLocation->setCurrentIndex(0);
-        ui->lePath->setEnabled(false);
-        ui->tbtnBrowse->setEnabled(false);
-        break;
-
-    case Util::SavingTo::same:
-        ui->cbxLocation->setCurrentIndex(1);
-        ui->lePath->setEnabled(false);
-        ui->tbtnBrowse->setEnabled(false);
-        break;
-
-    case Util::SavingTo::specified:
-        ui->cbxLocation->setCurrentIndex(2);
-        ui->lePath->setEnabled(true);
-        ui->tbtnBrowse->setEnabled(true);
-        break;
-    }
+    ui->cbxLocation->addItem(tr("The path specified when clicking \"Save pictures\""),
+                             QVariant::fromValue(Util::SavingTo::inPlace));
+    ui->cbxLocation->addItem(tr("The same location as the source picture"),
+                             QVariant::fromValue(Util::SavingTo::same));
+    ui->cbxLocation->addItem(tr("The following path:"),
+                             QVariant::fromValue(Util::SavingTo::specified));
+    ui->cbxLocation->setCurrentIndex(
+            ui->cbxLocation->findData(QVariant::fromValue(g_appConfig.options.outputOpt.savingTo)));
     ui->chbSubDir->setChecked(g_appConfig.options.outputOpt.subDir);
     ui->lePath->setText(QString::fromStdString(g_appConfig.options.outputOpt.outPath));
     const QByteArrayList supportedImageFormats{ QImageWriter::supportedImageFormats() };
@@ -72,9 +75,10 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     ui->dsbxFactor->setValue(g_appConfig.options.outputOpt.scalingFactor * 100.0);
 
     // ----- Grid Figure -----
-    m_color = QColor::fromString(QString::fromStdString(g_appConfig.options.gridOpt.colorRgb));
     ui->labColor->setAutoFillBackground(true);
-    ui->labColor->setStyleSheet("background-color: " % m_color.name() % ";");
+    ui->labColor->setStyleSheet("background-color: "
+                                % QString::fromStdString(g_appConfig.options.gridOpt.colorRgb)
+                                % ";");
     ui->sbxLineSize->setValue(g_appConfig.options.gridOpt.lineSize);
     ui->chbGrid->setChecked(g_appConfig.options.gridOpt.enabled);
     ui->gbxGridFigure->setEnabled(g_appConfig.options.gridOpt.enabled);
@@ -88,23 +92,61 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     /************************************************/
 
     // Signal connections
-    connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this, [this](int index) {
-        // 2 : "The following path:"
-        ui->lePath->setEnabled(index == 2);
-        ui->tbtnBrowse->setEnabled(index == 2);
+    connect(ui->cbxLang, &QComboBox::currentIndexChanged, this, [this, &g_appConfig](int index) {
+        g_appConfig.app.lang = ui->cbxLang->itemData(index).toString().toStdString();
+        Util::LanguageManager::instance().installTranslators();
     });
-    connect(ui->cbxFormats, &QComboBox::currentTextChanged, this, [this](const QString &text) {
-        ui->sbxQuality->setEnabled(text == u"jpg"_s || text == u"jpeg"_s);
+    connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this,
+            [this, &g_appConfig](int index) {
+                g_appConfig.options.outputOpt.savingTo =
+                        ui->cbxLang->itemData(index).value<Util::SavingTo>();
+                ui->lePath->setEnabled(g_appConfig.options.outputOpt.savingTo
+                                       == Util::SavingTo::specified);
+                ui->tbtnBrowse->setEnabled(ui->lePath->isEnabled());
+            });
+    connect(ui->cbxFormats, &QComboBox::currentTextChanged, this,
+            [this, &g_appConfig](const QString &text) {
+                ui->sbxQuality->setEnabled(text == u"jpg"_s || text == u"jpeg"_s);
+                g_appConfig.options.outputOpt.outFormat = text.toStdString();
+            });
+    connect(ui->cbxStyle, &QComboBox::currentTextChanged, this,
+            [&g_appConfig](const QString &text) {
+                g_appConfig.app.skin = text.toStdString();
+                Util::ThemeManager::instance().setAppSkin(text.toStdString());
+            });
+    connect(ui->lePath, &QLineEdit::textChanged, this, [&g_appConfig](const QString &text) {
+        g_appConfig.options.outputOpt.outPath = text.toStdString();
     });
-    connect(ui->btnSelectColor, &QPushButton::clicked, this, [this]() {
-        QColor color{ QColorDialog::getColor(m_color, this, tr("Select a color for grid lines")) };
+    connect(ui->chbSubDir, &QCheckBox::toggled, this,
+            [&g_appConfig](bool checked) { g_appConfig.options.outputOpt.subDir = checked; });
+    connect(ui->btnSelectColor, &QPushButton::clicked, this, [this, &g_appConfig]() {
+        QColor color{ QColorDialog::getColor(
+                QColor::fromString(QString::fromStdString(g_appConfig.options.gridOpt.colorRgb)),
+                this, tr("Select a color for grid lines")) };
         if (color.isValid()) {
-            m_color = color;
-            ui->labColor->setStyleSheet("background-color: " % m_color.name() % ";");
+            g_appConfig.options.gridOpt.colorRgb = color.name().toStdString();
+            ui->labColor->setStyleSheet("background-color: " % color.name() % ";");
         }
+    });
+    connect(ui->sbxQuality, &QSpinBox::valueChanged, this,
+            [&g_appConfig](int value) { g_appConfig.options.outputOpt.jpgQuality = value; });
+    connect(ui->dsbxFactor, &QDoubleSpinBox::valueChanged, this,
+            [&g_appConfig](double value) { g_appConfig.options.outputOpt.scalingFactor = value; });
+    connect(ui->rbtnSpecified, &QRadioButton::toggled, this, [&g_appConfig](bool checked) {
+        g_appConfig.options.nameOpt.prefMode =
+                checked ? Util::Prefix::specified : Util::Prefix::same;
     });
     connect(ui->rbtnSpecified, &QRadioButton::toggled, ui->lePrefix, &QLineEdit::setEnabled);
     connect(ui->chbGrid, &QCheckBox::toggled, ui->gbxGridFigure, &QGroupBox::setEnabled);
+    connect(ui->chbGrid, &QCheckBox::toggled, this,
+            [&g_appConfig](bool checked) { g_appConfig.options.gridOpt.enabled = checked; });
+    connect(ui->sbxLineSize, &QSpinBox::valueChanged, this,
+            [&g_appConfig](int value) { g_appConfig.options.gridOpt.lineSize = value; });
+    connect(ui->lePrefix, &QLineEdit::textChanged, this, [&g_appConfig](const QString &text) {
+        g_appConfig.options.nameOpt.prefix = text.toStdString();
+    });
+    connect(ui->chbNumberContained, &QCheckBox::toggled, this,
+            [&g_appConfig](bool checked) { g_appConfig.options.nameOpt.rcContained = checked; });
     connect(ui->tbtnAppearance, &QToolButton::toggled, this, [this](bool checked) {
         if (checked)
             ui->wgtOptions->setCurrentIndex(0); // "Appearance"
@@ -126,13 +168,6 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
         g_appConfig.options.outputOpt.outPath = in.toStdString();
         ui->lePath->setText(in);
     });
-    connect(ui->buttonBox, &QDialogButtonBox::clicked, this, [&, this](QAbstractButton *button) {
-        if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole) {
-            saveChanges();
-            // Change theme
-            Util::ThemeManager::instance().setAppSkin(g_appConfig.app.skin);
-        }
-    });
     connect(ui->tbtnAddSkin, &QToolButton::clicked, this, [this] {
         SkinOptionsDialog *dlg{ new SkinOptionsDialog(this) };
         if (dlg->exec() == QDialog::Accepted && !std::get<0>(dlg->skinInfo()).empty()
@@ -148,33 +183,9 @@ PreferencesWidget::~PreferencesWidget()
     delete ui;
 }
 
-void PreferencesWidget::saveChanges()
+void PreferencesWidget::changeEvent(QEvent *e)
 {
-    // Save configurations
-    g_appConfig.app.skin = ui->cbxStyle->currentText().toStdString();
-    switch (ui->cbxLocation->currentIndex()) {
-    case 0:
-        g_appConfig.options.outputOpt.savingTo = Util::SavingTo::inPlace;
-        break;
-
-    case 1:
-        g_appConfig.options.outputOpt.savingTo = Util::SavingTo::same;
-        break;
-
-    case 2:
-        g_appConfig.options.outputOpt.savingTo = Util::SavingTo::specified;
-        break;
-    }
-    g_appConfig.options.outputOpt.subDir = ui->chbSubDir->isChecked();
-    g_appConfig.options.outputOpt.outPath = ui->lePath->text().toStdString();
-    g_appConfig.options.outputOpt.outFormat = ui->cbxFormats->currentText().toStdString();
-    g_appConfig.options.outputOpt.jpgQuality = ui->sbxQuality->value();
-    g_appConfig.options.outputOpt.scalingFactor = ui->dsbxFactor->value() / 100.0;
-    g_appConfig.options.gridOpt.enabled = ui->chbGrid->isChecked();
-    g_appConfig.options.gridOpt.lineSize = ui->sbxLineSize->value();
-    g_appConfig.options.gridOpt.colorRgb = m_color.name().toStdString();
-    g_appConfig.options.nameOpt.prefMode =
-            ui->rbtnSpecified->isChecked() ? Util::Prefix::specified : Util::Prefix::same;
-    g_appConfig.options.nameOpt.prefix = ui->lePrefix->text().toStdString();
-    g_appConfig.options.nameOpt.rcContained = ui->chbNumberContained->isChecked();
+    QWidget::changeEvent(e);
+    if (e->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
 }

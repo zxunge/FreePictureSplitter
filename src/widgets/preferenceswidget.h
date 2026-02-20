@@ -8,6 +8,8 @@
 #include <QWidget>
 #include <QColor>
 
+class QEvent;
+
 namespace Ui {
 class PreferencesWidget;
 }
@@ -20,11 +22,11 @@ public:
     explicit PreferencesWidget(QWidget *parent = nullptr);
     ~PreferencesWidget();
 
-    void saveChanges(); // This does not apply skin changes.
+protected:
+    void changeEvent(QEvent *e) override;
 
 private:
     Ui::PreferencesWidget *ui;
-    QColor m_color;
 };
 
 #endif // PREFERENCESWIDGET_H

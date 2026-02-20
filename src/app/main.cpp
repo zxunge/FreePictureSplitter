@@ -6,6 +6,7 @@
 
 #include "utils/jsonconfigitems.h"
 #include "utils/thememanager.h"
+#include "utils/languagemanager.h"
 #include "utils/stdpaths.h"
 #include "utils/fonts.h"
 
@@ -75,18 +76,6 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
         originalHandler(type, context, msg);
 }
 
-inline void loadTranslations(QApplication *a)
-{
-    Q_ASSERT(a);
-    QTranslator *qtTranslator{ new QTranslator() }, *appTranslator{ new QTranslator() };
-    if (qtTranslator->load(QLocale::system(), u"qt"_s, u"_"_s, Util::translationsDir()))
-        a->installTranslator(qtTranslator);
-
-    if (appTranslator->load(QLocale::system(), fpsAppName, u"_"_s, Util::translationsDir()))
-        a->installTranslator(appTranslator);
-    // Do not free translators.
-}
-
 [[nodiscard]] inline bool loadConfigurations()
 {
     QFile cfgFile(Util::dataDir() % CONFIG_FILENAME);
@@ -144,7 +133,7 @@ inline void loadTranslations(QApplication *a)
 
     if (!loadConfigurations())
         return false;
-    loadTranslations(a);
+    Util::LanguageManager::instance().installTranslators();
 
     // Load styles
     if (!Util::ThemeManager::instance().setAppSkin(g_appConfig.app.skin)) {
