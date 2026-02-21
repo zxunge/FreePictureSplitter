@@ -275,8 +275,12 @@ void BatchWidget::closeEvent(QCloseEvent *event)
 void BatchWidget::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
-    if (e->type() == QEvent::LanguageChange)
+    if (e->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
+        m_model->setHeaderData(0, Qt::Horizontal, tr("File Name"));
+        m_model->setHeaderData(1, Qt::Horizontal, tr("File Path"));
+        m_model->setHeaderData(2, Qt::Horizontal, tr("File Size"));
+    }
 }
 
 void BatchWidget::addPicture(const QString &fileName)

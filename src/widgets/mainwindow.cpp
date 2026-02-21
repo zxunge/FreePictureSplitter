@@ -205,6 +205,10 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
-    if (e->type() == QEvent::LanguageChange)
+    if (e->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
+        ui->tabWidget->setTabText(0, tr("Single Splitting"));
+        ui->tabWidget->setTabText(1, tr("Batch Splitting"));
+        ui->tabWidget->setTabText(2, tr("Preferences"));
+    }
 }

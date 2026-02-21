@@ -32,254 +32,293 @@
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="82"/>
+        <location filename="../../ui/batchwidget.ui" line="83"/>
         <source>Splitting Settings..</source>
         <translation>分割设置..</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="95"/>
+        <location filename="../../ui/batchwidget.ui" line="96"/>
         <source>Rows:</source>
         <translation>行数：</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="105"/>
+        <location filename="../../ui/batchwidget.ui" line="106"/>
         <source>Height (Pixel):</source>
         <translation>高度（像素）：</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="128"/>
+        <location filename="../../ui/batchwidget.ui" line="129"/>
         <source>Width (Pixel):</source>
         <translation>宽度（像素）：</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="151"/>
+        <location filename="../../ui/batchwidget.ui" line="152"/>
         <source>Split Averagely</source>
         <translation>平均分割</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="171"/>
+        <location filename="../../ui/batchwidget.ui" line="172"/>
         <source>Columns:</source>
         <translation>列数：</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="194"/>
+        <location filename="../../ui/batchwidget.ui" line="195"/>
         <source>Splitting Sequence</source>
         <translation>分割顺序</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="200"/>
+        <location filename="../../ui/batchwidget.ui" line="201"/>
         <source>Left to Right, 
 Bottom to Top</source>
         <translation>自左向右，
 自底向上</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="208"/>
+        <location filename="../../ui/batchwidget.ui" line="209"/>
         <source>Left to Right, 
 Top to Bottom</source>
         <translation>自左向右，
 自上向下</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="219"/>
+        <location filename="../../ui/batchwidget.ui" line="220"/>
         <source>Right to Left, 
 Bottom to Top</source>
         <translation>自右向左，
 自底向上</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="227"/>
+        <location filename="../../ui/batchwidget.ui" line="228"/>
         <source>Right to Left, 
 Top to Bottom</source>
         <translation>自右向左，
 自上向下</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="238"/>
+        <location filename="../../ui/batchwidget.ui" line="239"/>
         <source>Split by fixed sizes</source>
         <translation>按固定尺寸分割</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="252"/>
+        <location filename="../../ui/batchwidget.ui" line="253"/>
         <source>Split using templates</source>
         <translation>按模板分割</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="300"/>
+        <location filename="../../ui/batchwidget.ui" line="301"/>
         <source>A list of pictures added.</source>
         <translation>已添加一系列图片。</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="394"/>
+        <location filename="../../ui/batchwidget.ui" line="395"/>
         <source>Create Sub-directories</source>
         <translation>创建子目录</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="411"/>
+        <location filename="../../ui/batchwidget.ui" line="412"/>
         <source>The same location as each source picture</source>
         <translation>与每个图片源目录相同</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="416"/>
+        <location filename="../../ui/batchwidget.ui" line="417"/>
         <source>The following path:</source>
         <translation>下列目录：</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="424"/>
+        <location filename="../../ui/batchwidget.ui" line="425"/>
         <source>Output Location:</source>
         <translation>输出位置：</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="434"/>
+        <location filename="../../ui/batchwidget.ui" line="435"/>
         <source>Open in Explorer</source>
         <translation>在文件管理器中打开</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="444"/>
+        <location filename="../../ui/batchwidget.ui" line="445"/>
         <source>Change...</source>
         <translation>更改...</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="454"/>
+        <location filename="../../ui/batchwidget.ui" line="455"/>
         <source>Specify Output Directory:</source>
         <translation>指定输出目录：</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="474"/>
+        <location filename="../../ui/batchwidget.ui" line="475"/>
         <source>Start Splitting...</source>
         <translation>开始分割...</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="492"/>
+        <location filename="../../ui/batchwidget.ui" line="493"/>
         <source>Add pictures</source>
         <translation>添加图片</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="495"/>
+        <location filename="../../ui/batchwidget.ui" line="496"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add a picture to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;向列表中添加图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="498"/>
+        <location filename="../../ui/batchwidget.ui" line="499"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="507"/>
+        <location filename="../../ui/batchwidget.ui" line="508"/>
         <source>Add directory</source>
         <translation>添加文件夹</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="510"/>
+        <location filename="../../ui/batchwidget.ui" line="511"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Add all pictures under a directory to the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;将文件夹中所有的图片添加至列表中。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="513"/>
+        <location filename="../../ui/batchwidget.ui" line="514"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="525"/>
+        <location filename="../../ui/batchwidget.ui" line="526"/>
         <source>Remove from list</source>
         <translation>从列表中移除</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="528"/>
+        <location filename="../../ui/batchwidget.ui" line="529"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove the specified picture from the list.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;从列表中移除指定图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="531"/>
+        <location filename="../../ui/batchwidget.ui" line="532"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="546"/>
+        <location filename="../../ui/batchwidget.ui" line="547"/>
         <source>Show thumbnails</source>
         <translation>显示缩略图</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="549"/>
+        <location filename="../../ui/batchwidget.ui" line="550"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show pictures in thumbnails.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;以缩略图形式显示图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="552"/>
+        <location filename="../../ui/batchwidget.ui" line="553"/>
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="564"/>
+        <location filename="../../ui/batchwidget.ui" line="565"/>
         <source>Show detailed info</source>
         <translation>显示详细信息</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="567"/>
+        <location filename="../../ui/batchwidget.ui" line="568"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show detailed information of each picture.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;显示每个图片的详细信息。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/batchwidget.ui" line="570"/>
+        <location filename="../../ui/batchwidget.ui" line="571"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="84"/>
+        <location filename="../../ui/batchwidget.ui" line="583"/>
+        <source>Remove from disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/batchwidget.ui" line="586"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove the selected file(s) from disk.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../ui/batchwidget.ui" line="589"/>
+        <source>Ctrl+Del</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="86"/>
         <source>File Name</source>
         <translation>文件名称</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="85"/>
+        <location filename="../../widgets/batchwidget.cpp" line="87"/>
         <source>File Path</source>
         <translation>文件路径</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="86"/>
+        <location filename="../../widgets/batchwidget.cpp" line="88"/>
         <source>File Size</source>
         <translation>文件大小</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="185"/>
+        <location filename="../../widgets/batchwidget.cpp" line="187"/>
+        <location filename="../../widgets/batchwidget.cpp" line="198"/>
+        <source>Deleting files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="188"/>
+        <source>Are you sure to remove these %1 file(s)?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="199"/>
+        <source>Failed to delete file: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="207"/>
         <source>Add pictures...</source>
         <translation>添加图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="213"/>
+        <location filename="../../widgets/batchwidget.cpp" line="235"/>
         <source>Choose a directory containing pictures.</source>
         <translation>选择包含图片的文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="267"/>
+        <location filename="../../widgets/batchwidget.cpp" line="310"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="305"/>
-        <location filename="../../widgets/batchwidget.cpp" line="320"/>
-        <location filename="../../widgets/batchwidget.cpp" line="332"/>
-        <location filename="../../widgets/batchwidget.cpp" line="343"/>
-        <location filename="../../widgets/batchwidget.cpp" line="374"/>
+        <location filename="../../widgets/batchwidget.cpp" line="333"/>
+        <location filename="../../widgets/batchwidget.cpp" line="348"/>
+        <location filename="../../widgets/batchwidget.cpp" line="358"/>
+        <location filename="../../widgets/batchwidget.cpp" line="372"/>
+        <location filename="../../widgets/batchwidget.cpp" line="384"/>
+        <location filename="../../widgets/batchwidget.cpp" line="395"/>
+        <location filename="../../widgets/batchwidget.cpp" line="426"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="306"/>
+        <location filename="../../widgets/batchwidget.cpp" line="334"/>
         <source>Cannot open file: %1.</source>
         <translation>无法打开文件：%1.</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="343"/>
+        <location filename="../../widgets/batchwidget.cpp" line="348"/>
+        <location filename="../../widgets/batchwidget.cpp" line="358"/>
+        <source>Unsupported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="395"/>
         <source>No rule to split the picture</source>
         <translation>没有用于分割图片的规则</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="321"/>
+        <location filename="../../widgets/batchwidget.cpp" line="373"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation>您还没有指定输出文件夹，请重试。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="333"/>
+        <location filename="../../widgets/batchwidget.cpp" line="385"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
@@ -297,12 +336,12 @@ Top to Bottom</source>
         <translation>保存图像失败：%1：%2.</translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="233"/>
+        <location filename="../../core/imagedocument.cpp" line="234"/>
         <source>Null rectangle list</source>
         <translation>矩形列表为空</translation>
     </message>
     <message>
-        <location filename="../../core/imagedocument.cpp" line="243"/>
+        <location filename="../../core/imagedocument.cpp" line="244"/>
         <source>Null image</source>
         <translation>图像为空</translation>
     </message>
@@ -330,7 +369,7 @@ Top to Bottom</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../../widgets/errorlogdialog.cpp" line="25"/>
+        <location filename="../../widgets/errorlogdialog.cpp" line="27"/>
         <source>Choose a directory to save the error logs.</source>
         <translation>选择保存错误日志的文件夹。</translation>
     </message>
@@ -343,17 +382,17 @@ Top to Bottom</source>
         <translation>FreePictureSplitter</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="46"/>
+        <location filename="../../widgets/mainwindow.cpp" line="47"/>
         <source>Single Splitting</source>
         <translation>单图片分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="48"/>
+        <location filename="../../widgets/mainwindow.cpp" line="49"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="50"/>
+        <location filename="../../widgets/mainwindow.cpp" line="51"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
@@ -401,138 +440,137 @@ Top to Bottom</source>
         <translation>语言：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="149"/>
+        <location filename="../../ui/preferenceswidget.ui" line="146"/>
         <source>App Skin:</source>
         <translation>应用皮肤：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="182"/>
+        <location filename="../../ui/preferenceswidget.ui" line="193"/>
         <source>Output File Options</source>
         <translation>输出文件选项</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="188"/>
+        <location filename="../../ui/preferenceswidget.ui" line="199"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify output path:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;指定输出路径：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="195"/>
+        <location filename="../../ui/preferenceswidget.ui" line="206"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;对于JPG图片，取值为0 ~ 100，越大的值会使输出具有越高的质量。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="205"/>
+        <location filename="../../ui/preferenceswidget.ui" line="216"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="212"/>
+        <location filename="../../ui/preferenceswidget.ui" line="223"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;输出图片格式：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="222"/>
+        <location filename="../../ui/preferenceswidget.ui" line="233"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Picture scaling:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图片缩放：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="229"/>
+        <location filename="../../ui/preferenceswidget.ui" line="240"/>
         <source>Create sub-directories under the output path.</source>
         <translation>在输出目录下创建子文件夹。</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="243"/>
+        <location filename="../../ui/preferenceswidget.ui" line="254"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;(Default is 100.00%, that is, no scaling.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;（默认为100.00%，即没有缩放。）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="250"/>
-        <location filename="../../ui/preferenceswidget.ui" line="260"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
+        <source>System default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>点击“保存图片”时指定的目录</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="265"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
         <source>The same location as the source picture</source>
         <translation>与每个图片源目录相同</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="270"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
         <source>The following path:</source>
         <translation>下列目录：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="285"/>
+        <location filename="../../ui/preferenceswidget.ui" line="281"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG质量：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="302"/>
+        <location filename="../../ui/preferenceswidget.ui" line="298"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存至：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="328"/>
+        <location filename="../../ui/preferenceswidget.ui" line="324"/>
         <source>Grid Figure</source>
         <translation>网格图</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="377"/>
+        <location filename="../../ui/preferenceswidget.ui" line="373"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;分割线宽：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="354"/>
+        <location filename="../../ui/preferenceswidget.ui" line="350"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;网格线颜色：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="409"/>
+        <location filename="../../ui/preferenceswidget.ui" line="405"/>
         <source>Select Color...</source>
         <translation>选择颜色...</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="347"/>
+        <location filename="../../ui/preferenceswidget.ui" line="343"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;像素&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="318"/>
+        <location filename="../../ui/preferenceswidget.ui" line="314"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
         <translation>自动生成一份带网格图标明图片分割情况的图片。</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="419"/>
+        <location filename="../../ui/preferenceswidget.ui" line="415"/>
         <source>File Name Conventions</source>
         <translation>文件命名规则</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="425"/>
+        <location filename="../../ui/preferenceswidget.ui" line="421"/>
         <source>Use the original file name as the prefix</source>
         <translation>使用源文件名作为前缀</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="432"/>
+        <location filename="../../ui/preferenceswidget.ui" line="428"/>
         <source>Use the specified prefix:</source>
         <translation>使用指定前缀：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="442"/>
+        <location filename="../../ui/preferenceswidget.ui" line="438"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
         <translation>在文件名中包含[行数 * 列数]。</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="35"/>
-        <source>System</source>
-        <translation>跟随系统</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="100"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
         <source>Select a color for grid lines</source>
         <translation>为网格线选取一种颜色</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="155"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
@@ -571,32 +609,32 @@ Top to Bottom</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="139"/>
+        <location filename="../../app/main.cpp" line="127"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>加载模块exchndl.dll出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="100"/>
+        <location filename="../../app/main.cpp" line="88"/>
         <source>Error creating/opening configuration file.</source>
         <translation>创建或打开配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="112"/>
+        <location filename="../../app/main.cpp" line="100"/>
         <source>Error parsing configuration file: %1.</source>
         <translation>解析配置文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="124"/>
+        <location filename="../../app/main.cpp" line="112"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>配置文件的版本不匹配，尝试备份后把文件删除。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="153"/>
-        <source>Error loading skin: %1.</source>
-        <translation>加载皮肤%1出错。</translation>
+        <location filename="../../app/main.cpp" line="141"/>
+        <source>Could NOT load skin %1.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="168"/>
+        <location filename="../../app/main.cpp" line="156"/>
         <source>Error writing to configuration file.</source>
         <translation>写入配置文件出错。</translation>
     </message>
@@ -606,7 +644,7 @@ Top to Bottom</source>
         <translation>所有受支持的文件类型 (</translation>
     </message>
     <message>
-        <location filename="../../widgets/errorlogdialog.cpp" line="43"/>
+        <location filename="../../widgets/errorlogdialog.cpp" line="45"/>
         <source>Error writing to file %1.</source>
         <translation>写入文件%1时出错。</translation>
     </message>
@@ -810,6 +848,49 @@ Bottom to Top</source>
         <location filename="../../widgets/singlewidget.cpp" line="231"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
+    </message>
+</context>
+<context>
+    <name>SkinOptionsDialog</name>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="24"/>
+        <source>Skin name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="25"/>
+        <source>Your skin name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="26"/>
+        <source>Skin file name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="27"/>
+        <source>&lt;em&gt;Your skin file&apos;s name&lt;/em&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="32"/>
+        <source>Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="34"/>
+        <source>Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="35"/>
+        <source>Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/skinoptionsdialog.cpp" line="45"/>
+        <source>Open a .skin file...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

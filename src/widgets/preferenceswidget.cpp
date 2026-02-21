@@ -181,6 +181,10 @@ PreferencesWidget::~PreferencesWidget()
 void PreferencesWidget::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
-    if (e->type() == QEvent::LanguageChange)
+    if (e->type() == QEvent::LanguageChange) {
         ui->retranslateUi(this);
+        ui->cbxLocation->setItemText(0, tr("The path specified when clicking \"Save pictures\""));
+        ui->cbxLocation->setItemText(1, tr("The same location as the source picture"));
+        ui->cbxLocation->setItemText(2, tr("The following path:"));
+    }
 }
