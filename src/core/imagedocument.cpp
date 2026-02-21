@@ -85,8 +85,8 @@ void ImageDocument::setupSplitLines()
         // ----- Rows: Down -> Up -----
         for (int i{ rows - 1 }; i != 0; --i)
             for (int j{}; j != cols; ++j) {
-                m_rects[i][j].setTop(i * basicRowHeight);
-                m_rects[i][j].setBottom((i + 1) * basicRowHeight);
+                m_rects[i][j].setTop(height - (rows - i) * basicRowHeight);
+                m_rects[i][j].setHeight(basicRowHeight);
             }
         // Legacy;
         for (int j{}; j != cols; ++j) {
