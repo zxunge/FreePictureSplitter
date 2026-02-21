@@ -14,6 +14,8 @@
 #include <QMetaObject>
 #include <QStyleFactory>
 
+#include <phantomstyle.h>
+
 using namespace Qt::Literals::StringLiterals;
 
 namespace Util {
@@ -64,7 +66,9 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
         // we need to do some path-conversion.
         QString ss{ in.readAll() };
         ss.replace(u"@SKINS_DIR@"_s, Util::skinsDir());
-        qApp->setStyle(QStyleFactory::create(u"fusion"_s));
+        // Set a new PhantomStyle
+        PhantomStyle *style{ new PhantomStyle() };
+        qApp->setStyle(style);
         qApp->setStyleSheet(ss);
         styleFile.close();
 

@@ -8,6 +8,7 @@ if(DEPLOY_WINDOWS)
     set(CMAKE_INSTALL_LIBEXECDIR "libexec")
 endif()
 
+add_subdirectory(phantomstyle)
 add_subdirectory(qwindowkit)
 add_subdirectory(qwindowkit/examples/shared/widgetframe)
 add_subdirectory(reflect-cpp)
