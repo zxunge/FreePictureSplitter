@@ -22,7 +22,9 @@ class MainWindow final : public QMainWindow
     Q_OBJECT
 
 public:
-    static MainWindow &get();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow();
+
     QProgressBar *progressBar() const { return m_pbar; }
 
 private:
@@ -34,9 +36,6 @@ protected:
     void changeEvent(QEvent *e) override;
 
 private:
-    explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
     Ui::MainWindow *ui;
     QWK::WidgetWindowAgent *m_windowAgent;
     QProgressBar *m_pbar;

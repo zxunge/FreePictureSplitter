@@ -10,6 +10,7 @@
 #include "core/imagedocument.h"
 #include "utils/fileinfo.h"
 #include "utils/jsonconfigitems.h"
+#include "utils/misc.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -105,7 +106,7 @@ void SingleWidget::openPicture()
         int width{ m_imgDoc->size().width() }, height{ m_imgDoc->size().height() };
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
-        MainWindow::get().statusBar()->showMessage(
+        Util::getMainWindow()->statusBar()->showMessage(
                 tr("%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi")
                         .arg(m_imgDoc->fullName())
                         .arg(width)
@@ -265,7 +266,7 @@ void SingleWidget::closePicture()
     m_imgDoc->close();
     ui->graphicsView->setRulersVisibility(false);
     ui->actionClosePicture->setEnabled(false);
-    MainWindow::get().statusBar()->clearMessage();
+    Util::getMainWindow()->statusBar()->clearMessage();
 }
 
 void SingleWidget::changeEvent(QEvent *e)

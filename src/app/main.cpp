@@ -195,7 +195,8 @@ int main(int argc, char *argv[])
 
     qInfo("Application Started...");
 
-    MainWindow::get().show();
+    MainWindow w;
+    w.show();
     int ret{ a.exec() };
     if (!saveConfigurations())
         std::exit(EXIT_FAILURE);

@@ -4,11 +4,12 @@
 #include "batchwidget.h"
 #include "ui_batchwidget.h"
 #include "progressdialog.h"
-#include "errorlogdialog.h"
 #include "mainwindow.h"
+#include "errorlogdialog.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/fileinfo.h"
+#include "utils/misc.h"
 #include "core/imagedocument.h"
 
 #include <QButtonGroup>
@@ -106,10 +107,12 @@ BatchWidget::BatchWidget(QWidget *parent)
                 agRm->setEnabled(m_selModel->hasSelection());
             });
     connect(ui->viewList, &QListView::clicked, this, [this](const QModelIndex &index) {
-        MainWindow::get().statusBar()->showMessage(m_model->itemData(index).value(0).toString());
+        Util::getMainWindow()->statusBar()->showMessage(
+                m_model->itemData(index).value(0).toString());
     });
     connect(ui->viewTable, &QTableView::clicked, this, [this](const QModelIndex &index) {
-        MainWindow::get().statusBar()->showMessage(m_model->itemData(index).value(0).toString());
+        Util::getMainWindow()->statusBar()->showMessage(
+                m_model->itemData(index).value(0).toString());
     });
     connect(ui->viewList, &QWidget::customContextMenuRequested, this,
             [this](const QPoint &pos) { m_contextMenu->exec(QCursor::pos()); });
@@ -216,15 +219,15 @@ void BatchWidget::openPictures()
                 QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
 
         const QStringList list{ fdlg.selectedFiles() };
-        MainWindow::get().progressBar()->setRange(0, list.size());
-        MainWindow::get().progressBar()->setVisible(true);
+        Util::getMainWindow()->progressBar()->setRange(0, list.size());
+        Util::getMainWindow()->progressBar()->setVisible(true);
         int count{};
         Q_FOREACH (const auto file, list) {
             QCoreApplication::processEvents();
             addPicture(file);
-            MainWindow::get().progressBar()->setValue(++count);
+            Util::getMainWindow()->progressBar()->setValue(++count);
         }
-        MainWindow::get().progressBar()->setVisible(false);
+        Util::getMainWindow()->progressBar()->setVisible(false);
     } else
         return;
 }
@@ -249,27 +252,14 @@ void BatchWidget::openFolder()
 
     const QStringList list{ dir.entryList(nameFilters, QDir::Files) };
     int count{};
-    MainWindow::get().progressBar()->setRange(0, list.size());
-    MainWindow::get().progressBar()->setVisible(true);
+    Util::getMainWindow()->progressBar()->setRange(0, list.size());
+    Util::getMainWindow()->progressBar()->setVisible(true);
     Q_FOREACH (const auto file, list) {
         QCoreApplication::processEvents();
         addPicture(in + u"/"_s + file);
-        MainWindow::get().progressBar()->setValue(++count);
+        Util::getMainWindow()->progressBar()->setValue(++count);
     }
-    MainWindow::get().progressBar()->setVisible(false);
-}
-
-void BatchWidget::closeEvent(QCloseEvent *event)
-{
-    // Save configurations
-    if (ui->cbxLocation->currentIndex() == 0) // "The same"
-        g_appConfig.options.batchOpt.savingTo = Util::SavingTo::same;
-    else
-        g_appConfig.options.batchOpt.savingTo = Util::SavingTo::specified;
-    g_appConfig.options.batchOpt.outPath = ui->lePath->text().toStdString();
-    g_appConfig.options.batchOpt.subDir = ui->chbSubdir->isChecked();
-
-    QWidget::closeEvent(event);
+    Util::getMainWindow()->progressBar()->setVisible(false);
 }
 
 void BatchWidget::changeEvent(QEvent *e)

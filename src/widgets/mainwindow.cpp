@@ -79,12 +79,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-MainWindow &MainWindow::get()
-{
-    static MainWindow instance;
-    return instance;
-}
-
 void MainWindow::installWindowAgent()
 {
     // Setup window agent

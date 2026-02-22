@@ -35,7 +35,6 @@ private:
     void startSplit();
 
 protected:
-    void closeEvent(QCloseEvent *event) override;
     void changeEvent(QEvent *e) override;
 
 private:
