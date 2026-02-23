@@ -43,7 +43,7 @@ find_package(Qt6 REQUIRED COMPONENTS
 
 qt_standard_project_setup(
     REQUIRES 6.9
-    I18N_TRANSLATED_LANGUAGES de fr ja pl tr uk zh_TW zh_CN it
+    I18N_TRANSLATED_LANGUAGES de fr ja pl ru zh_TW zh_CN it
 )
 
 message(STATUS "Found Qt " ${Qt6_VERSION})

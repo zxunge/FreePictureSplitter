@@ -55,7 +55,9 @@ Source: "{#MyAppPath}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#MyAppPath}\symsrv.yes"; DestDir: "{app}"; Flags: ignoreversion
+#ifdef MINGW
+    Source: "{#MyAppPath}\symsrv.yes"; DestDir: "{app}"; Flags: ignoreversion
+#endif
 Source: "{#MyAppPath}\plugins\*"; DestDir: "{app}\plugins"; Flags: recursesubdirs createallsubdirs
 Source: "{#MyAppPath}\skins\*"; DestDir: "{app}\skins"; Flags: recursesubdirs createallsubdirs
 Source: "{#MyAppPath}\translations\*"; DestDir: "{app}\translations"; Flags: recursesubdirs createallsubdirs

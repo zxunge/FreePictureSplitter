@@ -5,15 +5,15 @@
 #ifndef MISC_H
 #define MISC_H
 
-#include <QApplication>
+#include "widgets/mainwindow.h"
 
-class MainWindow;
+#include <QApplication>
 
 namespace Util {
 
 inline MainWindow *getMainWindow()
 {
-    foreach (QWidget *w, qApp->topLevelWidgets())
+    Q_FOREACH (QWidget *w, qApp->topLevelWidgets())
         if (MainWindow *mainWin = qobject_cast<MainWindow *>(w))
             return mainWin;
     Q_ASSERT(false);
