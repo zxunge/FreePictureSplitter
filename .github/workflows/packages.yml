@@ -9,84 +9,41 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Setup MSYS2 Environment
-      uses: msys2/setup-msys2@v2
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
       with:
-        msystem: clang64
-        update: true
-        location: D:\
-        pacboy: >-
-          toolchain:p
-          cmake:p
-          ninja:p
-          angleproject:p
-          qt6-base:p
-          qt6-tools:p
-          qt6-translations:p
-          qt6-imageformats:p
-          qt6-svg:p
-
+        version: 6.10.*
+        arch: win64_msvc2022_64
+        install-deps: true
+        modules: "qtimageformats"
+        setup-python: false
+        
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v4
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
         submodules: recursive
         fetch-depth: 1
-        
-    - name: Build, deploy and copy dependencies
-      shell: msys2 {0}
+      
+    - name: Build
+      shell: pwsh
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
-        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
-        cmake --build build -j
+        cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=D:\FreePictureSplitter -B build .
+        cmake --build build -j --config Release
         cmake --install build --config Release
-        
-        # Copy DLLs
-        win_dlls=("libb2-1.dll"               \
-                  "libfreetype-6.dll"         \
-                  "libiconv-2.dll"            \
-                  "libjasper.dll"             \
-                  "libpcre2-8-0.dll"          \
-                  "libwebp-7.dll"             \  
-                  "libzstd.dll"               \
-                  "libbrotlicommon.dll"       \
-                  "libicudt78.dll"            \
-                  "libjpeg-8.dll"             \
-                  "libpng16-16.dll"           \
-                  "libwebpdecoder-3.dll"      \
-                  "vulkan-1.dll"              \
-                  "libbrotlidec.dll"          \   
-                  "libglib-2.0-0.dll"         \
-                  "libicuin78.dll"            \
-                  "libmd4c.dll"               \
-                  "libsharpyuv-0.dll"         \
-                  "libwebpdemux-2.dll"        \ 
-                  "zlib1.dll"                 \
-                  "libbz2-1.dll"              \
-                  "libgraphite2.dll"          \
-                  "libicuuc78.dll"            \
-                  "libmng-2.dll"              \
-                  "libwebpmux-3.dll"          \
-                  "libdouble-conversion.dll"  \
-                  "libharfbuzz-0.dll"         \
-                  "libintl-8.dll"             \
-                  "libpcre2-16-0.dll"         \
-                  "libturbojpeg.dll"          \
-                  "libwinpthread-1.dll"       \
-                  "libc++.dll")
-        for dll in ${win_dlls[@]};
-        do
-          cp -f /clang64/bin/$dll /opt/freepicturesplitter/
-        done
-        cp -f LICENSE /opt/freepicturesplitter/
+        cp -Force LICENSE D:\FreePictureSplitter\
 
     - name: Create an installer using Inno Setup
       shell: pwsh
       run: |
         choco install -y innosetup
-        iscc /O. /FFreePictureSplitter-setup-win64 FreePictureSplitter/dist/setup-win.iss /DMyAppPath="D:\msys64\opt\freepicturesplitter"
+        iscc /O. /FFreePictureSplitter-setup-win64 FreePictureSplitter/dist/setup-win.iss /DMyAppPath="D:\FreePictureSplitter"
 
     - name: Upload the installer
       uses: actions/upload-artifact@v6
