@@ -236,85 +236,88 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="86"/>
+        <location filename="../../widgets/batchwidget.cpp" line="87"/>
+        <location filename="../../widgets/batchwidget.cpp" line="270"/>
         <source>File Name</source>
         <translation>檔名</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="87"/>
+        <location filename="../../widgets/batchwidget.cpp" line="88"/>
+        <location filename="../../widgets/batchwidget.cpp" line="271"/>
         <source>File Path</source>
         <translation>檔案路徑</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="88"/>
+        <location filename="../../widgets/batchwidget.cpp" line="89"/>
+        <location filename="../../widgets/batchwidget.cpp" line="272"/>
         <source>File Size</source>
         <translation>文件大小</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="187"/>
-        <location filename="../../widgets/batchwidget.cpp" line="198"/>
+        <location filename="../../widgets/batchwidget.cpp" line="190"/>
+        <location filename="../../widgets/batchwidget.cpp" line="201"/>
         <source>Deleting files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="188"/>
+        <location filename="../../widgets/batchwidget.cpp" line="191"/>
         <source>Are you sure to remove these %1 file(s)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="199"/>
+        <location filename="../../widgets/batchwidget.cpp" line="202"/>
         <source>Failed to delete file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="207"/>
+        <location filename="../../widgets/batchwidget.cpp" line="210"/>
         <source>Add pictures...</source>
         <translation>添加圖片。 ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="235"/>
+        <location filename="../../widgets/batchwidget.cpp" line="238"/>
         <source>Choose a directory containing pictures.</source>
         <translation>選擇一個包含圖片的目錄。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="310"/>
+        <location filename="../../widgets/batchwidget.cpp" line="304"/>
         <source>Choose a directory to save pictures.</source>
         <translation>選擇一個目錄來保存圖片。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="333"/>
-        <location filename="../../widgets/batchwidget.cpp" line="348"/>
-        <location filename="../../widgets/batchwidget.cpp" line="358"/>
-        <location filename="../../widgets/batchwidget.cpp" line="372"/>
-        <location filename="../../widgets/batchwidget.cpp" line="384"/>
-        <location filename="../../widgets/batchwidget.cpp" line="395"/>
-        <location filename="../../widgets/batchwidget.cpp" line="426"/>
+        <location filename="../../widgets/batchwidget.cpp" line="327"/>
+        <location filename="../../widgets/batchwidget.cpp" line="342"/>
+        <location filename="../../widgets/batchwidget.cpp" line="352"/>
+        <location filename="../../widgets/batchwidget.cpp" line="366"/>
+        <location filename="../../widgets/batchwidget.cpp" line="378"/>
+        <location filename="../../widgets/batchwidget.cpp" line="389"/>
+        <location filename="../../widgets/batchwidget.cpp" line="420"/>
         <source>Batch Splitting</source>
         <translation>批量折開</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="334"/>
+        <location filename="../../widgets/batchwidget.cpp" line="328"/>
         <source>Cannot open file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="348"/>
-        <location filename="../../widgets/batchwidget.cpp" line="358"/>
+        <location filename="../../widgets/batchwidget.cpp" line="342"/>
+        <location filename="../../widgets/batchwidget.cpp" line="352"/>
         <source>Unsupported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="395"/>
+        <location filename="../../widgets/batchwidget.cpp" line="389"/>
         <source>No rule to split the picture</source>
         <translation>沒有分割圖片的規則</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="373"/>
+        <location filename="../../widgets/batchwidget.cpp" line="367"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation>您尚未指定輸出目錄，請重試。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="385"/>
+        <location filename="../../widgets/batchwidget.cpp" line="379"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -379,16 +382,19 @@ Top to Bottom</source>
     </message>
     <message>
         <location filename="../../widgets/mainwindow.cpp" line="47"/>
+        <location filename="../../widgets/mainwindow.cpp" line="204"/>
         <source>Single Splitting</source>
         <translation>單次折開</translation>
     </message>
     <message>
         <location filename="../../widgets/mainwindow.cpp" line="49"/>
+        <location filename="../../widgets/mainwindow.cpp" line="205"/>
         <source>Batch Splitting</source>
         <translation>批量折開</translation>
     </message>
     <message>
         <location filename="../../widgets/mainwindow.cpp" line="51"/>
+        <location filename="../../widgets/mainwindow.cpp" line="206"/>
         <source>Preferences</source>
         <translation>偏好</translation>
     </message>
@@ -487,16 +493,19 @@ Top to Bottom</source>
     </message>
     <message>
         <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>按一下“保存圖片”時指定的路徑</translation>
     </message>
     <message>
         <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
         <source>The same location as the source picture</source>
         <translation>與源圖片位於同一位置</translation>
     </message>
     <message>
         <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
         <source>The following path:</source>
         <translation>以下路徑：</translation>
     </message>
@@ -807,37 +816,37 @@ Bottom to Top</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;關閉當前打開的圖片。 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="89"/>
+        <location filename="../../widgets/singlewidget.cpp" line="90"/>
         <source>Open a picture...</source>
         <translation>打開圖片。 ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="109"/>
+        <location filename="../../widgets/singlewidget.cpp" line="110"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="129"/>
+        <location filename="../../widgets/singlewidget.cpp" line="130"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="142"/>
+        <location filename="../../widgets/singlewidget.cpp" line="143"/>
         <source>Choose the output directory.</source>
         <translation>選擇輸出目錄。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="168"/>
+        <location filename="../../widgets/singlewidget.cpp" line="169"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="181"/>
+        <location filename="../../widgets/singlewidget.cpp" line="182"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>請至少選擇一種分割模式，提供有用數據，然後重置分割線。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="231"/>
+        <location filename="../../widgets/singlewidget.cpp" line="232"/>
         <source>No rule to split this picture</source>
         <translation>沒有分割此圖片的規則</translation>
     </message>
