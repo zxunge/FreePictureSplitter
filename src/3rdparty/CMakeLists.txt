@@ -12,3 +12,8 @@ add_subdirectory(phantomstyle)
 add_subdirectory(qwindowkit)
 add_subdirectory(qwindowkit/examples/shared/widgetframe)
 add_subdirectory(reflect-cpp)
+
+if(MSVC)
+    # Fix issue https://github.com/getml/reflect-cpp/issues/560
+    target_compile_definitions(reflectcpp PUBLIC NOMINMAX)
+endif()
