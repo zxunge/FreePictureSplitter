@@ -7,15 +7,13 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-class MainWindow;
-} // namespace Ui
 namespace QWK {
 class WidgetWindowAgent;
 } // namespace QWK
 class QEvent;
 class QCloseEvent;
 class QProgressBar;
+class QTabWidget;
 
 class MainWindow final : public QMainWindow
 {
@@ -23,11 +21,13 @@ class MainWindow final : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() = default;
 
     QProgressBar *progressBar() const { return m_pbar; }
+    QTabWidget *tabWidget() const { return m_twgt; }
 
 private:
+    void createTabs();
     void installWindowAgent();
 
 protected:
@@ -36,9 +36,9 @@ protected:
     void changeEvent(QEvent *e) override;
 
 private:
-    Ui::MainWindow *ui;
     QWK::WidgetWindowAgent *m_windowAgent;
     QProgressBar *m_pbar;
+    QTabWidget *m_twgt;
 };
 
 #endif // MAINWINDOW_H

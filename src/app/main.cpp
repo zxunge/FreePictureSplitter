@@ -134,15 +134,6 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
     if (!loadConfigurations())
         return false;
     Util::LanguageManager::instance().installTranslators();
-
-    // Load styles
-    if (!Util::ThemeManager::instance().setAppSkin(g_appConfig.app.skin)) {
-        QMessageBox::warning(nullptr, fpsAppName,
-                             QObject::tr("Could NOT load skin %1.").arg(g_appConfig.app.skin),
-                             QMessageBox::Close);
-        return false;
-    }
-    qInfo("Skin loaded.");
     return true;
 }
 
@@ -196,6 +187,14 @@ int main(int argc, char *argv[])
     qInfo("Application Started...");
 
     MainWindow w;
+    // Load styles after the main window is created
+    if (!Util::ThemeManager::instance().setAppSkin(g_appConfig.app.skin)) {
+        QMessageBox::warning(nullptr, fpsAppName,
+                             QObject::tr("Could NOT load skin %1.").arg(g_appConfig.app.skin),
+                             QMessageBox::Close);
+        std::exit(EXIT_FAILURE);
+    }
+    qInfo("Skin loaded.");
     w.show();
     int ret{ a.exec() };
     if (!saveConfigurations())

@@ -6,12 +6,15 @@
 
 #include "utils/hovereventfilter.h"
 #include "utils/jsonconfigitems.h"
+#include "utils/misc.h"
 
 #include <QFile>
 #include <QMessageBox>
 #include <QApplication>
 #include <QDir>
 #include <QMetaObject>
+#include <QTabBar>
+#include <QColor>
 #include <QStyleFactory>
 
 #include <phantomstyle.h>
@@ -72,10 +75,16 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
         qApp->setStyleSheet(ss);
         styleFile.close();
 
-        if (std::get<2>(m_skinInfo) == Theme::Light)
+        if (std::get<2>(m_skinInfo) == Theme::Light) {
+            for (int i{}; i != getMainWindow()->tabWidget()->count(); ++i)
+                getMainWindow()->tabWidget()->tabBar()->setTabTextColor(i, Qt::black);
             m_filter->setLeaveIcon(ICON_CLOSE_LIGHT);
-        else
+        } else {
+            for (int i{}; i != getMainWindow()->tabWidget()->count(); ++i)
+                getMainWindow()->tabWidget()->tabBar()->setTabTextColor(
+                        i, QColor::fromRgb(0xc0, 0xc0, 0xc0));
             m_filter->setLeaveIcon(ICON_CLOSE_DARK);
+        }
         Q_EMIT themeChanged(std::get<2>(m_skinInfo));
 
         return true;

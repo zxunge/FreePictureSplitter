@@ -2,7 +2,6 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include "singlewidget.h"
 #include "batchwidget.h"
 #include "preferenceswidget.h"
@@ -18,14 +17,13 @@
 
 #include <QEvent>
 #include <QCloseEvent>
-#include <QAction>
 #include <QToolButton>
 #include <QLabel>
 #include <QIcon>
-#include <QStyle>
+#include <QTabWidget>
 #include <QStatusBar>
-#include <QStackedWidget>
 #include <QFile>
+#include <QHBoxLayout>
 #include <QProgressBar>
 
 #include <QWKWidgets/widgetwindowagent.h>
@@ -35,37 +33,48 @@
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setAttribute(Qt::WA_DontCreateNativeAncestors);
-    ui->setupUi(this);
 
-    SingleWidget *pgSingle{ new SingleWidget(this) };
-    BatchWidget *pgBatch{ new BatchWidget(this) };
-    PreferencesWidget *pgPref{ new PreferencesWidget(this) };
-    ui->tabWidget->addTab(pgSingle, QIcon(u":/controls/controls/32x32/image.svg"_s),
-                          tr("Single Splitting"));
-    ui->tabWidget->addTab(pgBatch, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),
-                          tr("Batch Splitting"));
-    ui->tabWidget->addTab(pgPref, QIcon(u":/controls/controls/32x32/settings.svg"_s),
-                          tr("Preferences"));
-    ui->tabWidget->setCurrentIndex(g_appConfig.dialog.lastEnteredIndex);
+    // Construct UI
+    setMinimumSize(QSize(800, 600));
+    setCentralWidget(new QWidget(this));
+    QHBoxLayout *horizontalLayout{ new QHBoxLayout(centralWidget()) };
+    horizontalLayout->setSpacing(0);
+    horizontalLayout->setContentsMargins(0, 0, 0, 0);
+    m_twgt = new FancyTabWidget(centralWidget());
+    m_twgt->setTabPosition(QTabWidget::TabPosition::West);
+    m_twgt->setTabShape(QTabWidget::TabShape::Rounded);
+    m_twgt->setIconSize(QSize(32, 32));
+
+    horizontalLayout->addWidget(m_twgt);
+
+    setStatusBar(new QStatusBar());
+    statusBar()->setSizeGripEnabled(false);
+    statusBar()->setObjectName("statusBar");
+
+    createTabs();
+
+    setObjectName("MainWindow");
+    centralWidget()->setObjectName("centralWidget");
+    m_twgt->setObjectName("tabWidget");
+    setWindowTitle(qAppName());
 
     QIcon icon(u":/icons/version.ico"_s);
-    ClickableLabel *labMark{ new ClickableLabel(ui->tabWidget) };
+    ClickableLabel *labMark{ new ClickableLabel(m_twgt) };
     labMark->resize(32, 32);
     labMark->setPixmap(icon.pixmap(icon.actualSize(QSize(32, 32))));
     m_pbar = new QProgressBar(this);
     m_pbar->setMaximumWidth(80);
-    ui->statusBar->addPermanentWidget(m_pbar);
-    ui->statusBar->addPermanentWidget(labMark);
+    statusBar()->addPermanentWidget(m_pbar);
+    statusBar()->addPermanentWidget(labMark);
     m_pbar->setVisible(false);
 
     connect(labMark, &ClickableLabel::clicked, this, [this] {
         AboutDialog dlg(this);
         dlg.exec();
     });
-    connect(ui->actionExit, &QAction::triggered, this, [this] { close(); });
 
     installWindowAgent();
 
@@ -74,9 +83,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         restoreGeometry(layoutFile.readAll());
 }
 
-MainWindow::~MainWindow()
+void MainWindow::createTabs()
 {
-    delete ui;
+    SingleWidget *pgSingle{ new SingleWidget(this) };
+    BatchWidget *pgBatch{ new BatchWidget(this) };
+    PreferencesWidget *pgPref{ new PreferencesWidget(this) };
+    m_twgt->addTab(pgSingle, QIcon(u":/controls/controls/32x32/image.svg"_s),
+                   tr("Single Splitting"));
+    m_twgt->addTab(pgBatch, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),
+                   tr("Batch Splitting"));
+    m_twgt->addTab(pgPref, QIcon(u":/controls/controls/32x32/settings.svg"_s), tr("Preferences"));
+    m_twgt->setCurrentIndex(g_appConfig.dialog.lastEnteredIndex);
 }
 
 void MainWindow::installWindowAgent()
@@ -191,7 +208,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     if (layoutFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
         layoutFile.write(saveGeometry());
 
-    g_appConfig.dialog.lastEnteredIndex = ui->tabWidget->currentIndex();
+    g_appConfig.dialog.lastEnteredIndex = m_twgt->currentIndex();
 
     QMainWindow::closeEvent(e);
 }
@@ -200,9 +217,8 @@ void MainWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
     if (e->type() == QEvent::LanguageChange) {
-        ui->retranslateUi(this);
-        ui->tabWidget->setTabText(0, tr("Single Splitting"));
-        ui->tabWidget->setTabText(1, tr("Batch Splitting"));
-        ui->tabWidget->setTabText(2, tr("Preferences"));
+        m_twgt->setTabText(0, tr("Single Splitting"));
+        m_twgt->setTabText(1, tr("Batch Splitting"));
+        m_twgt->setTabText(2, tr("Preferences"));
     }
 }
