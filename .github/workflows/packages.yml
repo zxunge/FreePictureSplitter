@@ -22,7 +22,7 @@ jobs:
       uses: jwlawson/actions-setup-cmake@v2
       
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
