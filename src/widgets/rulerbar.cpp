@@ -28,13 +28,13 @@ static const RulerMetric rulerMetricInches{ { 1, 2, 4, 8, 16, 32, 64, 128, 256, 
                                             { 1, 2, 4, 8, 16 } };
 
 RulerBar::RulerBar(QWidget *parent, Qt::Orientation orientation)
-    : QWidget{ parent },
-      m_faceColor{ parent->palette().color(QPalette::Window) },
-      m_lower{},
-      m_upper{},
-      m_maxSize{},
-      m_lastPos{ QPoint(0, 0) },
-      m_orientation{ orientation }
+    : QWidget(parent),
+      m_faceColor(parent->palette().color(QPalette::Window)),
+      m_lower(),
+      m_upper(),
+      m_maxSize(),
+      m_lastPos(QPoint(0, 0)),
+      m_orientation(orientation)
 {
     QFont f(font());
     f.setBold(false);

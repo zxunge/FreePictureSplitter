@@ -291,7 +291,7 @@ Top to Bottom</source>
         <location filename="../../widgets/batchwidget.cpp" line="366"/>
         <location filename="../../widgets/batchwidget.cpp" line="378"/>
         <location filename="../../widgets/batchwidget.cpp" line="389"/>
-        <location filename="../../widgets/batchwidget.cpp" line="420"/>
+        <location filename="../../widgets/batchwidget.cpp" line="421"/>
         <source>Batch Splitting</source>
         <translation>一括分割</translation>
     </message>
@@ -816,37 +816,37 @@ Bottom to Top</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;br/&gt;現在開いている画像を閉じます。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="90"/>
+        <location filename="../../widgets/singlewidget.cpp" line="93"/>
         <source>Open a picture...</source>
         <translation>画像を開きます。..</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="110"/>
+        <location filename="../../widgets/singlewidget.cpp" line="113"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="130"/>
+        <location filename="../../widgets/singlewidget.cpp" line="133"/>
         <source>Error loading picture file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="143"/>
+        <location filename="../../widgets/singlewidget.cpp" line="146"/>
         <source>Choose the output directory.</source>
         <translation>出力ディレクトリを選択します。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="169"/>
+        <location filename="../../widgets/singlewidget.cpp" line="172"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="182"/>
+        <location filename="../../widgets/singlewidget.cpp" line="185"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>少なくとも1つの分割モードを選択して有用なデータを提供し、分割線をリセットしてください。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="232"/>
+        <location filename="../../widgets/singlewidget.cpp" line="236"/>
         <source>No rule to split this picture</source>
         <translation>この画像を分割する規則はありません</translation>
     </message>

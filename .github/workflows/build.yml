@@ -85,7 +85,7 @@ jobs:
       uses: jwlawson/actions-setup-cmake@v2
       
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
@@ -102,7 +102,7 @@ jobs:
         cmake --install build --config RelWithDebInfo
         
     - name: Upload Build Output
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: FreePictureSplitter-msvc
         path: D:\FreePictureSplitter

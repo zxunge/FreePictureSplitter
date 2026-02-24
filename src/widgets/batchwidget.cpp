@@ -396,7 +396,8 @@ void BatchWidget::startSplit()
         imgDoc->writerOption().setFormat(
                 QString::fromStdString(g_appConfig.options.outputOpt.outFormat).toUtf8());
         imgDoc->writerOption().setQuality(g_appConfig.options.outputOpt.jpgQuality);
-        imgDoc->option().setSavePrefix(g_appConfig.options.nameOpt.prefix);
+        if (g_appConfig.options.nameOpt.prefMode == Util::Prefix::specified)
+            imgDoc->option().setSavePrefix(g_appConfig.options.nameOpt.prefix);
         imgDoc->option().setRowColContained(g_appConfig.options.nameOpt.rcContained);
         imgDoc->setOutputPath(finalPath);
 

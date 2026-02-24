@@ -50,6 +50,8 @@ public Q_SLOTS:
 
 Q_SIGNALS:
     void positionChanged(int x, int y);
+    void lineExists(bool existence);
+    void lineAddedByDragging();
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;

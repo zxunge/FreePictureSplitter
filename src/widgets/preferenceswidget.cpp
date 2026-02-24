@@ -98,7 +98,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     });
     connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this, [&, this](int index) {
         g_appConfig.options.outputOpt.savingTo =
-                ui->cbxLang->itemData(index).value<Util::SavingTo>();
+                ui->cbxLocation->itemData(index).value<Util::SavingTo>();
         ui->lePath->setEnabled(g_appConfig.options.outputOpt.savingTo == Util::SavingTo::specified);
         ui->tbtnBrowse->setEnabled(ui->lePath->isEnabled());
     });

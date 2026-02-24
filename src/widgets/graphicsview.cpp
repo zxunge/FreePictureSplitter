@@ -57,6 +57,7 @@ void GraphicsView::clearScene()
 {
     if (scene())
         scene()->deleteLater();
+    removeAllDraggableLines();
 }
 
 void GraphicsView::mouseMoveEvent(QMouseEvent *event)
@@ -141,6 +142,8 @@ void GraphicsView::addDraggableLine(Qt::Orientation orientation, const QPoint &p
     fl->show();
     connect(fl, &DraggableLine::userDestruction, this, &GraphicsView::lineDestruction);
     m_plines.push_back(fl);
+
+    Q_EMIT lineExists(true);
 }
 
 void GraphicsView::addDraggableLine(DraggableLine *fl)
@@ -150,6 +153,8 @@ void GraphicsView::addDraggableLine(DraggableLine *fl)
 
     connect(fl, &DraggableLine::userDestruction, this, &GraphicsView::lineDestruction);
     m_plines.push_back(fl);
+
+    Q_EMIT lineExists(true);
 }
 
 void GraphicsView::removeAllDraggableLines()
@@ -157,6 +162,8 @@ void GraphicsView::removeAllDraggableLines()
     Q_FOREACH (auto l, m_plines)
         l->deleteLater();
     m_plines.clear();
+
+    Q_EMIT lineExists(false);
 }
 
 void GraphicsView::dragStarted(const QPoint &startPos)
@@ -210,6 +217,7 @@ void GraphicsView::dragFinished(const QPoint &endPos, bool isReal)
     }
 
     addDraggableLine(m_tempLine);
+    Q_EMIT lineAddedByDragging();
 
     // Set to null (not deleting)
     m_tempLine = nullptr;
@@ -227,4 +235,6 @@ void GraphicsView::lineDestruction()
                 break;
             }
     }
+    if (m_plines.empty())
+        Q_EMIT lineExists(false);
 }

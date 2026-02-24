@@ -6,7 +6,7 @@ on:
 jobs:
   win64:
     # We create an installer on Windows.
-    runs-on: windows-latest
+    runs-on: windows-2025
 
     steps:
     - name: Install Qt
@@ -22,7 +22,7 @@ jobs:
       uses: jwlawson/actions-setup-cmake@v2
       
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
@@ -31,6 +31,8 @@ jobs:
       
     - name: Build
       shell: pwsh
+      env:
+        VCINSTALLDIR: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC'
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action

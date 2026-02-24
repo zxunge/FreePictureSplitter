@@ -44,6 +44,9 @@ SingleWidget::SingleWidget(QWidget *parent)
     connect(ui->btnReset, &QPushButton::clicked, this, &SingleWidget::resetSplitLines);
     connect(ui->actionZoomIn, &QAction::triggered, ui->graphicsView, &GraphicsView::zoomIn);
     connect(ui->actionZoomOut, &QAction::triggered, ui->graphicsView, &GraphicsView::zoomOut);
+    connect(ui->graphicsView, &GraphicsView::lineExists, ui->actionSave, &QAction::setEnabled);
+    connect(ui->graphicsView, &GraphicsView::lineAddedByDragging, this,
+            [this] { ui->rbtnManual->setChecked(true); });
     connect(ui->rbtnAver, &QRadioButton::toggled, this, [this](bool checked) {
         ui->sbxCols->setEnabled(checked);
         ui->sbxRows->setEnabled(checked);
@@ -192,7 +195,8 @@ void SingleWidget::savePictures()
         m_imgDoc->writerOption().setFormat(
                 QString::fromStdString(g_appConfig.options.outputOpt.outFormat).toUtf8());
         m_imgDoc->writerOption().setQuality(g_appConfig.options.outputOpt.jpgQuality);
-        m_imgDoc->option().setSavePrefix(g_appConfig.options.nameOpt.prefix);
+        if (g_appConfig.options.nameOpt.prefMode == Util::Prefix::specified)
+            m_imgDoc->option().setSavePrefix(g_appConfig.options.nameOpt.prefix);
         m_imgDoc->option().setRowColContained(g_appConfig.options.nameOpt.rcContained);
         m_imgDoc->setOutputPath(finalPath);
 
@@ -262,8 +266,8 @@ void SingleWidget::resetSplitLines()
 
 void SingleWidget::closePicture()
 {
-    ui->graphicsView->clearScene();
     m_imgDoc->close();
+    ui->graphicsView->clearScene();
     ui->graphicsView->setRulersVisibility(false);
     ui->actionClosePicture->setEnabled(false);
     Util::getMainWindow()->statusBar()->clearMessage();

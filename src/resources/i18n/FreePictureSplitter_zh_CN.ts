@@ -107,7 +107,7 @@ Top to Bottom</source>
     <message>
         <location filename="../../ui/batchwidget.ui" line="301"/>
         <source>A list of pictures added.</source>
-        <translation>已添加一系列图片。</translation>
+        <translation>已添加的一系列图片。</translation>
     </message>
     <message>
         <location filename="../../ui/batchwidget.ui" line="395"/>
@@ -227,17 +227,17 @@ Top to Bottom</source>
     <message>
         <location filename="../../ui/batchwidget.ui" line="583"/>
         <source>Remove from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>从磁盘移除</translation>
     </message>
     <message>
         <location filename="../../ui/batchwidget.ui" line="586"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Remove the selected file(s) from disk.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;从磁盘中移除所选文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../../ui/batchwidget.ui" line="589"/>
         <source>Ctrl+Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Del</translation>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="87"/>
@@ -261,17 +261,17 @@ Top to Bottom</source>
         <location filename="../../widgets/batchwidget.cpp" line="190"/>
         <location filename="../../widgets/batchwidget.cpp" line="201"/>
         <source>Deleting files</source>
-        <translation type="unfinished"></translation>
+        <translation>删除文件</translation>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="191"/>
         <source>Are you sure to remove these %1 file(s)?</source>
-        <translation type="unfinished"></translation>
+        <translation>你确定删除这%1个文件吗？</translation>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="202"/>
         <source>Failed to delete file: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>删除文件%1失败。</translation>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="210"/>
@@ -295,7 +295,7 @@ Top to Bottom</source>
         <location filename="../../widgets/batchwidget.cpp" line="366"/>
         <location filename="../../widgets/batchwidget.cpp" line="378"/>
         <location filename="../../widgets/batchwidget.cpp" line="389"/>
-        <location filename="../../widgets/batchwidget.cpp" line="420"/>
+        <location filename="../../widgets/batchwidget.cpp" line="421"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
@@ -308,7 +308,7 @@ Top to Bottom</source>
         <location filename="../../widgets/batchwidget.cpp" line="342"/>
         <location filename="../../widgets/batchwidget.cpp" line="352"/>
         <source>Unsupported</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持</translation>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="389"/>
@@ -493,7 +493,7 @@ Top to Bottom</source>
     <message>
         <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
         <source>System default</source>
-        <translation type="unfinished"></translation>
+        <translation>系统默认</translation>
     </message>
     <message>
         <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
@@ -640,7 +640,7 @@ Top to Bottom</source>
     <message>
         <location filename="../../app/main.cpp" line="141"/>
         <source>Could NOT load skin %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载皮肤%1。</translation>
     </message>
     <message>
         <location filename="../../app/main.cpp" line="156"/>
@@ -824,37 +824,37 @@ Bottom to Top</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;关闭当前打开的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="90"/>
+        <location filename="../../widgets/singlewidget.cpp" line="93"/>
         <source>Open a picture...</source>
         <translation>打开一张图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="110"/>
+        <location filename="../../widgets/singlewidget.cpp" line="113"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation>%1，宽度：%2，高度：%3，色深：%4，垂直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="130"/>
+        <location filename="../../widgets/singlewidget.cpp" line="133"/>
         <source>Error loading picture file: %1.</source>
         <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="143"/>
+        <location filename="../../widgets/singlewidget.cpp" line="146"/>
         <source>Choose the output directory.</source>
         <translation>选择输出文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="169"/>
+        <location filename="../../widgets/singlewidget.cpp" line="172"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="182"/>
+        <location filename="../../widgets/singlewidget.cpp" line="185"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="232"/>
+        <location filename="../../widgets/singlewidget.cpp" line="236"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
     </message>
@@ -864,42 +864,42 @@ Bottom to Top</source>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="24"/>
         <source>Skin name</source>
-        <translation type="unfinished"></translation>
+        <translation>皮肤名称</translation>
     </message>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="25"/>
         <source>Your skin name</source>
-        <translation type="unfinished"></translation>
+        <translation>您的皮肤名称</translation>
     </message>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="26"/>
         <source>Skin file name: </source>
-        <translation type="unfinished"></translation>
+        <translation>皮肤文件名： </translation>
     </message>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="27"/>
         <source>&lt;em&gt;Your skin file&apos;s name&lt;/em&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;em&gt;您的皮肤文件名&lt;/em&gt;</translation>
     </message>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="32"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>主题</translation>
     </message>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="34"/>
         <source>Light</source>
-        <translation type="unfinished"></translation>
+        <translation>浅色</translation>
     </message>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="35"/>
         <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <translation>深色</translation>
     </message>
     <message>
         <location filename="../../widgets/skinoptionsdialog.cpp" line="45"/>
         <source>Open a .skin file...</source>
-        <translation type="unfinished"></translation>
+        <translation>打开.skin文件...</translation>
     </message>
 </context>
 </TS>
