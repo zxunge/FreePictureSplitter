@@ -50,6 +50,24 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+[Code]
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+  InstallDir: String;
+begin
+  InstallDir := ExpandConstant('{app}');
+
+  case CurUninstallStep of
+    usUninstall:
+      begin
+        if DirExists(InstallDir) then
+          DelTree(InstallDir, True, True, True);
+
+        RemoveDir(ExtractFileDir(InstallDir));
+      end;
+  end;
+end;
+
 [Files]
 Source: "{#MyAppPath}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion

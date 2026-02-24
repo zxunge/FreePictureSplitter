@@ -4,6 +4,9 @@ function(gen_deploy_script)
     cmake_parse_arguments(PARSE_ARGV 0 arg "" "${one_value_args}" "")
     set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/deploy_${arg_TARGET}_$<CONFIG>.cmake")
     # Project-specific content & Qt's generation
+    if(WIN32)
+        set(deploy_tool_options_arg --no-opengl-sw --no-system-dxc-compiler --include-plugins qgif,qicns,qico,qjp2,qjpeg,qmng,qsvg,qtga,qtiff,qwbmp,qwebp)
+    endif()
     if(${arg_WINDEPLOY})
         set(content "
 set(QT_DEPLOY_PLUGINS_DIR \"plugins\")
@@ -15,6 +18,7 @@ include(\"${QT_DEPLOY_SUPPORT}\")
 set(__QT_DEPLOY_I18N_CATALOGS \"qtbase\")
 qt_deploy_runtime_dependencies(
     EXECUTABLE \"$<TARGET_FILE_NAME:${arg_TARGET}>\"
+    DEPLOY_TOOL_OPTIONS "${deploy_tool_options_arg}"
     GENERATE_QT_CONF
 )
         ")
@@ -27,6 +31,7 @@ include(\"${QT_DEPLOY_SUPPORT}\")
 set(__QT_DEPLOY_I18N_CATALOGS \"qtbase\")
 qt_deploy_runtime_dependencies(
     EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:${arg_TARGET}>\"
+    DEPLOY_TOOL_OPTIONS "${deploy_tool_options_arg}"
 )
 
 # Manually generate our custom qt.conf file
