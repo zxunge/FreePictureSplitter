@@ -5,7 +5,10 @@ function(gen_deploy_script)
     set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/deploy_${arg_TARGET}_$<CONFIG>.cmake")
     # Project-specific content & Qt's generation
     if(WIN32)
-        set(deploy_tool_options_arg "--no-opengl-sw --no-system-dxc-compiler --include-plugins qgif,qicns,qico,qjp2,qjpeg,qmng,qsvg,qtga,qtiff,qwbmp,qwebp")
+        set(deploy_tool_options_arg
+                --no-opengl-sw
+                --no-system-dxc-compiler
+                "\"--include-plugins qgif,qicns,qico,qjp2,qjpeg,qmng,qsvg,qtga,qtiff,qwbmp,qwebp\"")
     endif()
     if(${arg_WINDEPLOY})
         set(content "
