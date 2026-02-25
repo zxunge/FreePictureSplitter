@@ -45,7 +45,7 @@ jobs:
       shell: pwsh
       run: |
         choco install -y innosetup
-        iscc /O. /FFreePictureSplitter-setup-win64 FreePictureSplitter/dist/setup-win.iss /DMyAppPath="D:\FreePictureSplitter"
+        iscc /O. /FFreePictureSplitter-setup-win64 FreePictureSplitter/dist/setup-win64.iss /DMyAppPath="D:\FreePictureSplitter"
 
     - name: Upload the installer
       uses: actions/upload-artifact@v6
