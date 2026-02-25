@@ -13,7 +13,6 @@ class WidgetWindowAgent;
 class QEvent;
 class QCloseEvent;
 class QProgressBar;
-class QTabWidget;
 
 class MainWindow final : public QMainWindow
 {

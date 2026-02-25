@@ -63,6 +63,7 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
     QFile styleFile;
     styleFile.setFileName(Util::skinsDir() + u"/"_s
                           + QString::fromStdString(std::get<1>(m_skinInfo)));
+    qDebug() << styleFile.fileName();
     if (styleFile.open(QFile::ReadOnly)) {
         QTextStream in(&styleFile);
         // The stylesheets cannot be applied directly,
@@ -75,16 +76,11 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
         qApp->setStyleSheet(ss);
         styleFile.close();
 
-        if (std::get<2>(m_skinInfo) == Theme::Light) {
-            for (int i{}; i != getMainWindow()->tabWidget()->count(); ++i)
-                getMainWindow()->tabWidget()->tabBar()->setTabTextColor(i, Qt::black);
+        if (std::get<2>(m_skinInfo) == Theme::Light)
             m_filter->setLeaveIcon(ICON_CLOSE_LIGHT);
-        } else {
-            for (int i{}; i != getMainWindow()->tabWidget()->count(); ++i)
-                getMainWindow()->tabWidget()->tabBar()->setTabTextColor(
-                        i, QColor::fromRgb(0xc0, 0xc0, 0xc0));
+        else
             m_filter->setLeaveIcon(ICON_CLOSE_DARK);
-        }
+
         Q_EMIT themeChanged(std::get<2>(m_skinInfo));
 
         return true;

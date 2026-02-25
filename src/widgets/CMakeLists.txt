@@ -19,12 +19,11 @@ target_sources(FreePictureSplitter PRIVATE
     batchwidget.h
     preferenceswidget.cpp
     preferenceswidget.h
-    fancytabwidget.cpp
-    fancytabwidget.h
     errorlogdialog.cpp
     errorlogdialog.h
     skinoptionsdialog.cpp
     skinoptionsdialog.h
+    auxtabbutton.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

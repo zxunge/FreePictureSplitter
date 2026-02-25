@@ -5,8 +5,8 @@
 #include "singlewidget.h"
 #include "batchwidget.h"
 #include "preferenceswidget.h"
-#include "fancytabwidget.h"
 #include "aboutdialog.h"
+#include "auxtabbutton.h"
 #include "clickablelabel.h"
 #include "globaldefs.h"
 
@@ -21,6 +21,8 @@
 #include <QLabel>
 #include <QIcon>
 #include <QTabWidget>
+#include <QTabBar>
+#include <QStyle>
 #include <QStatusBar>
 #include <QFile>
 #include <QHBoxLayout>
@@ -43,10 +45,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     QHBoxLayout *horizontalLayout{ new QHBoxLayout(centralWidget()) };
     horizontalLayout->setSpacing(0);
     horizontalLayout->setContentsMargins(0, 0, 0, 0);
-    m_twgt = new FancyTabWidget(centralWidget());
+    m_twgt = new QTabWidget(centralWidget());
     m_twgt->setTabPosition(QTabWidget::TabPosition::West);
     m_twgt->setTabShape(QTabWidget::TabShape::Rounded);
-    m_twgt->setIconSize(QSize(32, 32));
 
     horizontalLayout->addWidget(m_twgt);
 
@@ -88,12 +89,20 @@ void MainWindow::createTabs()
     SingleWidget *pgSingle{ new SingleWidget(this) };
     BatchWidget *pgBatch{ new BatchWidget(this) };
     PreferencesWidget *pgPref{ new PreferencesWidget(this) };
-    m_twgt->addTab(pgSingle, QIcon(u":/controls/controls/32x32/image.svg"_s),
-                   tr("Single Splitting"));
-    m_twgt->addTab(pgBatch, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),
-                   tr("Batch Splitting"));
-    m_twgt->addTab(pgPref, QIcon(u":/controls/controls/32x32/settings.svg"_s), tr("Preferences"));
+    m_twgt->addTab(pgSingle, QString());
+    m_twgt->addTab(pgBatch, QString());
+    m_twgt->addTab(pgPref, QString());
+    AuxTabButton *btn0{ new AuxTabButton(QPixmap(u":/controls/controls/32x32/image.svg"_s),
+                                         tr("Single Splitting")) };
+    m_twgt->tabBar()->setTabButton(0, QTabBar::ButtonPosition::RightSide, btn0);
+    AuxTabButton *btn1{ new AuxTabButton(QPixmap(u":/controls/controls/32x32/image_multiple.svg"_s),
+                                         tr("Batch Splitting")) };
+    m_twgt->tabBar()->setTabButton(1, QTabBar::ButtonPosition::RightSide, btn1);
+    AuxTabButton *btn2{ new AuxTabButton(QPixmap(u":/controls/controls/32x32/settings.svg"_s),
+                                         tr("Preferences")) };
+    m_twgt->tabBar()->setTabButton(2, QTabBar::ButtonPosition::RightSide, btn2);
     m_twgt->setCurrentIndex(g_appConfig.dialog.lastEnteredIndex);
+    m_twgt->setAutoFillBackground(true);
 }
 
 void MainWindow::installWindowAgent()
@@ -217,8 +226,18 @@ void MainWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
     if (e->type() == QEvent::LanguageChange) {
-        m_twgt->setTabText(0, tr("Single Splitting"));
-        m_twgt->setTabText(1, tr("Batch Splitting"));
-        m_twgt->setTabText(2, tr("Preferences"));
+        qobject_cast<AuxTabButton *>(
+                m_twgt->tabBar()->tabButton(0, QTabBar::ButtonPosition::RightSide))
+                ->setText(tr("Single Splitting"));
+        qobject_cast<AuxTabButton *>(
+                m_twgt->tabBar()->tabButton(1, QTabBar::ButtonPosition::RightSide))
+                ->setText(tr("Batch Splitting"));
+        qobject_cast<AuxTabButton *>(
+                m_twgt->tabBar()->tabButton(2, QTabBar::ButtonPosition::RightSide))
+                ->setText(tr("Preferences"));
+
+        // TODO@26/02/25 Add code to update each bar's size to show words correctly.
+        m_twgt->tabBar()->updateGeometry();
+        m_twgt->adjustSize();
     }
 }
