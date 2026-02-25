@@ -17,7 +17,7 @@ qt_deploy_runtime_dependencies(
     EXECUTABLE \"$<TARGET_FILE_NAME:${arg_TARGET}>\"
     DEPLOY_TOOL_OPTIONS --no-opengl-sw
                         --no-system-dxc-compiler
-                        --include-plugins qgif,qicns,qico,qjp2,qjpeg,qmng,qsvg,qtga,qtiff,qwbmp,qwebp
+                        --add-plugin-types imageformats
     GENERATE_QT_CONF
 )
         ")
@@ -30,7 +30,6 @@ include(\"${QT_DEPLOY_SUPPORT}\")
 set(__QT_DEPLOY_I18N_CATALOGS \"qtbase\")
 qt_deploy_runtime_dependencies(
     EXECUTABLE \"\${QT_DEPLOY_BIN_DIR}/$<TARGET_FILE_NAME:${arg_TARGET}>\"
-    DEPLOY_TOOL_OPTIONS \"${deploy_tool_options_arg}\"
 )
 
 # Manually generate our custom qt.conf file

@@ -2,13 +2,14 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "mainwindow.h"
-#include "globaldefs.h"
+#include "app_version.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/thememanager.h"
 #include "utils/languagemanager.h"
 #include "utils/stdpaths.h"
 #include "utils/fonts.h"
+#include "utils/misc.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -66,7 +67,8 @@ QtMessageHandler originalHandler{};
 void logToFile(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QString message{ qFormatLogMessage(type, context, msg) };
-    static FILE *f{ fopen((Util::dataDir() % LOG_FILENAME).toUtf8().constData(), "a") };
+    static FILE *f{ fopen((Util::dataDir() % '/' % Util::LOG_FILE_NAME).toUtf8().constData(),
+                          "a") };
     if (f) {
         fprintf(f, "%s\n", qPrintable(message));
         fflush(f);
@@ -78,13 +80,13 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
 
 [[nodiscard]] inline bool loadConfigurations()
 {
-    QFile cfgFile(Util::dataDir() % CONFIG_FILENAME);
+    QFile cfgFile(Util::dataDir() % '/' % Util::CONFIG_FILE_NAME);
     QString jsonCfgStr;
     if (cfgFile.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream ts(&cfgFile);
         jsonCfgStr = ts.readAll();
     } else {
-        QMessageBox::critical(nullptr, fpsAppName,
+        QMessageBox::critical(nullptr, qAppName(),
                               QObject::tr("Error creating/opening configuration file."),
                               QMessageBox::Close);
         return false;
@@ -96,7 +98,7 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
     else {
         const auto result{ rfl::json::read<Util::Config>(jsonCfgStr.toStdString()) };
         if (!result) {
-            QMessageBox::critical(nullptr, fpsAppName,
+            QMessageBox::critical(nullptr, qAppName(),
                                   QObject::tr("Error parsing configuration file: %1.")
                                           .arg(QString::fromStdString(result.error().what())),
                                   QMessageBox::Close);
@@ -106,9 +108,9 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
 
         // Check for version differences, as they will cause weird compatibility problems.
         // We promise not to change the interfaces when updating the micro version.
-        if (g_appConfig.app.majorVersion != fpsVersionMajor
-            || g_appConfig.app.minorVersion != fpsVersionMinor) {
-            QMessageBox::warning(nullptr, fpsAppName,
+        if (g_appConfig.app.majorVersion != APP_VERSION_MAJOR
+            || g_appConfig.app.minorVersion != APP_VERSION_MINOR) {
+            QMessageBox::warning(nullptr, qAppName(),
                                  QObject::tr("Configuration file\'s version doesn\'t match, try "
                                              "deleting it after backuping."),
                                  QMessageBox::Close);
@@ -141,9 +143,9 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
 {
     // Save configuration changes to file
     const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(g_appConfig)) };
-    QFile cfgFile(Util::dataDir() % CONFIG_FILENAME);
+    QFile cfgFile(Util::dataDir() % '/' % Util::CONFIG_FILE_NAME);
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
-        QMessageBox::warning(nullptr, fpsAppName,
+        QMessageBox::warning(nullptr, qAppName(),
                              QObject::tr("Error writing to configuration file."),
                              QMessageBox::Close);
         return false;
@@ -171,10 +173,10 @@ int main(int argc, char *argv[])
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(
             Qt::HighDpiScaleFactorRoundingPolicy::RoundPreferFloor);
 
-    QCoreApplication::setApplicationVersion(fpsVersionFull);
-    QCoreApplication::setApplicationName(fpsAppName);
+    QCoreApplication::setApplicationVersion(App::Constants::APP_VERSION_STR);
+    QCoreApplication::setApplicationName(App::Constants::APP_NAME);
     QCoreApplication::setOrganizationName(u"zxunge"_s);
-    QGuiApplication::setApplicationDisplayName(fpsAppName);
+    QGuiApplication::setApplicationDisplayName(App::Constants::APP_NAME);
 
     QApplication a(argc, argv);
     originalHandler = qInstallMessageHandler(logToFile);
@@ -189,7 +191,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     // Load styles after the main window is created
     if (!Util::ThemeManager::instance().setAppSkin(g_appConfig.app.skin)) {
-        QMessageBox::warning(nullptr, fpsAppName,
+        QMessageBox::warning(nullptr, qAppName(),
                              QObject::tr("Could NOT load skin %1.").arg(g_appConfig.app.skin),
                              QMessageBox::Close);
         std::exit(EXIT_FAILURE);

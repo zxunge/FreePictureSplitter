@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
-#include "config.h"
+#include "app_version.h"
 #include "aboutdialog.h"
 #include "clickablelabel.h"
 
@@ -27,7 +27,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     auto iconLabel{ new QLabel(this) };
     iconLabel->setPixmap(QPixmap(u":/icons/fps.ico"_s).scaled(64, 64, Qt::KeepAspectRatio));
 
-    auto titleLabel{ new QLabel(fpsAppName, this) };
+    auto titleLabel{ new QLabel(qAppName(), this) };
     auto titleFont{ titleLabel->font() };
     titleFont.setPointSize(18);
     titleFont.setBold(true);
@@ -41,7 +41,7 @@ AboutDialog::AboutDialog(QWidget *parent)
     auto versionLabel{ new QLabel(
             tr("<strong>Version: %1</strong><br />An efficient, small but powerful picture "
                "splitting application.<br />Most common formats are supported.")
-                    .arg(fpsVersionFull),
+                    .arg(App::Constants::APP_VERSION_STR),
             this) };
     versionLabel->setAlignment(Qt::AlignCenter);
 
@@ -66,8 +66,9 @@ AboutDialog::AboutDialog(QWidget *parent)
     copyrightLabel->adjustSize();
     copyrightLabel->setWordWrap(true);
 
-    auto linkLabel{ new QLabel(tr("<a href=\"%1\">GitHub Repository</a>").arg(fpsHomepageUrl),
-                               this) };
+    auto linkLabel{ new QLabel(
+            tr("<a href=\"%1\">GitHub Repository</a>").arg(App::Constants::APP_HOMEPAGE_URL),
+            this) };
     linkLabel->setOpenExternalLinks(true);
     linkLabel->setAlignment(Qt::AlignCenter);
 

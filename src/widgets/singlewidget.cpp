@@ -129,7 +129,7 @@ void SingleWidget::openPicture()
         if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
     } else
-        QMessageBox::warning(this, fpsAppName,
+        QMessageBox::warning(this, qAppName(),
                              tr("Error loading picture file: %1.").arg(m_imgDoc->fullName()),
                              QMessageBox::Close);
 }
@@ -168,7 +168,7 @@ void SingleWidget::savePictures()
         if (!dir.exists(baseName))
             if (!dir.mkdir(baseName)) {
                 QMessageBox::warning(
-                        this, fpsAppName,
+                        this, qAppName(),
                         tr("QDir::mkdir \'%1\' error!").arg(dir.absolutePath() + '/' + baseName),
                         QMessageBox::Close);
                 return;
@@ -181,7 +181,7 @@ void SingleWidget::savePictures()
     if (ui->rbtnManual->isChecked())
         m_imgDoc->applyLinesFrom(ui->graphicsView);
     else if (!m_imgDoc->isValid()) {
-        QMessageBox::warning(this, fpsAppName,
+        QMessageBox::warning(this, qAppName(),
                              tr("Please at least choose one splitting mode, offer "
                                 "useful data then reset the splitting lines."),
                              QMessageBox::Close);
@@ -229,11 +229,11 @@ void SingleWidget::savePictures()
             watcher.setFuture(result.value());
             dlg->exec();
         } else {
-            QMessageBox::warning(this, fpsAppName, result.error(), QMessageBox::Close);
+            QMessageBox::warning(this, qAppName(), result.error(), QMessageBox::Close);
             return;
         }
     } else {
-        QMessageBox::warning(this, fpsAppName, tr("No rule to split this picture"),
+        QMessageBox::warning(this, qAppName(), tr("No rule to split this picture"),
                              QMessageBox::Close);
         return;
     }

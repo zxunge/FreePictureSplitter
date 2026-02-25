@@ -48,9 +48,6 @@ qt_standard_project_setup(
 
 message(STATUS "Found Qt " ${Qt6_VERSION})
 
-configure_file(config/config.h.in config.h @ONLY)
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
-
 if(WITH_QT_GUI)
     message(STATUS "Qt GUI is enabled.")
     add_subdirectory(src)

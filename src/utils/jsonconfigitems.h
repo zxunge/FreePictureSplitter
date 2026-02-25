@@ -5,7 +5,7 @@
 #ifndef JSONCONFIGITEMS_H
 #define JSONCONFIGITEMS_H
 
-#include "config.h"
+#include "app_version.h"
 #include "utils/thememanager.h"
 
 #include <string>
@@ -80,11 +80,11 @@ struct Config
  */
 inline void setDefConf(Config &s)
 {
-    s = Config{ .app = { .name = fpsAppName,
-                         .fullVersion = fpsVersionFull,
-                         .majorVersion = fpsVersionMajor,
-                         .minorVersion = fpsVersionMinor,
-                         .microVersion = fpsVersionMicro,
+    s = Config{ .app = { .name = App::Constants::APP_NAME,
+                         .fullVersion = App::Constants::APP_VERSION_STR,
+                         .majorVersion = APP_VERSION_MAJOR,
+                         .minorVersion = APP_VERSION_MINOR,
+                         .microVersion = APP_VERSION_PATCH,
                          .skin = "Flat Light" },
                 .skinList = { std::make_tuple("Flat Light", "default.skin",
                                               ThemeManager::Theme::Light) },

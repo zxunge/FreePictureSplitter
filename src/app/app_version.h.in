@@ -1,0 +1,22 @@
+// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-FileCopyrightText: 2024-2026 zxunge
+// clang-format off
+
+#ifndef APP_VERSION_H
+#define APP_VERSION_H
+
+#define APP_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define APP_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define APP_VERSION_PATCH @PROJECT_VERSION_PATCH@
+
+namespace App {
+namespace Constants {
+
+const char APP_NAME[]         = "@PROJECT_NAME@";
+const char APP_VERSION_STR[]  = "@PROJECT_VERSION@";
+const char APP_HOMEPAGE_URL[] = "@PROJECT_HOMEPAGE_URL@";
+
+} // namespace Constants
+} // namespace App
+
+#endif // APP_VERSION_H

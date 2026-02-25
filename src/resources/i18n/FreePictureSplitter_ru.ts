@@ -9,17 +9,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="69"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="70"/>
         <source>&lt;a href=&quot;%1&quot;&gt;GitHub Repository&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="75"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="76"/>
         <source>About Qt...</source>
         <translation>О QT. ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="79"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="80"/>
         <source>Close</source>
         <translation>Выберите каталог выхода.</translation>
     </message>
@@ -376,40 +376,20 @@ Top to Bottom</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="20"/>
-        <source>FreePictureSplitter</source>
-        <translation>Форма</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="67"/>
-        <source>&amp;Exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="70"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выйти из FreePictureSplitter.  &lt;/p&gt;&lt;/тело&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="73"/>
-        <source>Alt+X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/mainwindow.cpp" line="47"/>
-        <location filename="../../widgets/mainwindow.cpp" line="204"/>
+        <location filename="../../widgets/mainwindow.cpp" line="96"/>
+        <location filename="../../widgets/mainwindow.cpp" line="231"/>
         <source>Single Splitting</source>
         <translation>Показать миниатюры</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="49"/>
-        <location filename="../../widgets/mainwindow.cpp" line="205"/>
+        <location filename="../../widgets/mainwindow.cpp" line="99"/>
+        <location filename="../../widgets/mainwindow.cpp" line="234"/>
         <source>Batch Splitting</source>
         <translation>Партийное разделение</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="51"/>
-        <location filename="../../widgets/mainwindow.cpp" line="206"/>
+        <location filename="../../widgets/mainwindow.cpp" line="102"/>
+        <location filename="../../widgets/mainwindow.cpp" line="237"/>
         <source>Preferences</source>
         <translation>Настройки</translation>
     </message>
@@ -614,32 +594,32 @@ Top to Bottom</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="88"/>
+        <location filename="../../app/main.cpp" line="90"/>
         <source>Error creating/opening configuration file.</source>
         <translation>Сообщение об ошибке</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="100"/>
+        <location filename="../../app/main.cpp" line="102"/>
         <source>Error parsing configuration file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="112"/>
+        <location filename="../../app/main.cpp" line="114"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>Столбки:</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="127"/>
+        <location filename="../../app/main.cpp" line="129"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>Ошибка при создании/открытии файла конфигурации.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="141"/>
+        <location filename="../../app/main.cpp" line="195"/>
         <source>Could NOT load skin %1.</source>
         <translation>Версия файла конфигурации не соответствует, попробуйте удалить его после резервного копирования.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="156"/>
+        <location filename="../../app/main.cpp" line="149"/>
         <source>Error writing to configuration file.</source>
         <translation>Ошибка записи в файл конфигурации.</translation>
     </message>
@@ -649,7 +629,7 @@ Top to Bottom</source>
         <translation>Все поддерживаемые типы файлов (</translation>
     </message>
     <message>
-        <location filename="../../widgets/errorlogdialog.cpp" line="45"/>
+        <location filename="../../widgets/errorlogdialog.cpp" line="44"/>
         <source>Error writing to file %1.</source>
         <translation>Ошибка записи в файл конфигурации.</translation>
     </message>

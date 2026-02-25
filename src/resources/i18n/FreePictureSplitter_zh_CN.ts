@@ -9,17 +9,17 @@
         <translation>&lt;strong&gt;版本： %1&lt;/strong&gt;&lt;br /&gt;高效、小巧且强大的图片分割应用程序。&lt;br /&gt;支持常见图片格式。</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="69"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="70"/>
         <source>&lt;a href=&quot;%1&quot;&gt;GitHub Repository&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;%1&quot;&gt;GitHub仓库&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="75"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="76"/>
         <source>About Qt...</source>
         <translation>关于Qt...</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="79"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="80"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -380,42 +380,22 @@ Top to Bottom</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../ui/mainwindow.ui" line="20"/>
-        <source>FreePictureSplitter</source>
-        <translation>FreePictureSplitter</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/mainwindow.cpp" line="47"/>
-        <location filename="../../widgets/mainwindow.cpp" line="204"/>
+        <location filename="../../widgets/mainwindow.cpp" line="96"/>
+        <location filename="../../widgets/mainwindow.cpp" line="231"/>
         <source>Single Splitting</source>
         <translation>单图片分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="49"/>
-        <location filename="../../widgets/mainwindow.cpp" line="205"/>
+        <location filename="../../widgets/mainwindow.cpp" line="99"/>
+        <location filename="../../widgets/mainwindow.cpp" line="234"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="51"/>
-        <location filename="../../widgets/mainwindow.cpp" line="206"/>
+        <location filename="../../widgets/mainwindow.cpp" line="102"/>
+        <location filename="../../widgets/mainwindow.cpp" line="237"/>
         <source>Preferences</source>
         <translation>首选项</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="67"/>
-        <source>&amp;Exit</source>
-        <translation>退出(&amp;E)</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="70"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exit FreePictureSplitter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;退出FreePictureSplitter。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../../ui/mainwindow.ui" line="73"/>
-        <source>Alt+X</source>
-        <translation>Alt+X</translation>
     </message>
 </context>
 <context>
@@ -618,32 +598,32 @@ Top to Bottom</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="127"/>
+        <location filename="../../app/main.cpp" line="129"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>加载模块exchndl.dll出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="88"/>
+        <location filename="../../app/main.cpp" line="90"/>
         <source>Error creating/opening configuration file.</source>
         <translation>创建或打开配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="100"/>
+        <location filename="../../app/main.cpp" line="102"/>
         <source>Error parsing configuration file: %1.</source>
         <translation>解析配置文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="112"/>
+        <location filename="../../app/main.cpp" line="114"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>配置文件的版本不匹配，尝试备份后把文件删除。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="141"/>
+        <location filename="../../app/main.cpp" line="195"/>
         <source>Could NOT load skin %1.</source>
         <translation>无法加载皮肤%1。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="156"/>
+        <location filename="../../app/main.cpp" line="149"/>
         <source>Error writing to configuration file.</source>
         <translation>写入配置文件出错。</translation>
     </message>
@@ -653,7 +633,7 @@ Top to Bottom</source>
         <translation>所有受支持的文件类型 (</translation>
     </message>
     <message>
-        <location filename="../../widgets/errorlogdialog.cpp" line="45"/>
+        <location filename="../../widgets/errorlogdialog.cpp" line="44"/>
         <source>Error writing to file %1.</source>
         <translation>写入文件%1时出错。</translation>
     </message>

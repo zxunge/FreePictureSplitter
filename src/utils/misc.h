@@ -8,6 +8,7 @@
 #include "widgets/mainwindow.h"
 
 #include <QApplication>
+#include <QStringLiteral>
 
 namespace Util {
 
@@ -19,6 +20,11 @@ inline MainWindow *getMainWindow()
     Q_ASSERT(false);
     return nullptr;
 }
+
+const char CONFIG_FILE_NAME[] = "conf.json";
+const char LAYOUT_FILE_NAME[] = "geometry.layout";
+const char LOG_FILE_NAME[] = "app.log";
+const char ERRORLOG_FILE_NAME[] = "error.log";
 
 } // namespace Util
 

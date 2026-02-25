@@ -8,12 +8,12 @@
 #include "aboutdialog.h"
 #include "auxtabbutton.h"
 #include "clickablelabel.h"
-#include "globaldefs.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/leaveevent.h"
 #include "utils/thememanager.h"
 #include "utils/stdpaths.h"
+#include "utils/misc.h"
 
 #include <QEvent>
 #include <QCloseEvent>
@@ -79,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     installWindowAgent();
 
-    QFile layoutFile(Util::dataDir() % LAYOUT_FILENAME);
+    QFile layoutFile(Util::dataDir() % '/' % Util::LAYOUT_FILE_NAME);
     if (layoutFile.open(QIODevice::ReadOnly))
         restoreGeometry(layoutFile.readAll());
 }
@@ -213,7 +213,7 @@ bool MainWindow::event(QEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-    QFile layoutFile(Util::dataDir() % LAYOUT_FILENAME);
+    QFile layoutFile(Util::dataDir() % '/' % Util::LAYOUT_FILE_NAME);
     if (layoutFile.open(QIODevice::ReadWrite | QIODevice::Truncate))
         layoutFile.write(saveGeometry());
 

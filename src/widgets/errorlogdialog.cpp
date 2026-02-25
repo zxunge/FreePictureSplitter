@@ -3,8 +3,8 @@
 
 #include "errorlogdialog.h"
 #include "ui_errorlogdialog.h"
-#include "globaldefs.h"
 
+#include "utils/misc.h"
 #include "utils/jsonconfigitems.h"
 
 #include <QTableWidgetItem>
@@ -33,17 +33,17 @@ ErrorLogDialog::ErrorLogDialog(QWidget *parent)
             g_appConfig.dialog.lastSavedToDir = dir.toStdString();
 
             // Save logs to file
-            QFile file(dir % ERRORLOG_FILENAME);
+            QFile file(dir % '/' % Util::ERRORLOG_FILE_NAME);
             QTextStream ts(&file);
             if (file.open(QIODevice::ReadWrite | QIODevice::Truncate))
                 for (int row{}; row < ui->tblErrors->rowCount(); ++row)
                     ts << ui->tblErrors->item(row, 0)->text() << u" "_s
                        << ui->tblErrors->item(row, 1)->text() << Qt::endl;
             else {
-                QMessageBox::warning(
-                        nullptr, fpsAppName,
-                        QObject::tr("Error writing to file %1.").arg(dir % ERRORLOG_FILENAME),
-                        QMessageBox::Close);
+                QMessageBox::warning(nullptr, qAppName(),
+                                     QObject::tr("Error writing to file %1.")
+                                             .arg(dir % '/' % Util::ERRORLOG_FILE_NAME),
+                                     QMessageBox::Close);
                 return;
             }
             file.close();

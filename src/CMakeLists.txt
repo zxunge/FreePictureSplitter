@@ -1,6 +1,6 @@
 list(APPEND CMAKE_AUTOUIC_SEARCH_PATHS "${CMAKE_CURRENT_LIST_DIR}/ui")
 
-qt_add_executable(FreePictureSplitter globaldefs.h)
+qt_add_executable(FreePictureSplitter "")
 
 set_target_properties(FreePictureSplitter PROPERTIES
     WIN32_EXECUTABLE TRUE
