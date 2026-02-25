@@ -25,6 +25,7 @@ const char CONFIG_FILE_NAME[] = "conf.json";
 const char LAYOUT_FILE_NAME[] = "geometry.layout";
 const char LOG_FILE_NAME[] = "app.log";
 const char ERRORLOG_FILE_NAME[] = "error.log";
+const char CRASHREPORT_FILE_NAME[] = "crashreport.RPT";
 
 } // namespace Util
 

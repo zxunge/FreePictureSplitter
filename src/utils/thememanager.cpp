@@ -63,7 +63,6 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
     QFile styleFile;
     styleFile.setFileName(Util::skinsDir() + u"/"_s
                           + QString::fromStdString(std::get<1>(m_skinInfo)));
-    qDebug() << styleFile.fileName();
     if (styleFile.open(QFile::ReadOnly)) {
         QTextStream in(&styleFile);
         // The stylesheets cannot be applied directly,

@@ -52,7 +52,7 @@ using namespace Qt::Literals::StringLiterals;
         };
         if (excHndlInit && excHndlSetLogFileNameA) {
             excHndlInit();
-            if (excHndlSetLogFileNameA("crashreport.rpt"))
+            if (excHndlSetLogFileNameA(Util::CRASHREPORT_FILE_NAME))
                 return true;
             // Do not free the DLL module
         }
@@ -125,7 +125,7 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
     Q_ASSERT(a);
 #if defined(__MINGW32__) || defined(__MINGW64__)
     if (!loadExcHndl()) {
-        QMessageBox::critical(nullptr, fpsAppName,
+        QMessageBox::critical(nullptr, qAppName(),
                               QObject::tr("Error loading module: exchndl.dll."),
                               QMessageBox::Close);
         return false;

@@ -1,4 +1,6 @@
-target_sources(FreePictureSplitter PRIVATE fps.qrc resources.rc)
+configure_file(resources.rc.in resources.rc ESCAPE_QUOTES @ONLY)
+file(COPY_FILE ${CMAKE_CURRENT_SOURCE_DIR}/fps.ico ${CMAKE_CURRENT_BINARY_DIR}/fps.ico)
+target_sources(FreePictureSplitter PRIVATE fps.qrc ${CMAKE_CURRENT_BINARY_DIR}/resources.rc)
 qt_add_translations(
     TARGETS FreePictureSplitter
     LUPDATE_OPTIONS -no-obsolete
