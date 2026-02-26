@@ -5,7 +5,7 @@ on:
   
 jobs:
   win64:
-    # We create an installer on Windows.
+    # We create an installer using Inno Setup on Windows.
     runs-on: windows-2025
 
     steps:
@@ -52,3 +52,42 @@ jobs:
       with:
         name: FreePictureSplitter-setup-win64
         path: FreePictureSplitter-setup-win64.exe
+        
+  linux:
+    # We create a self-extracting archive on Linux.
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: 6.10.*
+        arch: linux_gcc_64
+        install-deps: true
+        modules: "qtimageformats"
+        setup-python: false
+
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        repository: zxunge/FreePictureSplitter
+        path: FreePictureSplitter
+        submodules: recursive
+        fetch-depth: 1
+
+    - name: Build
+      run: |
+        cd FreePictureSplitter/
+        # We do not want PCH to be enabled when building on GitHub Action
+        cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Release -B build .
+        cmake --build build -j
+        cpack --config build/CPackConfig.cmake --vendor zxunge -B /opt/freepicturesplitter
+        # Remove temporary directories
+        rm -rf /opt/freepicturesplitter/_CPack_Packages
+        
+    - name: Upload Build Output
+      uses: actions/upload-artifact@v6
+      with:
+        name: FreePictureSplitter-linux-amd64
+        path: /opt/freepicturesplitter
+        compression-level: 9

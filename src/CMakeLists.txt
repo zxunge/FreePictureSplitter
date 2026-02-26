@@ -64,5 +64,7 @@ endif()
 install(SCRIPT ${deploy_script})
 # Note that we need to deploy Dr.MinGW dlls manually,
 # including exchndl.dll, mgwhelp.dll, dbghelp.dll, dbgcore.dll, symsrv.dll, and symsrv.yes.
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set(CPACK_GENERATOR "STGZ")
 include(CPack)
 

@@ -69,7 +69,7 @@ begin
 end;
 
 [Files]
-Source: "{#MyAppPath}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#MyAppPath}\{#MyAppExeName}"; DestDir: "{app}"
 Source: "{#MyAppPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#MyAppPath}\qt.conf"; DestDir: "{app}"; Flags: ignoreversion
