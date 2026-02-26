@@ -40,6 +40,8 @@ FreePictureSplitter是一款快速、小巧且易用的图片分割软件。
 HTML生成 | ❎
 质量控制 | ❎
 
+## [用法](usage.md)
+
 ## 下载
 最新版本可在[Github Releases](https://github.com/zxunge/FreePictureSplitter/releases)上找到。
 
