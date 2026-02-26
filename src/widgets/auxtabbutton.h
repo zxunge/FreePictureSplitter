@@ -28,11 +28,7 @@ public:
         layout->addWidget(m_labText);
     }
 
-    void setText(const QString &text)
-    {
-        m_labText->setText(text);
-        m_labText->adjustSize();
-    }
+    void setText(const QString &text) { m_labText->setText(text); }
     void setPixmap(const QPixmap &pixmap) { m_labPixmap->setPixmap(pixmap.scaled(32, 32)); }
 
 private:

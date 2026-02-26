@@ -467,27 +467,32 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="49"/>
         <source>System default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>Der Pfad, der beim Klicken auf &quot;Bilder speichern&quot; angegeben wird</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
         <source>The same location as the source picture</source>
         <translation>Der gleiche Ort wie das Quellenbild</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="62"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="189"/>
         <source>The following path:</source>
         <translation>Der folgende Weg:</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/preferenceswidget.cpp" line="199"/>
+        <source>The UI language is changed. Would you like to restart to fit the UI components?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/preferenceswidget.ui" line="281"/>
@@ -550,12 +555,12 @@ Top to Bottom</source>
         <translation> [Zeilennummer * Spaltennummer] im Dateinamen enthalten.</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
         <source>Select a color for grid lines</source>
         <translation>Wählen Sie eine Farbe für Gitterlinien aus</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="155"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="156"/>
         <source>Choose a directory to save pictures.</source>
         <translation>Wählen Sie ein Verzeichnis aus, um Bilder zu speichern.</translation>
     </message>

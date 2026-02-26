@@ -235,9 +235,5 @@ void MainWindow::changeEvent(QEvent *e)
         qobject_cast<AuxTabButton *>(
                 m_twgt->tabBar()->tabButton(2, QTabBar::ButtonPosition::RightSide))
                 ->setText(tr("Preferences"));
-
-        // TODO@26/02/25 Add code to update each bar's size to show words correctly.
-        m_twgt->tabBar()->updateGeometry();
-        m_twgt->adjustSize();
     }
 }

@@ -527,37 +527,42 @@ Top to Bottom</source>
         <translation> [Номер строки * Номер колонки] содержится в названии файла.</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="49"/>
         <source>System default</source>
         <translation>Начните разделяться. ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>Следующий путь:</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
         <source>The same location as the source picture</source>
         <translation>То же место, что и на каждом исходном изображении</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="62"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="189"/>
         <source>The following path:</source>
         <translation>По умолчанию системы</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
         <source>Select a color for grid lines</source>
         <translation>Выберите цвет. ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="155"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="156"/>
         <source>Choose a directory to save pictures.</source>
         <translation>Выберите каталог, содержащий фотографии.</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/preferenceswidget.cpp" line="199"/>
+        <source>The UI language is changed. Would you like to restart to fit the UI components?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

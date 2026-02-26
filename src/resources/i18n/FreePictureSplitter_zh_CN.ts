@@ -471,27 +471,32 @@ Top to Bottom</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;（默认为100.00%，即没有缩放。）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="49"/>
         <source>System default</source>
         <translation>系统默认</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>点击“保存图片”时指定的目录</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
         <source>The same location as the source picture</source>
         <translation>与每个图片源目录相同</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="62"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="189"/>
         <source>The following path:</source>
         <translation>下列目录：</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/preferenceswidget.cpp" line="199"/>
+        <source>The UI language is changed. Would you like to restart to fit the UI components?</source>
+        <translation>用户界面的语言已经改变。你想要重启程序来让界面看起来更合适吗？</translation>
     </message>
     <message>
         <location filename="../../ui/preferenceswidget.ui" line="281"/>
@@ -554,12 +559,12 @@ Top to Bottom</source>
         <translation>在文件名中包含[行数 * 列数]。</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
         <source>Select a color for grid lines</source>
         <translation>为网格线选取一种颜色</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="155"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="156"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>

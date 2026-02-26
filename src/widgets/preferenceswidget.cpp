@@ -16,6 +16,9 @@
 #include <QFileSystemModel>
 #include <QAbstractItemModel>
 #include <QLocale>
+#include <QMessageBox>
+#include <QProcess>
+#include <QCoreApplication>
 #include <QVariant>
 #include <QStandardPaths>
 
@@ -92,10 +95,8 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     /************************************************/
 
     // Signal connections
-    connect(ui->cbxLang, &QComboBox::currentIndexChanged, this, [&, this](int index) {
-        g_appConfig.app.lang = ui->cbxLang->itemData(index).toString().toStdString();
-        Util::LanguageManager::instance().installTranslators();
-    });
+    connect(ui->cbxLang, &QComboBox::currentIndexChanged, this,
+            &PreferencesWidget::languageChanged);
     connect(ui->cbxLocation, &QComboBox::currentIndexChanged, this, [&, this](int index) {
         g_appConfig.options.outputOpt.savingTo =
                 ui->cbxLocation->itemData(index).value<Util::SavingTo>();
@@ -186,5 +187,19 @@ void PreferencesWidget::changeEvent(QEvent *e)
         ui->cbxLocation->setItemText(0, tr("The path specified when clicking \"Save pictures\""));
         ui->cbxLocation->setItemText(1, tr("The same location as the source picture"));
         ui->cbxLocation->setItemText(2, tr("The following path:"));
+    }
+}
+
+void PreferencesWidget::languageChanged(int index)
+{
+    g_appConfig.app.lang = ui->cbxLang->itemData(index).toString().toStdString();
+    Util::LanguageManager::instance().installTranslators();
+    if (QMessageBox::Yes
+        == QMessageBox::information(this, qAppName(),
+                                    tr("The UI language is changed. Would you like to restart to "
+                                       "fit the UI components?"),
+                                    QMessageBox::Yes | QMessageBox::No)) {
+        qApp->closeAllWindows();
+        QProcess::startDetached(qApp->applicationFilePath(), QCoreApplication::arguments().mid(1));
     }
 }

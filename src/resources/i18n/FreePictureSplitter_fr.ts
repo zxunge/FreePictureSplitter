@@ -467,27 +467,32 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="49"/>
         <source>System default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>Le chemin spécifié en cliquant sur &quot;Enregistrer les images&quot;</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
         <source>The same location as the source picture</source>
         <translation>Le même emplacement que l&apos;image source</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="62"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="189"/>
         <source>The following path:</source>
         <translation>Le chemin suivant :</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/preferenceswidget.cpp" line="199"/>
+        <source>The UI language is changed. Would you like to restart to fit the UI components?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/preferenceswidget.ui" line="281"/>
@@ -550,12 +555,12 @@ Top to Bottom</source>
         <translation> [Numéro de ligne * Numéro de colonne] contenu dans le nom des fichiers.</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="121"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
         <source>Select a color for grid lines</source>
         <translation>Sélectionner une couleur pour les lignes de grille</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="155"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="156"/>
         <source>Choose a directory to save pictures.</source>
         <translation>Choisissez un répertoire pour enregistrer les images.</translation>
     </message>

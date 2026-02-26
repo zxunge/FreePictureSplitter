@@ -26,6 +26,9 @@ protected:
     void changeEvent(QEvent *e) override;
 
 private:
+    void languageChanged(int index);
+
+private:
     Ui::PreferencesWidget *ui;
 };
 
