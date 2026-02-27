@@ -11,6 +11,7 @@
 #include <QMimeType>
 #include <QFileInfo>
 #include <QFileDialog>
+#include <QDirIterator>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -58,6 +59,19 @@ inline QStringList mimeTypesToNameFilters(const QByteArrayList &types)
     all += u')';
     filters.push_front(all);
     return filters;
+}
+
+inline qsizetype fileCount(const QString &path, const QStringList &filters,
+                           QDirIterator::IteratorFlags flags)
+{
+    QDirIterator it(path, filters, QDir::Files | QDir::NoSymLinks, flags);
+    // Get file count
+    qsizetype count{};
+    while (it.hasNext()) {
+        it.next();
+        ++count;
+    }
+    return count;
 }
 
 } // namespace FileInfo

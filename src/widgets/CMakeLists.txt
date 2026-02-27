@@ -24,6 +24,7 @@ target_sources(FreePictureSplitter PRIVATE
     skinoptionsdialog.cpp
     skinoptionsdialog.h
     auxtabbutton.h
+    filedialog.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

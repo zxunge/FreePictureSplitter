@@ -6,6 +6,7 @@
 #include "progressdialog.h"
 #include "mainwindow.h"
 #include "errorlogdialog.h"
+#include "filedialog.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/fileinfo.h"
@@ -35,6 +36,7 @@
 #include <QModelIndex>
 #include <QStandardPaths>
 #include <QCoreApplication>
+#include <QDirIterator>
 #include <QFuture>
 #include <QFutureWatcher>
 
@@ -234,32 +236,47 @@ void BatchWidget::openPictures()
 
 void BatchWidget::openFolder()
 {
-    QString in{ QFileDialog::getExistingDirectory(
-            this, tr("Choose a directory containing pictures."),
+    QCheckBox *checkBox{ new QCheckBox(tr("Iterate files in all sub-directories recursively.")) };
+    FileDialog dlg(checkBox, this);
+    dlg.setWindowTitle(tr("Choose a directory containing pictures."));
+    dlg.fileDialog()->setDirectory(
             g_appConfig.dialog.lastOpenedDir.empty()
                     ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                    : QString::fromStdString(g_appConfig.dialog.lastOpenedDir)) };
-    if (in.isEmpty())
-        return;
+                    : QString::fromStdString(g_appConfig.dialog.lastOpenedDir));
+    dlg.fileDialog()->setOptions(dlg.fileDialog()->options() | QFileDialog::ShowDirsOnly);
+    dlg.fileDialog()->setFileMode(QFileDialog::Directory);
+    if (QDialog::Accepted == dlg.exec())
+        g_appConfig.dialog.lastOpenedDir =
+                dlg.fileDialog()->selectedFiles().constFirst().toStdString();
     else
-        g_appConfig.dialog.lastOpenedDir = in.toStdString();
+        return;
 
-    QDir dir(in);
+    // Generate name filters
     QStringList nameFilters;
     const QByteArrayList supportedFormats{ QImageReader::supportedImageFormats() };
     Q_FOREACH (const auto format, supportedFormats)
         nameFilters << u"*."_s + QString(format);
 
-    const QStringList list{ dir.entryList(nameFilters, QDir::Files) };
-    int count{};
-    Util::getMainWindow()->progressBar()->setRange(0, list.size());
-    Util::getMainWindow()->progressBar()->setVisible(true);
-    Q_FOREACH (const auto file, list) {
+    QDirIterator it(QString::fromStdString(g_appConfig.dialog.lastOpenedDir), nameFilters,
+                    QDir::Files | QDir::NoSymLinks,
+                    checkBox->isChecked() ? QDirIterator::Subdirectories
+                                          : QDirIterator::NoIteratorFlags);
+    // A progress bar will be helpful for users
+    MainWindow *wnd{ Util::getMainWindow() };
+    wnd->progressBar()->setRange(0,
+                                 Util::fileCount(it.path(), nameFilters,
+                                                 checkBox->isChecked()
+                                                         ? QDirIterator::Subdirectories
+                                                         : QDirIterator::NoIteratorFlags));
+    wnd->progressBar()->setVisible(true);
+    // Iterate files
+    while (it.hasNext()) {
+        it.next();
         QCoreApplication::processEvents();
-        addPicture(in + u"/"_s + file);
-        Util::getMainWindow()->progressBar()->setValue(++count);
+        addPicture(it.filePath());
+        wnd->progressBar()->setValue(wnd->progressBar()->value() + 1);
     }
-    Util::getMainWindow()->progressBar()->setVisible(false);
+    wnd->progressBar()->setVisible(false);
 }
 
 void BatchWidget::changeEvent(QEvent *e)
