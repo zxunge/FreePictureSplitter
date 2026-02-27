@@ -13,6 +13,7 @@ class WidgetWindowAgent;
 class QEvent;
 class QCloseEvent;
 class QProgressBar;
+class FancyTabWidget;
 
 class MainWindow final : public QMainWindow
 {
@@ -23,7 +24,6 @@ public:
     ~MainWindow() = default;
 
     QProgressBar *progressBar() const { return m_pbar; }
-    QTabWidget *tabWidget() const { return m_twgt; }
 
 private:
     void createTabs();
@@ -37,7 +37,7 @@ protected:
 private:
     QWK::WidgetWindowAgent *m_windowAgent;
     QProgressBar *m_pbar;
-    QTabWidget *m_twgt;
+    FancyTabWidget *m_twgt;
 };
 
 #endif // MAINWINDOW_H

@@ -11,6 +11,8 @@ target_sources(FreePictureSplitter PRIVATE
     progressdialog.h
     rulerbar.cpp
     rulerbar.h
+    fancytabwidget.cpp
+    fancytabwidget.h
     clickablelabel.cpp
     clickablelabel.h
     singlewidget.cpp
@@ -23,7 +25,6 @@ target_sources(FreePictureSplitter PRIVATE
     errorlogdialog.h
     skinoptionsdialog.cpp
     skinoptionsdialog.h
-    auxtabbutton.h
     filedialog.h
 )
 
