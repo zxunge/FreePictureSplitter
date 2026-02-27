@@ -18,14 +18,14 @@ struct RulerMetric
 };
 
 // Ruler metric for general use.
-static const RulerMetric rulerMetricGeneral{ { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1'000, 2'500,
-                                               5'000, 10'000, 25'000, 50'000, 100'000 },
-                                             { 1, 5, 10, 50, 100 } };
+static const RulerMetric rulerMetricGeneral = { { 1, 2, 5, 10, 25, 50, 100, 250, 500, 1'000, 2'500,
+                                                  5'000, 10'000, 25'000, 50'000, 100'000 },
+                                                { 1, 5, 10, 50, 100 } };
 
 // Ruler metric for inch scales.
-static const RulerMetric rulerMetricInches{ { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1'024, 2'048,
-                                              4'096, 8'192, 16'384, 32'768 },
-                                            { 1, 2, 4, 8, 16 } };
+static const RulerMetric rulerMetricInches = { { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1'024,
+                                                 2'048, 4'096, 8'192, 16'384, 32'768 },
+                                               { 1, 2, 4, 8, 16 } };
 
 RulerBar::RulerBar(QWidget *parent, Qt::Orientation orientation)
     : QWidget(parent),
@@ -60,7 +60,7 @@ void RulerBar::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
     QPainter painter(this);
-    QRect rulerRect{ rect() };
+    QRect rulerRect = rect();
     painter.fillRect(rulerRect, m_faceColor);
 
     if (m_orientation == Qt::Horizontal) {
@@ -79,20 +79,20 @@ void RulerBar::paintEvent(QPaintEvent *event)
 
 void RulerBar::drawTicker(QPainter *painter)
 {
-    QRect allocation{ rect() };
-    int width{ (m_orientation == Qt::Horizontal) ? allocation.width() : allocation.height() },
-            height{ (m_orientation == Qt::Horizontal) ? allocation.height() : allocation.width() };
-    int length{}, idealLength{};
-    double lower{ m_lower }, upper{ m_upper }; // Upper and lower limits, in ruler units
-    double increment{}; // Number of pixels per unit
-    unsigned int scale{}; // Number of units per major unit
-    double start{}, end{};
-    char unitStr[32]{};
+    QRect allocation = rect();
+    int width = (m_orientation == Qt::Horizontal) ? allocation.width() : allocation.height();
+    int height = (m_orientation == Qt::Horizontal) ? allocation.height() : allocation.width();
+    int length = 0, idealLength = 0;
+    double lower = m_lower, upper = m_upper; // Upper and lower limits, in ruler units
+    double increment = 0; // Number of pixels per unit
+    unsigned int scale = 0; // Number of units per major unit
+    double start = 0, end = 0;
+    char unitStr[32] = {};
     QFontMetrics fm(font());
-    int digitHeight{ fm.height() };
-    int textSize{};
-    int pos{};
-    RulerMetric rulerMetric{ rulerMetricGeneral }; // The metric to use for this unit system
+    int digitHeight = fm.height();
+    int textSize = 0;
+    int pos = 0;
+    RulerMetric rulerMetric = rulerMetricGeneral; // The metric to use for this unit system
 
     if (upper == lower)
         return;
@@ -109,8 +109,8 @@ void RulerBar::drawTicker(QPainter *painter)
     if (scale == std::size(rulerMetric.rulerScale))
         scale = std::size(rulerMetric.rulerScale) - 1;
 
-    for (int i{ std::size(rulerMetric.subdivide) - 1 }; i >= 0; --i) {
-        double subdIncr{};
+    for (int i = std::size(rulerMetric.subdivide) - 1; i >= 0; --i) {
+        double subdIncr = 0;
         if (scale == 1 && i == 1)
             subdIncr = 1.0;
         else
@@ -131,7 +131,7 @@ void RulerBar::drawTicker(QPainter *painter)
             end = ceil(lower / subdIncr) * subdIncr;
         }
 
-        int tick_index{};
+        int tick_index = 0;
         for (long long cur = start; cur <= end; cur += subdIncr) {
             pos = qRound((cur - lower) * increment + 1e-12);
             if (m_orientation == Qt::Horizontal) {
@@ -142,8 +142,8 @@ void RulerBar::drawTicker(QPainter *painter)
                 painter->drawLine(rt.topLeft(), rt.topRight());
             }
 
-            double pxLabelSpacing{ fabs(increment * rulerMetric.rulerScale[scale]
-                                        / rulerMetric.subdivide[i]) };
+            double pxLabelSpacing =
+                    fabs(increment * rulerMetric.rulerScale[scale] / rulerMetric.subdivide[i]);
 
             if (i == 0 && (pxLabelSpacing > 6 * digitHeight || tick_index % 2 == 0 || cur == 0)
                 && (pxLabelSpacing > 3 * digitHeight || tick_index % 4 == 0 || cur == 0)) {
@@ -152,7 +152,7 @@ void RulerBar::drawTicker(QPainter *painter)
                 else
                     sprintf(unitStr, "%lld", cur);
 
-                int w{ fm.horizontalAdvance(unitStr) };
+                int w = fm.horizontalAdvance(unitStr);
                 if (m_orientation == Qt::Horizontal)
                     painter->drawText(pos + 2, allocation.top(), w, RULER_SIZE,
                                       Qt::AlignLeft | Qt::AlignTop, unitStr);
@@ -172,9 +172,9 @@ void RulerBar::drawTicker(QPainter *painter)
 
 void RulerBar::drawPos(QPainter *painter)
 {
-    int width{}, height{};
-    int bsWidth{}, bsHeight{};
-    QRect allocation{ rect() };
+    int width = 0, height = 0;
+    int bsWidth = 0, bsHeight = 0;
+    QRect allocation = rect();
 
     if (m_orientation == Qt::Horizontal) {
         width = allocation.width();
@@ -234,7 +234,7 @@ void RulerBar::mouseReleaseEvent(QMouseEvent *event)
 }
 
 CornerBox::CornerBox(QWidget *parent)
-    : QWidget{ parent }, m_faceColor{ parent->palette().color(QPalette::Window) }
+    : QWidget(parent), m_faceColor(parent->palette().color(QPalette::Window))
 {
     // ctor
 }

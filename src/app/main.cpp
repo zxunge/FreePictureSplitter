@@ -38,18 +38,17 @@ using namespace Qt::Literals::StringLiterals;
 [[nodiscard]] inline bool loadExcHndl()
 {
     // Load the DLL
-    QLibrary *exchndl{ new QLibrary(u"exchndl.dll"_s) };
+    QLibrary *exchndl = new QLibrary(u"exchndl.dll"_s);
     Q_ASSERT(exchndl);
 
     if (exchndl->load()) {
         typedef void (*ProtoExcHndlInit)();
         typedef bool (*ProtoExcHndlSetLogFileNameA)(const char *);
-        ProtoExcHndlInit excHndlInit{ reinterpret_cast<ProtoExcHndlInit>(
-                exchndl->resolve("ExcHndlInit")) };
-        ProtoExcHndlSetLogFileNameA excHndlSetLogFileNameA{
-            reinterpret_cast<ProtoExcHndlSetLogFileNameA>(
-                    exchndl->resolve("ExcHndlSetLogFileNameA"))
-        };
+        ProtoExcHndlInit excHndlInit =
+                reinterpret_cast<ProtoExcHndlInit>(exchndl->resolve("ExcHndlInit"));
+        ProtoExcHndlSetLogFileNameA excHndlSetLogFileNameA =
+                reinterpret_cast<ProtoExcHndlSetLogFileNameA>(
+                        exchndl->resolve("ExcHndlSetLogFileNameA"));
         if (excHndlInit && excHndlSetLogFileNameA) {
             excHndlInit();
             if (excHndlSetLogFileNameA(Util::CRASHREPORT_FILE_NAME))
@@ -62,13 +61,12 @@ using namespace Qt::Literals::StringLiterals;
 }
 #endif // __MINGW32__ || __MINGW64__
 
-QtMessageHandler originalHandler{};
+QtMessageHandler originalHandler = nullptr;
 
 void logToFile(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    QString message{ qFormatLogMessage(type, context, msg) };
-    static FILE *f{ fopen((Util::dataDir() % '/' % Util::LOG_FILE_NAME).toUtf8().constData(),
-                          "a") };
+    QString message = qFormatLogMessage(type, context, msg);
+    static FILE *f = fopen((Util::dataDir() % '/' % Util::LOG_FILE_NAME).toUtf8().constData(), "a");
     if (f) {
         fprintf(f, "%s\n", qPrintable(message));
         fflush(f);
@@ -96,7 +94,7 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
     if (jsonCfgStr.isEmpty())
         Util::setDefConf(g_appConfig);
     else {
-        const auto result{ rfl::json::read<Util::Config>(jsonCfgStr.toStdString()) };
+        const auto result = rfl::json::read<Util::Config>(jsonCfgStr.toStdString());
         if (!result) {
             QMessageBox::critical(nullptr, qAppName(),
                                   QObject::tr("Error parsing configuration file: %1.")
@@ -142,7 +140,7 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
 [[nodiscard]] inline bool saveConfigurations()
 {
     // Save configuration changes to file
-    const QString jsonCfgStr{ QString::fromStdString(rfl::json::write(g_appConfig)) };
+    const QString jsonCfgStr = QString::fromStdString(rfl::json::write(g_appConfig));
     QFile cfgFile(Util::dataDir() % '/' % Util::CONFIG_FILE_NAME);
     if (!cfgFile.open(QIODevice::WriteOnly | QFile::Truncate | QIODevice::Text)) {
         QMessageBox::warning(nullptr, qAppName(),
@@ -162,7 +160,7 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_WIN) && (!defined(Q_CC_MINGW) || __GNUC__ >= 5)
     // Make console output work on Windows, if running in a console.
     if (AttachConsole(ATTACH_PARENT_PROCESS)) {
-        FILE *dummy{};
+        FILE *dummy = nullptr;
         freopen_s(&dummy, "CONOUT$", "w", stdout);
         freopen_s(&dummy, "CONOUT$", "w", stderr);
     }
@@ -198,7 +196,7 @@ int main(int argc, char *argv[])
     }
     qInfo("Skin loaded.");
     w.show();
-    int ret{ a.exec() };
+    int ret = a.exec();
     if (!saveConfigurations())
         std::exit(EXIT_FAILURE);
 

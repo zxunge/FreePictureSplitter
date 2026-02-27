@@ -12,7 +12,7 @@ class QMouseEvent;
 class QEvent;
 class QWidget;
 
-constexpr int LINE_SIZE{ 2 };
+constexpr int LINE_SIZE = 2;
 
 class DraggableLine : public QPushButton
 {
@@ -70,7 +70,7 @@ protected:
     bool event(QEvent *event) override;
 
 private:
-    bool m_pressed{ false };
+    bool m_pressed = false;
     Qt::Orientation m_orientation;
     int m_scenePos; // Position in a scene (V:x or H:y)
     quint64 m_id; // An identifier, enabling us to find it.

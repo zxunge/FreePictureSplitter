@@ -18,7 +18,7 @@ public:
     {
         m_dlg = new QFileDialog(this, Qt::SubWindow);
         m_dlg->setOption(QFileDialog::DontUseNativeDialog, true);
-        QVBoxLayout *layout{ new QVBoxLayout(this) };
+        QVBoxLayout *layout = new QVBoxLayout(this);
         m_dlg->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         toAdd->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
         layout->addWidget(m_dlg);

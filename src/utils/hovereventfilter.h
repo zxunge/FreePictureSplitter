@@ -34,7 +34,7 @@ public:
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override
     {
-        QAbstractButton *btn{ qobject_cast<QAbstractButton *>(obj) };
+        QAbstractButton *btn = qobject_cast<QAbstractButton *>(obj);
         if (!btn)
             return false;
 

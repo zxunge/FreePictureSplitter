@@ -17,7 +17,7 @@ public:
     explicit AuxTabButton(const QPixmap &pixmap, const QString &text, QWidget *parent = nullptr)
         : QWidget(parent), m_labPixmap(new QLabel(this)), m_labText(new QLabel(this))
     {
-        QVBoxLayout *layout{ new QVBoxLayout(this) };
+        QVBoxLayout *layout = new QVBoxLayout(this);
         m_labPixmap->setPixmap(pixmap.scaled(32, 32));
         m_labText->setText(text);
         m_labText->setWordWrap(true);

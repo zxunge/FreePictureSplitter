@@ -67,10 +67,10 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
         QTextStream in(&styleFile);
         // The stylesheets cannot be applied directly,
         // we need to do some path-conversion.
-        QString ss{ in.readAll() };
+        QString ss = in.readAll();
         ss.replace(u"@SKINS_DIR@"_s, Util::skinsDir());
         // Set a new PhantomStyle
-        PhantomStyle *style{ new PhantomStyle() };
+        PhantomStyle *style = new PhantomStyle();
         qApp->setStyle(style);
         qApp->setStyleSheet(ss);
         styleFile.close();

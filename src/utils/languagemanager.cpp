@@ -19,9 +19,9 @@ void Util::LanguageManager::installTranslators()
     m_qtTranslator = std::make_unique<QTranslator>();
     m_appTranslator = std::make_unique<QTranslator>();
 
-    const QLocale locale{ g_appConfig.app.lang.empty()
-                                  ? QLocale()
-                                  : QLocale(QString::fromStdString(g_appConfig.app.lang)) };
+    const QLocale locale = g_appConfig.app.lang.empty()
+            ? QLocale()
+            : QLocale(QString::fromStdString(g_appConfig.app.lang));
 
     if (m_qtTranslator->load(locale, u"qt"_s, u"_"_s,
                              QLibraryInfo::path(QLibraryInfo::TranslationsPath)))

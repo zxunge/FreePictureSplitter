@@ -50,7 +50,7 @@ public:
         : m_scalingFactor(1.0),
           m_rcContained(false),
           m_seq(LeftToRight | UpToDown),
-          m_info(SplitAverage{ 3, 3 })
+          m_info(SplitAverage(3, 3))
     {
         setGridEnabled(false);
     }

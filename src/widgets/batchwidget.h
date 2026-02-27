@@ -43,7 +43,6 @@ private:
     QMenu *m_contextMenu;
     QStandardItemModel *m_model;
     QItemSelectionModel *m_selModel;
-    // QProgressBar *m_pbLoading;
 };
 
 #endif // BATCHWIDGET_H

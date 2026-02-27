@@ -9,7 +9,6 @@
 #include <QPixmap>
 
 namespace Util {
-
 inline namespace Color {
 
 /*!
@@ -25,7 +24,6 @@ QColor getDominantColor(const QPixmap &pixmap);
 QColor getContrastColor(const QColor &color);
 
 } // namespace Color
-
 } // namespace Util
 
 #endif // COLORS_H

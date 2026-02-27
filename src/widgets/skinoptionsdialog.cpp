@@ -20,21 +20,21 @@ using namespace Qt::Literals::StringLiterals;
 SkinOptionsDialog::SkinOptionsDialog(QWidget *parent)
     : QDialog(parent), m_info(std::make_tuple("", "", Util::ThemeManager::Theme::Light))
 {
-    QVBoxLayout *mainLayout{ new QVBoxLayout(this) };
-    auto label1{ new QLabel(tr("Skin name"), this) };
-    auto leName{ new QLineEdit(tr("Your skin name"), this) };
-    auto label2{ new ClickableLabel(tr("Skin file name: "), this) };
-    auto label3{ new QLabel(tr("<em>Your skin file\'s name</em>"), this) };
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    auto label1 = new QLabel(tr("Skin name"), this);
+    auto leName = new QLineEdit(tr("Your skin name"), this);
+    auto label2 = new ClickableLabel(tr("Skin file name: "), this);
+    auto label3 = new QLabel(tr("<em>Your skin file\'s name</em>"), this);
     label2->setStyleSheet("text-decoration: underline; color: blue;");
-    QHBoxLayout *layout{ new QHBoxLayout() };
+    QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(label2);
     layout->addWidget(label3);
-    auto label4{ new QLabel(tr("Theme"), this) };
-    auto cbxTheme{ new QComboBox(this) };
+    auto label4 = new QLabel(tr("Theme"), this);
+    auto cbxTheme = new QComboBox(this);
     cbxTheme->addItem(tr("Light"), QVariant::fromValue(Util::ThemeManager::Theme::Light));
     cbxTheme->addItem(tr("Dark"), QVariant::fromValue(Util::ThemeManager::Theme::Dark));
-    QDialogButtonBox *buttonBox{ new QDialogButtonBox(
-            QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this) };
+    QDialogButtonBox *buttonBox =
+            new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
     connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 

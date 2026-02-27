@@ -15,8 +15,12 @@
 class RulerBar;
 class CornerBox;
 class QMouseEvent;
+class QKeyEvent;
 
-constexpr double ZOOM_RATIO{ 1.2 }; // Ratio used when zooming in/out.
+/*!
+ * \brief ZOOM_RATIO Ratio used when zooming in/out.
+ */
+constexpr double ZOOM_RATIO = 1.2;
 
 class GraphicsView : public QGraphicsView
 {
@@ -29,12 +33,26 @@ public:
     void zoomIn();
     void zoomOut();
 
-    void showPixmap(const QPixmap &pixmap,
-                    bool adaptive = true); // Show an image on the GraphicsView.
+    /*!
+     * \brief showPixmap Show an image on the GraphicsView.
+     * \param pixmap
+     * \param adaptive
+     */
+    void showPixmap(const QPixmap &pixmap, bool adaptive = true);
     void clearScene();
-    // Create a line using direction and initial position. pos -> whole GraphicsView
+
+    /*!
+     * \brief addDraggableLine Create a line using direction and initial position. pos -> whole
+     * GraphicsView
+     * \param ori
+     * \param pos
+     */
     void addDraggableLine(Qt::Orientation ori, const QPoint &pos);
-    void addDraggableLine(DraggableLine *fl); // Add an existing line to list.
+    /*!
+     * \brief addDraggableLine Add an existing line to list.
+     * \param fl
+     */
+    void addDraggableLine(DraggableLine *fl);
     void removeAllDraggableLines();
     const QVector<QPointer<DraggableLine>> &getDraggableLines() const { return m_plines; }
 
@@ -55,8 +73,12 @@ Q_SIGNALS:
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void scrollContentsBy(int dx, int dy) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
     void updateRuler();
 
 private Q_SLOTS:
@@ -70,8 +92,9 @@ private:
     CornerBox *m_box;
     QVector<QPointer<DraggableLine>> m_plines;
 
-    DraggableLine *m_tempLine{ nullptr }; // Temporary line widget
+    DraggableLine *m_tempLine = nullptr; // Temporary line widget
     QPoint m_dragStartPos; // Position where dragging starts
+    bool m_isCtrlPressed; // True if Key Ctrl is pressed
 };
 
 #endif // GRAPHICSVIEW_H

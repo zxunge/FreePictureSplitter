@@ -29,7 +29,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QCompleter *completer{ new QCompleter(this) };
+    QCompleter *completer = new QCompleter(this);
     completer->setModel(new QFileSystemModel(completer));
     completer->setCaseSensitivity(Qt::CaseInsensitive);
     ui->lePath->setCompleter(completer);
@@ -40,14 +40,14 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     ui->cbxStyle->setCurrentText(QString::fromStdString(g_appConfig.app.skin));
     Q_FOREACH (const QString &name, Util::LanguageManager::availableLanguages()) {
         QLocale locale(name);
-        QString string{ QStringLiteral("%1 (%2)").arg(
-                QLocale::languageToString(locale.language()),
-                QLocale::territoryToString(locale.territory())) };
+        QString string =
+                QStringLiteral("%1 (%2)").arg(QLocale::languageToString(locale.language()),
+                                              QLocale::territoryToString(locale.territory()));
         ui->cbxLang->addItem(string, name);
     }
     ui->cbxLang->model()->sort(0);
     ui->cbxLang->insertItem(0, tr("System default"));
-    int languageIndex{ ui->cbxLang->findData(QString::fromStdString(g_appConfig.app.lang)) };
+    int languageIndex = ui->cbxLang->findData(QString::fromStdString(g_appConfig.app.lang));
     if (languageIndex == -1)
         languageIndex = 0;
     ui->cbxLang->setCurrentIndex(languageIndex);
@@ -65,7 +65,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
             ui->cbxLocation->findData(QVariant::fromValue(g_appConfig.options.outputOpt.savingTo)));
     ui->chbSubDir->setChecked(g_appConfig.options.outputOpt.subDir);
     ui->lePath->setText(QString::fromStdString(g_appConfig.options.outputOpt.outPath));
-    const QByteArrayList supportedImageFormats{ QImageWriter::supportedImageFormats() };
+    const QByteArrayList supportedImageFormats = QImageWriter::supportedImageFormats();
     Q_FOREACH (const QByteArray &imageFormat, supportedImageFormats) {
         ui->cbxFormats->addItem(QString(imageFormat));
     }
@@ -117,9 +117,9 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     connect(ui->chbSubDir, &QCheckBox::toggled, this,
             [&](bool checked) { g_appConfig.options.outputOpt.subDir = checked; });
     connect(ui->btnSelectColor, &QPushButton::clicked, this, [&, this]() {
-        QColor color{ QColorDialog::getColor(
+        QColor color = QColorDialog::getColor(
                 QColor::fromString(QString::fromStdString(g_appConfig.options.gridOpt.colorRgb)),
-                this, tr("Select a color for grid lines")) };
+                this, tr("Select a color for grid lines"));
         if (color.isValid()) {
             g_appConfig.options.gridOpt.colorRgb = color.name().toStdString();
             ui->labColor->setStyleSheet("background-color: " % color.name() % ";");
@@ -152,11 +152,11 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
             ui->wgtOptions->setCurrentIndex(1); // "Output"
     });
     connect(ui->tbtnBrowse, &QToolButton::clicked, this, [&, this]() {
-        QString in{ QFileDialog::getExistingDirectory(
+        QString in = QFileDialog::getExistingDirectory(
                 this, tr("Choose a directory to save pictures."),
                 g_appConfig.dialog.lastSavedToDir.empty()
                         ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                        : QString::fromStdString(g_appConfig.dialog.lastSavedToDir)) };
+                        : QString::fromStdString(g_appConfig.dialog.lastSavedToDir));
         if (in.isEmpty())
             return;
 
@@ -165,7 +165,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
         ui->lePath->setText(in);
     });
     connect(ui->tbtnAddSkin, &QToolButton::clicked, this, [this] {
-        SkinOptionsDialog *dlg{ new SkinOptionsDialog(this) };
+        SkinOptionsDialog *dlg = new SkinOptionsDialog(this);
         if (dlg->exec() == QDialog::Accepted && !std::get<0>(dlg->skinInfo()).empty()
             && !std::get<1>(dlg->skinInfo()).empty()) {
             ui->cbxStyle->addItem(QString::fromStdString(std::get<0>(dlg->skinInfo())));

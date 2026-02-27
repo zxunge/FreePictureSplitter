@@ -9,7 +9,6 @@
 #include <QGuiApplication>
 
 namespace Util {
-
 inline namespace Font {
 
 /*!
@@ -19,13 +18,12 @@ inline namespace Font {
 inline void setAppFont(QLocale locale, QGuiApplication *app)
 {
     Q_UNUSED(locale);
-    QFont font{ app->font() };
+    QFont font = app->font();
     font.setPointSize(9);
     app->setFont(font);
 }
 
 } // namespace Font
-
 } // namespace Util
 
 #endif // FONTS_H

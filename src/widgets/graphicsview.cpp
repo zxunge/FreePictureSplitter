@@ -17,6 +17,7 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 
     setViewport(new QWidget);
     setMouseTracking(true);
+    grabKeyboard();
     setAttribute(Qt::WA_DeleteOnClose);
 
     // Connected for dragging support
@@ -30,14 +31,14 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 
 GraphicsView::~GraphicsView()
 {
-    // dtor
+    releaseKeyboard();
 }
 
 void GraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
 {
     if (scene())
         scene()->deleteLater();
-    QGraphicsScene *scene{ new QGraphicsScene };
+    QGraphicsScene *scene = new QGraphicsScene;
     scene->addPixmap(pixmap);
     setScene(scene);
 
@@ -46,8 +47,8 @@ void GraphicsView::showPixmap(const QPixmap &pixmap, bool adaptive)
     removeAllDraggableLines();
 
     if (adaptive) { // Set an adaptive background for GraphicsView based on the image's color
-        const QColor dominant{ Util::getDominantColor(pixmap) };
-        const QColor bgColor{ Util::getContrastColor(dominant) };
+        const QColor dominant = Util::getDominantColor(pixmap);
+        const QColor bgColor = Util::getContrastColor(dominant);
 
         viewport()->setStyleSheet(QString("background-color: %1;").arg(bgColor.name()));
     }
@@ -64,10 +65,20 @@ void GraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
     QGraphicsView::mouseMoveEvent(event);
 
-    QPointF pt{ mapToScene(event->pos()) };
+    QPointF pt = mapToScene(event->pos());
     m_hruler->updatePosition(event->pos());
     m_vruler->updatePosition(event->pos());
     Q_EMIT positionChanged(pt.x(), pt.y());
+}
+
+void GraphicsView::mousePressEvent(QMouseEvent *event)
+{
+    QGraphicsView::mousePressEvent(event);
+}
+
+void GraphicsView::mouseReleaseEvent(QMouseEvent *event)
+{
+    QGraphicsView::mouseReleaseEvent(event);
 }
 
 void GraphicsView::resizeEvent(QResizeEvent *event)
@@ -96,21 +107,31 @@ void GraphicsView::scrollContentsBy(int dx, int dy)
         l->updateLine();
 }
 
+void GraphicsView::keyPressEvent(QKeyEvent *event)
+{
+    QGraphicsView::keyPressEvent(event);
+}
+
+void GraphicsView::keyReleaseEvent(QKeyEvent *event)
+{
+    QGraphicsView::keyReleaseEvent(event);
+}
+
 void GraphicsView::updateRuler()
 {
     if (!scene())
         return;
 
-    QRectF viewbox{ this->rect() };
-    QPointF offset{ mapFromScene(scene()->sceneRect().topLeft()) };
-    double factor{ 1.0 / transform().m11() };
-    double lowerX{ factor * (viewbox.left() - offset.x()) };
-    double upperX{ factor * (viewbox.right() - RULER_SIZE - offset.x()) };
+    QRectF viewbox = this->rect();
+    QPointF offset = mapFromScene(scene()->sceneRect().topLeft());
+    double factor = 1.0 / transform().m11();
+    double lowerX = factor * (viewbox.left() - offset.x());
+    double upperX = factor * (viewbox.right() - RULER_SIZE - offset.x());
     m_hruler->setRange(lowerX, upperX, upperX - lowerX);
     m_hruler->update();
 
-    double lowerY{ -factor * (viewbox.top() - offset.y()) };
-    double upperY{ -factor * (viewbox.bottom() - RULER_SIZE - offset.y()) };
+    double lowerY = -factor * (viewbox.top() - offset.y());
+    double upperY = -factor * (viewbox.bottom() - RULER_SIZE - offset.y());
 
     m_vruler->setRange(lowerY, upperY, upperY - lowerY);
     m_vruler->update();
@@ -137,7 +158,7 @@ void GraphicsView::addDraggableLine(Qt::Orientation orientation, const QPoint &p
     if (!scene())
         return;
 
-    QPointer<DraggableLine> fl{ new DraggableLine(orientation, this) };
+    QPointer<DraggableLine> fl = new DraggableLine(orientation, this);
     fl->updateLine(pos);
     fl->show();
     connect(fl, &DraggableLine::userDestruction, this, &GraphicsView::lineDestruction);
@@ -192,8 +213,8 @@ void GraphicsView::dragMoved(const QPoint &currentPos)
         return;
 
     // Avoid being moved out of its parent
-    int x{ qBound(0, currentPos.x(), width() - LINE_SIZE) };
-    int y{ qBound(0, currentPos.y(), height() - LINE_SIZE) };
+    int x = qBound(0, currentPos.x(), width() - LINE_SIZE);
+    int y = qBound(0, currentPos.y(), height() - LINE_SIZE);
 
     if (qobject_cast<RulerBar *>(sender())->orientation() == Qt::Horizontal)
         m_tempLine->updateLine(0, y);
@@ -226,9 +247,9 @@ void GraphicsView::dragFinished(const QPoint &endPos, bool isReal)
 
 void GraphicsView::lineDestruction()
 {
-    DraggableLine *sd{ qobject_cast<DraggableLine *>(sender()) };
+    DraggableLine *sd = qobject_cast<DraggableLine *>(sender());
     if (sd) {
-        for (qsizetype i{}; i != m_plines.size(); ++i)
+        for (qsizetype i = 0; i != m_plines.size(); ++i)
             if (m_plines[i]->id() == sd->id()) {
                 m_plines[i]->deleteLater();
                 m_plines.remove(i);

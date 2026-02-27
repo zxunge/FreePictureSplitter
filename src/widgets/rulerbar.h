@@ -7,8 +7,8 @@
 
 #include <QWidget>
 
-constexpr int MINIMUM_INCR{ 5 };
-constexpr int RULER_SIZE{ 24 };
+constexpr int MINIMUM_INCR = 5;
+constexpr int RULER_SIZE = 24;
 
 class CornerBox : public QWidget
 {
@@ -55,8 +55,10 @@ protected:
     void drawPos(QPainter *painter);
 
 Q_SIGNALS:
-    // Definitions of dragging Q_SIGNALS:
-    // Starting, moving and ending
+    /*!
+     * \brief Definitions of dragging Q_SIGNALS:
+     * \brief Starting, moving and ending
+     */
     void dragStarted(const QPoint &startPos);
     void dragMoved(const QPoint &currentPos);
     void dragFinished(const QPoint &endPos, bool isReal);
@@ -67,8 +69,8 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    bool m_dragging{ false };
-    bool m_moved{ false };
+    bool m_dragging = false;
+    bool m_moved = false;
     QPoint m_dragStartPos;
 
 protected:

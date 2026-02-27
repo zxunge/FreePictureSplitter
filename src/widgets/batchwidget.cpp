@@ -27,8 +27,6 @@
 #include <QPixmap>
 #include <QSize>
 #include <QImage>
-#include <QCompleter>
-#include <QFileSystemModel>
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QItemSelectionModel>
@@ -53,24 +51,18 @@ BatchWidget::BatchWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // UI preparations
-    QCompleter *completer{ new QCompleter(this) };
-    completer->setModel(new QFileSystemModel(completer));
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    ui->lePath->setCompleter(completer);
-
     ui->viewTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 
-    QActionGroup *ag{ new QActionGroup(this) };
+    QActionGroup *ag = new QActionGroup(this);
     ag->addAction(ui->actionShowDetailInfo);
     ag->addAction(ui->actionShowThumbnails);
 
-    QActionGroup *agRm{ new QActionGroup(this) };
+    QActionGroup *agRm = new QActionGroup(this);
     agRm->addAction(ui->actionRemoveFromDisk);
     agRm->addAction(ui->actionRemoveFromList);
     agRm->setEnabled(false);
 
-    QButtonGroup *bg{ new QButtonGroup(this) };
+    QButtonGroup *bg = new QButtonGroup(this);
     bg->addButton(ui->rbtnAverage);
     bg->addButton(ui->rbtnSize);
     bg->addButton(ui->rbtnTemplate);
@@ -165,10 +157,12 @@ BatchWidget::BatchWidget(QWidget *parent)
             ui->btnOpen->setEnabled(true);
             ui->lePath->setEnabled(true);
             ui->btnChange->setEnabled(true);
+            ui->labDir->setEnabled(true);
         } else {
             ui->btnOpen->setEnabled(false);
             ui->lePath->setEnabled(false);
             ui->btnChange->setEnabled(false);
+            ui->labDir->setEnabled(false);
         }
     });
 }
@@ -197,7 +191,7 @@ void BatchWidget::deleteSelectedItems()
         return;
 
     Q_FOREACH (const QModelIndex &i, m_selModel->selectedRows()) {
-        QString filePath{ m_model->item(i.row(), 1)->text() };
+        QString filePath = m_model->item(i.row(), 1)->text();
         QFile::setPermissions(filePath, QFile::WriteOwner);
         if (!QFile::remove(filePath))
             QMessageBox::critical(this, tr("Deleting files"),
@@ -220,10 +214,10 @@ void BatchWidget::openPictures()
         g_appConfig.dialog.lastOpenedDir =
                 QFileInfo(fdlg.selectedFiles().constFirst()).path().toStdString();
 
-        const QStringList list{ fdlg.selectedFiles() };
+        const QStringList list = fdlg.selectedFiles();
         Util::getMainWindow()->progressBar()->setRange(0, list.size());
         Util::getMainWindow()->progressBar()->setVisible(true);
-        int count{};
+        int count = 0;
         Q_FOREACH (const auto file, list) {
             QCoreApplication::processEvents();
             addPicture(file);
@@ -236,7 +230,7 @@ void BatchWidget::openPictures()
 
 void BatchWidget::openFolder()
 {
-    QCheckBox *checkBox{ new QCheckBox(tr("Iterate files in all sub-directories recursively.")) };
+    QCheckBox *checkBox = new QCheckBox(tr("Iterate files in all sub-directories recursively."));
     FileDialog dlg(checkBox, this);
     dlg.setWindowTitle(tr("Choose a directory containing pictures."));
     dlg.fileDialog()->setDirectory(
@@ -253,7 +247,7 @@ void BatchWidget::openFolder()
 
     // Generate name filters
     QStringList nameFilters;
-    const QByteArrayList supportedFormats{ QImageReader::supportedImageFormats() };
+    const QByteArrayList supportedFormats = QImageReader::supportedImageFormats();
     Q_FOREACH (const auto format, supportedFormats)
         nameFilters << u"*."_s + QString(format);
 
@@ -262,7 +256,7 @@ void BatchWidget::openFolder()
                     checkBox->isChecked() ? QDirIterator::Subdirectories
                                           : QDirIterator::NoIteratorFlags);
     // A progress bar will be helpful for users
-    MainWindow *wnd{ Util::getMainWindow() };
+    MainWindow *wnd = Util::getMainWindow();
     wnd->progressBar()->setRange(0,
                                  Util::fileCount(it.path(), nameFilters,
                                                  checkBox->isChecked()
@@ -296,11 +290,11 @@ void BatchWidget::addPicture(const QString &fileName)
     if (!reader.canRead())
         return;
     reader.setScaledSize(QSize(80, 80));
-    QStandardItem *itemName{ new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
-                                               QFileInfo(fileName).fileName()) };
-    QStandardItem *itemPath{ new QStandardItem(fileName) };
-    QStandardItem *itemSize{ new QStandardItem(fileSizeString(fileName)) };
-    ImageDocument *imgDoc{ new ImageDocument(fileName, this) };
+    QStandardItem *itemName = new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
+                                                QFileInfo(fileName).fileName());
+    QStandardItem *itemPath = new QStandardItem(fileName);
+    QStandardItem *itemSize = new QStandardItem(fileSizeString(fileName));
+    ImageDocument *imgDoc = new ImageDocument(fileName, this);
     itemName->setData(QVariant::fromValue(static_cast<void *>(imgDoc)));
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 
@@ -317,11 +311,11 @@ void BatchWidget::addPicture(const QString &fileName)
 
 void BatchWidget::changePath()
 {
-    QString in{ QFileDialog::getExistingDirectory(
+    QString in = QFileDialog::getExistingDirectory(
             this, tr("Choose a directory to save pictures."),
             g_appConfig.dialog.lastSavedToDir.empty()
                     ? QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
-                    : QString::fromStdString(g_appConfig.dialog.lastSavedToDir)) };
+                    : QString::fromStdString(g_appConfig.dialog.lastSavedToDir));
     if (in.isEmpty())
         return;
 
@@ -331,13 +325,13 @@ void BatchWidget::changePath()
 
 void BatchWidget::startSplit()
 {
-    ImageDocument *imgDoc{};
+    ImageDocument *imgDoc = nullptr;
 
     ProgressDialog dlg(m_model->rowCount(), this);
     dlg.show();
     dlg.raise();
 
-    for (qsizetype i{}; i != m_model->rowCount(); ++i) {
+    for (qsizetype i = 0; i != m_model->rowCount(); ++i) {
         imgDoc = static_cast<ImageDocument *>(m_model->item(i, 0)->data().value<void *>());
         Q_ASSERT(imgDoc);
         if (!imgDoc->canRead()) {
@@ -423,7 +417,7 @@ void BatchWidget::startSplit()
 
             if (!result.value().result().empty()) {
                 // Show errors
-                ErrorLogDialog *dlgErr{ new ErrorLogDialog(this) };
+                ErrorLogDialog *dlgErr = new ErrorLogDialog(this);
                 Q_FOREACH (auto &result, result.value().result()) {
                     if (!result.has_value())
                         dlgErr->addErrorInfo(

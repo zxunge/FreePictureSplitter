@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // Construct UI
     setMinimumSize(QSize(800, 600));
     setCentralWidget(new QWidget(this));
-    QHBoxLayout *horizontalLayout{ new QHBoxLayout(centralWidget()) };
+    QHBoxLayout *horizontalLayout = new QHBoxLayout(centralWidget());
     horizontalLayout->setSpacing(0);
     horizontalLayout->setContentsMargins(0, 0, 0, 0);
     m_twgt = new QTabWidget(centralWidget());
@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setWindowTitle(qAppName());
 
     QIcon icon(u":/icons/version.ico"_s);
-    ClickableLabel *labMark{ new ClickableLabel(m_twgt) };
+    ClickableLabel *labMark = new ClickableLabel(m_twgt);
     labMark->resize(32, 32);
     labMark->setPixmap(icon.pixmap(icon.actualSize(QSize(32, 32))));
     m_pbar = new QProgressBar(this);
@@ -86,20 +86,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 void MainWindow::createTabs()
 {
-    SingleWidget *pgSingle{ new SingleWidget(this) };
-    BatchWidget *pgBatch{ new BatchWidget(this) };
-    PreferencesWidget *pgPref{ new PreferencesWidget(this) };
+    SingleWidget *pgSingle = new SingleWidget(this);
+    BatchWidget *pgBatch = new BatchWidget(this);
+    PreferencesWidget *pgPref = new PreferencesWidget(this);
     m_twgt->addTab(pgSingle, QString());
     m_twgt->addTab(pgBatch, QString());
     m_twgt->addTab(pgPref, QString());
-    AuxTabButton *btn0{ new AuxTabButton(QPixmap(u":/controls/controls/32x32/image.svg"_s),
-                                         tr("Single Splitting")) };
+    AuxTabButton *btn0 = new AuxTabButton(QPixmap(u":/controls/controls/32x32/image.svg"_s),
+                                          tr("Single Splitting"));
     m_twgt->tabBar()->setTabButton(0, QTabBar::ButtonPosition::RightSide, btn0);
-    AuxTabButton *btn1{ new AuxTabButton(QPixmap(u":/controls/controls/32x32/image_multiple.svg"_s),
-                                         tr("Batch Splitting")) };
+    AuxTabButton *btn1 = new AuxTabButton(
+            QPixmap(u":/controls/controls/32x32/image_multiple.svg"_s), tr("Batch Splitting"));
     m_twgt->tabBar()->setTabButton(1, QTabBar::ButtonPosition::RightSide, btn1);
-    AuxTabButton *btn2{ new AuxTabButton(QPixmap(u":/controls/controls/32x32/settings.svg"_s),
-                                         tr("Preferences")) };
+    AuxTabButton *btn2 = new AuxTabButton(QPixmap(u":/controls/controls/32x32/settings.svg"_s),
+                                          tr("Preferences"));
     m_twgt->tabBar()->setTabButton(2, QTabBar::ButtonPosition::RightSide, btn2);
     m_twgt->setCurrentIndex(g_appConfig.dialog.lastEnteredIndex);
     m_twgt->setAutoFillBackground(true);
@@ -112,33 +112,33 @@ void MainWindow::installWindowAgent()
     m_windowAgent->setup(this);
 
     // Construct window bar
-    auto windowBar{ new QWK::WindowBar() };
-    auto titleLabel{ new QLabel() };
+    auto windowBar = new QWK::WindowBar();
+    auto titleLabel = new QLabel();
     titleLabel->setAlignment(Qt::AlignCenter);
     titleLabel->setObjectName(u"win-title-label"_s);
 
-    auto iconButton{ new QWK::WindowButton() };
+    auto iconButton = new QWK::WindowButton();
     iconButton->setObjectName(u"icon-button"_s);
     iconButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    auto pinButton{ new QWK::WindowButton() };
+    auto pinButton = new QWK::WindowButton();
     pinButton->setCheckable(true);
     pinButton->setObjectName(QStringLiteral("pin-button"));
     pinButton->setProperty("system-button", true);
     pinButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    auto minButton{ new QWK::WindowButton() };
+    auto minButton = new QWK::WindowButton();
     minButton->setObjectName(u"min-button"_s);
     minButton->setProperty("system-button", true);
     minButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    auto maxButton{ new QWK::WindowButton() };
+    auto maxButton = new QWK::WindowButton();
     maxButton->setCheckable(true);
     maxButton->setObjectName(u"max-button"_s);
     maxButton->setProperty("system-button", true);
     maxButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
-    auto closeButton{ new QWK::WindowButton() };
+    auto closeButton = new QWK::WindowButton();
     closeButton->setObjectName(u"close-button"_s);
     closeButton->setProperty("system-button", true);
     closeButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -188,7 +188,7 @@ bool MainWindow::event(QEvent *event)
 {
     switch (event->type()) {
     case QEvent::WindowActivate: {
-        auto menu{ menuWidget() };
+        auto menu = menuWidget();
         if (!menu)
             break;
         menu->setProperty("bar-active", true);
@@ -197,7 +197,7 @@ bool MainWindow::event(QEvent *event)
     }
 
     case QEvent::WindowDeactivate: {
-        auto menu{ menuWidget() };
+        auto menu = menuWidget();
         if (!menu)
             break;
         menu->setProperty("bar-active", false);

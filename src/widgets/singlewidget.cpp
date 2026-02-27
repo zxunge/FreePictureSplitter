@@ -105,8 +105,8 @@ void SingleWidget::openPicture()
         return;
 
     if (m_imgDoc->canRead()) {
-        QPixmap pixmap{ QPixmap::fromImage(m_imgDoc->toImage()) };
-        int width{ m_imgDoc->size().width() }, height{ m_imgDoc->size().height() };
+        QPixmap pixmap = QPixmap::fromImage(m_imgDoc->toImage());
+        int width = m_imgDoc->size().width(), height = m_imgDoc->size().height();
         // Display image info on StatusBar; they are: file name, width * height, color depth,
         // vertical DPI, horizontal DPI
         Util::getMainWindow()->statusBar()->showMessage(
@@ -136,7 +136,7 @@ void SingleWidget::openPicture()
 
 void SingleWidget::savePictures()
 {
-    QString baseName{ m_imgDoc->baseName() };
+    QString baseName = m_imgDoc->baseName();
 
     // Check for user's selection: output folder
     QString basePath, finalPath;
@@ -201,7 +201,7 @@ void SingleWidget::savePictures()
         m_imgDoc->setOutputPath(finalPath);
 
         if (auto result = m_imgDoc->saveImages(); result.has_value()) {
-            ProgressDialog *dlg{ new ProgressDialog(m_imgDoc->totalCount(), this) };
+            ProgressDialog *dlg = new ProgressDialog(m_imgDoc->totalCount(), this);
             dlg->setAttribute(Qt::WA_DeleteOnClose);
             QFutureWatcher<QList<Result<>>> watcher(this);
 
@@ -210,7 +210,7 @@ void SingleWidget::savePictures()
                         dlg->close();
                         if (!watcher.result().empty()) {
                             // Show errors
-                            ErrorLogDialog *dlgErr{ new ErrorLogDialog(this) };
+                            ErrorLogDialog *dlgErr = new ErrorLogDialog(this);
                             Q_FOREACH (auto &result, watcher.result()) {
                                 if (!result.has_value())
                                     dlgErr->addErrorInfo({ std::make_tuple(m_imgDoc->filePath(),

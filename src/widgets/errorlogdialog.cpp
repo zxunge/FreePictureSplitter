@@ -23,11 +23,11 @@ ErrorLogDialog::ErrorLogDialog(QWidget *parent)
 
     connect(ui->buttonBox, &QDialogButtonBox::clicked, this, [&, this](QAbstractButton *button) {
         if (ui->buttonBox->standardButton(button) == QDialogButtonBox::SaveAll) {
-            QString dir{ QFileDialog::getExistingDirectory(
+            QString dir = QFileDialog::getExistingDirectory(
                     this, tr("Choose a directory to save the error logs."),
                     g_appConfig.dialog.lastSavedToDir.empty()
                             ? QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)
-                            : QString::fromStdString(g_appConfig.dialog.lastSavedToDir)) };
+                            : QString::fromStdString(g_appConfig.dialog.lastSavedToDir));
             if (dir.isEmpty())
                 return;
             g_appConfig.dialog.lastSavedToDir = dir.toStdString();
@@ -36,7 +36,7 @@ ErrorLogDialog::ErrorLogDialog(QWidget *parent)
             QFile file(dir % '/' % Util::ERRORLOG_FILE_NAME);
             QTextStream ts(&file);
             if (file.open(QIODevice::ReadWrite | QIODevice::Truncate))
-                for (int row{}; row < ui->tblErrors->rowCount(); ++row)
+                for (int row = 0; row < ui->tblErrors->rowCount(); ++row)
                     ts << ui->tblErrors->item(row, 0)->text() << u" "_s
                        << ui->tblErrors->item(row, 1)->text() << Qt::endl;
             else {
@@ -65,7 +65,7 @@ ErrorLogDialog::~ErrorLogDialog()
 void ErrorLogDialog::addErrorInfo(const QList<ErrorInfo> &infolist)
 {
     Q_FOREACH (auto &info, infolist) {
-        int curRows{ ui->tblErrors->rowCount() };
+        int curRows = ui->tblErrors->rowCount();
         ui->tblErrors->insertRow(curRows);
         ui->tblErrors->setItem(curRows, 0, new QTableWidgetItem(std::get<0>(info)));
         ui->tblErrors->setItem(curRows, 1, new QTableWidgetItem(std::get<1>(info)));
@@ -75,7 +75,7 @@ void ErrorLogDialog::addErrorInfo(const QList<ErrorInfo> &infolist)
 QList<ErrorLogDialog::ErrorInfo> ErrorLogDialog::errorInfoList() const
 {
     QList<ErrorInfo> infolist;
-    for (int row{}; row < ui->tblErrors->rowCount(); ++row)
+    for (int row = 0; row < ui->tblErrors->rowCount(); ++row)
         infolist.push_back(std::make_tuple(ui->tblErrors->item(row, 0)->text(),
                                            ui->tblErrors->item(row, 1)->text()));
 

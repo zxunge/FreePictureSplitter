@@ -16,7 +16,7 @@ using namespace Qt::Literals::StringLiterals;
 
 void DraggableLine::updateLine(const QPoint &pos)
 {
-    QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
+    QGraphicsView *parent = qobject_cast<QGraphicsView *>(parentWidget());
     if (m_orientation == Qt::Horizontal) {
         resize(parentWidget()->width(), LINE_SIZE);
         m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().y();
@@ -30,7 +30,7 @@ void DraggableLine::updateLine(const QPoint &pos)
 
 void DraggableLine::updateLine()
 {
-    QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
+    QGraphicsView *parent = qobject_cast<QGraphicsView *>(parentWidget());
     // Moving according to the stored scenePos
     if (m_orientation == Qt::Horizontal) {
         resize(parentWidget()->width(), LINE_SIZE);
@@ -49,7 +49,7 @@ void DraggableLine::setScenePos(int pos)
 
 void DraggableLine::init(Qt::Orientation orientation, const QPoint &pos)
 {
-    QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
+    QGraphicsView *parent = qobject_cast<QGraphicsView *>(parentWidget());
 
     setAutoFillBackground(true);
     setStyleSheet(u"background-color: rgb(50, 205, 50);"_s);
@@ -80,7 +80,7 @@ void DraggableLine::mousePressEvent(QMouseEvent *event)
 void DraggableLine::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::LeftButton) {
-        QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
+        QGraphicsView *parent = qobject_cast<QGraphicsView *>(parentWidget());
         if (m_pressed && m_orientation == Qt::Horizontal) {
             move(0, mapToParent(event->pos()).y());
             m_scenePos =
@@ -99,7 +99,7 @@ void DraggableLine::mouseMoveEvent(QMouseEvent *event)
 void DraggableLine::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
-        QGraphicsView *parent{ qobject_cast<QGraphicsView *>(parentWidget()) };
+        QGraphicsView *parent = qobject_cast<QGraphicsView *>(parentWidget());
         if (m_pressed && m_orientation == Qt::Horizontal) {
             m_scenePos =
                     parent->mapToScene(parent->viewport()->mapFromParent(mapToParent(event->pos())))
