@@ -13,9 +13,15 @@
 #include <QFrame>
 #include <QLabel>
 
+using namespace Qt::Literals::StringLiterals;
+
+const QColor PopupMessage::m_errorColor = QColor(0xfef0f0);
+const QColor PopupMessage::m_infoColor = QColor(0xd0d7ff);
+const QColor PopupMessage::m_successColor = QColor(0xCDE6C7);
+
 PopupMessage::PopupMessage(QWidget *parent)
     : QWidget(parent, Qt::Tool | Qt::FramelessWindowHint),
-      m_animation(new QPropertyAnimation(this, "geometry")),
+      m_animation(new QPropertyAnimation(this, "geometry"_ba)),
       m_timer(new QTimer(this)),
       m_isHiding(false)
 {
@@ -24,11 +30,11 @@ PopupMessage::PopupMessage(QWidget *parent)
     setAttribute(Qt::WA_DeleteOnClose); // Automatically delete when closed
 
     // Default style: black semi-transparent, rounded corners, white text
-    setStyleSheet("PopupMessage {"
+    setStyleSheet(u"PopupMessage {"
                   "   background-color: rgba(0, 0, 0, 180);"
                   "   border-radius: 10px;"
                   "   color: white;"
-                  "}");
+                  "}"_s);
 
     // Create layout and set margins so that content does not stick to edges
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -45,16 +51,32 @@ PopupMessage::PopupMessage(QWidget *parent)
     connect(m_animation, &QPropertyAnimation::finished, this, &PopupMessage::onAnimationFinished);
 }
 
-PopupMessage::PopupMessage(const QString &text, int timeout, int offsetFromTop, QWidget *parent)
+PopupMessage::PopupMessage(const QString &text, int timeout, int offsetFromTop, MsgType type,
+                           QWidget *parent)
     : PopupMessage(parent)
 {
     QFrame *content = new QFrame;
     QVBoxLayout *contentLayout = new QVBoxLayout(content);
     QLabel *textLabel = new QLabel(text);
-    textLabel->setStyleSheet("font-size: 14px;");
+    textLabel->setStyleSheet(u"font-size: 14px;"_s);
     contentLayout->addWidget(textLabel, Qt::AlignCenter);
     content->setAutoFillBackground(true);
-    content->setStyleSheet("background-color: rgba(200, 200, 200, 0.8); border-radius: 10px;");
+    switch (type) {
+    case PopupMessage::MsgType::Error:
+        content->setStyleSheet(
+                QString("background-color: %1; border-radius: 10px;").arg(m_errorColor.name()));
+        break;
+
+    case PopupMessage::MsgType::Info:
+        content->setStyleSheet(
+                QString("background-color: %1; border-radius: 10px;").arg(m_infoColor.name()));
+        break;
+
+    case PopupMessage::MsgType::Success:
+        content->setStyleSheet(
+                QString("background-color: %1; border-radius: 10px;").arg(m_successColor.name()));
+        break;
+    }
 
     setContent(content);
     showAnimated(timeout, offsetFromTop);

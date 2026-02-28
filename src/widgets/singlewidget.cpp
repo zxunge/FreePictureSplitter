@@ -132,7 +132,7 @@ void SingleWidget::openPicture()
     } else
         PopupMessage *msg =
                 new PopupMessage(tr("Error loading picture file: %1.").arg(m_imgDoc->fullName()),
-                                 3000, 30, Util::getMainWindow());
+                                 3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
 }
 
 void SingleWidget::savePictures()
@@ -170,7 +170,7 @@ void SingleWidget::savePictures()
             if (!dir.mkdir(baseName)) {
                 PopupMessage *msg = new PopupMessage(
                         tr("QDir::mkdir \'%1\' error!").arg(dir.absolutePath() + '/' + baseName),
-                        3000, 30, Util::getMainWindow());
+                        3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
                 return;
             }
         finalPath = basePath + u"/"_s + baseName;
@@ -181,9 +181,10 @@ void SingleWidget::savePictures()
     if (ui->rbtnManual->isChecked())
         m_imgDoc->applyLinesFrom(ui->graphicsView);
     else if (!m_imgDoc->isValid()) {
-        PopupMessage *msg = new PopupMessage(tr("Please at least choose one splitting mode, offer "
-                                                "useful data then reset the splitting lines."),
-                                             3000, 30, Util::getMainWindow());
+        PopupMessage *msg =
+                new PopupMessage(tr("Please at least choose one splitting mode, offer "
+                                    "useful data then reset the splitting lines."),
+                                 3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
         return;
     }
 
@@ -228,12 +229,13 @@ void SingleWidget::savePictures()
             watcher.setFuture(result.value());
             dlg->exec();
         } else {
-            PopupMessage *msg = new PopupMessage(result.error(), 3000, 30, Util::getMainWindow());
+            PopupMessage *msg = new PopupMessage(
+                    result.error(), 3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
             return;
         }
     } else {
         PopupMessage *msg = new PopupMessage(tr("No rule to split this picture"), 3000, 30,
-                                             Util::getMainWindow());
+                                             PopupMessage::MsgType::Error, Util::getMainWindow());
         return;
     }
 }

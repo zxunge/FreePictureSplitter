@@ -8,11 +8,13 @@
 #include <QWidget>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QColor>
 
 class PopupMessage : public QWidget
 {
     Q_OBJECT
 public:
+    enum class MsgType { Error, Info, Success };
     explicit PopupMessage(QWidget *parent = nullptr);
     /*!
      * \brief PopupMessage For convenience
@@ -20,14 +22,22 @@ public:
      * \param parent
      */
     explicit PopupMessage(const QString &text, int timeout = 3000, int offsetFromTop = 30,
-                          QWidget *parent = nullptr);
+                          MsgType type = MsgType::Info, QWidget *parent = nullptr);
     ~PopupMessage();
 
-    // Set the content widget to be displayed (can only be called once, or each time to replace)
+    /*!
+     * \brief setContent Set the content widget to be displayed (can only be called once, or each
+     * time to replace)
+     * \param content
+     */
     void setContent(QWidget *content);
 
-    // Show animation: timeout is auto-hide milliseconds, offsetFromTop is the distance from the
-    // parent's top
+    /*!
+     * \brief showAnimated Show animation: timeout is auto-hide milliseconds, offsetFromTop is the
+     * distance from the parent's top
+     * \param timeout
+     * \param offsetFromTop
+     */
     void showAnimated(int timeout = 3000, int offsetFromTop = 30);
 
 protected:
@@ -50,6 +60,11 @@ private:
     QPoint m_targetPos; // target position (global coordinates)
     QPoint m_startPos; // start position (global coordinates)
     bool m_isHiding;
+
+private:
+    static const QColor m_errorColor;
+    static const QColor m_infoColor;
+    static const QColor m_successColor;
 };
 
 #endif // POPUPMESSAGE_H

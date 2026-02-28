@@ -11,9 +11,9 @@
 
 #include "utils/jsonconfigitems.h"
 #include "utils/leaveevent.h"
-#include "utils/thememanager.h"
 #include "utils/stdpaths.h"
-#include "utils/misc.h"
+#include "utils/thememanager.h"
+#include "utils/globals.h"
 
 #include <QEvent>
 #include <QCloseEvent>

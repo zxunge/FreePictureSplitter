@@ -9,7 +9,7 @@
 #include "utils/languagemanager.h"
 #include "utils/stdpaths.h"
 #include "utils/fonts.h"
-#include "utils/misc.h"
+#include "utils/globals.h"
 
 #include <QApplication>
 #include <QLocale>

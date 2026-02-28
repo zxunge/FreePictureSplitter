@@ -4,7 +4,7 @@
 #include "errorlogdialog.h"
 #include "ui_errorlogdialog.h"
 
-#include "utils/misc.h"
+#include "utils/globals.h"
 #include "utils/jsonconfigitems.h"
 
 #include <QTableWidgetItem>

@@ -6,6 +6,7 @@
 #include "progressdialog.h"
 #include "mainwindow.h"
 #include "errorlogdialog.h"
+#include "popupmessage.h"
 #include "filedialog.h"
 
 #include "utils/jsonconfigitems.h"
@@ -224,6 +225,8 @@ void BatchWidget::openPictures()
             Util::getMainWindow()->progressBar()->setValue(++count);
         }
         Util::getMainWindow()->progressBar()->setVisible(false);
+        PopupMessage *msg = new PopupMessage(tr("Successfully added a list of pictures."), 3000, 30,
+                                             PopupMessage::MsgType::Success, Util::getMainWindow());
     } else
         return;
 }
@@ -271,6 +274,8 @@ void BatchWidget::openFolder()
         wnd->progressBar()->setValue(wnd->progressBar()->value() + 1);
     }
     wnd->progressBar()->setVisible(false);
+    PopupMessage *msg = new PopupMessage(tr("Successfully added a list of pictures."), 3000, 30,
+                                         PopupMessage::MsgType::Success, Util::getMainWindow());
 }
 
 void BatchWidget::changeEvent(QEvent *e)
