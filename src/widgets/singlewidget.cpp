@@ -6,6 +6,7 @@
 #include "progressdialog.h"
 #include "errorlogdialog.h"
 #include "mainwindow.h"
+#include "popupmessage.h"
 
 #include "core/imagedocument.h"
 #include "utils/fileinfo.h"
@@ -129,9 +130,9 @@ void SingleWidget::openPicture()
         if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
     } else
-        QMessageBox::warning(this, qAppName(),
-                             tr("Error loading picture file: %1.").arg(m_imgDoc->fullName()),
-                             QMessageBox::Close);
+        PopupMessage *msg =
+                new PopupMessage(tr("Error loading picture file: %1.").arg(m_imgDoc->fullName()),
+                                 3000, 30, Util::getMainWindow());
 }
 
 void SingleWidget::savePictures()
@@ -167,10 +168,9 @@ void SingleWidget::savePictures()
         QDir dir(basePath);
         if (!dir.exists(baseName))
             if (!dir.mkdir(baseName)) {
-                QMessageBox::warning(
-                        this, qAppName(),
+                PopupMessage *msg = new PopupMessage(
                         tr("QDir::mkdir \'%1\' error!").arg(dir.absolutePath() + '/' + baseName),
-                        QMessageBox::Close);
+                        3000, 30, Util::getMainWindow());
                 return;
             }
         finalPath = basePath + u"/"_s + baseName;
@@ -181,10 +181,9 @@ void SingleWidget::savePictures()
     if (ui->rbtnManual->isChecked())
         m_imgDoc->applyLinesFrom(ui->graphicsView);
     else if (!m_imgDoc->isValid()) {
-        QMessageBox::warning(this, qAppName(),
-                             tr("Please at least choose one splitting mode, offer "
-                                "useful data then reset the splitting lines."),
-                             QMessageBox::Close);
+        PopupMessage *msg = new PopupMessage(tr("Please at least choose one splitting mode, offer "
+                                                "useful data then reset the splitting lines."),
+                                             3000, 30, Util::getMainWindow());
         return;
     }
 
@@ -229,12 +228,12 @@ void SingleWidget::savePictures()
             watcher.setFuture(result.value());
             dlg->exec();
         } else {
-            QMessageBox::warning(this, qAppName(), result.error(), QMessageBox::Close);
+            PopupMessage *msg = new PopupMessage(result.error(), 3000, 30, Util::getMainWindow());
             return;
         }
     } else {
-        QMessageBox::warning(this, qAppName(), tr("No rule to split this picture"),
-                             QMessageBox::Close);
+        PopupMessage *msg = new PopupMessage(tr("No rule to split this picture"), 3000, 30,
+                                             Util::getMainWindow());
         return;
     }
 }

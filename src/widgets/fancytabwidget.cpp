@@ -11,18 +11,7 @@
 #include <QToolTip>
 #include <QApplication>
 
-#include <cmath>
 #include <utility>
-
-// ========== Helper functions ==========
-static int commonPrefixLength(const QString &s1, const QString &s2)
-{
-    int n = qMin(s1.size(), s2.size());
-    for (int i = 0; i < n; ++i)
-        if (s1[i] != s2[i])
-            return i;
-    return n;
-}
 
 // ========== FancyTabBar implementation ==========
 
@@ -119,10 +108,10 @@ void FancyTabBar::setCurrentIndex(int index)
 {
     if (index == m_currentIndex || (index >= 0 && !isTabEnabled(index)))
         return;
-    emit currentAboutToChange(index);
+    Q_EMIT currentAboutToChange(index);
     m_currentIndex = index;
     update();
-    emit currentChanged(index);
+    Q_EMIT currentChanged(index);
 }
 
 void FancyTabBar::setIconsOnly(bool iconsOnly)
@@ -165,10 +154,11 @@ void FancyTabBar::setTextColor(const QColor &normal, const QColor &selected)
 QRect FancyTabBar::tabRect(int index) const
 {
     QSize sh = tabSizeHint();
-    int totalHeight = sh.height() * m_tabs.size();
+    int tabHeight = sh.height();
+    int totalHeight = m_topMargin + tabHeight * m_tabs.size();
     if (totalHeight > height())
-        sh.setHeight(height() / m_tabs.size());
-    return QRect(0, index * sh.height(), sh.width(), sh.height());
+        tabHeight = (height() - m_topMargin) / m_tabs.size();
+    return QRect(0, m_topMargin + index * sh.height(), sh.width(), tabHeight);
 }
 
 QSize FancyTabBar::tabSizeHint(bool minimum) const
@@ -195,7 +185,7 @@ QSize FancyTabBar::tabSizeHint(bool minimum) const
 QSize FancyTabBar::sizeHint() const
 {
     QSize sh = tabSizeHint();
-    return QSize(sh.width(), sh.height() * m_tabs.size());
+    return QSize(sh.width(), m_topMargin + sh.height() * m_tabs.size());
 }
 
 void FancyTabBar::paintEvent(QPaintEvent *event)
@@ -468,7 +458,7 @@ void FancyTabWidget::setBaseColor(const QColor &color)
 void FancyTabWidget::showWidget(int index)
 {
     m_stackedLayout->setCurrentIndex(index);
-    emit currentChanged(index);
+    Q_EMIT currentChanged(index);
 }
 
 void FancyTabWidget::addCornerWidget(QWidget *widget)

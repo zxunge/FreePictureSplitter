@@ -44,6 +44,9 @@ public:
 
     QSize sizeHint() const override;
 
+    int topMargin() const { return m_topMargin; }
+    void setTopMargin(int topMargin) { m_topMargin = topMargin; }
+
 signals:
     void currentChanged(int index);
     void currentAboutToChange(int index);
@@ -80,6 +83,9 @@ private:
     QColor m_textColorSelected = Qt::black;
     QColor m_textColorDisabled = Qt::gray;
 
+    int m_topMargin = 16;
+
+private:
     QRect tabRect(int index) const;
     QSize tabSizeHint(bool minimum = false) const;
     void paintTab(QPainter *painter, int tabIndex) const;
@@ -129,11 +135,11 @@ public:
     void addCornerWidget(QWidget *widget);
     void insertCornerWidget(int index, QWidget *widget);
 
-signals:
+Q_SIGNALS:
     void currentChanged(int index);
     void currentAboutToShow(int index); // Emitted right before switching
 
-private slots:
+private Q_SLOTS:
     void showWidget(int index);
 
 private:

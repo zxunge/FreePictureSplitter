@@ -26,6 +26,8 @@ target_sources(FreePictureSplitter PRIVATE
     skinoptionsdialog.cpp
     skinoptionsdialog.h
     filedialog.h
+    popupmessage.cpp
+    popupmessage.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})
