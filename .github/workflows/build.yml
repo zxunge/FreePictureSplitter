@@ -63,7 +63,7 @@ jobs:
         cmake --install build
         
     - name: Upload Build Output
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: FreePictureSplitter-msys2-${{ matrix.msystem }}
         path: D:\msys64\opt\freepicturesplitter
@@ -102,7 +102,7 @@ jobs:
         cmake --install build --config RelWithDebInfo
         
     - name: Upload Build Output
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: FreePictureSplitter-msvc
         path: D:\FreePictureSplitter
@@ -137,7 +137,7 @@ jobs:
         cmake --install build
         
     - name: Upload Build Output
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: FreePictureSplitter-ubuntu
         path: /opt/freepicturesplitter
