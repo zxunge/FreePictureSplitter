@@ -40,6 +40,10 @@ public:
      */
     void showAnimated(int timeout = 3000, int offsetFromTop = 30);
 
+    static void error(const QString &text, int timeout = 3000, int offsetFromTop = 30);
+    static void info(const QString &text, int timeout = 3000, int offsetFromTop = 30);
+    static void success(const QString &text, int timeout = 3000, int offsetFromTop = 30);
+
 protected:
     void mousePressEvent(QMouseEvent *event) override;
     void showEvent(QShowEvent *event) override;
@@ -47,8 +51,8 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 
 private slots:
-    void onAnimationFinished();
-    void onTimeout();
+    void animationFinished();
+    void timeout();
 
 private:
     void startAnimation(bool hide = false);
@@ -62,9 +66,12 @@ private:
     bool m_isHiding;
 
 private:
-    static const QColor m_errorColor;
-    static const QColor m_infoColor;
-    static const QColor m_successColor;
+    static const QColor ERROR_COLOR;
+    static const QColor INFO_COLOR;
+    static const QColor SUCCESS_COLOR;
+    static const QColor ERROR_MSG_COLOR;
+    static const QColor INFO_MSG_COLOR;
+    static const QColor SUCCESS_MSG_COLOR;
 };
 
 #endif // POPUPMESSAGE_H

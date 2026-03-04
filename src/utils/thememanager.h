@@ -62,7 +62,7 @@ private:
     QAbstractButton *m_closeBtn;
     ButtonHoverEventFilter *m_filter;
 
-Q_SIGNALS:
+signals:
     void themeChanged(Util::ThemeManager::Theme theme);
 };
 

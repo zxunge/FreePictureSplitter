@@ -135,11 +135,11 @@ public:
     void addCornerWidget(QWidget *widget);
     void insertCornerWidget(int index, QWidget *widget);
 
-Q_SIGNALS:
+signals:
     void currentChanged(int index);
     void currentAboutToShow(int index); // Emitted right before switching
 
-private Q_SLOTS:
+private slots:
     void showWidget(int index);
 
 private:

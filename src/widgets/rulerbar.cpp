@@ -202,7 +202,7 @@ void RulerBar::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
         m_dragging = true;
         m_dragStartPos = event->pos(); // Coordinate in RulerBar
-        Q_EMIT dragStarted(mapToParent(m_dragStartPos)); // Convert to the parent window
+        emit dragStarted(mapToParent(m_dragStartPos)); // Convert to the parent window
     }
     QWidget::mousePressEvent(event);
 }
@@ -210,7 +210,7 @@ void RulerBar::mousePressEvent(QMouseEvent *event)
 void RulerBar::mouseMoveEvent(QMouseEvent *event)
 {
     if (m_dragging) {
-        Q_EMIT dragMoved(mapToParent(event->pos())); // Convert to the parent
+        emit dragMoved(mapToParent(event->pos())); // Convert to the parent
         m_moved = true; // Avoid clicking only
     }
 
@@ -224,12 +224,12 @@ void RulerBar::mouseReleaseEvent(QMouseEvent *event)
         m_dragging = false;
         if ((m_orientation == Qt::Horizontal && event->pos().y() >= height())
             || (m_orientation == Qt::Vertical && event->pos().x() >= width()))
-            Q_EMIT dragFinished(mapToParent(event->pos()),
-                                true); // Convert to the parent
+            emit dragFinished(mapToParent(event->pos()),
+                              true); // Convert to the parent
         else
-            Q_EMIT dragFinished(mapToParent(event->pos()), false);
+            emit dragFinished(mapToParent(event->pos()), false);
     } else
-        Q_EMIT dragFinished(mapToParent(event->pos()), false);
+        emit dragFinished(mapToParent(event->pos()), false);
     QWidget::mouseReleaseEvent(event);
 }
 

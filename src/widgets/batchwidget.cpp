@@ -225,8 +225,7 @@ void BatchWidget::openPictures()
             Util::getMainWindow()->progressBar()->setValue(++count);
         }
         Util::getMainWindow()->progressBar()->setVisible(false);
-        PopupMessage *msg = new PopupMessage(tr("Successfully added a list of pictures."), 3000, 30,
-                                             PopupMessage::MsgType::Success, Util::getMainWindow());
+        PopupMessage::success(tr("Successfully added a list of pictures."));
     } else
         return;
 }
@@ -274,8 +273,7 @@ void BatchWidget::openFolder()
         wnd->progressBar()->setValue(wnd->progressBar()->value() + 1);
     }
     wnd->progressBar()->setVisible(false);
-    PopupMessage *msg = new PopupMessage(tr("Successfully added a list of pictures."), 3000, 30,
-                                         PopupMessage::MsgType::Success, Util::getMainWindow());
+    PopupMessage::success(tr("Successfully added a list of pictures."));
 }
 
 void BatchWidget::changeEvent(QEvent *e)

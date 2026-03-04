@@ -59,7 +59,7 @@ public:
 private:
     void init(Qt::Orientation orientation, const QPoint &pos);
 
-Q_SIGNALS:
+signals:
     void userDestruction();
 
 protected:

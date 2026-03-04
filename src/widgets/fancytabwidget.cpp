@@ -108,10 +108,10 @@ void FancyTabBar::setCurrentIndex(int index)
 {
     if (index == m_currentIndex || (index >= 0 && !isTabEnabled(index)))
         return;
-    Q_EMIT currentAboutToChange(index);
+    emit currentAboutToChange(index);
     m_currentIndex = index;
     update();
-    Q_EMIT currentChanged(index);
+    emit currentChanged(index);
 }
 
 void FancyTabBar::setIconsOnly(bool iconsOnly)
@@ -458,7 +458,7 @@ void FancyTabWidget::setBaseColor(const QColor &color)
 void FancyTabWidget::showWidget(int index)
 {
     m_stackedLayout->setCurrentIndex(index);
-    Q_EMIT currentChanged(index);
+    emit currentChanged(index);
 }
 
 void FancyTabWidget::addCornerWidget(QWidget *widget)

@@ -8,6 +8,7 @@
 #include "aboutdialog.h"
 #include "fancytabwidget.h"
 #include "clickablelabel.h"
+#include "toolbutton.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/leaveevent.h"
@@ -61,20 +62,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_twgt->setObjectName("tabWidget");
     setWindowTitle(qAppName());
 
+    // Version label & progress bar
     QIcon icon(u":/icons/version.ico"_s);
     ClickableLabel *labMark = new ClickableLabel(m_twgt);
     labMark->resize(32, 32);
     labMark->setPixmap(icon.pixmap(icon.actualSize(QSize(32, 32))));
     m_pbar = new QProgressBar(this);
     m_pbar->setMaximumWidth(80);
-    statusBar()->addPermanentWidget(m_pbar);
-    statusBar()->addPermanentWidget(labMark);
     m_pbar->setVisible(false);
-
     connect(labMark, &ClickableLabel::clicked, this, [this] {
         AboutDialog dlg(this);
         dlg.exec();
     });
+
+    // Task menu & button
+    m_taskMenu = new QMenu(this);
+    ToolButton *tbtnTask = new ToolButton(this);
+    tbtnTask->setMaximumHeight(16);
+    tbtnTask->setText(QChar(0x2630));
+    connect(tbtnTask, &QToolButton::clicked, this, [this] { m_taskMenu->exec(QCursor::pos()); });
+    statusBar()->addPermanentWidget(m_pbar);
+    statusBar()->addPermanentWidget(tbtnTask);
+    statusBar()->addPermanentWidget(labMark);
 
     installWindowAgent();
 

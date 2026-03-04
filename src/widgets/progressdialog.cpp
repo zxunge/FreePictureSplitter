@@ -22,7 +22,7 @@ ProgressDialog::ProgressDialog(int total, QWidget *parent)
 
     connect(ui->btnCancel, &QPushButton::clicked, this, [this] {
         m_cancelled = true;
-        Q_EMIT cancelled();
+        emit cancelled();
     });
 }
 

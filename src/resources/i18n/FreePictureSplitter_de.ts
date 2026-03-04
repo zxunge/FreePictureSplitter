@@ -14,12 +14,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="76"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="75"/>
         <source>About Qt...</source>
         <translation>Über Qt. ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="80"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="79"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
@@ -236,88 +236,99 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="87"/>
-        <location filename="../../widgets/batchwidget.cpp" line="270"/>
+        <location filename="../../widgets/batchwidget.cpp" line="82"/>
+        <location filename="../../widgets/batchwidget.cpp" line="284"/>
         <source>File Name</source>
         <translation>Dateiname</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="88"/>
-        <location filename="../../widgets/batchwidget.cpp" line="271"/>
+        <location filename="../../widgets/batchwidget.cpp" line="83"/>
+        <location filename="../../widgets/batchwidget.cpp" line="285"/>
         <source>File Path</source>
         <translation>Dateipfad</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="89"/>
-        <location filename="../../widgets/batchwidget.cpp" line="272"/>
+        <location filename="../../widgets/batchwidget.cpp" line="84"/>
+        <location filename="../../widgets/batchwidget.cpp" line="286"/>
         <source>File Size</source>
         <translation>Dateigröße</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="190"/>
-        <location filename="../../widgets/batchwidget.cpp" line="201"/>
+        <location filename="../../widgets/batchwidget.cpp" line="187"/>
+        <location filename="../../widgets/batchwidget.cpp" line="198"/>
         <source>Deleting files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="191"/>
+        <location filename="../../widgets/batchwidget.cpp" line="188"/>
         <source>Are you sure to remove these %1 file(s)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="202"/>
+        <location filename="../../widgets/batchwidget.cpp" line="199"/>
         <source>Failed to delete file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="210"/>
+        <location filename="../../widgets/batchwidget.cpp" line="207"/>
         <source>Add pictures...</source>
         <translation>Bilder hinzufügen. ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="238"/>
+        <location filename="../../widgets/batchwidget.cpp" line="228"/>
+        <location filename="../../widgets/batchwidget.cpp" line="276"/>
+        <source>Successfully added a list of pictures.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="235"/>
+        <source>Iterate files in all sub-directories recursively.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="237"/>
         <source>Choose a directory containing pictures.</source>
         <translation>Wählen Sie ein Verzeichnis mit Bildern aus.</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="304"/>
+        <location filename="../../widgets/batchwidget.cpp" line="318"/>
         <source>Choose a directory to save pictures.</source>
         <translation>Wählen Sie ein Verzeichnis aus, um Bilder zu speichern.</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="327"/>
-        <location filename="../../widgets/batchwidget.cpp" line="342"/>
-        <location filename="../../widgets/batchwidget.cpp" line="352"/>
+        <location filename="../../widgets/batchwidget.cpp" line="341"/>
+        <location filename="../../widgets/batchwidget.cpp" line="356"/>
         <location filename="../../widgets/batchwidget.cpp" line="366"/>
-        <location filename="../../widgets/batchwidget.cpp" line="378"/>
-        <location filename="../../widgets/batchwidget.cpp" line="389"/>
-        <location filename="../../widgets/batchwidget.cpp" line="421"/>
+        <location filename="../../widgets/batchwidget.cpp" line="380"/>
+        <location filename="../../widgets/batchwidget.cpp" line="392"/>
+        <location filename="../../widgets/batchwidget.cpp" line="403"/>
+        <location filename="../../widgets/batchwidget.cpp" line="435"/>
         <source>Batch Splitting</source>
         <translation>Batch Splitting</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="328"/>
+        <location filename="../../widgets/batchwidget.cpp" line="342"/>
         <source>Cannot open file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="342"/>
-        <location filename="../../widgets/batchwidget.cpp" line="352"/>
+        <location filename="../../widgets/batchwidget.cpp" line="356"/>
+        <location filename="../../widgets/batchwidget.cpp" line="366"/>
         <source>Unsupported</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="389"/>
+        <location filename="../../widgets/batchwidget.cpp" line="403"/>
         <source>No rule to split the picture</source>
         <translation>Keine Regel zum Aufteilen des Bildes</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="367"/>
+        <location filename="../../widgets/batchwidget.cpp" line="381"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation>Sie haben das Ausgabeverzeichnis noch nicht angegeben, bitte versuchen Sie es erneut.</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="379"/>
+        <location filename="../../widgets/batchwidget.cpp" line="393"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -376,22 +387,30 @@ Top to Bottom</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="96"/>
+        <location filename="../../widgets/mainwindow.cpp" line="101"/>
         <location filename="../../widgets/mainwindow.cpp" line="231"/>
         <source>Single Splitting</source>
         <translation>Einzelteilung</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="99"/>
-        <location filename="../../widgets/mainwindow.cpp" line="234"/>
+        <location filename="../../widgets/mainwindow.cpp" line="103"/>
+        <location filename="../../widgets/mainwindow.cpp" line="233"/>
         <source>Batch Splitting</source>
         <translation>Batch Splitting</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="102"/>
-        <location filename="../../widgets/mainwindow.cpp" line="237"/>
+        <location filename="../../widgets/mainwindow.cpp" line="105"/>
+        <location filename="../../widgets/mainwindow.cpp" line="234"/>
         <source>Preferences</source>
         <translation>Präferenzen</translation>
+    </message>
+</context>
+<context>
+    <name>PopupMessage</name>
+    <message>
+        <location filename="../../widgets/popupmessage.cpp" line="179"/>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -467,32 +486,27 @@ Top to Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="49"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="47"/>
         <source>System default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="56"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="185"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>Der Pfad, der beim Klicken auf &quot;Bilder speichern&quot; angegeben wird</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
         <source>The same location as the source picture</source>
         <translation>Der gleiche Ort wie das Quellenbild</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="62"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="189"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
         <source>The following path:</source>
         <translation>Der folgende Weg:</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="199"/>
-        <source>The UI language is changed. Would you like to restart to fit the UI components?</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../ui/preferenceswidget.ui" line="281"/>
@@ -555,12 +569,12 @@ Top to Bottom</source>
         <translation> [Zeilennummer * Spaltennummer] im Dateinamen enthalten.</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
         <source>Select a color for grid lines</source>
         <translation>Wählen Sie eine Farbe für Gitterlinien aus</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="156"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="154"/>
         <source>Choose a directory to save pictures.</source>
         <translation>Wählen Sie ein Verzeichnis aus, um Bilder zu speichern.</translation>
     </message>
@@ -599,32 +613,32 @@ Top to Bottom</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="129"/>
+        <location filename="../../app/main.cpp" line="127"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>Fehler beim Laden des Moduls: exchndl.dll.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="90"/>
+        <location filename="../../app/main.cpp" line="88"/>
         <source>Error creating/opening configuration file.</source>
         <translation>Fehler beim Erstellen/Öffnen der Konfigurationsdatei.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="102"/>
+        <location filename="../../app/main.cpp" line="100"/>
         <source>Error parsing configuration file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="114"/>
+        <location filename="../../app/main.cpp" line="112"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>Die Version der Konfigurationsdatei stimmt nicht überein, versuchen Sie, sie nach der Sicherung zu löschen.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="195"/>
+        <location filename="../../app/main.cpp" line="193"/>
         <source>Could NOT load skin %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="149"/>
+        <location filename="../../app/main.cpp" line="147"/>
         <source>Error writing to configuration file.</source>
         <translation>Fehler beim Schreiben in die Konfigurationsdatei.</translation>
     </message>
@@ -801,12 +815,12 @@ Bottom to Top</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schließen Sie das aktuell geöffnete Bild.  &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="93"/>
+        <location filename="../../widgets/singlewidget.cpp" line="94"/>
         <source>Open a picture...</source>
         <translation>Öffnen Sie ein Bild. ..</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="113"/>
+        <location filename="../../widgets/singlewidget.cpp" line="114"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation type="unfinished"></translation>
     </message>
@@ -816,22 +830,22 @@ Bottom to Top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="146"/>
+        <location filename="../../widgets/singlewidget.cpp" line="145"/>
         <source>Choose the output directory.</source>
         <translation>Wählen Sie das Ausgabeverzeichnis.</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="172"/>
+        <location filename="../../widgets/singlewidget.cpp" line="170"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="185"/>
+        <location filename="../../widgets/singlewidget.cpp" line="181"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>Bitte wählen Sie mindestens einen Splittmodus, bieten Sie nützliche Daten an und setzen Sie die Splittlinien zurück.</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="236"/>
+        <location filename="../../widgets/singlewidget.cpp" line="231"/>
         <source>No rule to split this picture</source>
         <translation>Keine Regel, um dieses Bild zu teilen</translation>
     </message>

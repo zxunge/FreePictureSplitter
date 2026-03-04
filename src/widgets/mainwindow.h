@@ -14,6 +14,7 @@ class QEvent;
 class QCloseEvent;
 class QProgressBar;
 class FancyTabWidget;
+class QMenu;
 
 class MainWindow final : public QMainWindow
 {
@@ -38,6 +39,7 @@ private:
     QWK::WidgetWindowAgent *m_windowAgent;
     QProgressBar *m_pbar;
     FancyTabWidget *m_twgt;
+    QMenu *m_taskMenu;
 };
 
 #endif // MAINWINDOW_H

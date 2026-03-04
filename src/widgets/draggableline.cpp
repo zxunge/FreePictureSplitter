@@ -105,7 +105,7 @@ void DraggableLine::mouseReleaseEvent(QMouseEvent *event)
                     parent->mapToScene(parent->viewport()->mapFromParent(mapToParent(event->pos())))
                             .y();
             if (m_scenePos >= parent->scene()->height() || m_scenePos <= 0)
-                Q_EMIT userDestruction();
+                emit userDestruction();
             move(0, mapToParent(event->pos()).y());
             m_pressed = false;
         } else if (m_pressed && m_orientation == Qt::Vertical) {
@@ -113,7 +113,7 @@ void DraggableLine::mouseReleaseEvent(QMouseEvent *event)
                     parent->mapToScene(parent->viewport()->mapFromParent(mapToParent(event->pos())))
                             .x();
             if (m_scenePos >= parent->scene()->width() || m_scenePos <= 0)
-                Q_EMIT userDestruction();
+                emit userDestruction();
             move(mapToParent(event->pos()).x(), 0);
             m_pressed = false;
         }
