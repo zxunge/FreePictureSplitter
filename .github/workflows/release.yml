@@ -1,0 +1,32 @@
+name: Pack full source
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive  
+          fetch-depth: 0
+
+      - name: Package source code
+        run: |
+          ZIP_NAME="FreePictureSplitter-${{ github.event.release.tag_name }}-full-source.zip"
+          git archive --format=zip --output /tmp/$ZIP_NAME HEAD
+          git submodule foreach --recursive 'cd $toplevel/$path && git archive --format=zip --prefix=$path/ --output /tmp/sub-$sha1.zip HEAD'
+          cd /tmp
+          zipmerge $ZIP_NAME $ZIP_NAME sub-*.zip
+          cd -
+          mv /tmp/$ZIP_NAME ./
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*-full-source.zip"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
