@@ -4,83 +4,100 @@
 #include "toolbutton.h"
 
 #include <QPainter>
-#include <QEvent>
 #include <QEnterEvent>
-#include <QEasingCurve>
-
-using namespace Qt::Literals::StringLiterals;
+#include <QApplication>
+#include <QStyleOptionButton>
 
 ToolButton::ToolButton(QWidget *parent)
-    : QToolButton(parent), m_animation(new QPropertyAnimation(this, "hoverOpacity"_ba))
+    : QToolButton(parent), m_animation(new QPropertyAnimation(this, "hoverFactor"))
 {
-    setMouseTracking(true);
+    m_normalColor = palette().button().color();
+    m_hoverColor = m_normalColor.darker(120);
+    m_pressedColor = m_normalColor.darker(150);
+    m_checkedColor = m_normalColor.lighter(110);
+
     m_animation->setEasingCurve(QEasingCurve::InOutQuad);
     m_animation->setDuration(200);
-    setStyleSheet(u"border: none;"_s);
     connect(m_animation, &QPropertyAnimation::valueChanged, this,
             QOverload<>::of(&QWidget::update));
 }
 
-ToolButton::~ToolButton()
+void ToolButton::setNormalColor(const QColor &color)
 {
-    delete m_animation;
-}
-
-void ToolButton::setHoverOpacity(qreal opacity)
-{
-    if (qFuzzyCompare(m_hoverOpacity, opacity))
-        return;
-    m_hoverOpacity = opacity;
+    m_normalColor = color;
     update();
 }
 
-void ToolButton::setOverlayColor(const QColor &color)
+void ToolButton::setHoverColor(const QColor &color)
 {
-    if (m_overlayColor == color)
-        return;
-    m_overlayColor = color;
+    m_hoverColor = color;
     update();
+}
+
+void ToolButton::setPressedColor(const QColor &color)
+{
+    m_pressedColor = color;
+    update();
+}
+
+void ToolButton::setCheckedColor(const QColor &color)
+{
+    m_checkedColor = color;
+    update();
+}
+
+void ToolButton::setHoverFactor(qreal factor)
+{
+    if (qFuzzyCompare(m_hoverFactor, factor))
+        return;
+    m_hoverFactor = factor;
+    update();
+}
+
+void ToolButton::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    QColor bgColor;
+    if (isDown())
+        bgColor = m_pressedColor;
+    else if (isChecked())
+        bgColor = m_checkedColor;
+    else
+        bgColor = interpolateColor(m_normalColor, m_hoverColor, m_hoverFactor);
+
+    painter.setBrush(bgColor);
+    painter.setPen(Qt::NoPen);
+    painter.drawRoundedRect(rect(), 9, 9);
+
+    QToolButton::paintEvent(event);
 }
 
 void ToolButton::enterEvent(QEnterEvent *event)
 {
-    m_isHovered = true;
     startHoverAnimation(true);
     QToolButton::enterEvent(event);
 }
 
 void ToolButton::leaveEvent(QEvent *event)
 {
-    m_isHovered = false;
     startHoverAnimation(false);
     QToolButton::leaveEvent(event);
-}
-
-void ToolButton::changeEvent(QEvent *event)
-{
-    if (event->type() == QEvent::EnabledChange && !isEnabled()) {
-        m_animation->stop();
-        setHoverOpacity(0.0);
-    }
-    QToolButton::changeEvent(event);
-}
-
-void ToolButton::paintEvent(QPaintEvent *event)
-{
-    QToolButton::paintEvent(event);
-    if (qFuzzyIsNull(m_hoverOpacity))
-        return;
-
-    QPainter painter(this);
-    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter.setOpacity(m_hoverOpacity);
-    painter.fillRect(rect(), m_overlayColor);
 }
 
 void ToolButton::startHoverAnimation(bool hovered)
 {
     m_animation->stop();
-    m_animation->setStartValue(m_hoverOpacity);
+    m_animation->setStartValue(m_hoverFactor);
     m_animation->setEndValue(hovered ? 1.0 : 0.0);
     m_animation->start();
+}
+
+QColor ToolButton::interpolateColor(const QColor &from, const QColor &to, qreal ratio) const
+{
+    return QColor(from.red() + (to.red() - from.red()) * ratio,
+                  from.green() + (to.green() - from.green()) * ratio,
+                  from.blue() + (to.blue() - from.blue()) * ratio,
+                  from.alpha() + (to.alpha() - from.alpha()) * ratio);
 }

@@ -134,6 +134,8 @@ public:
     // Add corner widgets (e.g., extra buttons)
     void addCornerWidget(QWidget *widget);
     void insertCornerWidget(int index, QWidget *widget);
+    void setBottomCornerWidget(QWidget *widget);
+    QWidget *bottomCornerWidget() const { return m_bottomCornerWidget; }
 
 signals:
     void currentChanged(int index);
@@ -143,9 +145,14 @@ private slots:
     void showWidget(int index);
 
 private:
+    void updateCornerLayout();
+
+private:
     FancyTabBar *m_tabBar;
     QWidget *m_cornerWidgetContainer;
     QStackedLayout *m_stackedLayout;
+    QList<QWidget *> m_topCornerWidgets;
+    QWidget *m_bottomCornerWidget = nullptr;
 };
 
 #endif // FANCYTABWIDGET_H

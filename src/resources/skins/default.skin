@@ -167,21 +167,3 @@ QPushButton:disabled {
     border: 1px solid rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
-
-QTabWidget#tabWidget::pane {
-    border: none;
-}
-
-QTabWidget#tabWidget::tab {
-    border: none;
-    padding: 3px 10px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    background-color: #FDE6E0;
-}
-
-QTabWidget#tabWidget::tab:selected {
-    background-color: #FDE6E0;
-    font-weight: bold;
-    border-left: 3px solid #cc5bce;
-}

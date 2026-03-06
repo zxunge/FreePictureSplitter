@@ -386,7 +386,6 @@ FancyTabWidget::FancyTabWidget(QWidget *parent) : QWidget(parent)
 
     QVBoxLayout *cornerLayout = new QVBoxLayout(m_cornerWidgetContainer);
     cornerLayout->setContentsMargins(0, 0, 0, 0);
-    cornerLayout->addStretch();
 
     QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->setContentsMargins(0, 0, 0, 0);
@@ -401,8 +400,6 @@ FancyTabWidget::FancyTabWidget(QWidget *parent) : QWidget(parent)
     mainLayout->setSpacing(1);
     mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(m_stackedLayout);
-
-    setBaseColor(m_tabBar->baseColor());
 
     connect(m_tabBar, &FancyTabBar::currentChanged, this, &FancyTabWidget::showWidget);
     connect(m_tabBar, &FancyTabBar::currentAboutToChange, this,
@@ -461,14 +458,55 @@ void FancyTabWidget::showWidget(int index)
     emit currentChanged(index);
 }
 
+void FancyTabWidget::updateCornerLayout()
+{
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(m_cornerWidgetContainer->layout());
+    if (!layout)
+        return;
+
+    QLayoutItem *item;
+    while ((item = layout->takeAt(0)) != nullptr) {
+        delete item;
+    }
+
+    for (QWidget *w : std::as_const(m_topCornerWidgets)) {
+        if (w) {
+            layout->addWidget(w);
+        }
+    }
+
+    layout->addStretch();
+
+    if (m_bottomCornerWidget) {
+        layout->addWidget(m_bottomCornerWidget);
+    }
+}
+
 void FancyTabWidget::addCornerWidget(QWidget *widget)
 {
-    auto layout = qobject_cast<QVBoxLayout *>(m_cornerWidgetContainer->layout());
-    layout->insertWidget(layout->count() - 1, widget); // Insert before the stretch
+    if (!widget)
+        return;
+    m_topCornerWidgets.append(widget);
+    updateCornerLayout();
 }
 
 void FancyTabWidget::insertCornerWidget(int index, QWidget *widget)
 {
-    auto layout = qobject_cast<QVBoxLayout *>(m_cornerWidgetContainer->layout());
-    layout->insertWidget(index, widget);
+    if (!widget)
+        return;
+    m_topCornerWidgets.insert(index, widget);
+    updateCornerLayout();
+}
+
+void FancyTabWidget::setBottomCornerWidget(QWidget *widget)
+{
+    if (m_bottomCornerWidget == widget)
+        return;
+
+    if (widget) {
+        widget->setParent(m_cornerWidgetContainer);
+    }
+
+    m_bottomCornerWidget = widget;
+    updateCornerLayout();
 }

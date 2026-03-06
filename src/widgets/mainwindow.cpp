@@ -78,12 +78,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     // Task menu & button
     m_taskMenu = new QMenu(this);
     ToolButton *tbtnTask = new ToolButton(this);
-    tbtnTask->setMaximumHeight(16);
+    tbtnTask->setToolTip(tr("Tasks"));
+    tbtnTask->setMinimumHeight(32);
     tbtnTask->setText(QChar(0x2630));
     connect(tbtnTask, &QToolButton::clicked, this, [this] { m_taskMenu->exec(QCursor::pos()); });
     statusBar()->addPermanentWidget(m_pbar);
     statusBar()->addPermanentWidget(tbtnTask);
-    statusBar()->addPermanentWidget(labMark);
+    labMark->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+    m_twgt->setBottomCornerWidget(labMark);
 
     installWindowAgent();
 
