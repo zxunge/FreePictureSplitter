@@ -237,98 +237,98 @@ Top to Bottom</source>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="82"/>
-        <location filename="../../widgets/batchwidget.cpp" line="284"/>
+        <location filename="../../widgets/batchwidget.cpp" line="289"/>
         <source>File Name</source>
         <translation>ファイル名</translation>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="83"/>
-        <location filename="../../widgets/batchwidget.cpp" line="285"/>
+        <location filename="../../widgets/batchwidget.cpp" line="290"/>
         <source>File Path</source>
         <translation>ファイルパス</translation>
     </message>
     <message>
         <location filename="../../widgets/batchwidget.cpp" line="84"/>
-        <location filename="../../widgets/batchwidget.cpp" line="286"/>
+        <location filename="../../widgets/batchwidget.cpp" line="291"/>
         <source>File Size</source>
         <translation>ファイルサイズ</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="187"/>
-        <location filename="../../widgets/batchwidget.cpp" line="198"/>
+        <location filename="../../widgets/batchwidget.cpp" line="192"/>
+        <location filename="../../widgets/batchwidget.cpp" line="203"/>
         <source>Deleting files</source>
         <translation>ファイルを削除</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="188"/>
+        <location filename="../../widgets/batchwidget.cpp" line="193"/>
         <source>Are you sure to remove these %1 file(s)?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="199"/>
+        <location filename="../../widgets/batchwidget.cpp" line="204"/>
         <source>Failed to delete file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="207"/>
+        <location filename="../../widgets/batchwidget.cpp" line="212"/>
         <source>Add pictures...</source>
         <translation>画像を追加します。..</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="228"/>
-        <location filename="../../widgets/batchwidget.cpp" line="276"/>
+        <location filename="../../widgets/batchwidget.cpp" line="233"/>
+        <location filename="../../widgets/batchwidget.cpp" line="281"/>
         <source>Successfully added a list of pictures.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="235"/>
+        <location filename="../../widgets/batchwidget.cpp" line="240"/>
         <source>Iterate files in all sub-directories recursively.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="237"/>
+        <location filename="../../widgets/batchwidget.cpp" line="242"/>
         <source>Choose a directory containing pictures.</source>
         <translation>画像を含むディレクトリを選択します。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="318"/>
+        <location filename="../../widgets/batchwidget.cpp" line="329"/>
         <source>Choose a directory to save pictures.</source>
         <translation>画像を保存するディレクトリを選択します。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="341"/>
-        <location filename="../../widgets/batchwidget.cpp" line="356"/>
-        <location filename="../../widgets/batchwidget.cpp" line="366"/>
-        <location filename="../../widgets/batchwidget.cpp" line="380"/>
-        <location filename="../../widgets/batchwidget.cpp" line="392"/>
+        <location filename="../../widgets/batchwidget.cpp" line="352"/>
+        <location filename="../../widgets/batchwidget.cpp" line="367"/>
+        <location filename="../../widgets/batchwidget.cpp" line="377"/>
+        <location filename="../../widgets/batchwidget.cpp" line="391"/>
         <location filename="../../widgets/batchwidget.cpp" line="403"/>
-        <location filename="../../widgets/batchwidget.cpp" line="435"/>
+        <location filename="../../widgets/batchwidget.cpp" line="414"/>
+        <location filename="../../widgets/batchwidget.cpp" line="446"/>
         <source>Batch Splitting</source>
         <translation>一括分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="342"/>
+        <location filename="../../widgets/batchwidget.cpp" line="353"/>
         <source>Cannot open file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="356"/>
-        <location filename="../../widgets/batchwidget.cpp" line="366"/>
+        <location filename="../../widgets/batchwidget.cpp" line="367"/>
+        <location filename="../../widgets/batchwidget.cpp" line="377"/>
         <source>Unsupported</source>
         <translation>サポートされていません</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="403"/>
+        <location filename="../../widgets/batchwidget.cpp" line="414"/>
         <source>No rule to split the picture</source>
         <translation>画像を分割する規則はありません</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="381"/>
+        <location filename="../../widgets/batchwidget.cpp" line="392"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation>出力ディレクトリを指定していません。再試行してください。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="393"/>
+        <location filename="../../widgets/batchwidget.cpp" line="404"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -387,20 +387,25 @@ Top to Bottom</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="101"/>
-        <location filename="../../widgets/mainwindow.cpp" line="231"/>
-        <source>Single Splitting</source>
-        <translation>単一分割</translation>
+        <location filename="../../widgets/mainwindow.cpp" line="81"/>
+        <source>Tasks</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../widgets/mainwindow.cpp" line="103"/>
         <location filename="../../widgets/mainwindow.cpp" line="233"/>
+        <source>Single Splitting</source>
+        <translation>単一分割</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/mainwindow.cpp" line="105"/>
+        <location filename="../../widgets/mainwindow.cpp" line="235"/>
         <source>Batch Splitting</source>
         <translation>一括分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="105"/>
-        <location filename="../../widgets/mainwindow.cpp" line="234"/>
+        <location filename="../../widgets/mainwindow.cpp" line="107"/>
+        <location filename="../../widgets/mainwindow.cpp" line="236"/>
         <source>Preferences</source>
         <translation>に好都合である</translation>
     </message>

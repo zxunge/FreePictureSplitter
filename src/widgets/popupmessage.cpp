@@ -37,7 +37,7 @@ PopupMessage::PopupMessage(QWidget *parent)
     // Default style: black semi-transparent, rounded corners, white text
     setStyleSheet(u"PopupMessage {"
                   "   background-color: rgba(0, 0, 0, 180);"
-                  "   border-radius: 10px;"
+                  "   border-radius: 30px;"
                   "   color: white;"
                   "}"_s);
 
@@ -63,22 +63,22 @@ PopupMessage::PopupMessage(const QString &text, int timeout, int offsetFromTop, 
     QFrame *content = new QFrame;
     QVBoxLayout *contentLayout = new QVBoxLayout(content);
     QLabel *textLabel = new QLabel(text);
-    textLabel->setStyleSheet(u"font-size: 14px;"_s);
+    textLabel->setStyleSheet(u"font-size: 15px;"_s);
     contentLayout->addWidget(textLabel, Qt::AlignCenter);
     content->setAutoFillBackground(true);
     switch (type) {
     case PopupMessage::MsgType::Error:
-        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 10px;")
+        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
                                        .arg(ERROR_COLOR.name(), ERROR_MSG_COLOR.name()));
         break;
 
     case PopupMessage::MsgType::Info:
-        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 10px;")
+        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
                                        .arg(INFO_COLOR.name(), INFO_MSG_COLOR.name()));
         break;
 
     case PopupMessage::MsgType::Success:
-        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 10px;")
+        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
                                        .arg(SUCCESS_COLOR.name(), SUCCESS_MSG_COLOR.name()));
         break;
     }

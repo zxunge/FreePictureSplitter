@@ -248,7 +248,7 @@ void SingleWidget::resetSplitLines()
     if (ui->rbtnAver->isChecked())
         m_imgDoc->option().setAverage(ui->sbxRows->value(), ui->sbxCols->value());
     else if (ui->rbtnSize->isChecked())
-        m_imgDoc->option().setSize(QSize(ui->sbxWidth->value(), ui->sbxHeight->value()));
+        m_imgDoc->option().setSize({ ui->sbxWidth->value(), ui->sbxHeight->value() });
     else
         return;
 

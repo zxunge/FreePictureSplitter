@@ -87,6 +87,11 @@ BatchWidget::BatchWidget(QWidget *parent)
     ui->viewList->setSelectionModel(m_selModel);
     ui->viewTable->setSelectionModel(m_selModel);
 
+    ui->sbxCols->setMaximum(std::numeric_limits<int>::max());
+    ui->sbxRows->setMaximum(std::numeric_limits<int>::max());
+    ui->sbxHeight->setMaximum(std::numeric_limits<int>::max());
+    ui->sbxWidth->setMaximum(std::numeric_limits<int>::max());
+
     // Load configurations
     ui->cbxLocation->setCurrentIndex(
             g_appConfig.options.batchOpt.savingTo == Util::SavingTo::specified ? 1 : 0);
@@ -287,21 +292,27 @@ void BatchWidget::changeEvent(QEvent *e)
     }
 }
 
-void BatchWidget::addPicture(const QString &fileName)
+void BatchWidget::addPicture(const QString &filePath)
 {
-    QImageReader reader(fileName);
+    // Check if the item has been already added
+    for (qsizetype i = 0; i != m_model->rowCount(); ++i)
+        if (m_model->item(i, 1)->text() == filePath)
+            return;
+
+    QImageReader reader(filePath);
     if (!reader.canRead())
         return;
-    reader.setScaledSize(QSize(80, 80));
+    reader.setScaledSize({ 80, 80 });
     QStandardItem *itemName = new QStandardItem(QIcon(QPixmap::fromImageReader(&reader)),
-                                                QFileInfo(fileName).fileName());
-    QStandardItem *itemPath = new QStandardItem(fileName);
-    QStandardItem *itemSize = new QStandardItem(fileSizeString(fileName));
-    ImageDocument *imgDoc = new ImageDocument(fileName, this);
+                                                QFileInfo(filePath).fileName());
+    QStandardItem *itemPath = new QStandardItem(filePath);
+    QStandardItem *itemSize = new QStandardItem(fileSizeString(filePath));
+    ImageDocument *imgDoc = new ImageDocument(filePath, this);
     itemName->setData(QVariant::fromValue(static_cast<void *>(imgDoc)));
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
 
     // Adjust input range if the original range is bigger
+    reader.setFileName(reader.fileName());
     if (ui->sbxHeight->value() > reader.size().height())
         ui->sbxHeight->setMaximum(reader.size().height());
     if (ui->sbxWidth->value() > reader.size().width())
@@ -361,7 +372,7 @@ void BatchWidget::startSplit()
         if (ui->rbtnAverage->isChecked())
             imgDoc->option().setAverage(ui->sbxRows->value(), ui->sbxCols->value());
         else if (ui->rbtnSize->isChecked())
-            imgDoc->option().setSize(QSize(ui->sbxWidth->value(), ui->sbxHeight->value()));
+            imgDoc->option().setSize({ ui->sbxWidth->value(), ui->sbxHeight->value() });
         else {
             QMessageBox::critical(this, tr("Batch Splitting"), tr("Unsupported"),
                                   QMessageBox::Close);

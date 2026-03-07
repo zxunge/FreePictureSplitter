@@ -31,7 +31,7 @@ BEGIN
             VALUE "FileDescription", "A fast, small, and easy-to-use picture splitter!"
             VALUE "FileVersion", "@PROJECT_VERSION@"
             VALUE "InternalName", "FreePictureSplitter.exe"
-            VALUE "LegalCopyright", "Copyright (C) 2024-2025 zxunge"
+            VALUE "LegalCopyright", "Copyright (C) 2024-2026 zxunge"
             VALUE "OriginalFilename", "FreePictureSplitter.exe"
             VALUE "ProductName", "@PROJECT_NAME@"
             VALUE "ProductVersion", "@PROJECT_VERSION@"

@@ -163,9 +163,9 @@ QRect FancyTabBar::tabRect(int index) const
 
 QSize FancyTabBar::tabSizeHint(bool minimum) const
 {
-    if (m_iconsOnly) {
-        return QSize(32, 32);
-    }
+    if (m_iconsOnly)
+        return { 32, 32 };
+
     QFont boldFont = font();
     boldFont.setPointSizeF(9.0);
     boldFont.setBold(true);
@@ -179,7 +179,7 @@ QSize FancyTabBar::tabSizeHint(bool minimum) const
     int iconHeight = minimum ? 0 : 32;
     int spacing = 8;
     int width = qMax(60 + spacing, maxTextWidth + 8);
-    return QSize(width, iconHeight + spacing + fm.height());
+    return { width, iconHeight + spacing + fm.height() };
 }
 
 QSize FancyTabBar::sizeHint() const

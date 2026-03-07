@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
         <file>fps.ico</file>
-        <file>version.ico</file>
     </qresource>
     <qresource prefix="/windowBar">
         <file>windowBar/close-dark.svg</file>
