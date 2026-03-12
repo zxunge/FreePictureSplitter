@@ -168,20 +168,16 @@ QPushButton:disabled {
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-QTabWidget#tabWidget::pane {
-    border: none;
+QProgressBar {
+    height: 14px;
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    border-radius: 7px;
+    background: #1D5573;
 }
 
-QTabWidget#tabWidget::tab {
-    border: none;
-    padding: 3px 10px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    background-color: #FDE6E0;
-}
-
-QTabWidget#tabWidget::tab:selected {
-    background-color: #FDE6E0;
-    font-weight: bold;
-    border-left: 3px solid #cc5bce;
+QProgressBar::chunk {
+    border-radius: 7px;
+    background: qlineargradient(spread:pad,x1:0,y1:0,x2:1,y2:0,stop:0 #99ffff,stop:1 #9900ff);
 }

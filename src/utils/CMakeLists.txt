@@ -14,6 +14,8 @@ target_sources(FreePictureSplitter PRIVATE
     languagemanager.h
     misc.h
     globals.h
+    taskmanager.cpp
+    taskmanager.h
 )
 
 if(WIN32 AND (NOT DEPLOY_WINDOWS))

@@ -20,7 +20,7 @@ public:
     }
     ~ClickableLabel() { }
 
-Q_SIGNALS:
+signals:
     void clicked();
 
 protected:

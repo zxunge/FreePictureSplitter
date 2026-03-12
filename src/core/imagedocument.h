@@ -181,7 +181,7 @@ public:
         if (m_imgReader.canRead()) {
             m_imgReader.setAutoTransform(true);
             m_fileInfo.setFile(QDir::cleanPath(fn));
-            Q_EMIT imageChanged(m_fileInfo.absoluteFilePath());
+            emit imageChanged(m_fileInfo.absoluteFilePath());
             return true;
         } else
             return false;
@@ -217,7 +217,7 @@ public:
 
     void close() { m_imgReader.setFileName(QString()); }
 
-Q_SIGNALS:
+signals:
     void imageChanged(const QString &fn);
     void imageSaved(const QString &path);
 

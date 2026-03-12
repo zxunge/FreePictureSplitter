@@ -54,9 +54,9 @@ protected:
     void drawTicker(QPainter *painter);
     void drawPos(QPainter *painter);
 
-Q_SIGNALS:
+signals:
     /*!
-     * \brief Definitions of dragging Q_SIGNALS:
+     * \brief Definitions of dragging signals:
      * \brief Starting, moving and ending
      */
     void dragStarted(const QPoint &startPos);

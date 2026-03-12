@@ -21,7 +21,7 @@
 FreePictureSplitter是一款快速、小巧且易用的图片分割软件。
 
 ## 项目截图
-![screenshot](screenshot.png "Screenshot")
+<video src="https://github.com/user-attachments/assets/b4deb424-bbb4-4c97-983b-263082837b9b" data-canonical-src="https://github.com/user-attachments/assets/b4deb424-bbb4-4c97-983b-263082837b9b" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
 
 > [!NOTE]
 > 当我们以后提到FreePictureSplitter时，我们指的是FreePictureSplitter版本3及以上版本。
@@ -53,3 +53,4 @@ HTML生成 | ❎
 
 ## Star History
 [![Star History Chart](https://api.star-history.com/svg?repos=zxunge/FreePictureSplitter&type=Date)](https://star-history.com/#zxunge/FreePictureSplitter&Date)
+

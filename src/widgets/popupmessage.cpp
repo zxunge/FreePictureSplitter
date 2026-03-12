@@ -3,6 +3,8 @@
 
 #include "popupmessage.h"
 
+#include "utils/misc.h"
+
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QScreen>
@@ -15,9 +17,12 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-const QColor PopupMessage::m_errorColor = QColor(0xfef0f0);
-const QColor PopupMessage::m_infoColor = QColor(0xd0d7ff);
-const QColor PopupMessage::m_successColor = QColor(0xCDE6C7);
+const QColor PopupMessage::ERROR_COLOR = QColor(0xfef0f0);
+const QColor PopupMessage::INFO_COLOR = QColor(0xEFF6FF);
+const QColor PopupMessage::SUCCESS_COLOR = QColor(0xEDF7EF);
+const QColor PopupMessage::ERROR_MSG_COLOR = QColor(0xf56c6c);
+const QColor PopupMessage::INFO_MSG_COLOR = QColor(0x1A4C8C);
+const QColor PopupMessage::SUCCESS_MSG_COLOR = QColor(0x1F7840);
 
 PopupMessage::PopupMessage(QWidget *parent)
     : QWidget(parent, Qt::Tool | Qt::FramelessWindowHint),
@@ -32,7 +37,7 @@ PopupMessage::PopupMessage(QWidget *parent)
     // Default style: black semi-transparent, rounded corners, white text
     setStyleSheet(u"PopupMessage {"
                   "   background-color: rgba(0, 0, 0, 180);"
-                  "   border-radius: 10px;"
+                  "   border-radius: 30px;"
                   "   color: white;"
                   "}"_s);
 
@@ -47,8 +52,8 @@ PopupMessage::PopupMessage(QWidget *parent)
 
     // Timer (single shot)
     m_timer->setSingleShot(true);
-    connect(m_timer, &QTimer::timeout, this, &PopupMessage::onTimeout);
-    connect(m_animation, &QPropertyAnimation::finished, this, &PopupMessage::onAnimationFinished);
+    connect(m_timer, &QTimer::timeout, this, &PopupMessage::timeout);
+    connect(m_animation, &QPropertyAnimation::finished, this, &PopupMessage::animationFinished);
 }
 
 PopupMessage::PopupMessage(const QString &text, int timeout, int offsetFromTop, MsgType type,
@@ -58,23 +63,23 @@ PopupMessage::PopupMessage(const QString &text, int timeout, int offsetFromTop, 
     QFrame *content = new QFrame;
     QVBoxLayout *contentLayout = new QVBoxLayout(content);
     QLabel *textLabel = new QLabel(text);
-    textLabel->setStyleSheet(u"font-size: 14px;"_s);
+    textLabel->setStyleSheet(u"font-size: 15px;"_s);
     contentLayout->addWidget(textLabel, Qt::AlignCenter);
     content->setAutoFillBackground(true);
     switch (type) {
     case PopupMessage::MsgType::Error:
-        content->setStyleSheet(
-                QString("background-color: %1; border-radius: 10px;").arg(m_errorColor.name()));
+        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
+                                       .arg(ERROR_COLOR.name(), ERROR_MSG_COLOR.name()));
         break;
 
     case PopupMessage::MsgType::Info:
-        content->setStyleSheet(
-                QString("background-color: %1; border-radius: 10px;").arg(m_infoColor.name()));
+        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
+                                       .arg(INFO_COLOR.name(), INFO_MSG_COLOR.name()));
         break;
 
     case PopupMessage::MsgType::Success:
-        content->setStyleSheet(
-                QString("background-color: %1; border-radius: 10px;").arg(m_successColor.name()));
+        content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
+                                       .arg(SUCCESS_COLOR.name(), SUCCESS_MSG_COLOR.name()));
         break;
     }
 
@@ -139,6 +144,24 @@ void PopupMessage::showAnimated(int timeout, int offsetFromTop)
     m_timer->start(timeout);
 }
 
+void PopupMessage::error(const QString &text, int timeout, int offsetFromTop)
+{
+    PopupMessage *msg = new PopupMessage(text, timeout, offsetFromTop, PopupMessage::MsgType::Error,
+                                         Util::getMainWindow());
+}
+
+void PopupMessage::info(const QString &text, int timeout, int offsetFromTop)
+{
+    PopupMessage *msg = new PopupMessage(text, timeout, offsetFromTop, PopupMessage::MsgType::Info,
+                                         Util::getMainWindow());
+}
+
+void PopupMessage::success(const QString &text, int timeout, int offsetFromTop)
+{
+    PopupMessage *msg = new PopupMessage(text, timeout, offsetFromTop,
+                                         PopupMessage::MsgType::Success, Util::getMainWindow());
+}
+
 void PopupMessage::mousePressEvent(QMouseEvent *event)
 {
     // Stop timer and animation
@@ -197,7 +220,7 @@ bool PopupMessage::eventFilter(QObject *obj, QEvent *event)
     return QWidget::eventFilter(obj, event);
 }
 
-void PopupMessage::onAnimationFinished()
+void PopupMessage::animationFinished()
 {
     if (m_isHiding) {
         // Hiding animation finished, actually hide and destroy
@@ -206,7 +229,7 @@ void PopupMessage::onAnimationFinished()
     }
 }
 
-void PopupMessage::onTimeout()
+void PopupMessage::timeout()
 {
     hideAnimated();
 }

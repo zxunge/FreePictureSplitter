@@ -157,7 +157,7 @@
                <widget class="QComboBox" name="cbxStyle"/>
               </item>
               <item row="1" column="2">
-               <widget class="QToolButton" name="tbtnAddSkin">
+               <widget class="ToolButton" name="tbtnAddSkin">
                 <property name="text">
                  <string/>
                 </property>
@@ -452,6 +452,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ToolButton</class>
+   <extends>QToolButton</extends>
+   <header>toolbutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/fps.qrc"/>
  </resources>

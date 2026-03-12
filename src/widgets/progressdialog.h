@@ -21,10 +21,10 @@ public:
 
     bool isCancelled() const { return m_cancelled; }
 
-Q_SIGNALS:
+signals:
     void cancelled();
 
-public Q_SLOTS:
+public slots:
     void proceed(int elapsed);
     void proceed();
     void setRange(int minimum, int maximum);

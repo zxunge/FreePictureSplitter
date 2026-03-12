@@ -63,10 +63,10 @@ public:
         m_box->setVisible(visible);
     }
 
-public Q_SLOTS:
+public slots:
     void lineDestruction();
 
-Q_SIGNALS:
+signals:
     void positionChanged(int x, int y);
     void lineExists(bool existence);
     void lineAddedByDragging();
@@ -81,7 +81,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
     void updateRuler();
 
-private Q_SLOTS:
+private slots:
     void dragStarted(const QPoint &startPos);
     void dragMoved(const QPoint &currentPos);
     void dragFinished(const QPoint &endPos, bool isReal);

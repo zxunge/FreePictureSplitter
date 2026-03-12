@@ -8,6 +8,7 @@
 #include "aboutdialog.h"
 #include "fancytabwidget.h"
 #include "clickablelabel.h"
+#include "toolbutton.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/leaveevent.h"
@@ -40,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setAttribute(Qt::WA_DontCreateNativeAncestors);
 
     // Construct UI
-    setMinimumSize(QSize(800, 600));
+    setMinimumSize({ 800, 600 });
     setCentralWidget(new QWidget(this));
 
     QHBoxLayout *horizontalLayout = new QHBoxLayout(centralWidget());
@@ -61,20 +62,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     m_twgt->setObjectName("tabWidget");
     setWindowTitle(qAppName());
 
-    QIcon icon(u":/icons/version.ico"_s);
+    // Version label & progress bar
     ClickableLabel *labMark = new ClickableLabel(m_twgt);
-    labMark->resize(32, 32);
-    labMark->setPixmap(icon.pixmap(icon.actualSize(QSize(32, 32))));
+    labMark->setAutoFillBackground(true);
+    labMark->setStyleSheet(u"background-color: #8A2BE2; color: white;"_s);
+    labMark->setText(App::Constants::APP_VERSION_STR);
+    labMark->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);
+    m_twgt->setBottomCornerWidget(labMark);
     m_pbar = new QProgressBar(this);
     m_pbar->setMaximumWidth(80);
-    statusBar()->addPermanentWidget(m_pbar);
-    statusBar()->addPermanentWidget(labMark);
     m_pbar->setVisible(false);
-
     connect(labMark, &ClickableLabel::clicked, this, [this] {
         AboutDialog dlg(this);
         dlg.exec();
     });
+
+    // Task menu & button
+    m_taskMenu = new QMenu(this);
+    ToolButton *tbtnTask = new ToolButton(this);
+    tbtnTask->setToolTip(tr("Tasks"));
+    tbtnTask->setMinimumHeight(32);
+    tbtnTask->setText(QChar(0x2630));
+    connect(tbtnTask, &QToolButton::clicked, this, [this] { m_taskMenu->exec(QCursor::pos()); });
+    statusBar()->addPermanentWidget(m_pbar);
+    statusBar()->addPermanentWidget(tbtnTask);
 
     installWindowAgent();
 

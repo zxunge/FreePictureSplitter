@@ -28,6 +28,8 @@ target_sources(FreePictureSplitter PRIVATE
     filedialog.h
     popupmessage.cpp
     popupmessage.h
+    toolbutton.cpp
+    toolbutton.h
 )
 
 target_include_directories(FreePictureSplitter PRIVATE ${CMAKE_CURRENT_LIST_DIR})

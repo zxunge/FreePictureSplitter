@@ -26,7 +26,7 @@ public:
     ~BatchWidget();
 
 private:
-    void addPicture(const QString &fileName);
+    void addPicture(const QString &filePath);
     void removeSelectedItems();
     void deleteSelectedItems();
     void openPictures();

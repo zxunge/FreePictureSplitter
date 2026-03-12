@@ -48,7 +48,7 @@ jobs:
         iscc /O. /FFreePictureSplitter-setup-win64 FreePictureSplitter/dist/setup-win64.iss /DMyAppPath="D:\FreePictureSplitter"
 
     - name: Upload the installer
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: FreePictureSplitter-setup-win64
         path: FreePictureSplitter-setup-win64.exe
@@ -86,7 +86,7 @@ jobs:
         rm -rf /opt/freepicturesplitter/_CPack_Packages
         
     - name: Upload Build Output
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: FreePictureSplitter-linux-amd64
         path: /opt/freepicturesplitter

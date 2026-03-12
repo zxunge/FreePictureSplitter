@@ -14,12 +14,12 @@
         <translation>&lt;a href=&quot;%1&quot;&gt;GitHub仓库&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="76"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="75"/>
         <source>About Qt...</source>
         <translation>关于Qt...</translation>
     </message>
     <message>
-        <location filename="../../widgets/aboutdialog.cpp" line="80"/>
+        <location filename="../../widgets/aboutdialog.cpp" line="79"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -240,88 +240,99 @@ Top to Bottom</source>
         <translation>Ctrl+Del</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="87"/>
-        <location filename="../../widgets/batchwidget.cpp" line="270"/>
+        <location filename="../../widgets/batchwidget.cpp" line="82"/>
+        <location filename="../../widgets/batchwidget.cpp" line="289"/>
         <source>File Name</source>
         <translation>文件名称</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="88"/>
-        <location filename="../../widgets/batchwidget.cpp" line="271"/>
+        <location filename="../../widgets/batchwidget.cpp" line="83"/>
+        <location filename="../../widgets/batchwidget.cpp" line="290"/>
         <source>File Path</source>
         <translation>文件路径</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="89"/>
-        <location filename="../../widgets/batchwidget.cpp" line="272"/>
+        <location filename="../../widgets/batchwidget.cpp" line="84"/>
+        <location filename="../../widgets/batchwidget.cpp" line="291"/>
         <source>File Size</source>
         <translation>文件大小</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="190"/>
-        <location filename="../../widgets/batchwidget.cpp" line="201"/>
+        <location filename="../../widgets/batchwidget.cpp" line="192"/>
+        <location filename="../../widgets/batchwidget.cpp" line="203"/>
         <source>Deleting files</source>
         <translation>删除文件</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="191"/>
+        <location filename="../../widgets/batchwidget.cpp" line="193"/>
         <source>Are you sure to remove these %1 file(s)?</source>
         <translation>你确定删除这%1个文件吗？</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="202"/>
+        <location filename="../../widgets/batchwidget.cpp" line="204"/>
         <source>Failed to delete file: %1.</source>
         <translation>删除文件%1失败。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="210"/>
+        <location filename="../../widgets/batchwidget.cpp" line="212"/>
         <source>Add pictures...</source>
         <translation>添加图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="238"/>
+        <location filename="../../widgets/batchwidget.cpp" line="233"/>
+        <location filename="../../widgets/batchwidget.cpp" line="281"/>
+        <source>Successfully added a list of pictures.</source>
+        <translation>已成功添加一列文件。</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="240"/>
+        <source>Iterate files in all sub-directories recursively.</source>
+        <translation>递归添加所有子文件夹中的文件。</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/batchwidget.cpp" line="242"/>
         <source>Choose a directory containing pictures.</source>
         <translation>选择包含图片的文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="304"/>
+        <location filename="../../widgets/batchwidget.cpp" line="329"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="327"/>
-        <location filename="../../widgets/batchwidget.cpp" line="342"/>
         <location filename="../../widgets/batchwidget.cpp" line="352"/>
-        <location filename="../../widgets/batchwidget.cpp" line="366"/>
-        <location filename="../../widgets/batchwidget.cpp" line="378"/>
-        <location filename="../../widgets/batchwidget.cpp" line="389"/>
-        <location filename="../../widgets/batchwidget.cpp" line="421"/>
+        <location filename="../../widgets/batchwidget.cpp" line="367"/>
+        <location filename="../../widgets/batchwidget.cpp" line="377"/>
+        <location filename="../../widgets/batchwidget.cpp" line="391"/>
+        <location filename="../../widgets/batchwidget.cpp" line="403"/>
+        <location filename="../../widgets/batchwidget.cpp" line="414"/>
+        <location filename="../../widgets/batchwidget.cpp" line="446"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="328"/>
+        <location filename="../../widgets/batchwidget.cpp" line="353"/>
         <source>Cannot open file: %1.</source>
         <translation>无法打开文件：%1.</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="342"/>
-        <location filename="../../widgets/batchwidget.cpp" line="352"/>
+        <location filename="../../widgets/batchwidget.cpp" line="367"/>
+        <location filename="../../widgets/batchwidget.cpp" line="377"/>
         <source>Unsupported</source>
         <translation>不支持</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="389"/>
+        <location filename="../../widgets/batchwidget.cpp" line="414"/>
         <source>No rule to split the picture</source>
         <translation>没有用于分割图片的规则</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="367"/>
+        <location filename="../../widgets/batchwidget.cpp" line="392"/>
         <source>You have not specified the output directory yet, please try again.</source>
         <translation>您还没有指定输出文件夹，请重试。</translation>
     </message>
     <message>
-        <location filename="../../widgets/batchwidget.cpp" line="379"/>
+        <location filename="../../widgets/batchwidget.cpp" line="404"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
@@ -380,22 +391,35 @@ Top to Bottom</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="96"/>
-        <location filename="../../widgets/mainwindow.cpp" line="231"/>
+        <location filename="../../widgets/mainwindow.cpp" line="81"/>
+        <source>Tasks</source>
+        <translation>任务</translation>
+    </message>
+    <message>
+        <location filename="../../widgets/mainwindow.cpp" line="103"/>
+        <location filename="../../widgets/mainwindow.cpp" line="233"/>
         <source>Single Splitting</source>
         <translation>单图片分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="99"/>
-        <location filename="../../widgets/mainwindow.cpp" line="234"/>
+        <location filename="../../widgets/mainwindow.cpp" line="105"/>
+        <location filename="../../widgets/mainwindow.cpp" line="235"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="102"/>
-        <location filename="../../widgets/mainwindow.cpp" line="237"/>
+        <location filename="../../widgets/mainwindow.cpp" line="107"/>
+        <location filename="../../widgets/mainwindow.cpp" line="236"/>
         <source>Preferences</source>
         <translation>首选项</translation>
+    </message>
+</context>
+<context>
+    <name>PopupMessage</name>
+    <message>
+        <location filename="../../widgets/popupmessage.cpp" line="179"/>
+        <source>Details</source>
+        <translation>详细信息</translation>
     </message>
 </context>
 <context>
@@ -471,32 +495,27 @@ Top to Bottom</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;（默认为100.00%，即没有缩放。）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="49"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="47"/>
         <source>System default</source>
         <translation>系统默认</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="56"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="185"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>点击“保存图片”时指定的目录</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="188"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
         <source>The same location as the source picture</source>
         <translation>与每个图片源目录相同</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="62"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="189"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
         <source>The following path:</source>
         <translation>下列目录：</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="199"/>
-        <source>The UI language is changed. Would you like to restart to fit the UI components?</source>
-        <translation>用户界面的语言已经改变。你想要重启程序来让界面看起来更合适吗？</translation>
     </message>
     <message>
         <location filename="../../ui/preferenceswidget.ui" line="281"/>
@@ -559,12 +578,12 @@ Top to Bottom</source>
         <translation>在文件名中包含[行数 * 列数]。</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="122"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
         <source>Select a color for grid lines</source>
         <translation>为网格线选取一种颜色</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="156"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="154"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
@@ -603,32 +622,32 @@ Top to Bottom</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="129"/>
+        <location filename="../../app/main.cpp" line="127"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>加载模块exchndl.dll出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="90"/>
+        <location filename="../../app/main.cpp" line="88"/>
         <source>Error creating/opening configuration file.</source>
         <translation>创建或打开配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="102"/>
+        <location filename="../../app/main.cpp" line="100"/>
         <source>Error parsing configuration file: %1.</source>
         <translation>解析配置文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="114"/>
+        <location filename="../../app/main.cpp" line="112"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>配置文件的版本不匹配，尝试备份后把文件删除。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="195"/>
+        <location filename="../../app/main.cpp" line="193"/>
         <source>Could NOT load skin %1.</source>
         <translation>无法加载皮肤%1。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="149"/>
+        <location filename="../../app/main.cpp" line="147"/>
         <source>Error writing to configuration file.</source>
         <translation>写入配置文件出错。</translation>
     </message>
@@ -809,12 +828,12 @@ Bottom to Top</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;关闭当前打开的图片。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="93"/>
+        <location filename="../../widgets/singlewidget.cpp" line="94"/>
         <source>Open a picture...</source>
         <translation>打开一张图片...</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="113"/>
+        <location filename="../../widgets/singlewidget.cpp" line="114"/>
         <source>%1, Width: %2, Height: %3, Depth: %4, Vertical: %5 dpi, Horizontal: %6 dpi</source>
         <translation>%1，宽度：%2，高度：%3，色深：%4，垂直方向：%5 dpi，水平方向：%6 dpi</translation>
     </message>
@@ -824,22 +843,22 @@ Bottom to Top</source>
         <translation>加载图片文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="146"/>
+        <location filename="../../widgets/singlewidget.cpp" line="145"/>
         <source>Choose the output directory.</source>
         <translation>选择输出文件夹。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="172"/>
+        <location filename="../../widgets/singlewidget.cpp" line="170"/>
         <source>QDir::mkdir &apos;%1&apos; error!</source>
         <translation>QDir::mkdir &apos;%1&apos; 出错！</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="185"/>
+        <location filename="../../widgets/singlewidget.cpp" line="181"/>
         <source>Please at least choose one splitting mode, offer useful data then reset the splitting lines.</source>
         <translation>请至少选择一种分割模式，指定分割数据然后重置分割线。</translation>
     </message>
     <message>
-        <location filename="../../widgets/singlewidget.cpp" line="236"/>
+        <location filename="../../widgets/singlewidget.cpp" line="231"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
     </message>

@@ -6,10 +6,8 @@
 
 #include "utils/hovereventfilter.h"
 #include "utils/jsonconfigitems.h"
-#include "utils/misc.h"
 
 #include <QFile>
-#include <QMessageBox>
 #include <QApplication>
 #include <QDir>
 #include <QMetaObject>
@@ -80,7 +78,7 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
         else
             m_filter->setLeaveIcon(ICON_CLOSE_DARK);
 
-        Q_EMIT themeChanged(std::get<2>(m_skinInfo));
+        emit themeChanged(std::get<2>(m_skinInfo));
 
         return true;
     }

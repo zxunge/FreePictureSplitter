@@ -130,9 +130,7 @@ void SingleWidget::openPicture()
         if (ui->rbtnManual->isChecked())
             ui->actionSave->setEnabled(true);
     } else
-        PopupMessage *msg =
-                new PopupMessage(tr("Error loading picture file: %1.").arg(m_imgDoc->fullName()),
-                                 3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
+        PopupMessage::error(tr("Error loading picture file: %1.").arg(m_imgDoc->fullName()));
 }
 
 void SingleWidget::savePictures()
@@ -168,9 +166,8 @@ void SingleWidget::savePictures()
         QDir dir(basePath);
         if (!dir.exists(baseName))
             if (!dir.mkdir(baseName)) {
-                PopupMessage *msg = new PopupMessage(
-                        tr("QDir::mkdir \'%1\' error!").arg(dir.absolutePath() + '/' + baseName),
-                        3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
+                PopupMessage::error(
+                        tr("QDir::mkdir \'%1\' error!").arg(dir.absolutePath() + '/' + baseName));
                 return;
             }
         finalPath = basePath + u"/"_s + baseName;
@@ -181,10 +178,8 @@ void SingleWidget::savePictures()
     if (ui->rbtnManual->isChecked())
         m_imgDoc->applyLinesFrom(ui->graphicsView);
     else if (!m_imgDoc->isValid()) {
-        PopupMessage *msg =
-                new PopupMessage(tr("Please at least choose one splitting mode, offer "
-                                    "useful data then reset the splitting lines."),
-                                 3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
+        PopupMessage::info(tr("Please at least choose one splitting mode, offer "
+                              "useful data then reset the splitting lines."));
         return;
     }
 
@@ -229,13 +224,11 @@ void SingleWidget::savePictures()
             watcher.setFuture(result.value());
             dlg->exec();
         } else {
-            PopupMessage *msg = new PopupMessage(
-                    result.error(), 3000, 30, PopupMessage::MsgType::Error, Util::getMainWindow());
+            PopupMessage::error(result.error());
             return;
         }
     } else {
-        PopupMessage *msg = new PopupMessage(tr("No rule to split this picture"), 3000, 30,
-                                             PopupMessage::MsgType::Error, Util::getMainWindow());
+        PopupMessage::error(tr("No rule to split this picture"));
         return;
     }
 }
@@ -255,7 +248,7 @@ void SingleWidget::resetSplitLines()
     if (ui->rbtnAver->isChecked())
         m_imgDoc->option().setAverage(ui->sbxRows->value(), ui->sbxCols->value());
     else if (ui->rbtnSize->isChecked())
-        m_imgDoc->option().setSize(QSize(ui->sbxWidth->value(), ui->sbxHeight->value()));
+        m_imgDoc->option().setSize({ ui->sbxWidth->value(), ui->sbxHeight->value() });
     else
         return;
 

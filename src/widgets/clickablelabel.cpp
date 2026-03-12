@@ -8,6 +8,6 @@ ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent) { }
 
 void ClickableLabel::mousePressEvent(QMouseEvent *e)
 {
-    Q_EMIT clicked();
+    emit clicked();
     QLabel::mousePressEvent(e);
 }

@@ -108,10 +108,10 @@ void FancyTabBar::setCurrentIndex(int index)
 {
     if (index == m_currentIndex || (index >= 0 && !isTabEnabled(index)))
         return;
-    Q_EMIT currentAboutToChange(index);
+    emit currentAboutToChange(index);
     m_currentIndex = index;
     update();
-    Q_EMIT currentChanged(index);
+    emit currentChanged(index);
 }
 
 void FancyTabBar::setIconsOnly(bool iconsOnly)
@@ -163,9 +163,9 @@ QRect FancyTabBar::tabRect(int index) const
 
 QSize FancyTabBar::tabSizeHint(bool minimum) const
 {
-    if (m_iconsOnly) {
-        return QSize(32, 32);
-    }
+    if (m_iconsOnly)
+        return { 32, 32 };
+
     QFont boldFont = font();
     boldFont.setPointSizeF(9.0);
     boldFont.setBold(true);
@@ -179,7 +179,7 @@ QSize FancyTabBar::tabSizeHint(bool minimum) const
     int iconHeight = minimum ? 0 : 32;
     int spacing = 8;
     int width = qMax(60 + spacing, maxTextWidth + 8);
-    return QSize(width, iconHeight + spacing + fm.height());
+    return { width, iconHeight + spacing + fm.height() };
 }
 
 QSize FancyTabBar::sizeHint() const
@@ -386,7 +386,6 @@ FancyTabWidget::FancyTabWidget(QWidget *parent) : QWidget(parent)
 
     QVBoxLayout *cornerLayout = new QVBoxLayout(m_cornerWidgetContainer);
     cornerLayout->setContentsMargins(0, 0, 0, 0);
-    cornerLayout->addStretch();
 
     QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->setContentsMargins(0, 0, 0, 0);
@@ -401,8 +400,6 @@ FancyTabWidget::FancyTabWidget(QWidget *parent) : QWidget(parent)
     mainLayout->setSpacing(1);
     mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(m_stackedLayout);
-
-    setBaseColor(m_tabBar->baseColor());
 
     connect(m_tabBar, &FancyTabBar::currentChanged, this, &FancyTabWidget::showWidget);
     connect(m_tabBar, &FancyTabBar::currentAboutToChange, this,
@@ -458,17 +455,58 @@ void FancyTabWidget::setBaseColor(const QColor &color)
 void FancyTabWidget::showWidget(int index)
 {
     m_stackedLayout->setCurrentIndex(index);
-    Q_EMIT currentChanged(index);
+    emit currentChanged(index);
+}
+
+void FancyTabWidget::updateCornerLayout()
+{
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(m_cornerWidgetContainer->layout());
+    if (!layout)
+        return;
+
+    QLayoutItem *item;
+    while ((item = layout->takeAt(0)) != nullptr) {
+        delete item;
+    }
+
+    for (QWidget *w : std::as_const(m_topCornerWidgets)) {
+        if (w) {
+            layout->addWidget(w);
+        }
+    }
+
+    layout->addStretch();
+
+    if (m_bottomCornerWidget) {
+        layout->addWidget(m_bottomCornerWidget);
+    }
 }
 
 void FancyTabWidget::addCornerWidget(QWidget *widget)
 {
-    auto layout = qobject_cast<QVBoxLayout *>(m_cornerWidgetContainer->layout());
-    layout->insertWidget(layout->count() - 1, widget); // Insert before the stretch
+    if (!widget)
+        return;
+    m_topCornerWidgets.append(widget);
+    updateCornerLayout();
 }
 
 void FancyTabWidget::insertCornerWidget(int index, QWidget *widget)
 {
-    auto layout = qobject_cast<QVBoxLayout *>(m_cornerWidgetContainer->layout());
-    layout->insertWidget(index, widget);
+    if (!widget)
+        return;
+    m_topCornerWidgets.insert(index, widget);
+    updateCornerLayout();
+}
+
+void FancyTabWidget::setBottomCornerWidget(QWidget *widget)
+{
+    if (m_bottomCornerWidget == widget)
+        return;
+
+    if (widget) {
+        widget->setParent(m_cornerWidgetContainer);
+    }
+
+    m_bottomCornerWidget = widget;
+    updateCornerLayout();
 }
