@@ -33,6 +33,8 @@ private:
     void openFolder();
     void changePath();
     void startSplit();
+    QSize minSize();
+    void updateSpinBoxes();
 
 protected:
     void changeEvent(QEvent *e) override;

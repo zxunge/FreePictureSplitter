@@ -39,6 +39,9 @@
 #include <QFuture>
 #include <QFutureWatcher>
 
+#include <limits>
+#include <algorithm>
+
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 using namespace Core;
@@ -171,6 +174,8 @@ BatchWidget::BatchWidget(QWidget *parent)
             ui->labDir->setEnabled(false);
         }
     });
+    connect(m_model, &QStandardItemModel::rowsInserted, this, &BatchWidget::updateSpinBoxes);
+    connect(m_model, &QStandardItemModel::rowsRemoved, this, &BatchWidget::updateSpinBoxes);
 }
 
 BatchWidget::~BatchWidget()
@@ -310,17 +315,6 @@ void BatchWidget::addPicture(const QString &filePath)
     ImageDocument *imgDoc = new ImageDocument(filePath, this);
     itemName->setData(QVariant::fromValue(static_cast<void *>(imgDoc)));
     m_model->appendRow(QList<QStandardItem *>{ itemName, itemPath, itemSize });
-
-    // Adjust input range if the original range is bigger
-    reader.setFileName(reader.fileName());
-    if (ui->sbxHeight->value() > reader.size().height())
-        ui->sbxHeight->setMaximum(reader.size().height());
-    if (ui->sbxWidth->value() > reader.size().width())
-        ui->sbxWidth->setMaximum(reader.size().width());
-    if (ui->sbxRows->value() > reader.size().height())
-        ui->sbxRows->setMaximum(reader.size().height());
-    if (ui->sbxCols->value() > reader.size().width())
-        ui->sbxCols->setMaximum(reader.size().width());
 }
 
 void BatchWidget::changePath()
@@ -448,4 +442,30 @@ void BatchWidget::startSplit()
         }
     }
     dlg.close();
+}
+
+QSize BatchWidget::minSize()
+{
+    int minHeight = std::numeric_limits<int>::max();
+    int minWidth = std::numeric_limits<int>::max();
+
+    for (int i = 0; i < m_model->rowCount(); ++i) {
+        if (auto *item = m_model->item(i, 0)) {
+            if (auto *imgDoc = static_cast<ImageDocument *>(item->data().value<void *>())) {
+                const QSize size = imgDoc->size();
+                minHeight = std::min(minHeight, size.height());
+                minWidth = std::min(minWidth, size.width());
+            }
+        }
+    }
+    return { minWidth, minHeight };
+}
+
+void BatchWidget::updateSpinBoxes()
+{
+    QSize size = minSize();
+    ui->sbxHeight->setMaximum(size.height());
+    ui->sbxWidth->setMaximum(size.width());
+    ui->sbxRows->setMaximum(size.height());
+    ui->sbxCols->setMaximum(size.width());
 }

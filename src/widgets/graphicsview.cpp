@@ -17,7 +17,6 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 
     setViewport(new QWidget);
     setMouseTracking(true);
-    grabKeyboard();
     setAttribute(Qt::WA_DeleteOnClose);
 
     // Connected for dragging support
