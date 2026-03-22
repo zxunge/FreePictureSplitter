@@ -61,13 +61,6 @@ jobs:
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
         cmake --build build -j
         cmake --install build
-        
-    - name: Upload Build Output
-      uses: actions/upload-artifact@v7
-      with:
-        name: FreePictureSplitter-msys2-${{ matrix.msystem }}
-        path: D:\msys64\opt\freepicturesplitter
-        compression-level: 9
 
   msvc:
     runs-on: windows-latest
@@ -98,15 +91,8 @@ jobs:
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
         cmake -DWITH_PCH=OFF -DCMAKE_INSTALL_PREFIX=D:\FreePictureSplitter -B build .
-        cmake --build build -j --config RelWithDebInfo
-        cmake --install build --config RelWithDebInfo
-        
-    - name: Upload Build Output
-      uses: actions/upload-artifact@v7
-      with:
-        name: FreePictureSplitter-msvc
-        path: D:\FreePictureSplitter
-        compression-level: 9
+        cmake --build build --config Debug
+        cmake --install build --config Debug
       
   ubuntu:
     runs-on: ubuntu-latest
@@ -135,10 +121,3 @@ jobs:
         cmake -DWITH_PCH=OFF -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/opt/freepicturesplitter -B build .
         cmake --build build -j
         cmake --install build
-        
-    - name: Upload Build Output
-      uses: actions/upload-artifact@v7
-      with:
-        name: FreePictureSplitter-ubuntu
-        path: /opt/freepicturesplitter
-        compression-level: 9

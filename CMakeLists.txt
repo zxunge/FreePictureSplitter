@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 
+cmake_policy(SET CMP0091 NEW)
+
 project(FreePictureSplitter
-        VERSION 4.0.0
+        VERSION 4.1.0
         LANGUAGES C CXX
         DESCRIPTION "A fast, small, and easy-to-use picture splitter!"
         HOMEPAGE_URL https://github.com/zxunge/FreePictureSplitter
@@ -53,13 +55,3 @@ if(WITH_QT_GUI)
     add_subdirectory(src)
     add_subdirectory(lib)
 endif()
-
-message(STATUS "Configuration Options Summary --
-    Target system:          ${CMAKE_SYSTEM}
-    Compiler:
-        Build type:         ${CMAKE_BUILD_TYPE}
-        C compiler:         ${CMAKE_C_COMPILER}
-        C++ compiler:       ${CMAKE_CXX_COMPILER}
-        Qt version:         ${QT_DEFAULT_MAJOR_VERSION}
-        Qt toolchain:       ${QT_QMAKE_EXECUTABLE}"
-)

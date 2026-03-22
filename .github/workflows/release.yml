@@ -1,17 +1,18 @@
-name: Pack full source
+name: Pack Full Source
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code with submodules
         uses: actions/checkout@v4
         with:
-          submodules: recursive  
+          submodules: recursive
           fetch-depth: 0
 
       - name: Package source code

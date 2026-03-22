@@ -52,6 +52,7 @@ jobs:
       with:
         name: FreePictureSplitter-setup-win64
         path: FreePictureSplitter-setup-win64.exe
+        compression-level: 9
         
   linux:
     # We create a self-extracting archive on Linux.
