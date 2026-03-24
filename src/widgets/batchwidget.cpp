@@ -55,6 +55,10 @@ BatchWidget::BatchWidget(QWidget *parent)
 {
     ui->setupUi(this);
 
+     // Reserved features
+    ui->rbtnTemplate->setVisible(false);
+    ui->cbxTemplate->setVisible(false);
+
     ui->viewTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 
     QActionGroup *ag = new QActionGroup(this);
