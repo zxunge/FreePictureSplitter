@@ -7,3 +7,6 @@
 [submodule "src/3rdparty/phantomstyle"]
 	path = src/3rdparty/phantomstyle
 	url = https://github.com/cristianadam/phantomstyle.git
+[submodule "src/3rdparty/qlementine"]
+	path = src/3rdparty/qlementine
+	url = https://github.com/oclero/qlementine.git

@@ -9,6 +9,9 @@
 #include <QIcon>
 #include <QAbstractButton>
 
+#include <oclero/qlementine/style/QlementineStyle.hpp>
+#include <oclero/qlementine/style/ThemeManager.hpp>
+
 #include <tuple>
 #include <string>
 
@@ -61,6 +64,8 @@ private:
     SkinInfo m_skinInfo;
     QAbstractButton *m_closeBtn;
     ButtonHoverEventFilter *m_filter;
+    oclero::qlementine::QlementineStyle *m_style;
+    oclero::qlementine::ThemeManager *m_themeMgr;
 
 signals:
     void themeChanged(Util::ThemeManager::Theme theme);

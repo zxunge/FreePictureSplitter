@@ -13,9 +13,8 @@
 #include <QMetaObject>
 #include <QTabBar>
 #include <QColor>
-#include <QStyleFactory>
 
-#include <phantomstyle.h>
+#include <oclero/qlementine.hpp>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -38,6 +37,12 @@ ThemeManager::ThemeManager(QObject *parent)
     : QObject(parent), m_skinInfo(std::make_tuple("", "", Theme::Light)), m_closeBtn(nullptr)
 {
     m_filter = new ButtonHoverEventFilter(ICON_CLOSE_DARK, QIcon(), this);
+    m_style = new oclero::qlementine::QlementineStyle(qApp);
+    m_themeMgr = new oclero::qlementine::ThemeManager(m_style);
+
+    m_style->setAnimationsEnabled(true);
+    m_style->setAutoIconColor(oclero::qlementine::AutoIconColor::TextColor);
+    m_themeMgr->loadDirectory(Util::skinsDir());
 }
 
 ThemeManager::~ThemeManager()
@@ -67,9 +72,7 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
         // we need to do some path-conversion.
         QString ss = in.readAll();
         ss.replace(u"@SKINS_DIR@"_s, Util::skinsDir());
-        // Set a new PhantomStyle
-        PhantomStyle *style = new PhantomStyle();
-        qApp->setStyle(style);
+        qApp->setStyle(m_style);
         qApp->setStyleSheet(ss);
         styleFile.close();
 
