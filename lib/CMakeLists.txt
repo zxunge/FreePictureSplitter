@@ -21,3 +21,5 @@ if(MINGW)
     endif()
     install(FILES ${exchndl_dlls} DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif()
+
+add_subdirectory(tools)

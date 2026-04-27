@@ -5,18 +5,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include "framelesswidget.h"
 
-namespace QWK {
-class WidgetWindowAgent;
-} // namespace QWK
 class QEvent;
+class QStatusBar;
 class QCloseEvent;
 class QProgressBar;
 class FancyTabWidget;
 class QMenu;
 
-class MainWindow final : public QMainWindow
+class MainWindow final : public FramelessWidget
 {
     Q_OBJECT
 
@@ -25,19 +23,18 @@ public:
     ~MainWindow() = default;
 
     QProgressBar *progressBar() const { return m_pbar; }
+    QStatusBar *statusBar() const { return m_statusBar; }
 
 private:
     void createTabs();
-    void installWindowAgent();
 
 protected:
-    bool event(QEvent *event) override;
     void closeEvent(QCloseEvent *e) override;
     void changeEvent(QEvent *e) override;
 
 private:
-    QWK::WidgetWindowAgent *m_windowAgent;
     QProgressBar *m_pbar;
+    QStatusBar *m_statusBar;
     FancyTabWidget *m_twgt;
     QMenu *m_taskMenu;
 };

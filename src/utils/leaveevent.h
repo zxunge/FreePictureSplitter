@@ -35,7 +35,7 @@ static inline void emulateLeaveEvent(QWidget *widget)
             if (widget->testAttribute(Qt::WA_Hover)) {
                 const QPoint localPos = widget->mapFromGlobal(globalPos);
                 const QPoint scenePos = widget->window()->mapFromGlobal(globalPos);
-                static constexpr const QPoint oldPos = {};
+                static constexpr const QPoint oldPos = { };
                 const Qt::KeyboardModifiers modifiers = QGuiApplication::keyboardModifiers();
                 const auto event =
                         new QHoverEvent(QEvent::HoverLeave, scenePos, globalPos, oldPos, modifiers);

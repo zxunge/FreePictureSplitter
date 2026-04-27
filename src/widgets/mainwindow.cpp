@@ -26,17 +26,13 @@
 #include <QStyle>
 #include <QStatusBar>
 #include <QFile>
-#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QProgressBar>
-
-#include <QWKWidgets/widgetwindowagent.h>
-#include <widgetframe/windowbar.h>
-#include <widgetframe/windowbutton.h>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
+MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
 {
     setAttribute(Qt::WA_DontCreateNativeAncestors);
 
@@ -44,23 +40,30 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     setMinimumSize({ 800, 600 });
     setCentralWidget(new QWidget(this));
 
-    QHBoxLayout *horizontalLayout = new QHBoxLayout(centralWidget());
-    horizontalLayout->setSpacing(0);
-    horizontalLayout->setContentsMargins(0, 0, 0, 0);
+    QVBoxLayout *verticalLayout = new QVBoxLayout(centralWidget());
+    verticalLayout->setSpacing(0);
+    verticalLayout->setContentsMargins(0, 0, 0, 0);
 
     m_twgt = new FancyTabWidget(centralWidget());
-    horizontalLayout->addWidget(m_twgt);
+    verticalLayout->addWidget(m_twgt);
 
-    setStatusBar(new QStatusBar());
+    m_statusBar = new QStatusBar();
     statusBar()->setSizeGripEnabled(false);
     statusBar()->setObjectName("statusBar");
+    verticalLayout->addWidget(m_statusBar);
 
     createTabs();
 
     setObjectName("MainWindow");
     centralWidget()->setObjectName("centralWidget");
     m_twgt->setObjectName("tabWidget");
+
     setWindowTitle(qAppName());
+    setTitleText(qAppName());
+    setTitleBarColor(Qt::white);
+    setBackgroundColor(QColor(255, 255, 255, 255));
+    setRadius(12);
+    setBlurRadius(12);
 
     // Version label & progress bar
     ClickableLabel *labMark = new ClickableLabel(m_twgt);
@@ -87,8 +90,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     statusBar()->addPermanentWidget(m_pbar);
     statusBar()->addPermanentWidget(tbtnTask);
 
-    installWindowAgent();
-
     QFile layoutFile(Util::dataDir() % '/' % Util::LAYOUT_FILE_NAME);
     if (layoutFile.open(QIODevice::ReadOnly))
         restoreGeometry(layoutFile.readAll());
@@ -109,112 +110,6 @@ void MainWindow::createTabs()
     m_twgt->setAutoFillBackground(true);
 }
 
-void MainWindow::installWindowAgent()
-{
-    // Setup window agent
-    m_windowAgent = new QWK::WidgetWindowAgent(this);
-    m_windowAgent->setup(this);
-
-    // Construct window bar
-    auto windowBar = new QWK::WindowBar();
-    auto titleLabel = new QLabel();
-    titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setObjectName(u"win-title-label"_s);
-
-    auto iconButton = new QWK::WindowButton();
-    iconButton->setObjectName(u"icon-button"_s);
-    iconButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-    auto pinButton = new QWK::WindowButton();
-    pinButton->setCheckable(true);
-    pinButton->setObjectName(QStringLiteral("pin-button"));
-    pinButton->setProperty("system-button", true);
-    pinButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-    auto minButton = new QWK::WindowButton();
-    minButton->setObjectName(u"min-button"_s);
-    minButton->setProperty("system-button", true);
-    minButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-    auto maxButton = new QWK::WindowButton();
-    maxButton->setCheckable(true);
-    maxButton->setObjectName(u"max-button"_s);
-    maxButton->setProperty("system-button", true);
-    maxButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-    auto closeButton = new QWK::WindowButton();
-    closeButton->setObjectName(u"close-button"_s);
-    closeButton->setProperty("system-button", true);
-    closeButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-
-    windowBar->setHostWidget(this);
-    windowBar->setTitleLabel(titleLabel);
-    windowBar->setIconButton(iconButton);
-    windowBar->setPinButton(pinButton);
-    windowBar->setMinButton(minButton);
-    windowBar->setMaxButton(maxButton);
-    windowBar->setCloseButton(closeButton);
-    m_windowAgent->setTitleBar(windowBar);
-
-    // Set properties
-    m_windowAgent->setHitTestVisible(pinButton, true);
-    m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
-    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Minimize, minButton);
-    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Maximize, maxButton);
-    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, closeButton);
-    connect(windowBar, &QWK::WindowBar::pinRequested, this, [this, pinButton](bool pin) {
-        if (isHidden() || isMinimized() || isMaximized() || isFullScreen())
-            return;
-
-        setWindowFlag(Qt::WindowStaysOnTopHint, pin);
-        show();
-        pinButton->setChecked(pin);
-    });
-    connect(windowBar, &QWK::WindowBar::minimizeRequested, this, &QWidget::showMinimized);
-    connect(windowBar, &QWK::WindowBar::maximizeRequested, this, [this, maxButton](bool max) {
-        if (max)
-            showMaximized();
-        else
-            showNormal();
-
-        // It's a Qt issue that if a QAbstractButton::clicked triggers a window's maximization,
-        // the button remains to be hovered until the mouse move. As a result, we need to
-        // manually send leave events to the button.
-        emulateLeaveEvent(maxButton);
-    });
-    connect(windowBar, &QWK::WindowBar::closeRequested, this, &QWidget::close);
-    ThemeManager::instance().setCloseButton(closeButton);
-
-    setMenuWidget(windowBar);
-}
-
-bool MainWindow::event(QEvent *event)
-{
-    switch (event->type()) {
-    case QEvent::WindowActivate: {
-        auto menu = menuWidget();
-        if (!menu)
-            break;
-        menu->setProperty("bar-active", true);
-        style()->polish(menu);
-        break;
-    }
-
-    case QEvent::WindowDeactivate: {
-        auto menu = menuWidget();
-        if (!menu)
-            break;
-        menu->setProperty("bar-active", false);
-        style()->polish(menu);
-        break;
-    }
-
-    default:
-        break;
-    }
-    return QMainWindow::event(event);
-}
-
 void MainWindow::closeEvent(QCloseEvent *e)
 {
     QFile layoutFile(Util::dataDir() % '/' % Util::LAYOUT_FILE_NAME);
@@ -223,12 +118,12 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
     g_appConfig.dialog.lastEnteredIndex = m_twgt->currentIndex();
 
-    QMainWindow::closeEvent(e);
+    QWidget::closeEvent(e);
 }
 
 void MainWindow::changeEvent(QEvent *e)
 {
-    QMainWindow::changeEvent(e);
+    QWidget::changeEvent(e);
     if (e->type() == QEvent::LanguageChange) {
         m_twgt->setTab(0, QIcon(u":/controls/controls/32x32/image.svg"_s), tr("Single Splitting"));
         m_twgt->setTab(1, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),
