@@ -34,6 +34,7 @@ public:
     void setCentralWidget(QWidget *newCentralWidget);
 
     TitleBar *titleBar() const;
+    void restoreGeometry(const QByteArray &geometry);
 
 protected:
     enum OpFlag { NONE = -1, Top, Bottom, Left, Right, TL, TR, BL, BR };

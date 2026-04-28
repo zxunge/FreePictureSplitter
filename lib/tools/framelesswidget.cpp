@@ -10,11 +10,10 @@ FramelessWidget::~FramelessWidget() { }
 void FramelessWidget::setBackgroundColor(const QColor &color)
 {
     m_bgColor = color;
-    if (isMaximized() || isFullScreen()) {
+    if (isMaximized() || isFullScreen())
         updateRadius(0);
-    } else {
+    else
         updateRadius(m_radius);
-    }
     updateSize();
 }
 
@@ -48,24 +47,24 @@ void FramelessWidget::initialize()
     setWindowFlags(Qt::FramelessWindowHint | windowFlags()); // Hide default frame
     setAttribute(Qt::WA_TranslucentBackground, true); // Set transparent background
     setMouseTracking(true); // Enable mouse tracking
-    // resize(400, 300);
+
     m_border = new QWidget;
     m_border->setCursor(Qt::ArrowCursor);
     m_titleBar = new TitleBar(m_border);
-    QVBoxLayout *pCenterLayout = new QVBoxLayout;
-    pCenterLayout->setContentsMargins(0, 0, 0, 0);
-    pCenterLayout->setSpacing(0);
-    pCenterLayout->setAlignment(Qt::AlignTop);
-    pCenterLayout->addWidget(m_titleBar);
+    QVBoxLayout *centerLayout = new QVBoxLayout;
+    centerLayout->setContentsMargins(0, 0, 0, 0);
+    centerLayout->setSpacing(0);
+    centerLayout->setAlignment(Qt::AlignTop);
+    centerLayout->addWidget(m_titleBar);
 
     if (m_centralWidget) {
         m_titleBar->setTitleText(m_centralWidget->windowTitle());
         m_titleBar->setTitleIcon(m_centralWidget->windowIcon().pixmap(64, 64));
-        pCenterLayout->addWidget(m_centralWidget);
-        pCenterLayout->setStretch(1, 1);
+        centerLayout->addWidget(m_centralWidget);
+        centerLayout->setStretch(1, 1);
         m_border->setCursor(m_centralWidget->cursor());
     }
-    m_border->setLayout(pCenterLayout);
+    m_border->setLayout(centerLayout);
     m_gridLayout = new QGridLayout;
     m_gridLayout->setContentsMargins(m_blurRadius, m_blurRadius, m_blurRadius,
                                      m_blurRadius); // Reserve space for border shadow
@@ -76,6 +75,13 @@ void FramelessWidget::initialize()
     setRadius(m_radius);
 
     connect(m_titleBar, &TitleBar::closed, this, &FramelessWidget::close);
+    connect(m_titleBar, &TitleBar::maximizedStateChanged, this, [this](bool isMax) {
+        Q_UNUSED(isMax)
+        if (isMaximized() || isFullScreen())
+            updateRadius(0);
+        else
+            updateRadius(m_radius);
+    });
 }
 
 void FramelessWidget::calculateOpflag(QPoint pos)
@@ -455,6 +461,15 @@ void FramelessWidget::changeEvent(QEvent *event)
 TitleBar *FramelessWidget::titleBar() const
 {
     return m_titleBar;
+}
+
+void FramelessWidget::restoreGeometry(const QByteArray &geometry)
+{
+    QWidget::restoreGeometry(geometry);
+    if (isMaximized())
+        emit m_titleBar->maximizedStateChanged(true);
+    else
+        emit m_titleBar->maximizedStateChanged(false);
 }
 
 QWidget *FramelessWidget::centralWidget() const

@@ -107,6 +107,14 @@ void ThemeManager::setTitleBar(TitleBar *bar)
     m_titleBar->btnClose()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_CLOSE_DARK
                                                                            : ICON_CLOSE_LIGHT);
     m_titleBar->btnClose()->installEventFilter(m_filter);
+    connect(m_titleBar, &TitleBar::maximizedStateChanged, this, [this](bool is) {
+        if (is)
+            m_titleBar->btnMax()->setIcon(
+                    std::get<2>(m_skinInfo) == Theme::Dark ? ICON_NORMAL_DARK : ICON_NORMAL_LIGHT);
+        else
+            m_titleBar->btnMax()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_MAX_DARK
+                                                                                 : ICON_MAX_LIGHT);
+    });
 }
 
 ThemeManager::SkinInfo ThemeManager::infoFromSkinName(const std::string &name)

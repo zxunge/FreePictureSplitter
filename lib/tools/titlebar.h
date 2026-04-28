@@ -51,7 +51,7 @@ public slots:
 signals:
     void closed();
     void movePos(QPointF movePoint);
-    void maxChange(bool is);
+    void maximizedStateChanged(bool is);
 
 protected:
     void initialize();
@@ -83,10 +83,10 @@ private:
     uint m_radius = 10;
     QColor m_minHoverColor = QColor(240, 240, 240);
     QColor m_maxHoverColor = QColor(240, 240, 240);
-    QColor m_closeHoverColor = QColor(255, 123, 123);
+    QColor m_closeHoverColor = QColor(232, 17, 35);
     QColor m_minPressedColor = QColor(220, 220, 220);
     QColor m_maxPressedColor = QColor(220, 220, 220);
-    QColor m_closePressedColor = QColor(255, 103, 103);
+    QColor m_closePressedColor = QColor(232, 17, 35);
 };
 
 #endif // TITLEBAR_H

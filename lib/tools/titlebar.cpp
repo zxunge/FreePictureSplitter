@@ -24,9 +24,8 @@ void TitleBar::setTitleIcon(const QString &path)
 
 void TitleBar::setTitleIcon(const QPixmap &icon)
 {
-    if (icon.isNull()) {
+    if (icon.isNull())
         return;
-    }
     m_labIcon->setHidden(false);
     QPixmap pix = icon.scaledToHeight(m_height - 10, Qt::SmoothTransformation);
     m_labIcon->setPixmap(pix);
@@ -105,11 +104,10 @@ void TitleBar::setPressedColorClose(const QColor &color)
 void TitleBar::showFull(const bool &isFull)
 {
     QWidget *p = window();
-    if (isFull) {
+    if (isFull)
         p->showFullScreen();
-    } else {
+    else
         p->showMaximized();
-    }
 }
 
 void TitleBar::setMoveEnable(const bool &moveEnable)
@@ -128,10 +126,10 @@ void TitleBar::maximized()
     QWidget *p = window();
     if (p->isMaximized()) {
         p->showNormal();
-        emit maxChange(false);
+        emit maximizedStateChanged(false);
     } else {
         p->showMaximized();
-        emit maxChange(true);
+        emit maximizedStateChanged(true);
     }
 }
 
@@ -182,6 +180,7 @@ void TitleBar::initialize()
     m_btnClose->setFocusPolicy(Qt::NoFocus);
     m_btnMin->setFocusPolicy(Qt::NoFocus);
     m_btnMax->setFocusPolicy(Qt::NoFocus);
+
     connect(m_btnMin, &QPushButton::clicked, this, &TitleBar::minimized);
     connect(m_btnMax, &QPushButton::clicked, this, &TitleBar::maximized);
     connect(m_btnClose, &QPushButton::clicked, this, &TitleBar::closed);
@@ -234,9 +233,8 @@ void TitleBar::updateStyle()
 
 void TitleBar::moveTopParent(QWidget *wgt, QPoint movePoint)
 {
-    if (nullptr == wgt) {
+    if (nullptr == wgt)
         return;
-    }
 
     if (wgt->parentWidget()) {
         moveTopParent(wgt->parentWidget(), movePoint);
@@ -291,9 +289,9 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
 {
     m_ignoreNextPress = true;
     m_isPressed = false;
-    if (!m_btnMax->isVisible() || event->button() != Qt::MouseButton::LeftButton) {
+    if (!m_btnMax->isVisible() || event->button() != Qt::MouseButton::LeftButton)
         return;
-    }
+
     maximized();
     QWidget::mouseDoubleClickEvent(event);
 }
