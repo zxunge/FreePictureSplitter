@@ -30,7 +30,7 @@ Result<QFuture<QList<Result<>>>> ImageDocument::saveImages()
                                                    Qt::SmoothTransformation)))
                         return std::unexpected(tr("Image saving failed: %1: %2.")
                                                        .arg(filename, writer.errorString()));
-                    return { };
+                    return {};
                 },
                 [](QList<Result<>> &results, const Result<> &result) { results.push_back(result); },
                 QtConcurrent::OrderedReduce);

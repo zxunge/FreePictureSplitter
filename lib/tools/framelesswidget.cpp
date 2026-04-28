@@ -2,9 +2,12 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "framelesswidget.h"
+#include "borderwidget.h"
 #include "../../src/utils/thememanager.h"
 
 #include <oclero/qlementine/style/Theme.hpp>
+
+using namespace Qt::Literals::StringLiterals;
 
 FramelessWidget::FramelessWidget(QWidget *parent) : QWidget(parent) { }
 
@@ -13,6 +16,7 @@ FramelessWidget::~FramelessWidget() { }
 void FramelessWidget::setBackgroundColor(const QColor &color)
 {
     m_backgroundColor = color;
+    m_border->setBackgroundColor(color);
     if (isMaximized() || isFullScreen())
         updateRadius(0);
     else
@@ -50,7 +54,7 @@ void FramelessWidget::initialize()
     setAttribute(Qt::WA_TranslucentBackground, true); // Set transparent background
     setMouseTracking(true); // Enable mouse tracking
 
-    m_border = new QWidget;
+    m_border = new BorderWidget;
     m_border->setCursor(Qt::ArrowCursor);
     m_titleBar = new TitleBar(m_border);
     QVBoxLayout *centerLayout = new QVBoxLayout;
@@ -67,6 +71,7 @@ void FramelessWidget::initialize()
         m_border->setCursor(m_centralWidget->cursor());
     }
     m_border->setLayout(centerLayout);
+    m_border->setObjectName("border");
     m_gridLayout = new QGridLayout;
     m_gridLayout->setContentsMargins(m_blurRadius, m_blurRadius, m_blurRadius,
                                      m_blurRadius); // Reserve space for border shadow
@@ -131,42 +136,29 @@ void FramelessWidget::calculateOpflag(QPoint pos)
 
 void FramelessWidget::updateRadius(const uint &r)
 {
-    m_border->setObjectName("Border");
-    QString cr = QString::number(m_backgroundColor.red()); // Get red component
-    QString cg = QString::number(m_backgroundColor.green()); // Get green component
-    QString cb = QString::number(m_backgroundColor.blue()); // Get blue component
-    QString ca = QString::number(m_backgroundColor.alpha()); // Get alpha component
-    m_border->setStyleSheet(
-            QString("QWidget#Border{border-radius: %1px;background-color: rgba(%2, %3, %4, %5);}")
-                    .arg(QString::number(r), cr, cg, cb, ca));
-
-    m_border->style()->unpolish(m_border);
-    m_border->style()->polish(m_border);
+    m_border->setBorderRadius(r);
     m_titleBar->setRadius(r);
     update();
 }
 
 void FramelessWidget::updateSize()
 {
-    if (m_centralWidget == nullptr) {
+    if (m_centralWidget == nullptr)
         return;
-    }
 
     int w = m_centralWidget->maximumWidth() + m_blurRadius;
     int h = m_centralWidget->maximumHeight() + m_blurRadius;
 
-    if (!m_titleBar->isHidden()) {
+    if (!m_titleBar->isHidden())
         h += m_titleBar->height();
-    }
 
     setMaximumSize(qMin(w, QWIDGETSIZE_MAX), qMin(h, QWIDGETSIZE_MAX));
 
     w = m_centralWidget->width() + m_blurRadius;
     h = m_centralWidget->height() + m_blurRadius;
 
-    if (!m_titleBar->isHidden()) {
+    if (!m_titleBar->isHidden())
         h += m_titleBar->height();
-    }
     resize(w, h);
 }
 
@@ -186,9 +178,8 @@ void FramelessWidget::mousePressEvent(QMouseEvent *event)
 void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint pos = event->pos();
-    if (!m_isOp) {
+    if (!m_isOp)
         calculateOpflag(pos);
-    }
 
     // Get the current mouse drag position
     QPointF currPos = event->globalPosition();
@@ -209,9 +200,8 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y();
             w = size().width() - ptemp.x();
             h = size().height();
-            if (w < minimumWidth()) {
+            if (w < minimumWidth())
                 m_lastPos.setX(this->pos().x());
-            }
             break;
             // Right border stretched
         case Right:
@@ -219,9 +209,8 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y();
             w = size().width() + ptemp.x();
             h = size().height();
-            if (w < minimumWidth()) {
+            if (w < minimumWidth())
                 m_lastPos.setX(this->pos().x() + width());
-            }
             break;
             // Top border stretched
         case Top:
@@ -229,9 +218,8 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y() + ptemp.y();
             w = size().width();
             h = size().height() - ptemp.y();
-            if (h < minimumHeight()) {
+            if (h < minimumHeight())
                 m_lastPos.setY(this->pos().y());
-            }
             break;
             // Bottom border stretched
         case Bottom:
@@ -239,9 +227,8 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y();
             w = size().width();
             h = size().height() + ptemp.y();
-            if (h < minimumHeight()) {
+            if (h < minimumHeight())
                 m_lastPos.setY(this->pos().y() + height());
-            }
             break;
             // Top-right corner stretched
         case TR:
@@ -249,12 +236,10 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y() + ptemp.y();
             w = size().width() + ptemp.x();
             h = size().height() - ptemp.y();
-            if (w < minimumWidth()) {
+            if (w < minimumWidth())
                 m_lastPos.setX(this->pos().x() + width());
-            }
-            if (h < minimumHeight()) {
+            if (h < minimumHeight())
                 m_lastPos.setY(this->pos().y());
-            }
             break;
             // Top-left corner stretched
         case TL:
@@ -262,12 +247,10 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y() + ptemp.y();
             w = size().width() - ptemp.x();
             h = size().height() - ptemp.y();
-            if (w < minimumWidth()) {
+            if (w < minimumWidth())
                 m_lastPos.setX(this->pos().x());
-            }
-            if (h < minimumHeight()) {
+            if (h < minimumHeight())
                 m_lastPos.setY(this->pos().y());
-            }
             break;
             // Bottom-right corner stretched
         case BR:
@@ -275,12 +258,10 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y();
             w = size().width() + ptemp.x();
             h = size().height() + ptemp.y();
-            if (w < minimumWidth()) {
+            if (w < minimumWidth())
                 m_lastPos.setX(this->pos().x() + width());
-            }
-            if (h < minimumHeight()) {
+            if (h < minimumHeight())
                 m_lastPos.setY(this->pos().y() + height());
-            }
             break;
             // Bottom-left corner stretched
         case BL:
@@ -288,12 +269,10 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
             y = this->pos().y();
             w = size().width() - ptemp.x();
             h = size().height() + ptemp.y();
-            if (w < minimumWidth()) {
+            if (w < minimumWidth())
                 m_lastPos.setX(this->pos().x());
-            }
-            if (h < minimumHeight()) {
+            if (h < minimumHeight())
                 m_lastPos.setY(this->pos().y() + height());
-            }
             break;
         default:
             return;

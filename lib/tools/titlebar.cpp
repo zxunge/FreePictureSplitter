@@ -6,10 +6,13 @@
 
 #include <oclero/qlementine/style/Theme.hpp>
 
+using namespace Qt::Literals::StringLiterals;
+
 TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
 {
     setFocusPolicy(Qt::NoFocus);
     setFixedHeight(m_height);
+    setObjectName("titleBar");
 
     m_btnClose = new QPushButton(this);
     m_btnMax = new QPushButton(this);
@@ -188,40 +191,33 @@ void TitleBar::minimized()
 
 void TitleBar::updateStyle()
 {
-    QString styleMin = "QPushButton{border: 0px;}QPushButton:hover{background-color: "
-                       "hoverColor;border-radius: 0px;}QPushButton:pressed{background-color: "
-                       "pressedColor;border-radius: 0px;}";
-    QString styleMax = "QPushButton{border: 0px;}QPushButton:hover{background-color: "
-                       "hoverColor;border-radius: 0px;}QPushButton:pressed{background-color: "
-                       "pressedColor;border-radius: 0px;}";
-    QString styleClose = "QPushButton{border: 0px;}QPushButton:hover{background-color: "
-                         "hoverColor;borderRadius}QPushButton:pressed{background-color: "
-                         "pressedColor;borderRadius}";
-
-    setObjectName("titleBar");
     QString cr = QString::number(m_backgroundColor.red());
     QString cg = QString::number(m_backgroundColor.green());
     QString cb = QString::number(m_backgroundColor.blue());
     QString ca = QString::number(m_backgroundColor.alpha());
-    setStyleSheet(QString("QWidget#titleBar{border-top-left-radius: %1px;"
-                          "border-top-right-radius: %1px;"
-                          "border-bottom-left-radius: 0px;"
-                          "border-bottom-right-radius: 0px;"
-                          "background-color: rgba(%2, %3, %4, %5);}")
+    setStyleSheet(QString("QWidget#titleBar{border-top-left-radius:%1px;"
+                          "border-top-right-radius:%1px;"
+                          "border-bottom-left-radius:0px;"
+                          "border-bottom-right-radius:0px;"
+                          "background-color:rgba(%2,%3,%4,%5);}")
                           .arg(QString::number(m_radius), cr, cg, cb, ca));
-    m_labTitle->setStyleSheet(QString("color: %1;").arg(m_textColor.name()));
-
-    QString borderRadius = QString("border-top-left-radius: 0px;border-top-right-radius: %1px;")
-                                   .arg(QString::number(m_radius));
-    m_btnClose->setStyleSheet(styleClose.replace("hoverColor", m_hoverColorClose.name())
-                                      .replace("pressedColor", m_pressedColorClose.name())
-                                      .replace("borderRadius", borderRadius));
-    m_btnMax->setStyleSheet(styleMax.replace("hoverColor", m_hoverColorMax.name())
-                                    .replace("pressedColor", m_pressedColorMax.name()));
-    m_btnMin->setStyleSheet(styleMin.replace("hoverColor", m_hoverColorMin.name())
-                                    .replace("pressedColor", m_pressedColorMin.name()));
+    m_labTitle->setStyleSheet(QString("color:%1;").arg(m_textColor.name()));
+    m_btnClose->setStyleSheet(
+            u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+            % m_hoverColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}QPushButton:pressed{background-color:"_s
+            % m_pressedColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}"_s);
+    m_btnMax->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+                            % m_hoverColorMax.name()
+                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
+                            % m_pressedColorMax.name() % u";border-radius:0px;}"_s);
+    m_btnMin->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+                            % m_hoverColorMin.name()
+                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
+                            % m_pressedColorMin.name() % u";border-radius:0px;}"_s);
     m_labIcon->setStyleSheet(
-            QString("border-top-left-radius: %1px;").arg(QString::number(m_radius)));
+            QString("border-top-left-radius:%1px;").arg(QString::number(m_radius)));
     m_labIcon->setAttribute(Qt::WA_TranslucentBackground, true);
     m_labTitle->setAttribute(Qt::WA_TranslucentBackground, true);
     setFixedHeight(m_height);
@@ -274,6 +270,7 @@ void TitleBar::mouseMoveEvent(QMouseEvent *event)
         pos = QPoint(width() * 1.0 / w * pos.x(), this->pos().y() + pos.y());
         window()->move(m_mousePos.toPoint() - pos);
         emit movePos(movePoint);
+        emit maximizedStateChanged(false);
     }
 
     QWidget::mouseMoveEvent(event);

@@ -3,6 +3,8 @@ qt_add_library(FramelessWidget STATIC
     framelesswidget.h
     titlebar.cpp
     titlebar.h
+    borderwidget.cpp
+    borderwidget.h
 )
 
 target_include_directories(FramelessWidget PUBLIC

@@ -93,7 +93,7 @@ void RulerBar::drawTicker(QPainter *painter)
     double increment = 0; // Number of pixels per unit
     unsigned int scale = 0; // Number of units per major unit
     double start = 0, end = 0;
-    char unitStr[32] = { };
+    char unitStr[32] = {};
     QFontMetrics fm(font());
     int digitHeight = fm.height();
     int textSize = 0;

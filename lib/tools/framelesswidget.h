@@ -16,6 +16,7 @@
 namespace oclero::qlementine {
 class Theme;
 } // namespace oclero::qlementine
+class BorderWidget;
 
 class FramelessWidget : public QWidget
 {
@@ -60,7 +61,7 @@ protected:
 private:
     void themeChanged(const oclero::qlementine::Theme *theme);
     QWidget *m_centralWidget = nullptr; // Center widget provided by user
-    QWidget *m_border = nullptr; // Widget that simulates the border
+    BorderWidget *m_border = nullptr; // Widget that simulates the border
     TitleBar *m_titleBar = nullptr; // Title bar
     QGridLayout *m_gridLayout = nullptr;
 
