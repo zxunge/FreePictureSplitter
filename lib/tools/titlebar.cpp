@@ -51,34 +51,9 @@ void TitleBar::setHeight(const uint &h)
     updateStyle();
 }
 
-void TitleBar::setMinIcon(const QIcon &icon)
-{
-    m_btnMin->setIcon(icon);
-}
-
-void TitleBar::setMaxIcon(const QIcon &icon)
-{
-    m_btnMax->setIcon(icon);
-}
-
-void TitleBar::setCloseIcon(const QIcon &icon)
-{
-    m_btnClose->setIcon(icon);
-}
-
 void TitleBar::setTitleTextFont(const QFont &font)
 {
     m_labTitle->setFont(font);
-}
-
-void TitleBar::setHiddenMin(const bool &is)
-{
-    m_btnMin->setHidden(is);
-}
-
-void TitleBar::setHiddenMax(const bool &is)
-{
-    m_btnMax->setHidden(is);
 }
 
 void TitleBar::addWidget(QWidget *w)
@@ -185,9 +160,6 @@ void TitleBar::initialize()
     m_labIcon->setScaledContents(true);
     m_labIcon->setHidden(true);
     m_labIcon->setFixedHeight(m_height - 10);
-    m_btnClose->setIcon(QIcon(":/res/close.png"));
-    m_btnMin->setIcon(QIcon(":/res/min.png"));
-    m_btnMax->setIcon(QIcon(":/res/max.png"));
 
     setAttribute(Qt::WA_StyledBackground);
 
@@ -210,9 +182,9 @@ void TitleBar::initialize()
     m_btnClose->setFocusPolicy(Qt::NoFocus);
     m_btnMin->setFocusPolicy(Qt::NoFocus);
     m_btnMax->setFocusPolicy(Qt::NoFocus);
-    connect(m_btnMin, SIGNAL(clicked(bool)), this, SLOT(minimized()));
-    connect(m_btnMax, SIGNAL(clicked(bool)), this, SLOT(maximized()));
-    connect(m_btnClose, SIGNAL(clicked(bool)), this, SIGNAL(closed()));
+    connect(m_btnMin, &QPushButton::clicked, this, &TitleBar::minimized);
+    connect(m_btnMax, &QPushButton::clicked, this, &TitleBar::maximized);
+    connect(m_btnClose, &QPushButton::clicked, this, &TitleBar::closed);
 }
 
 void TitleBar::updateStyle()
@@ -324,4 +296,19 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
     }
     maximized();
     QWidget::mouseDoubleClickEvent(event);
+}
+
+QPushButton *TitleBar::btnMin() const
+{
+    return m_btnMin;
+}
+
+QPushButton *TitleBar::btnMax() const
+{
+    return m_btnMax;
+}
+
+QPushButton *TitleBar::btnClose() const
+{
+    return m_btnClose;
 }

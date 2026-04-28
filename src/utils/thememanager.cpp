@@ -3,6 +3,7 @@
 
 #include "thememanager.h"
 #include "stdpaths.h"
+#include "titlebar.h"
 
 #include "utils/hovereventfilter.h"
 #include "utils/jsonconfigitems.h"
@@ -34,7 +35,7 @@ namespace Util {
 #define ICON_PIN_FILL_LIGHT QIcon(u":/windowBar/windowBar/pin-fill-light.svg"_s)
 
 ThemeManager::ThemeManager(QObject *parent)
-    : QObject(parent), m_skinInfo(std::make_tuple("", "", Theme::Light)), m_closeBtn(nullptr)
+    : QObject(parent), m_skinInfo(std::make_tuple("", "", Theme::Light)), m_titleBar(nullptr)
 {
     m_filter = new ButtonHoverEventFilter(ICON_CLOSE_DARK, QIcon(), this);
     m_style = new oclero::qlementine::QlementineStyle(qApp);
@@ -94,12 +95,18 @@ ThemeManager &ThemeManager::instance()
     return instance;
 }
 
-void ThemeManager::setCloseButton(QAbstractButton *btn)
+void ThemeManager::setTitleBar(TitleBar *bar)
 {
-    if (m_closeBtn)
-        m_closeBtn->removeEventFilter(m_filter);
-    m_closeBtn = btn;
-    m_closeBtn->installEventFilter(m_filter);
+    if (m_titleBar)
+        m_titleBar->btnClose()->removeEventFilter(m_filter);
+    m_titleBar = bar;
+    m_titleBar->btnMin()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_MIN_DARK
+                                                                         : ICON_MIN_LIGHT);
+    m_titleBar->btnMax()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_MAX_DARK
+                                                                         : ICON_MAX_LIGHT);
+    m_titleBar->btnClose()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_CLOSE_DARK
+                                                                           : ICON_CLOSE_LIGHT);
+    m_titleBar->btnClose()->installEventFilter(m_filter);
 }
 
 ThemeManager::SkinInfo ThemeManager::infoFromSkinName(const std::string &name)

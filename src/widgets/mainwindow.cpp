@@ -11,7 +11,6 @@
 #include "toolbutton.h"
 
 #include "utils/jsonconfigitems.h"
-#include "utils/leaveevent.h"
 #include "utils/stdpaths.h"
 #include "utils/thememanager.h"
 #include "utils/globals.h"
@@ -51,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     statusBar()->setSizeGripEnabled(false);
     statusBar()->setObjectName("statusBar");
     verticalLayout->addWidget(m_statusBar);
+    verticalLayout->setContentsMargins(5, 5, 5, 5);
 
     createTabs();
 
@@ -59,11 +59,12 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     m_twgt->setObjectName("tabWidget");
 
     setWindowTitle(qAppName());
-    setTitleText(qAppName());
-    setTitleBarColor(Qt::white);
+    titleBar()->setTitleText(qAppName());
+    titleBar()->setBackgroundColor(Qt::white);
     setBackgroundColor(QColor(255, 255, 255, 255));
     setRadius(12);
     setBlurRadius(12);
+    ThemeManager::instance().setTitleBar(titleBar());
 
     // Version label & progress bar
     ClickableLabel *labMark = new ClickableLabel(m_twgt);

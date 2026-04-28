@@ -7,31 +7,6 @@ FramelessWidget::FramelessWidget(QWidget *parent) : QWidget(parent) { }
 
 FramelessWidget::~FramelessWidget() { }
 
-void FramelessWidget::setTitleBarColor(const QColor &color)
-{
-    m_titleBar->setBackgroundColor(color);
-}
-
-void FramelessWidget::setTitleTextColor(const QColor &color)
-{
-    m_titleBar->setTextColor(color);
-}
-
-void FramelessWidget::setTitleText(const QString &text)
-{
-    m_titleBar->setTitleText(text);
-}
-
-void FramelessWidget::setTitleIcon(const QString &path)
-{
-    m_titleBar->setTitleIcon(path);
-}
-
-void FramelessWidget::setTitleIcon(const QPixmap &icon)
-{
-    m_titleBar->setTitleIcon(icon);
-}
-
 void FramelessWidget::setBackgroundColor(const QColor &color)
 {
     m_bgColor = color;
@@ -68,59 +43,6 @@ void FramelessWidget::setBlurRadius(const uint &r)
     }
 }
 
-void FramelessWidget::setHiddenMin(const bool &is)
-{
-    m_titleBar->setHiddenMin(is);
-}
-
-void FramelessWidget::setHiddenMax(const bool &is)
-{
-    m_titleBar->setHiddenMax(is);
-}
-
-void FramelessWidget::setHiddenTitleBar(const bool &is)
-{
-    m_titleBar->setHidden(is);
-    updateRadius(m_radius);
-    updateSize();
-}
-
-void FramelessWidget::setTitleBarHeight(const uint &h)
-{
-    m_titleBar->setHeight(h);
-    updateSize();
-}
-
-void FramelessWidget::setMinIcon(const QIcon &icon)
-{
-    m_titleBar->setMinIcon(icon);
-}
-
-void FramelessWidget::setMaxIcon(const QIcon &icon)
-{
-    m_titleBar->setMaxIcon(icon);
-}
-
-void FramelessWidget::setCloseIcon(const QIcon &icon)
-{
-    m_titleBar->setCloseIcon(icon);
-}
-
-void FramelessWidget::setTitleTextFont(const QFont &font)
-{
-    m_titleBar->setTitleTextFont(font);
-}
-
-void FramelessWidget::addWidgetToTitleBar(QWidget *w)
-{
-    m_titleBar->addWidget(w);
-}
-
-void FramelessWidget::addLayoutToTitleBar(QLayout *layout)
-{
-    m_titleBar->addLayout(layout);
-}
-
 void FramelessWidget::initialize()
 {
     setWindowFlags(Qt::FramelessWindowHint | windowFlags()); // Hide default frame
@@ -137,8 +59,8 @@ void FramelessWidget::initialize()
     pCenterLayout->addWidget(m_titleBar);
 
     if (m_centralWidget) {
-        setTitleText(m_centralWidget->windowTitle());
-        setTitleIcon(m_centralWidget->windowIcon().pixmap(64, 64));
+        m_titleBar->setTitleText(m_centralWidget->windowTitle());
+        m_titleBar->setTitleIcon(m_centralWidget->windowIcon().pixmap(64, 64));
         pCenterLayout->addWidget(m_centralWidget);
         pCenterLayout->setStretch(1, 1);
         m_border->setCursor(m_centralWidget->cursor());
@@ -150,10 +72,10 @@ void FramelessWidget::initialize()
     m_gridLayout->addWidget(m_border);
     setLayout(m_gridLayout);
 
-    setTitleBarColor(Qt::white);
+    m_titleBar->setBackgroundColor(Qt::white);
     setRadius(m_radius);
 
-    connect(m_titleBar, SIGNAL(closed()), this, SLOT(close()));
+    connect(m_titleBar, &TitleBar::closed, this, &FramelessWidget::close);
 }
 
 void FramelessWidget::calculateOpflag(QPoint pos)
@@ -247,11 +169,7 @@ void FramelessWidget::mousePressEvent(QMouseEvent *event)
     }
     if (m_opFlag != -1) {
         m_isOp = true;
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-        m_lastPos = event->globalthis->pos();
-#else
         m_lastPos = event->globalPosition();
-#endif
     }
 }
 
@@ -263,11 +181,7 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *event)
     }
 
     // Get the current mouse drag position
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    QPointF currPos = event->globalthis->pos();
-#else
     QPointF currPos = event->globalPosition();
-#endif
     // Calculate the displacement of the mouse drag
     QPointF ptemp = currPos - m_lastPos;
     // Save the current mouse drag position for the next displacement calculation
@@ -536,6 +450,11 @@ void FramelessWidget::changeEvent(QEvent *event)
         }
     }
     QWidget::changeEvent(event);
+}
+
+TitleBar *FramelessWidget::titleBar() const
+{
+    return m_titleBar;
 }
 
 QWidget *FramelessWidget::centralWidget() const

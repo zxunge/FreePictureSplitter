@@ -20,19 +20,6 @@ public:
     explicit FramelessWidget(QWidget *parent = nullptr);
     ~FramelessWidget();
 
-    // Set title bar background color
-    void setTitleBarColor(const QColor &color);
-    // Set title text color
-    void setTitleTextColor(const QColor &color);
-    // Set title text font
-    void setTitleTextFont(const QFont &font);
-    // Set title
-    void setTitleText(const QString &text);
-    // Set title bar icon
-    void setTitleIcon(const QString &path);
-    // Set title bar icon
-    void setTitleIcon(const QPixmap &icon);
-
     // Set window background color
     void setBackgroundColor(const QColor &color);
 
@@ -43,40 +30,10 @@ public:
     // Set border shadow blur radius
     void setBlurRadius(const uint &r);
 
-    // Hide title bar minimize button
-    void setHiddenMin(const bool &is);
-    // Hide title bar maximize button
-    void setHiddenMax(const bool &is);
-    // Hide title bar
-    void setHiddenTitleBar(const bool &is);
-    // Set title bar height
-    void setTitleBarHeight(const uint &h);
-    // Set title bar minimize icon
-    void setMinIcon(const QIcon &icon);
-    // Set title bar maximize icon
-    void setMaxIcon(const QIcon &icon);
-    // Set title bar close icon
-    void setCloseIcon(const QIcon &icon);
-    // Set title bar minimize button hover background color
-    void setHoverColorMin(const QColor &color);
-    // Set title bar maximize button hover background color
-    void setHoverColorMax(const QColor &color);
-    // Set title bar close button hover background color
-    void setHoverColorClose(const QColor &color);
-    // Set title bar minimize button pressed background color
-    void setPressedColorMin(const QColor &color);
-    // Set title bar maximize button pressed background color
-    void setPressedColorMax(const QColor &color);
-    // Set title bar close button pressed background color
-    void setPressedColorClose(const QColor &color);
-
-    // Add widget after the title
-    void addWidgetToTitleBar(QWidget *w);
-    // Add layout after the title
-    void addLayoutToTitleBar(QLayout *layout);
-
     QWidget *centralWidget() const;
     void setCentralWidget(QWidget *newCentralWidget);
+
+    TitleBar *titleBar() const;
 
 protected:
     enum OpFlag { NONE = -1, Top, Bottom, Left, Right, TL, TR, BL, BR };

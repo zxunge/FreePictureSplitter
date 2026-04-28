@@ -25,12 +25,8 @@ public:
     void setBackgroundColor(const QColor &color);
     void setTextColor(const QColor &color);
     void setHeight(const uint &h);
-    void setMinIcon(const QIcon &icon);
-    void setMaxIcon(const QIcon &icon);
-    void setCloseIcon(const QIcon &icon);
+
     void setTitleTextFont(const QFont &font);
-    void setHiddenMin(const bool &is);
-    void setHiddenMax(const bool &is);
     void addWidget(QWidget *w);
     void addLayout(QLayout *layout);
     void setHoverColorMin(const QColor &color);
@@ -43,9 +39,15 @@ public:
     void showFull(const bool &isFull);
     void setMoveEnable(const bool &moveEnable);
     void setRadius(const uint &radius);
+
+    QPushButton *btnClose() const;
+    QPushButton *btnMax() const;
+    QPushButton *btnMin() const;
+
 public slots:
     void maximized();
     void minimized();
+
 signals:
     void closed();
     void movePos(QPointF movePoint);

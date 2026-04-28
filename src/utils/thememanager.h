@@ -16,6 +16,7 @@
 #include <string>
 
 class QApplication;
+class TitleBar;
 
 namespace Util {
 
@@ -50,9 +51,8 @@ public:
 
     static ThemeManager &instance();
 
-    // Close buttons
-    void setCloseButton(QAbstractButton *btn);
-    QAbstractButton *closeButton() const { return m_closeBtn; }
+    void setTitleBar(TitleBar *bar);
+    TitleBar *titleBar() const { return m_titleBar; }
 
 private:
     SkinInfo infoFromSkinName(const std::string &name);
@@ -62,7 +62,7 @@ private:
     ~ThemeManager();
 
     SkinInfo m_skinInfo;
-    QAbstractButton *m_closeBtn;
+    TitleBar *m_titleBar;
     ButtonHoverEventFilter *m_filter;
     oclero::qlementine::QlementineStyle *m_style;
     oclero::qlementine::ThemeManager *m_themeMgr;
