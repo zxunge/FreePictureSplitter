@@ -156,17 +156,6 @@
               <item row="1" column="1">
                <widget class="QComboBox" name="cbxStyle"/>
               </item>
-              <item row="1" column="2">
-               <widget class="ToolButton" name="tbtnAddSkin">
-                <property name="text">
-                 <string/>
-                </property>
-                <property name="icon">
-                 <iconset resource="../resources/fps.qrc">
-                  <normaloff>:/controls/controls/16x16/add.svg</normaloff>:/controls/controls/16x16/add.svg</iconset>
-                </property>
-               </widget>
-              </item>
              </layout>
             </widget>
            </item>
@@ -483,13 +472,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ToolButton</class>
-   <extends>QToolButton</extends>
-   <header>toolbutton.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="../resources/fps.qrc"/>
  </resources>

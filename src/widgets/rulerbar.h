@@ -10,9 +10,16 @@
 constexpr int MINIMUM_INCR = 5;
 constexpr int RULER_SIZE = 24;
 
+namespace oclero::qlementine {
+class Theme;
+} // namespace oclero::qlementine
+
 class CornerBox : public QWidget
 {
     Q_OBJECT
+
+    Q_PROPERTY(QColor faceColor READ faceColor WRITE setFaceColor)
+    Q_PROPERTY(QColor lineColor READ lineColor WRITE setLineColor)
 public:
     explicit CornerBox(QWidget *parent = nullptr);
 
@@ -23,16 +30,23 @@ public:
     }
     QColor faceColor() const { return m_faceColor; }
 
+    QColor lineColor() const;
+    void setLineColor(const QColor &lineColor);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
+    void themeChanged(const oclero::qlementine::Theme *theme);
     QColor m_faceColor;
+    QColor m_lineColor;
 };
 
 class RulerBar : public QWidget
 {
     Q_OBJECT
+
+    Q_PROPERTY(QColor faceColor READ faceColor WRITE setFaceColor)
 public:
     explicit RulerBar(QWidget *parent = nullptr, Qt::Orientation orientation = Qt::Horizontal);
 
@@ -69,6 +83,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
+    void themeChanged(const oclero::qlementine::Theme *theme);
     bool m_dragging = false;
     bool m_moved = false;
     QPoint m_dragStartPos;

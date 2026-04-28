@@ -23,8 +23,6 @@ target_sources(FreePictureSplitter PRIVATE
     preferenceswidget.h
     errorlogdialog.cpp
     errorlogdialog.h
-    skinoptionsdialog.cpp
-    skinoptionsdialog.h
     filedialog.h
     popupmessage.cpp
     popupmessage.h

@@ -13,15 +13,22 @@
 #include <QPainter>
 #include <QPainterPath>
 
+namespace oclero::qlementine {
+class Theme;
+} // namespace oclero::qlementine
+
 class FramelessWidget : public QWidget
 {
     Q_OBJECT
+
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
 public:
     explicit FramelessWidget(QWidget *parent = nullptr);
     ~FramelessWidget();
 
     // Set window background color
     void setBackgroundColor(const QColor &color);
+    QColor backgroundColor() const { return m_backgroundColor; }
 
     // Set border corner radius
     void setRadius(const uint &r);
@@ -31,7 +38,7 @@ public:
     void setBlurRadius(const uint &r);
 
     QWidget *centralWidget() const;
-    void setCentralWidget(QWidget *newCentralWidget);
+    void setCentralWidget(QWidget *centralWidget);
 
     TitleBar *titleBar() const;
     void restoreGeometry(const QByteArray &geometry);
@@ -51,6 +58,7 @@ protected:
     void changeEvent(QEvent *event) override;
 
 private:
+    void themeChanged(const oclero::qlementine::Theme *theme);
     QWidget *m_centralWidget = nullptr; // Center widget provided by user
     QWidget *m_border = nullptr; // Widget that simulates the border
     TitleBar *m_titleBar = nullptr; // Title bar
@@ -62,7 +70,7 @@ private:
     QColor m_shadowColor = QColor(91, 91, 91, 90); // Border shadow color
     int m_blurRadius = 10; // Border shadow blur radius
     int m_radius = 10; // Border corner radius
-    QColor m_bgColor = QColor(0, 0, 0, 0);
+    QColor m_backgroundColor = QColor(0, 0, 0, 0);
 };
 
 #endif // FRAMELESSWIDGET_H

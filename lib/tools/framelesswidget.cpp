@@ -2,6 +2,9 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "framelesswidget.h"
+#include "../../src/utils/thememanager.h"
+
+#include <oclero/qlementine/style/Theme.hpp>
 
 FramelessWidget::FramelessWidget(QWidget *parent) : QWidget(parent) { }
 
@@ -9,12 +12,11 @@ FramelessWidget::~FramelessWidget() { }
 
 void FramelessWidget::setBackgroundColor(const QColor &color)
 {
-    m_bgColor = color;
+    m_backgroundColor = color;
     if (isMaximized() || isFullScreen())
         updateRadius(0);
     else
         updateRadius(m_radius);
-    updateSize();
 }
 
 void FramelessWidget::setRadius(const uint &r)
@@ -82,6 +84,8 @@ void FramelessWidget::initialize()
         else
             updateRadius(m_radius);
     });
+    connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
+            &FramelessWidget::themeChanged);
 }
 
 void FramelessWidget::calculateOpflag(QPoint pos)
@@ -128,10 +132,10 @@ void FramelessWidget::calculateOpflag(QPoint pos)
 void FramelessWidget::updateRadius(const uint &r)
 {
     m_border->setObjectName("Border");
-    QString cr = QString::number(m_bgColor.red()); // Get red component
-    QString cg = QString::number(m_bgColor.green()); // Get green component
-    QString cb = QString::number(m_bgColor.blue()); // Get blue component
-    QString ca = QString::number(m_bgColor.alpha()); // Get alpha component
+    QString cr = QString::number(m_backgroundColor.red()); // Get red component
+    QString cg = QString::number(m_backgroundColor.green()); // Get green component
+    QString cb = QString::number(m_backgroundColor.blue()); // Get blue component
+    QString ca = QString::number(m_backgroundColor.alpha()); // Get alpha component
     m_border->setStyleSheet(
             QString("QWidget#Border{border-radius: %1px;background-color: rgba(%2, %3, %4, %5);}")
                     .arg(QString::number(r), cr, cg, cb, ca));
@@ -458,6 +462,11 @@ void FramelessWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
+void FramelessWidget::themeChanged(const oclero::qlementine::Theme *theme)
+{
+    setBackgroundColor(theme->backgroundColorMain2);
+}
+
 TitleBar *FramelessWidget::titleBar() const
 {
     return m_titleBar;
@@ -477,8 +486,8 @@ QWidget *FramelessWidget::centralWidget() const
     return m_centralWidget;
 }
 
-void FramelessWidget::setCentralWidget(QWidget *newCentralWidget)
+void FramelessWidget::setCentralWidget(QWidget *centralWidget)
 {
-    m_centralWidget = newCentralWidget;
+    m_centralWidget = centralWidget;
     initialize();
 }

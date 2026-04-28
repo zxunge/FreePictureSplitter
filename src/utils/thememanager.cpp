@@ -17,6 +17,8 @@
 
 #include <oclero/qlementine.hpp>
 
+#include <optional>
+
 using namespace Qt::Literals::StringLiterals;
 
 namespace Util {
@@ -35,15 +37,14 @@ namespace Util {
 #define ICON_PIN_FILL_LIGHT QIcon(u":/windowBar/windowBar/pin-fill-light.svg"_s)
 
 ThemeManager::ThemeManager(QObject *parent)
-    : QObject(parent), m_skinInfo(std::make_tuple("", "", Theme::Light)), m_titleBar(nullptr)
+    : m_titleBar(nullptr),
+      oclero::qlementine::ThemeManager(new oclero::qlementine::QlementineStyle(qApp), parent)
 {
     m_filter = new ButtonHoverEventFilter(ICON_CLOSE_DARK, QIcon(), this);
-    m_style = new oclero::qlementine::QlementineStyle(qApp);
-    m_themeMgr = new oclero::qlementine::ThemeManager(m_style);
 
-    m_style->setAnimationsEnabled(true);
-    m_style->setAutoIconColor(oclero::qlementine::AutoIconColor::TextColor);
-    m_themeMgr->loadDirectory(Util::skinsDir());
+    style()->setAnimationsEnabled(true);
+    style()->setAutoIconColor(oclero::qlementine::AutoIconColor::TextColor);
+    loadDirectory(Util::skinsDir());
 }
 
 ThemeManager::~ThemeManager()
@@ -54,39 +55,27 @@ ThemeManager::~ThemeManager()
 QStringList ThemeManager::availableSkins()
 {
     QStringList list;
-    // We DO NOT check the existence of the skin files.
-    for (const auto &skin : g_appConfig.skinList)
-        list.push_back(QString::fromStdString(std::get<0>(skin)));
+    for (const auto theme : themes())
+        list.append(theme.meta.name);
     return list;
 }
 
 bool ThemeManager::setAppSkin(const std::string &skinName)
 {
-    m_skinInfo = infoFromSkinName(skinName);
+    if (-1 == themeIndex(QString::fromStdString(skinName)))
+        return false;
 
-    QFile styleFile;
-    styleFile.setFileName(Util::skinsDir() + u"/"_s
-                          + QString::fromStdString(std::get<1>(m_skinInfo)));
-    if (styleFile.open(QFile::ReadOnly)) {
-        QTextStream in(&styleFile);
-        // The stylesheets cannot be applied directly,
-        // we need to do some path-conversion.
-        QString ss = in.readAll();
-        ss.replace(u"@SKINS_DIR@"_s, Util::skinsDir());
-        qApp->setStyle(m_style);
-        qApp->setStyleSheet(ss);
-        styleFile.close();
-
-        if (std::get<2>(m_skinInfo) == Theme::Light)
-            m_filter->setLeaveIcon(ICON_CLOSE_LIGHT);
-        else
-            m_filter->setLeaveIcon(ICON_CLOSE_DARK);
-
-        emit themeChanged(std::get<2>(m_skinInfo));
-
-        return true;
-    }
-    return false;
+    setCurrentTheme(QString::fromStdString(skinName));
+    // Infer theme (dark or light) from the colors
+    QColor color = themes().at(currentThemeIndex()).backgroundColorMain2;
+    if (color.red() * 0.2126 + color.green() * 0.7152 + color.blue() * 0.0722 <= 127.5)
+        m_theme = Theme::Dark;
+    else
+        m_theme = Theme::Light;
+    qApp->setStyle(style());
+    setTitleBar(m_titleBar);
+    emit themeChanged(&themes().at(currentThemeIndex()));
+    return true;
 }
 
 ThemeManager &ThemeManager::instance()
@@ -98,31 +87,28 @@ ThemeManager &ThemeManager::instance()
 void ThemeManager::setTitleBar(TitleBar *bar)
 {
     if (m_titleBar)
-        m_titleBar->btnClose()->removeEventFilter(m_filter);
+        m_titleBar->closeButton()->removeEventFilter(m_filter);
     m_titleBar = bar;
-    m_titleBar->btnMin()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_MIN_DARK
-                                                                         : ICON_MIN_LIGHT);
-    m_titleBar->btnMax()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_MAX_DARK
-                                                                         : ICON_MAX_LIGHT);
-    m_titleBar->btnClose()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_CLOSE_DARK
-                                                                           : ICON_CLOSE_LIGHT);
-    m_titleBar->btnClose()->installEventFilter(m_filter);
+    if (theme() == Theme::Light) {
+        m_titleBar->closeButton()->setIcon(ICON_CLOSE_LIGHT);
+        m_titleBar->minButton()->setIcon(ICON_MIN_LIGHT);
+        m_titleBar->maxButton()->setIcon(ICON_MAX_LIGHT);
+        m_filter->setLeaveIcon(ICON_CLOSE_LIGHT);
+    } else {
+        m_titleBar->closeButton()->setIcon(ICON_CLOSE_DARK);
+        m_titleBar->minButton()->setIcon(ICON_MIN_DARK);
+        m_titleBar->maxButton()->setIcon(ICON_MAX_DARK);
+        m_filter->setLeaveIcon(ICON_CLOSE_DARK);
+    }
+    m_titleBar->closeButton()->installEventFilter(m_filter);
     connect(m_titleBar, &TitleBar::maximizedStateChanged, this, [this](bool is) {
         if (is)
-            m_titleBar->btnMax()->setIcon(
-                    std::get<2>(m_skinInfo) == Theme::Dark ? ICON_NORMAL_DARK : ICON_NORMAL_LIGHT);
+            m_titleBar->maxButton()->setIcon(theme() == Theme::Dark ? ICON_NORMAL_DARK
+                                                                    : ICON_NORMAL_LIGHT);
         else
-            m_titleBar->btnMax()->setIcon(std::get<2>(m_skinInfo) == Theme::Dark ? ICON_MAX_DARK
-                                                                                 : ICON_MAX_LIGHT);
+            m_titleBar->maxButton()->setIcon(theme() == Theme::Dark ? ICON_MAX_DARK
+                                                                    : ICON_MAX_LIGHT);
     });
-}
-
-ThemeManager::SkinInfo ThemeManager::infoFromSkinName(const std::string &name)
-{
-    for (const auto &skin : g_appConfig.skinList)
-        if (std::get<0>(skin) == name)
-            return skin;
-    return std::make_tuple("", "", Theme::Light);
 }
 
 } // namespace Util

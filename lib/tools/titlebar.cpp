@@ -2,143 +2,11 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "titlebar.h"
+#include "../../src/utils/thememanager.h"
+
+#include <oclero/qlementine/style/Theme.hpp>
 
 TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
-{
-    initialize();
-}
-
-TitleBar::~TitleBar() { }
-
-void TitleBar::setTitleText(const QString &text)
-{
-    m_labTitle->setText(text);
-    window()->setWindowTitle(text);
-}
-
-void TitleBar::setTitleIcon(const QString &path)
-{
-    QPixmap pix(path);
-    setTitleIcon(pix);
-}
-
-void TitleBar::setTitleIcon(const QPixmap &icon)
-{
-    if (icon.isNull())
-        return;
-    m_labIcon->setHidden(false);
-    QPixmap pix = icon.scaledToHeight(m_height - 10, Qt::SmoothTransformation);
-    m_labIcon->setPixmap(pix);
-    window()->setWindowIcon(pix);
-}
-
-void TitleBar::setBackgroundColor(const QColor &color)
-{
-    m_bgColor = color;
-    updateStyle();
-}
-
-void TitleBar::setTextColor(const QColor &color)
-{
-    m_textColor = color;
-    updateStyle();
-}
-
-void TitleBar::setHeight(const uint &h)
-{
-    m_height = h;
-    updateStyle();
-}
-
-void TitleBar::setTitleTextFont(const QFont &font)
-{
-    m_labTitle->setFont(font);
-}
-
-void TitleBar::addWidget(QWidget *w)
-{
-    m_customLayout->addWidget(w);
-}
-
-void TitleBar::addLayout(QLayout *layout)
-{
-    m_customLayout->addLayout(layout);
-}
-
-void TitleBar::setHoverColorMin(const QColor &color)
-{
-    m_minHoverColor = color;
-    updateStyle();
-}
-
-void TitleBar::setHoverColorMax(const QColor &color)
-{
-    m_maxHoverColor = color;
-    updateStyle();
-}
-
-void TitleBar::setHoverColorClose(const QColor &color)
-{
-    m_closeHoverColor = color;
-    updateStyle();
-}
-
-void TitleBar::setPressedColorMin(const QColor &color)
-{
-    m_minPressedColor = color;
-    updateStyle();
-}
-
-void TitleBar::setPressedColorMax(const QColor &color)
-{
-    m_maxPressedColor = color;
-    updateStyle();
-}
-
-void TitleBar::setPressedColorClose(const QColor &color)
-{
-    m_closePressedColor = color;
-    updateStyle();
-}
-
-void TitleBar::showFull(const bool &isFull)
-{
-    QWidget *p = window();
-    if (isFull)
-        p->showFullScreen();
-    else
-        p->showMaximized();
-}
-
-void TitleBar::setMoveEnable(const bool &moveEnable)
-{
-    m_moveEnabled = moveEnable;
-}
-
-void TitleBar::setRadius(const uint &radius)
-{
-    m_radius = radius;
-    updateStyle();
-}
-
-void TitleBar::maximized()
-{
-    QWidget *p = window();
-    if (p->isMaximized()) {
-        p->showNormal();
-        emit maximizedStateChanged(false);
-    } else {
-        p->showMaximized();
-        emit maximizedStateChanged(true);
-    }
-}
-
-void TitleBar::minimized()
-{
-    window()->showMinimized();
-}
-
-void TitleBar::initialize()
 {
     setFocusPolicy(Qt::NoFocus);
     setFixedHeight(m_height);
@@ -184,6 +52,138 @@ void TitleBar::initialize()
     connect(m_btnMin, &QPushButton::clicked, this, &TitleBar::minimized);
     connect(m_btnMax, &QPushButton::clicked, this, &TitleBar::maximized);
     connect(m_btnClose, &QPushButton::clicked, this, &TitleBar::closed);
+    connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
+            &TitleBar::themeChanged);
+}
+
+TitleBar::~TitleBar() { }
+
+void TitleBar::setTitleText(const QString &text)
+{
+    m_labTitle->setText(text);
+    window()->setWindowTitle(text);
+}
+
+void TitleBar::setTitleIcon(const QString &path)
+{
+    QPixmap pix(path);
+    setTitleIcon(pix);
+}
+
+void TitleBar::setTitleIcon(const QPixmap &icon)
+{
+    if (icon.isNull())
+        return;
+    m_labIcon->setHidden(false);
+    QPixmap pix = icon.scaledToHeight(m_height - 10, Qt::SmoothTransformation);
+    m_labIcon->setPixmap(pix);
+    window()->setWindowIcon(pix);
+}
+
+void TitleBar::setBackgroundColor(const QColor &color)
+{
+    m_backgroundColor = color;
+    updateStyle();
+}
+
+void TitleBar::setTextColor(const QColor &color)
+{
+    m_textColor = color;
+    updateStyle();
+}
+
+void TitleBar::setHeight(const uint &h)
+{
+    m_height = h;
+    updateStyle();
+}
+
+void TitleBar::setTitleTextFont(const QFont &font)
+{
+    m_labTitle->setFont(font);
+}
+
+void TitleBar::addWidget(QWidget *w)
+{
+    m_customLayout->addWidget(w);
+}
+
+void TitleBar::addLayout(QLayout *layout)
+{
+    m_customLayout->addLayout(layout);
+}
+
+void TitleBar::setHoverColorMin(const QColor &color)
+{
+    m_hoverColorMin = color;
+    updateStyle();
+}
+
+void TitleBar::setHoverColorMax(const QColor &color)
+{
+    m_hoverColorMax = color;
+    updateStyle();
+}
+
+void TitleBar::setHoverColorClose(const QColor &color)
+{
+    m_hoverColorClose = color;
+    updateStyle();
+}
+
+void TitleBar::setPressedColorMin(const QColor &color)
+{
+    m_pressedColorMin = color;
+    updateStyle();
+}
+
+void TitleBar::setPressedColorMax(const QColor &color)
+{
+    m_pressedColorMax = color;
+    updateStyle();
+}
+
+void TitleBar::setPressedColorClose(const QColor &color)
+{
+    m_pressedColorClose = color;
+    updateStyle();
+}
+
+void TitleBar::showFull(const bool &isFull)
+{
+    QWidget *p = window();
+    if (isFull)
+        p->showFullScreen();
+    else
+        p->showMaximized();
+}
+
+void TitleBar::setMoveEnable(const bool &moveEnable)
+{
+    m_moveEnabled = moveEnable;
+}
+
+void TitleBar::setRadius(const uint &radius)
+{
+    m_radius = radius;
+    updateStyle();
+}
+
+void TitleBar::maximized()
+{
+    QWidget *p = window();
+    if (p->isMaximized()) {
+        p->showNormal();
+        emit maximizedStateChanged(false);
+    } else {
+        p->showMaximized();
+        emit maximizedStateChanged(true);
+    }
+}
+
+void TitleBar::minimized()
+{
+    window()->showMinimized();
 }
 
 void TitleBar::updateStyle()
@@ -199,10 +199,10 @@ void TitleBar::updateStyle()
                          "pressedColor;borderRadius}";
 
     setObjectName("titleBar");
-    QString cr = QString::number(m_bgColor.red());
-    QString cg = QString::number(m_bgColor.green());
-    QString cb = QString::number(m_bgColor.blue());
-    QString ca = QString::number(m_bgColor.alpha());
+    QString cr = QString::number(m_backgroundColor.red());
+    QString cg = QString::number(m_backgroundColor.green());
+    QString cb = QString::number(m_backgroundColor.blue());
+    QString ca = QString::number(m_backgroundColor.alpha());
     setStyleSheet(QString("QWidget#titleBar{border-top-left-radius: %1px;"
                           "border-top-right-radius: %1px;"
                           "border-bottom-left-radius: 0px;"
@@ -213,13 +213,13 @@ void TitleBar::updateStyle()
 
     QString borderRadius = QString("border-top-left-radius: 0px;border-top-right-radius: %1px;")
                                    .arg(QString::number(m_radius));
-    m_btnClose->setStyleSheet(styleClose.replace("hoverColor", m_closeHoverColor.name())
-                                      .replace("pressedColor", m_closePressedColor.name())
+    m_btnClose->setStyleSheet(styleClose.replace("hoverColor", m_hoverColorClose.name())
+                                      .replace("pressedColor", m_pressedColorClose.name())
                                       .replace("borderRadius", borderRadius));
-    m_btnMax->setStyleSheet(styleMax.replace("hoverColor", m_maxHoverColor.name())
-                                    .replace("pressedColor", m_maxPressedColor.name()));
-    m_btnMin->setStyleSheet(styleMin.replace("hoverColor", m_minHoverColor.name())
-                                    .replace("pressedColor", m_minPressedColor.name()));
+    m_btnMax->setStyleSheet(styleMax.replace("hoverColor", m_hoverColorMax.name())
+                                    .replace("pressedColor", m_pressedColorMax.name()));
+    m_btnMin->setStyleSheet(styleMin.replace("hoverColor", m_hoverColorMin.name())
+                                    .replace("pressedColor", m_pressedColorMin.name()));
     m_labIcon->setStyleSheet(
             QString("border-top-left-radius: %1px;").arg(QString::number(m_radius)));
     m_labIcon->setAttribute(Qt::WA_TranslucentBackground, true);
@@ -296,17 +296,27 @@ void TitleBar::mouseDoubleClickEvent(QMouseEvent *event)
     QWidget::mouseDoubleClickEvent(event);
 }
 
-QPushButton *TitleBar::btnMin() const
+void TitleBar::themeChanged(const oclero::qlementine::Theme *theme)
+{
+    setBackgroundColor(theme->backgroundColorMain2);
+    setTextColor(theme->secondaryColor);
+    setHoverColorMax(theme->neutralColorHovered);
+    setHoverColorMin(theme->neutralColorHovered);
+    setPressedColorMin(theme->neutralColorPressed);
+    setPressedColorMax(theme->neutralColorPressed);
+}
+
+QPushButton *TitleBar::minButton() const
 {
     return m_btnMin;
 }
 
-QPushButton *TitleBar::btnMax() const
+QPushButton *TitleBar::maxButton() const
 {
     return m_btnMax;
 }
 
-QPushButton *TitleBar::btnClose() const
+QPushButton *TitleBar::closeButton() const
 {
     return m_btnClose;
 }

@@ -2,6 +2,7 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "fancytabwidget.h"
+#include "utils/thememanager.h"
 
 #include <QPainter>
 #include <QMouseEvent>
@@ -10,6 +11,8 @@
 #include <QStyleOption>
 #include <QToolTip>
 #include <QApplication>
+
+#include <oclero/qlementine/style/ThemeManager.hpp>
 
 #include <utility>
 
@@ -20,6 +23,8 @@ FancyTabBar::FancyTabBar(QWidget *parent) : QWidget(parent)
     setAttribute(Qt::WA_Hover, true);
     setMouseTracking(true);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
+            &FancyTabBar::themeChanged);
 }
 
 FancyTabBar::~FancyTabBar()
@@ -368,6 +373,17 @@ bool FancyTabBar::event(QEvent *event)
         }
     }
     return QWidget::event(event);
+}
+
+void FancyTabBar::themeChanged(const oclero::qlementine::Theme *theme)
+{
+    setBaseColor(theme->backgroundColorTabBar);
+    setHoverColor(theme->neutralColorHovered);
+    setSelectedColor(theme->neutralColorPressed);
+    setTextColorNormal(theme->secondaryColor);
+    setTextColorSelected(theme->primaryAlternativeColor);
+    setTextColorDisabled(theme->secondaryColorDisabled);
+    setShadowColor(theme->shadowColor1);
 }
 
 void FancyTabBar::updateHoverAnimation()

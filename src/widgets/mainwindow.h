@@ -13,6 +13,9 @@ class QCloseEvent;
 class QProgressBar;
 class FancyTabWidget;
 class QMenu;
+namespace oclero::qlementine {
+class Theme;
+} // namespace oclero::qlementine
 
 class MainWindow final : public FramelessWidget
 {
@@ -26,6 +29,7 @@ public:
     QStatusBar *statusBar() const { return m_statusBar; }
 
 private:
+    void themeChanged(const oclero::qlementine::Theme *theme);
     void createTabs();
 
 protected:

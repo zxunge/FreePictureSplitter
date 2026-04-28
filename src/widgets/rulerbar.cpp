@@ -2,11 +2,14 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "rulerbar.h"
+#include "utils/thememanager.h"
 
 #include <QFrame>
 #include <QPaintEvent>
 #include <QGraphicsView>
 #include <QPainter>
+
+#include <oclero/qlementine/style/Theme.hpp>
 
 #include <cmath>
 #include <array>
@@ -41,6 +44,9 @@ RulerBar::RulerBar(QWidget *parent, Qt::Orientation orientation)
     f.setPixelSize(10);
     setFont(f);
     setMouseTracking(true);
+
+    connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
+            &RulerBar::themeChanged);
 }
 
 void RulerBar::setRange(double lower, double upper, double maxSize)
@@ -233,10 +239,18 @@ void RulerBar::mouseReleaseEvent(QMouseEvent *event)
     QWidget::mouseReleaseEvent(event);
 }
 
-CornerBox::CornerBox(QWidget *parent)
-    : QWidget(parent), m_faceColor(parent->palette().color(QPalette::Window))
+void RulerBar::themeChanged(const oclero::qlementine::Theme *theme)
 {
-    // ctor
+    setFaceColor(theme->backgroundColorMain2);
+}
+
+CornerBox::CornerBox(QWidget *parent)
+    : QWidget(parent),
+      m_faceColor(parent->palette().color(QPalette::Window)),
+      m_lineColor(Qt::black)
+{
+    connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
+            &CornerBox::themeChanged);
 }
 
 void CornerBox::paintEvent(QPaintEvent *e)
@@ -245,7 +259,25 @@ void CornerBox::paintEvent(QPaintEvent *e)
     QPainter painter(this);
     painter.fillRect(rect(), m_faceColor);
 
-    painter.setPen(Qt::DashLine);
+    painter.setPen(QPen(m_lineColor, 1, Qt::DashLine));
     painter.drawLine(rect().center().x(), rect().top(), rect().center().x(), rect().bottom());
     painter.drawLine(rect().left(), rect().center().y(), rect().right(), rect().center().y());
+}
+
+void CornerBox::themeChanged(const oclero::qlementine::Theme *theme)
+{
+    setFaceColor(theme->backgroundColorMain2);
+    setLineColor(theme->secondaryColor);
+}
+
+QColor CornerBox::lineColor() const
+{
+    return m_lineColor;
+}
+
+void CornerBox::setLineColor(const QColor &lineColor)
+{
+    if (m_lineColor == lineColor)
+        return;
+    m_lineColor = lineColor;
 }

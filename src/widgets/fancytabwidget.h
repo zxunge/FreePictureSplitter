@@ -12,10 +12,22 @@
 #include <QVariantAnimation>
 #include <QStackedLayout>
 
+namespace oclero::qlementine {
+class Theme;
+} // namespace oclero::qlementine
+
 // Custom tab bar (vertical layout, with visual effects)
 class FancyTabBar : public QWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QColor baseColor READ baseColor WRITE setBaseColor)
+    Q_PROPERTY(QColor hoverColor READ hoverColor WRITE setHoverColor)
+    Q_PROPERTY(QColor selectedColor READ selectedColor WRITE setSelectedColor)
+    Q_PROPERTY(QColor shadowColor READ shadowColor WRITE setShadowColor)
+    Q_PROPERTY(QColor textColorNormal READ textColorNormal WRITE setTextColorNormal)
+    Q_PROPERTY(QColor textColorSelected READ textColorSelected WRITE setTextColorSelected)
+    Q_PROPERTY(QColor textColorDisabled READ textColorDisabled WRITE setTextColorDisabled)
+
 public:
     explicit FancyTabBar(QWidget *parent = nullptr);
     ~FancyTabBar();
@@ -38,9 +50,18 @@ public:
     QColor baseColor() const { return m_baseColor; }
     void setBaseColor(const QColor &color);
     void setHoverColor(const QColor &color);
+    QColor hoverColor() const { return m_hoverColor; }
     void setSelectedColor(const QColor &color);
+    QColor selectedColor() const { return m_selectedColor; }
     void setShadowColor(const QColor &color);
+    QColor shadowColor() const { return m_shadowColor; }
     void setTextColor(const QColor &normal, const QColor &selected);
+    void setTextColorNormal(const QColor &color) { m_textColorNormal = color; }
+    void setTextColorSelected(const QColor &color) { m_textColorSelected = color; }
+    void setTextColorDisabled(const QColor &color) { m_textColorDisabled = color; }
+    QColor textColorNormal() const { return m_textColorNormal; }
+    QColor textColorSelected() const { return m_textColorSelected; }
+    QColor textColorDisabled() const { return m_textColorDisabled; }
 
     QSize sizeHint() const override;
 
@@ -59,6 +80,7 @@ protected:
     bool event(QEvent *event) override;
 
 private:
+    void themeChanged(const oclero::qlementine::Theme *theme);
     struct PrivateTab
     {
         QIcon icon;

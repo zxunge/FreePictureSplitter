@@ -28,6 +28,8 @@
 #include <QVBoxLayout>
 #include <QProgressBar>
 
+#include <oclero/qlementine/style/Theme.hpp>
+
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
@@ -41,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
 
     QVBoxLayout *verticalLayout = new QVBoxLayout(centralWidget());
     verticalLayout->setSpacing(0);
-    verticalLayout->setContentsMargins(0, 0, 0, 0);
 
     m_twgt = new FancyTabWidget(centralWidget());
     verticalLayout->addWidget(m_twgt);
@@ -50,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     statusBar()->setSizeGripEnabled(false);
     statusBar()->setObjectName("statusBar");
     verticalLayout->addWidget(m_statusBar);
-    verticalLayout->setContentsMargins(5, 5, 5, 5);
+    verticalLayout->setContentsMargins(5, 0, 5, 5);
 
     createTabs();
 
@@ -91,9 +92,30 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     statusBar()->addPermanentWidget(m_pbar);
     statusBar()->addPermanentWidget(tbtnTask);
 
+    connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
+            &MainWindow::themeChanged);
+
     QFile layoutFile(Util::dataDir() % '/' % Util::LAYOUT_FILE_NAME);
     if (layoutFile.open(QIODevice::ReadOnly))
         restoreGeometry(layoutFile.readAll());
+}
+
+void MainWindow::themeChanged(const oclero::qlementine::Theme *theme)
+{
+    Q_UNUSED(theme)
+    if (ThemeManager::Theme::Dark == ThemeManager::instance().theme()) {
+        m_twgt->setTab(0, QIcon(u":/controls/controls/32x32/image-dark.svg"_s),
+                       tr("Single Splitting"));
+        m_twgt->setTab(1, QIcon(u":/controls/controls/32x32/image_multiple-dark.svg"_s),
+                       tr("Batch Splitting"));
+        m_twgt->setTab(2, QIcon(u":/controls/controls/32x32/settings-dark.svg"_s),
+                       tr("Preferences"));
+    } else {
+        m_twgt->setTab(0, QIcon(u":/controls/controls/32x32/image.svg"_s), tr("Single Splitting"));
+        m_twgt->setTab(1, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),
+                       tr("Batch Splitting"));
+        m_twgt->setTab(2, QIcon(u":/controls/controls/32x32/settings.svg"_s), tr("Preferences"));
+    }
 }
 
 void MainWindow::createTabs()
@@ -125,10 +147,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
-    if (e->type() == QEvent::LanguageChange) {
-        m_twgt->setTab(0, QIcon(u":/controls/controls/32x32/image.svg"_s), tr("Single Splitting"));
-        m_twgt->setTab(1, QIcon(u":/controls/controls/32x32/image_multiple.svg"_s),
-                       tr("Batch Splitting"));
-        m_twgt->setTab(2, QIcon(u":/controls/controls/32x32/settings.svg"_s), tr("Preferences"));
-    }
+    if (e->type() == QEvent::LanguageChange)
+        themeChanged(&ThemeManager::instance().themes().at(
+                ThemeManager::instance().currentThemeIndex()));
 }

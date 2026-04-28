@@ -12,4 +12,5 @@ target_include_directories(FramelessWidget PUBLIC
 target_link_libraries(FramelessWidget PUBLIC
     Qt::Widgets
     Qt::Core
+    qlementine
 )

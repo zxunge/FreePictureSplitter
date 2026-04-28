@@ -30,8 +30,6 @@ struct Config
         std::string lang;
     } app;
 
-    std::vector<ThemeManager::SkinInfo> skinList;
-
     struct
     {
         std::string lastOpenedDir;
@@ -86,8 +84,6 @@ inline void setDefConf(Config &s)
                          .minorVersion = APP_VERSION_MINOR,
                          .microVersion = APP_VERSION_PATCH,
                          .skin = "Flat Light" },
-                .skinList = { std::make_tuple("Flat Light", "default.skin",
-                                              ThemeManager::Theme::Light) },
                 .dialog = { .lastEnteredIndex = 0 },
                 .options = { .outputOpt = { .savingTo = SavingTo::inPlace,
                                             .subDir = false,

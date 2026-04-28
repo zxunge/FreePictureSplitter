@@ -9,7 +9,6 @@
 #include <QIcon>
 #include <QAbstractButton>
 
-#include <oclero/qlementine/style/QlementineStyle.hpp>
 #include <oclero/qlementine/style/ThemeManager.hpp>
 
 #include <tuple>
@@ -26,22 +25,19 @@ class ButtonHoverEventFilter;
  * \brief The ThemeManager class
  * \include utils/thememanager.h
  */
-class ThemeManager : public QObject
+class ThemeManager : public oclero::qlementine::ThemeManager
 {
     Q_OBJECT
 public:
     enum class Theme { Dark, Light };
-    using SkinInfo =
-            std::tuple<std::string, std::string,
-                       Util::ThemeManager::Theme>; // Skin name, skin file's name, skin's theme
 
-    Theme theme() const { return std::get<2>(m_skinInfo); }
+    Theme theme() const { return m_theme; }
 
     /*!
-     * \brief getAvailableSkins
+     * \brief availableSkins
      * \details Get available skins names under skins directory.
      */
-    static QStringList availableSkins();
+    QStringList availableSkins();
     /*!
      * \brief setAppSkin
      * \param skinName Name of the skin, written in the header.
@@ -55,23 +51,18 @@ public:
     TitleBar *titleBar() const { return m_titleBar; }
 
 private:
-    SkinInfo infoFromSkinName(const std::string &name);
-
-private:
     explicit ThemeManager(QObject *parent = nullptr);
     ~ThemeManager();
 
-    SkinInfo m_skinInfo;
+    Theme m_theme; // It will be determined each time the theme is changed.
     TitleBar *m_titleBar;
     ButtonHoverEventFilter *m_filter;
-    oclero::qlementine::QlementineStyle *m_style;
-    oclero::qlementine::ThemeManager *m_themeMgr;
 
 signals:
-    void themeChanged(Util::ThemeManager::Theme theme);
+    void themeChanged(const oclero::qlementine::Theme *theme);
 };
 
 } // namespace Util
-Q_DECLARE_METATYPE(Util::ThemeManager::Theme)
+Q_DECLARE_METATYPE(Util::ThemeManager)
 
 #endif // THEMEMANAGER_H

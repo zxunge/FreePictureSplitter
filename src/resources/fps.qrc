@@ -32,5 +32,8 @@
         <file>controls/20x20/content_view.svg</file>
         <file>controls/20x20/settings.svg</file>
         <file>controls/16x16/add.svg</file>
+        <file>controls/32x32/image-dark.svg</file>
+        <file>controls/32x32/image_multiple-dark.svg</file>
+        <file>controls/32x32/settings-dark.svg</file>
     </qresource>
 </RCC>
