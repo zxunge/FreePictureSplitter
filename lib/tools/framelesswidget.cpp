@@ -15,12 +15,16 @@ FramelessWidget::~FramelessWidget() { }
 
 void FramelessWidget::setBackgroundColor(const QColor &color)
 {
-    m_backgroundColor = color;
     m_border->setBackgroundColor(color);
     if (isMaximized() || isFullScreen())
         updateRadius(0);
     else
         updateRadius(m_radius);
+}
+
+QColor FramelessWidget::backgroundColor() const
+{
+    return m_border->backgroundColor();
 }
 
 void FramelessWidget::setRadius(const uint &r)

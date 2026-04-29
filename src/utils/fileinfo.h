@@ -65,7 +65,7 @@ inline qsizetype fileCount(const QString &path, const QStringList &filters,
 {
     QDirIterator it(path, filters, QDir::Files | QDir::NoSymLinks, flags);
     // Get file count
-    qsizetype count = {};
+    qsizetype count = { };
     while (it.hasNext()) {
         it.next();
         ++count;

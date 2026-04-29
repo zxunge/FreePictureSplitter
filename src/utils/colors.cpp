@@ -15,7 +15,7 @@ QColor getDominantColor(const QPixmap &pixmap)
             pixmap.scaled(32, 32, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).toImage();
 
     // Average color
-    qint64 r = {}, g = {}, b = {}, count = {};
+    qint64 r = { }, g = { }, b = { }, count = { };
     QColor dominant;
 
     for (int y = 0; y < scaled.height(); ++y) {

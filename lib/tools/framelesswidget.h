@@ -29,7 +29,7 @@ public:
 
     // Set window background color
     void setBackgroundColor(const QColor &color);
-    QColor backgroundColor() const { return m_backgroundColor; }
+    QColor backgroundColor() const;
 
     // Set border corner radius
     void setRadius(const uint &r);
@@ -71,7 +71,6 @@ private:
     QColor m_shadowColor = QColor(91, 91, 91, 90); // Border shadow color
     int m_blurRadius = 10; // Border shadow blur radius
     int m_radius = 10; // Border corner radius
-    QColor m_backgroundColor = QColor(0, 0, 0, 0);
 };
 
 #endif // FRAMELESSWIDGET_H

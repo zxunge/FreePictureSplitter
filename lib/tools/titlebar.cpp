@@ -191,17 +191,12 @@ void TitleBar::minimized()
 
 void TitleBar::updateStyle()
 {
-    QString cr = QString::number(m_backgroundColor.red());
-    QString cg = QString::number(m_backgroundColor.green());
-    QString cb = QString::number(m_backgroundColor.blue());
-    QString ca = QString::number(m_backgroundColor.alpha());
-    setStyleSheet(QString("QWidget#titleBar{border-top-left-radius:%1px;"
-                          "border-top-right-radius:%1px;"
-                          "border-bottom-left-radius:0px;"
-                          "border-bottom-right-radius:0px;"
-                          "background-color:rgba(%2,%3,%4,%5);}")
-                          .arg(QString::number(m_radius), cr, cg, cb, ca));
-    m_labTitle->setStyleSheet(QString("color:%1;").arg(m_textColor.name()));
+    setStyleSheet(
+            u"QWidget#titleBar{border-top-left-radius:"_s % QString::number(m_radius)
+            % u"px;border-top-right-radius:"_s % QString::number(m_radius)
+            % u"px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;background-color:"_s
+            % m_backgroundColor.name() % u";}"_s);
+    m_labTitle->setStyleSheet(u"color:"_s % m_textColor.name() % u";"_s);
     m_btnClose->setStyleSheet(
             u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
             % m_hoverColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
@@ -216,8 +211,7 @@ void TitleBar::updateStyle()
                             % m_hoverColorMin.name()
                             % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
                             % m_pressedColorMin.name() % u";border-radius:0px;}"_s);
-    m_labIcon->setStyleSheet(
-            QString("border-top-left-radius:%1px;").arg(QString::number(m_radius)));
+    m_labIcon->setStyleSheet(u"border-top-left-radius:"_s % QString::number(m_radius) % u"px;"_s);
     m_labIcon->setAttribute(Qt::WA_TranslucentBackground, true);
     m_labTitle->setAttribute(Qt::WA_TranslucentBackground, true);
     setFixedHeight(m_height);

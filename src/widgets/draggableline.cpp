@@ -18,11 +18,11 @@ void DraggableLine::updateLine(const QPoint &pos)
 {
     QGraphicsView *parent = qobject_cast<QGraphicsView *>(parentWidget());
     if (m_orientation == Qt::Horizontal) {
-        resize(parentWidget()->width(), LINE_SIZE);
+        setFixedSize(parentWidget()->width(), LINE_SIZE);
         m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().y();
         move(0, pos.y());
     } else {
-        resize(LINE_SIZE, parentWidget()->height());
+        setFixedSize(LINE_SIZE, parentWidget()->height());
         m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().x();
         move(pos.x(), 0);
     }
@@ -33,10 +33,10 @@ void DraggableLine::updateLine()
     QGraphicsView *parent = qobject_cast<QGraphicsView *>(parentWidget());
     // Moving according to the stored scenePos
     if (m_orientation == Qt::Horizontal) {
-        resize(parentWidget()->width(), LINE_SIZE);
+        setFixedSize(parentWidget()->width(), LINE_SIZE);
         move(0, parent->viewport()->mapTo(parent, parent->mapFromScene(0, m_scenePos)).y());
     } else {
-        resize(LINE_SIZE, parentWidget()->height());
+        setFixedSize(LINE_SIZE, parentWidget()->height());
         move(parent->viewport()->mapTo(parent, parent->mapFromScene(m_scenePos, 0)).x(), 0);
     }
 }
@@ -57,12 +57,12 @@ void DraggableLine::init(Qt::Orientation orientation, const QPoint &pos)
     m_orientation = orientation;
     if (m_orientation == Qt::Horizontal) {
         setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
-        resize(parent->width(), LINE_SIZE);
+        setFixedSize(parent->width(), LINE_SIZE);
         move(0, pos.y());
         m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().y();
     } else {
         setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding));
-        resize(LINE_SIZE, parent->height());
+        setFixedSize(LINE_SIZE, parent->height());
         move(pos.x(), 0);
         m_scenePos = parent->mapToScene(parent->viewport()->mapFrom(parent, pos)).toPoint().x();
     }
