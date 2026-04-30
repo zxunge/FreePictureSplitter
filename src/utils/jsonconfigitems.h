@@ -83,7 +83,7 @@ inline void setDefConf(Config &s)
                          .majorVersion = APP_VERSION_MAJOR,
                          .minorVersion = APP_VERSION_MINOR,
                          .microVersion = APP_VERSION_PATCH,
-                         .skin = "Flat Light" },
+                         .skin = "Modern Light" },
                 .dialog = { .lastEnteredIndex = 0 },
                 .options = { .outputOpt = { .savingTo = SavingTo::inPlace,
                                             .subDir = false,
