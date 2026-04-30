@@ -67,14 +67,14 @@ bool ThemeManager::setAppSkin(const std::string &skinName)
 
     setCurrentTheme(QString::fromStdString(skinName));
     // Infer theme (dark or light) from the colors
-    QColor color = themes().at(currentThemeIndex()).backgroundColorMain2;
+    QColor color = currentAppTheme().backgroundColorMain2;
     if (color.red() * 0.2126 + color.green() * 0.7152 + color.blue() * 0.0722 <= 127.5)
         m_theme = Theme::Dark;
     else
         m_theme = Theme::Light;
     qApp->setStyle(style());
     setTitleBar(m_titleBar);
-    emit themeChanged(&themes().at(currentThemeIndex()));
+    emit themeChanged(&currentAppTheme());
     return true;
 }
 
@@ -115,6 +115,11 @@ void ThemeManager::setTitleBar(TitleBar *bar)
             m_titleBar->maxButton()->setIcon(theme() == Theme::Dark ? ICON_MAX_DARK
                                                                     : ICON_MAX_LIGHT);
     });
+}
+
+QList<oclero::qlementine::Theme>::const_reference ThemeManager::currentAppTheme() const
+{
+    return themes().at(currentThemeIndex());
 }
 
 } // namespace Util

@@ -43,7 +43,7 @@ void FancyTabBar::insertTab(int index, const QIcon &icon, const QString &label)
 
     // Create animation
     QVariantAnimation *anim = new QVariantAnimation(this);
-    anim->setDuration(160);
+    anim->setDuration(Util::ThemeManager::instance().currentAppTheme().animationDuration);
     anim->setStartValue(0.0);
     anim->setEndValue(1.0);
     anim->setEasingCurve(QEasingCurve::InOutQuad);

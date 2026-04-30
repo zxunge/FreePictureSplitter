@@ -77,7 +77,6 @@ signals:
     void maximizedStateChanged(bool is);
 
 protected:
-    void updateStyle();
     void moveTopParent(QWidget *pWgt, QPoint movePoint);
 
     void mousePressEvent(QMouseEvent *event) override;

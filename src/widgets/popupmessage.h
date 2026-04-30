@@ -64,14 +64,6 @@ private:
     QPoint m_targetPos; // target position (global coordinates)
     QPoint m_startPos; // start position (global coordinates)
     bool m_isHiding;
-
-private:
-    static const QColor ERROR_COLOR;
-    static const QColor INFO_COLOR;
-    static const QColor SUCCESS_COLOR;
-    static const QColor ERROR_MSG_COLOR;
-    static const QColor INFO_MSG_COLOR;
-    static const QColor SUCCESS_MSG_COLOR;
 };
 
 #endif // POPUPMESSAGE_H

@@ -4,7 +4,6 @@ target_sources(FreePictureSplitter PRIVATE
     colors.cpp
     stdpaths.h
     stdpaths.cpp
-    fonts.h
     hovereventfilter.h
     fileinfo.h
     thememanager.cpp

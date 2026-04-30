@@ -20,7 +20,7 @@ ToolButton::ToolButton(QWidget *parent)
     m_checkedColor = m_normalColor.lighter(110);
 
     m_animation->setEasingCurve(QEasingCurve::InOutQuad);
-    m_animation->setDuration(200);
+    m_animation->setDuration(Util::ThemeManager::instance().currentAppTheme().animationDuration);
     connect(m_animation, &QPropertyAnimation::valueChanged, this,
             QOverload<>::of(&QWidget::update));
     connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
@@ -113,4 +113,5 @@ void ToolButton::themeChanged(const oclero::qlementine::Theme *theme)
     setHoverColor(theme->neutralColorHovered);
     setPressedColor(theme->neutralColorPressed);
     setCheckedColor(theme->neutralColorPressed);
+    m_animation->setDuration(Util::ThemeManager::instance().currentAppTheme().animationDuration);
 }

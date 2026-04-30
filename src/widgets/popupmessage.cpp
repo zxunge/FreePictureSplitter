@@ -4,6 +4,7 @@
 #include "popupmessage.h"
 
 #include "utils/misc.h"
+#include "utils/thememanager.h"
 
 #include <QVBoxLayout>
 #include <QApplication>
@@ -16,13 +17,6 @@
 #include <QLabel>
 
 using namespace Qt::Literals::StringLiterals;
-
-const QColor PopupMessage::ERROR_COLOR = QColor(0xfef0f0);
-const QColor PopupMessage::INFO_COLOR = QColor(0xEFF6FF);
-const QColor PopupMessage::SUCCESS_COLOR = QColor(0xEDF7EF);
-const QColor PopupMessage::ERROR_MSG_COLOR = QColor(0xf56c6c);
-const QColor PopupMessage::INFO_MSG_COLOR = QColor(0x1A4C8C);
-const QColor PopupMessage::SUCCESS_MSG_COLOR = QColor(0x1F7840);
 
 PopupMessage::PopupMessage(QWidget *parent)
     : QWidget(parent, Qt::Tool | Qt::FramelessWindowHint),
@@ -48,7 +42,7 @@ PopupMessage::PopupMessage(QWidget *parent)
 
     // Animation configuration
     m_animation->setEasingCurve(QEasingCurve::OutCubic);
-    m_animation->setDuration(300);
+    m_animation->setDuration(Util::ThemeManager::instance().currentAppTheme().animationDuration);
 
     // Timer (single shot)
     m_timer->setSingleShot(true);
@@ -69,17 +63,32 @@ PopupMessage::PopupMessage(const QString &text, int timeout, int offsetFromTop, 
     switch (type) {
     case PopupMessage::MsgType::Error:
         content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
-                                       .arg(ERROR_COLOR.name(), ERROR_MSG_COLOR.name()));
+                                       .arg(Util::ThemeManager::instance()
+                                                    .currentAppTheme()
+                                                    .statusColorError.name(),
+                                            Util::ThemeManager::instance()
+                                                    .currentAppTheme()
+                                                    .statusColorForeground.name()));
         break;
 
     case PopupMessage::MsgType::Info:
         content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
-                                       .arg(INFO_COLOR.name(), INFO_MSG_COLOR.name()));
+                                       .arg(Util::ThemeManager::instance()
+                                                    .currentAppTheme()
+                                                    .statusColorInfo.name(),
+                                            Util::ThemeManager::instance()
+                                                    .currentAppTheme()
+                                                    .statusColorForeground.name()));
         break;
 
     case PopupMessage::MsgType::Success:
         content->setStyleSheet(QString("background-color: %1; color: %2; border-radius: 30px;")
-                                       .arg(SUCCESS_COLOR.name(), SUCCESS_MSG_COLOR.name()));
+                                       .arg(Util::ThemeManager::instance()
+                                                    .currentAppTheme()
+                                                    .statusColorSuccess.name(),
+                                            Util::ThemeManager::instance()
+                                                    .currentAppTheme()
+                                                    .statusColorForeground.name()));
         break;
     }
 

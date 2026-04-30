@@ -31,6 +31,8 @@ TitleBar::TitleBar(QWidget *parent) : QWidget(parent)
     m_labIcon->setFixedHeight(m_height - 10);
 
     setAttribute(Qt::WA_StyledBackground);
+    m_labIcon->setAttribute(Qt::WA_TranslucentBackground, true);
+    m_labTitle->setAttribute(Qt::WA_TranslucentBackground, true);
 
     m_mainLayout = new QHBoxLayout;
     m_customLayout = new QHBoxLayout;
@@ -86,19 +88,27 @@ void TitleBar::setTitleIcon(const QPixmap &icon)
 void TitleBar::setBackgroundColor(const QColor &color)
 {
     m_backgroundColor = color;
-    updateStyle();
+    setStyleSheet(
+            u"QWidget#titleBar{border-top-left-radius:"_s % QString::number(m_radius)
+            % u"px;border-top-right-radius:"_s % QString::number(m_radius)
+            % u"px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;background-color:"_s
+            % m_backgroundColor.name() % u";}"_s);
 }
 
 void TitleBar::setTextColor(const QColor &color)
 {
     m_textColor = color;
-    updateStyle();
+    m_labTitle->setStyleSheet(u"color:"_s % m_textColor.name() % u";"_s);
 }
 
 void TitleBar::setHeight(const uint &h)
 {
     m_height = h;
-    updateStyle();
+    setFixedHeight(m_height);
+    m_btnClose->setFixedSize(m_height * 2, m_height);
+    m_btnMin->setFixedSize(m_height * 2, m_height);
+    m_btnMax->setFixedSize(m_height * 2, m_height);
+    m_labIcon->setFixedSize(m_height - 10, m_height - 10);
 }
 
 void TitleBar::setTitleTextFont(const QFont &font)
@@ -119,37 +129,59 @@ void TitleBar::addLayout(QLayout *layout)
 void TitleBar::setHoverColorMin(const QColor &color)
 {
     m_hoverColorMin = color;
-    updateStyle();
+    m_btnMin->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+                            % m_hoverColorMin.name()
+                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
+                            % m_pressedColorMin.name() % u";border-radius:0px;}"_s);
 }
 
 void TitleBar::setHoverColorMax(const QColor &color)
 {
     m_hoverColorMax = color;
-    updateStyle();
+    m_btnMax->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+                            % m_hoverColorMax.name()
+                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
+                            % m_pressedColorMax.name() % u";border-radius:0px;}"_s);
 }
 
 void TitleBar::setHoverColorClose(const QColor &color)
 {
     m_hoverColorClose = color;
-    updateStyle();
+    m_btnClose->setStyleSheet(
+            u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+            % m_hoverColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}QPushButton:pressed{background-color:"_s
+            % m_pressedColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}"_s);
 }
 
 void TitleBar::setPressedColorMin(const QColor &color)
 {
     m_pressedColorMin = color;
-    updateStyle();
+    m_btnMin->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+                            % m_hoverColorMin.name()
+                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
+                            % m_pressedColorMin.name() % u";border-radius:0px;}"_s);
 }
 
 void TitleBar::setPressedColorMax(const QColor &color)
 {
     m_pressedColorMax = color;
-    updateStyle();
+    m_btnMax->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+                            % m_hoverColorMax.name()
+                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
+                            % m_pressedColorMax.name() % u";border-radius:0px;}"_s);
 }
 
 void TitleBar::setPressedColorClose(const QColor &color)
 {
     m_pressedColorClose = color;
-    updateStyle();
+    m_btnClose->setStyleSheet(
+            u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+            % m_hoverColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}QPushButton:pressed{background-color:"_s
+            % m_pressedColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}"_s);
 }
 
 void TitleBar::showFull(const bool &isFull)
@@ -169,7 +201,17 @@ void TitleBar::setMoveEnable(const bool &moveEnable)
 void TitleBar::setRadius(const uint &radius)
 {
     m_radius = radius;
-    updateStyle();
+    setStyleSheet(
+            u"QWidget#titleBar{border-top-left-radius:"_s % QString::number(m_radius)
+            % u"px;border-top-right-radius:"_s % QString::number(m_radius)
+            % u"px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;background-color:"_s
+            % m_backgroundColor.name() % u";}"_s);
+    m_btnClose->setStyleSheet(
+            u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
+            % m_hoverColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}QPushButton:pressed{background-color:"_s
+            % m_pressedColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
+            % QString::number(m_radius) % u"px;}"_s);
 }
 
 void TitleBar::maximized()
@@ -187,38 +229,6 @@ void TitleBar::maximized()
 void TitleBar::minimized()
 {
     window()->showMinimized();
-}
-
-void TitleBar::updateStyle()
-{
-    setStyleSheet(
-            u"QWidget#titleBar{border-top-left-radius:"_s % QString::number(m_radius)
-            % u"px;border-top-right-radius:"_s % QString::number(m_radius)
-            % u"px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;background-color:"_s
-            % m_backgroundColor.name() % u";}"_s);
-    m_labTitle->setStyleSheet(u"color:"_s % m_textColor.name() % u";"_s);
-    m_btnClose->setStyleSheet(
-            u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
-            % m_hoverColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
-            % QString::number(m_radius) % u"px;}QPushButton:pressed{background-color:"_s
-            % m_pressedColorClose.name() % u";border-top-left-radius:0px;border-top-right-radius:"_s
-            % QString::number(m_radius) % u"px;}"_s);
-    m_btnMax->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
-                            % m_hoverColorMax.name()
-                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
-                            % m_pressedColorMax.name() % u";border-radius:0px;}"_s);
-    m_btnMin->setStyleSheet(u"QPushButton{border:0px;}QPushButton:hover{background-color:"_s
-                            % m_hoverColorMin.name()
-                            % u";border-radius:0px;}QPushButton:pressed{background-color:"_s
-                            % m_pressedColorMin.name() % u";border-radius:0px;}"_s);
-    m_labIcon->setStyleSheet(u"border-top-left-radius:"_s % QString::number(m_radius) % u"px;"_s);
-    m_labIcon->setAttribute(Qt::WA_TranslucentBackground, true);
-    m_labTitle->setAttribute(Qt::WA_TranslucentBackground, true);
-    setFixedHeight(m_height);
-    m_btnClose->setFixedSize(m_height * 2, m_height);
-    m_btnMin->setFixedSize(m_height * 2, m_height);
-    m_btnMax->setFixedSize(m_height * 2, m_height);
-    m_labIcon->setFixedSize(m_height - 10, m_height - 10);
 }
 
 void TitleBar::moveTopParent(QWidget *wgt, QPoint movePoint)

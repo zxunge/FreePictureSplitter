@@ -8,7 +8,6 @@
 #include "utils/thememanager.h"
 #include "utils/languagemanager.h"
 #include "utils/stdpaths.h"
-#include "utils/fonts.h"
 #include "utils/globals.h"
 
 #include <QApplication>
@@ -129,7 +128,6 @@ void logToFile(QtMsgType type, const QMessageLogContext &context, const QString 
         return false;
     }
 #endif // __MINGW32__ || __MINGW64__
-    Util::setAppFont(QLocale::system(), a);
 
     if (!loadConfigurations())
         return false;

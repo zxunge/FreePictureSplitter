@@ -6,12 +6,10 @@
 #define THEMEMANAGER_H
 
 #include <QObject>
-#include <QIcon>
-#include <QAbstractButton>
+#include <QList>
 
 #include <oclero/qlementine/style/ThemeManager.hpp>
 
-#include <tuple>
 #include <string>
 
 class QApplication;
@@ -49,6 +47,8 @@ public:
 
     void setTitleBar(TitleBar *bar);
     TitleBar *titleBar() const { return m_titleBar; }
+
+    QList<oclero::qlementine::Theme>::const_reference currentAppTheme() const;
 
 private:
     explicit ThemeManager(QObject *parent = nullptr);
