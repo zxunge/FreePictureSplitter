@@ -387,25 +387,28 @@ Top to Bottom</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="83"/>
+        <location filename="../../widgets/mainwindow.cpp" line="87"/>
         <source>Tasks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="103"/>
-        <location filename="../../widgets/mainwindow.cpp" line="233"/>
+        <location filename="../../widgets/mainwindow.cpp" line="109"/>
+        <location filename="../../widgets/mainwindow.cpp" line="115"/>
+        <location filename="../../widgets/mainwindow.cpp" line="128"/>
         <source>Single Splitting</source>
         <translation>Divisione singola</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="105"/>
-        <location filename="../../widgets/mainwindow.cpp" line="235"/>
+        <location filename="../../widgets/mainwindow.cpp" line="111"/>
+        <location filename="../../widgets/mainwindow.cpp" line="117"/>
+        <location filename="../../widgets/mainwindow.cpp" line="130"/>
         <source>Batch Splitting</source>
         <translation>Divisione Lotch</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="107"/>
-        <location filename="../../widgets/mainwindow.cpp" line="236"/>
+        <location filename="../../widgets/mainwindow.cpp" line="113"/>
+        <location filename="../../widgets/mainwindow.cpp" line="118"/>
+        <location filename="../../widgets/mainwindow.cpp" line="132"/>
         <source>Preferences</source>
         <translation>Preferenze</translation>
     </message>
@@ -413,7 +416,7 @@ Top to Bottom</source>
 <context>
     <name>PopupMessage</name>
     <message>
-        <location filename="../../widgets/popupmessage.cpp" line="179"/>
+        <location filename="../../widgets/popupmessage.cpp" line="188"/>
         <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
@@ -451,135 +454,135 @@ Top to Bottom</source>
         <translation>Skin dell&apos;applicazione:</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="199"/>
+        <location filename="../../ui/preferenceswidget.ui" line="188"/>
         <source>Output File Options</source>
         <translation>Opzioni file di output</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="205"/>
+        <location filename="../../ui/preferenceswidget.ui" line="194"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify output path:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specificare il percorso di output:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="212"/>
+        <location filename="../../ui/preferenceswidget.ui" line="201"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Per le immagini JPG, questo è 0 ~ 100, e più grande, maggiore sarà la qualità degli output.  &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="222"/>
+        <location filename="../../ui/preferenceswidget.ui" line="211"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="229"/>
+        <location filename="../../ui/preferenceswidget.ui" line="218"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Formato immagine di uscita:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="239"/>
+        <location filename="../../ui/preferenceswidget.ui" line="228"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Picture scaling:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scala immagine:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="246"/>
+        <location filename="../../ui/preferenceswidget.ui" line="235"/>
         <source>Create sub-directories under the output path.</source>
         <translation>Creare sub-directory sotto il percorso di output.</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="260"/>
+        <location filename="../../ui/preferenceswidget.ui" line="249"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;(Default is 100.00%, that is, no scaling.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="47"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
         <source>System default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="56"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="185"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="176"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>Il percorso specificato quando si clicca su &quot;Salva immagini&quot;</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="177"/>
         <source>The same location as the source picture</source>
         <translation>La stessa posizione dell&apos;immagine di origine</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="178"/>
         <source>The following path:</source>
         <translation>Il seguente percorso:</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="287"/>
+        <location filename="../../ui/preferenceswidget.ui" line="276"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Qualità JPG:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="304"/>
+        <location filename="../../ui/preferenceswidget.ui" line="293"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Salvare in:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="336"/>
+        <location filename="../../ui/preferenceswidget.ui" line="325"/>
         <source>Grid Figure</source>
         <translation>Figura della griglia</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="385"/>
+        <location filename="../../ui/preferenceswidget.ui" line="374"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensione della riga:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="362"/>
+        <location filename="../../ui/preferenceswidget.ui" line="351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Colore della linea della griglia:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="417"/>
+        <location filename="../../ui/preferenceswidget.ui" line="406"/>
         <source>Select Color...</source>
         <translation>Seleziona il colore. ..</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="355"/>
+        <location filename="../../ui/preferenceswidget.ui" line="344"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation> &lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="320"/>
+        <location filename="../../ui/preferenceswidget.ui" line="309"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
         <translation>Genera automaticamente un&apos;immagine con una griglia che illustra come le immagini sono suddivise.</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="433"/>
+        <location filename="../../ui/preferenceswidget.ui" line="422"/>
         <source>File Name Conventions</source>
         <translation>Convenzioni di nome file</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="439"/>
+        <location filename="../../ui/preferenceswidget.ui" line="428"/>
         <source>Use the original file name as the prefix</source>
         <translation>Usare il nome del file originale come prefisso</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="446"/>
+        <location filename="../../ui/preferenceswidget.ui" line="435"/>
         <source>Use the specified prefix:</source>
         <translation>Usa il prefisso specificato:</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="456"/>
+        <location filename="../../ui/preferenceswidget.ui" line="445"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
         <translation> [Numero riga * Numero colonna] contenuto nel nome dei file.</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="119"/>
         <source>Select a color for grid lines</source>
         <translation>Selezionare un colore per le linee di griglia</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="154"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="153"/>
         <source>Choose a directory to save pictures.</source>
         <translation>Scegli una directory per salvare le immagini.</translation>
     </message>
@@ -618,32 +621,32 @@ Top to Bottom</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="127"/>
+        <location filename="../../app/main.cpp" line="126"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>Errore nel caricamento del modulo: exchndl.dll.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="88"/>
+        <location filename="../../app/main.cpp" line="87"/>
         <source>Error creating/opening configuration file.</source>
         <translation>Errore nella creazione/apertura del file di configurazione.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="100"/>
+        <location filename="../../app/main.cpp" line="99"/>
         <source>Error parsing configuration file: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="112"/>
+        <location filename="../../app/main.cpp" line="111"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>La versione del file di configurazione non corrisponde, prova a cancellarlo dopo il backup.</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="193"/>
+        <location filename="../../app/main.cpp" line="191"/>
         <source>Could NOT load skin %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="147"/>
+        <location filename="../../app/main.cpp" line="145"/>
         <source>Error writing to configuration file.</source>
         <translation>Errore di scrittura nel file di configurazione.</translation>
     </message>
@@ -655,6 +658,29 @@ Top to Bottom</source>
     <message>
         <location filename="../../widgets/errorlogdialog.cpp" line="44"/>
         <source>Error writing to file %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QShortcut</name>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1265"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1266"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1267"/>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1268"/>
+        <source>Down</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -853,49 +879,6 @@ Bottom to Top</source>
         <location filename="../../widgets/singlewidget.cpp" line="231"/>
         <source>No rule to split this picture</source>
         <translation>Nessuna regola per dividere questa immagine</translation>
-    </message>
-</context>
-<context>
-    <name>SkinOptionsDialog</name>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="24"/>
-        <source>Skin name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="25"/>
-        <source>Your skin name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="26"/>
-        <source>Skin file name: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="27"/>
-        <source>&lt;em&gt;Your skin file&apos;s name&lt;/em&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="32"/>
-        <source>Theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="34"/>
-        <source>Light</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="35"/>
-        <source>Dark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="45"/>
-        <source>Open a .skin file...</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

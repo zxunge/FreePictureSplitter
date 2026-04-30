@@ -391,25 +391,28 @@ Top to Bottom</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="83"/>
+        <location filename="../../widgets/mainwindow.cpp" line="87"/>
         <source>Tasks</source>
         <translation>任务</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="103"/>
-        <location filename="../../widgets/mainwindow.cpp" line="233"/>
+        <location filename="../../widgets/mainwindow.cpp" line="109"/>
+        <location filename="../../widgets/mainwindow.cpp" line="115"/>
+        <location filename="../../widgets/mainwindow.cpp" line="128"/>
         <source>Single Splitting</source>
         <translation>单图片分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="105"/>
-        <location filename="../../widgets/mainwindow.cpp" line="235"/>
+        <location filename="../../widgets/mainwindow.cpp" line="111"/>
+        <location filename="../../widgets/mainwindow.cpp" line="117"/>
+        <location filename="../../widgets/mainwindow.cpp" line="130"/>
         <source>Batch Splitting</source>
         <translation>批量分割</translation>
     </message>
     <message>
-        <location filename="../../widgets/mainwindow.cpp" line="107"/>
-        <location filename="../../widgets/mainwindow.cpp" line="236"/>
+        <location filename="../../widgets/mainwindow.cpp" line="113"/>
+        <location filename="../../widgets/mainwindow.cpp" line="118"/>
+        <location filename="../../widgets/mainwindow.cpp" line="132"/>
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
@@ -417,7 +420,7 @@ Top to Bottom</source>
 <context>
     <name>PopupMessage</name>
     <message>
-        <location filename="../../widgets/popupmessage.cpp" line="179"/>
+        <location filename="../../widgets/popupmessage.cpp" line="188"/>
         <source>Details</source>
         <translation>详细信息</translation>
     </message>
@@ -455,135 +458,135 @@ Top to Bottom</source>
         <translation>应用皮肤：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="199"/>
+        <location filename="../../ui/preferenceswidget.ui" line="188"/>
         <source>Output File Options</source>
         <translation>输出文件选项</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="205"/>
+        <location filename="../../ui/preferenceswidget.ui" line="194"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify output path:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;指定输出路径：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="212"/>
+        <location filename="../../ui/preferenceswidget.ui" line="201"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;For JPG images, this is 0 ~ 100, and the bigger, the higher quality outputs will have.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;对于JPG图片，取值为0 ~ 100，越大的值会使输出具有越高的质量。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="222"/>
+        <location filename="../../ui/preferenceswidget.ui" line="211"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="229"/>
+        <location filename="../../ui/preferenceswidget.ui" line="218"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Output picture format:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;输出图片格式：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="239"/>
+        <location filename="../../ui/preferenceswidget.ui" line="228"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Picture scaling:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;图片缩放：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="246"/>
+        <location filename="../../ui/preferenceswidget.ui" line="235"/>
         <source>Create sub-directories under the output path.</source>
         <translation>在输出目录下创建子文件夹。</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="260"/>
+        <location filename="../../ui/preferenceswidget.ui" line="249"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;(Default is 100.00%, that is, no scaling.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;%&amp;emsp;（默认为100.00%，即没有缩放。）&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="47"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="46"/>
         <source>System default</source>
         <translation>系统默认</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="56"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="185"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="55"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="176"/>
         <source>The path specified when clicking &quot;Save pictures&quot;</source>
         <translation>点击“保存图片”时指定的目录</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="58"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="186"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="57"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="177"/>
         <source>The same location as the source picture</source>
         <translation>与每个图片源目录相同</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="60"/>
-        <location filename="../../widgets/preferenceswidget.cpp" line="187"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="59"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="178"/>
         <source>The following path:</source>
         <translation>下列目录：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="287"/>
+        <location filename="../../ui/preferenceswidget.ui" line="276"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG Quality:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;JPG质量：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="304"/>
+        <location filename="../../ui/preferenceswidget.ui" line="293"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Saving to:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;保存至：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="336"/>
+        <location filename="../../ui/preferenceswidget.ui" line="325"/>
         <source>Grid Figure</source>
         <translation>网格图</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="385"/>
+        <location filename="../../ui/preferenceswidget.ui" line="374"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Line size:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;分割线宽：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="362"/>
+        <location filename="../../ui/preferenceswidget.ui" line="351"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Grid line color:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;网格线颜色：&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="417"/>
+        <location filename="../../ui/preferenceswidget.ui" line="406"/>
         <source>Select Color...</source>
         <translation>选择颜色...</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="355"/>
+        <location filename="../../ui/preferenceswidget.ui" line="344"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pixel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;像素&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="320"/>
+        <location filename="../../ui/preferenceswidget.ui" line="309"/>
         <source>Auto-generate an image with a grid illustrating how the pictures are splited.</source>
         <translation>自动生成一份带网格图标明图片分割情况的图片。</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="433"/>
+        <location filename="../../ui/preferenceswidget.ui" line="422"/>
         <source>File Name Conventions</source>
         <translation>文件命名规则</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="439"/>
+        <location filename="../../ui/preferenceswidget.ui" line="428"/>
         <source>Use the original file name as the prefix</source>
         <translation>使用源文件名作为前缀</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="446"/>
+        <location filename="../../ui/preferenceswidget.ui" line="435"/>
         <source>Use the specified prefix:</source>
         <translation>使用指定前缀：</translation>
     </message>
     <message>
-        <location filename="../../ui/preferenceswidget.ui" line="456"/>
+        <location filename="../../ui/preferenceswidget.ui" line="445"/>
         <source>[Row number * Column number] contained in files&apos; name.</source>
         <translation>在文件名中包含[行数 * 列数]。</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="120"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="119"/>
         <source>Select a color for grid lines</source>
         <translation>为网格线选取一种颜色</translation>
     </message>
     <message>
-        <location filename="../../widgets/preferenceswidget.cpp" line="154"/>
+        <location filename="../../widgets/preferenceswidget.cpp" line="153"/>
         <source>Choose a directory to save pictures.</source>
         <translation>选择保存图片的文件夹。</translation>
     </message>
@@ -622,32 +625,32 @@ Top to Bottom</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../app/main.cpp" line="127"/>
+        <location filename="../../app/main.cpp" line="126"/>
         <source>Error loading module: exchndl.dll.</source>
         <translation>加载模块exchndl.dll出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="88"/>
+        <location filename="../../app/main.cpp" line="87"/>
         <source>Error creating/opening configuration file.</source>
         <translation>创建或打开配置文件出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="100"/>
+        <location filename="../../app/main.cpp" line="99"/>
         <source>Error parsing configuration file: %1.</source>
         <translation>解析配置文件%1出错。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="112"/>
+        <location filename="../../app/main.cpp" line="111"/>
         <source>Configuration file&apos;s version doesn&apos;t match, try deleting it after backuping.</source>
         <translation>配置文件的版本不匹配，尝试备份后把文件删除。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="193"/>
+        <location filename="../../app/main.cpp" line="191"/>
         <source>Could NOT load skin %1.</source>
         <translation>无法加载皮肤%1。</translation>
     </message>
     <message>
-        <location filename="../../app/main.cpp" line="147"/>
+        <location filename="../../app/main.cpp" line="145"/>
         <source>Error writing to configuration file.</source>
         <translation>写入配置文件出错。</translation>
     </message>
@@ -660,6 +663,29 @@ Top to Bottom</source>
         <location filename="../../widgets/errorlogdialog.cpp" line="44"/>
         <source>Error writing to file %1.</source>
         <translation>写入文件%1时出错。</translation>
+    </message>
+</context>
+<context>
+    <name>QShortcut</name>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1265"/>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1266"/>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1267"/>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../3rdparty/qlementine/lib/src/utils/PrimitiveUtils.cpp" line="1268"/>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -861,49 +887,6 @@ Bottom to Top</source>
         <location filename="../../widgets/singlewidget.cpp" line="231"/>
         <source>No rule to split this picture</source>
         <translation>没有指定如何分割该图片</translation>
-    </message>
-</context>
-<context>
-    <name>SkinOptionsDialog</name>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="24"/>
-        <source>Skin name</source>
-        <translation>皮肤名称</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="25"/>
-        <source>Your skin name</source>
-        <translation>您的皮肤名称</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="26"/>
-        <source>Skin file name: </source>
-        <translation>皮肤文件名： </translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="27"/>
-        <source>&lt;em&gt;Your skin file&apos;s name&lt;/em&gt;</source>
-        <translation>&lt;em&gt;您的皮肤文件名&lt;/em&gt;</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="32"/>
-        <source>Theme</source>
-        <translation>主题</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="34"/>
-        <source>Light</source>
-        <translation>浅色</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="35"/>
-        <source>Dark</source>
-        <translation>深色</translation>
-    </message>
-    <message>
-        <location filename="../../widgets/skinoptionsdialog.cpp" line="45"/>
-        <source>Open a .skin file...</source>
-        <translation>打开.skin文件...</translation>
     </message>
 </context>
 </TS>
