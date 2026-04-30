@@ -91,13 +91,19 @@ void ThemeManager::setTitleBar(TitleBar *bar)
     m_titleBar = bar;
     if (theme() == Theme::Light) {
         m_titleBar->closeButton()->setIcon(ICON_CLOSE_LIGHT);
+        if (m_titleBar->maximizedState())
+            m_titleBar->maxButton()->setIcon(ICON_NORMAL_LIGHT);
+        else
+            m_titleBar->maxButton()->setIcon(ICON_MAX_LIGHT);
         m_titleBar->minButton()->setIcon(ICON_MIN_LIGHT);
-        m_titleBar->maxButton()->setIcon(ICON_MAX_LIGHT);
         m_filter->setLeaveIcon(ICON_CLOSE_LIGHT);
     } else {
         m_titleBar->closeButton()->setIcon(ICON_CLOSE_DARK);
+        if (m_titleBar->maximizedState())
+            m_titleBar->maxButton()->setIcon(ICON_NORMAL_DARK);
+        else
+            m_titleBar->maxButton()->setIcon(ICON_MAX_DARK);
         m_titleBar->minButton()->setIcon(ICON_MIN_DARK);
-        m_titleBar->maxButton()->setIcon(ICON_MAX_DARK);
         m_filter->setLeaveIcon(ICON_CLOSE_DARK);
     }
     m_titleBar->closeButton()->installEventFilter(m_filter);

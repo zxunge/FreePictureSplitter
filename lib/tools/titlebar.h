@@ -65,6 +65,8 @@ public:
     QPushButton *maxButton() const;
     QPushButton *minButton() const;
 
+    bool maximizedState() const;
+
 public slots:
     void maximized();
     void minimized();

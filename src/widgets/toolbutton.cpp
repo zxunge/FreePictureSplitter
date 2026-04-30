@@ -2,11 +2,14 @@
 // SPDX-FileCopyrightText: 2024-2026 zxunge
 
 #include "toolbutton.h"
+#include "utils/thememanager.h"
 
 #include <QPainter>
 #include <QEnterEvent>
 #include <QApplication>
 #include <QStyleOptionButton>
+
+#include <oclero/qlementine/style/Theme.hpp>
 
 ToolButton::ToolButton(QWidget *parent)
     : QToolButton(parent), m_animation(new QPropertyAnimation(this, "hoverFactor"))
@@ -20,6 +23,8 @@ ToolButton::ToolButton(QWidget *parent)
     m_animation->setDuration(200);
     connect(m_animation, &QPropertyAnimation::valueChanged, this,
             QOverload<>::of(&QWidget::update));
+    connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
+            &ToolButton::themeChanged);
 }
 
 void ToolButton::setNormalColor(const QColor &color)
@@ -100,4 +105,12 @@ QColor ToolButton::interpolateColor(const QColor &from, const QColor &to, qreal 
                   from.green() + (to.green() - from.green()) * ratio,
                   from.blue() + (to.blue() - from.blue()) * ratio,
                   from.alpha() + (to.alpha() - from.alpha()) * ratio);
+}
+
+void ToolButton::themeChanged(const oclero::qlementine::Theme *theme)
+{
+    setNormalColor(theme->neutralColor);
+    setHoverColor(theme->neutralColorHovered);
+    setPressedColor(theme->neutralColorPressed);
+    setCheckedColor(theme->neutralColorPressed);
 }

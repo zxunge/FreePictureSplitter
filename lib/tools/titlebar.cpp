@@ -302,6 +302,11 @@ QPushButton *TitleBar::minButton() const
     return m_btnMin;
 }
 
+bool TitleBar::maximizedState() const
+{
+    return window()->isMaximized();
+}
+
 QPushButton *TitleBar::maxButton() const
 {
     return m_btnMax;

@@ -65,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     setBackgroundColor(QColor(255, 255, 255, 255));
     setRadius(12);
     setBlurRadius(12);
-    ThemeManager::instance().setTitleBar(titleBar());
 
     // Version label & progress bar
     ClickableLabel *labMark = new ClickableLabel(m_twgt);
@@ -97,7 +96,9 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
 
     QFile layoutFile(Util::dataDir() % '/' % Util::LAYOUT_FILE_NAME);
     if (layoutFile.open(QIODevice::ReadOnly))
-        restoreGeometry(layoutFile.readAll());
+        FramelessWidget::restoreGeometry(layoutFile.readAll());
+
+    ThemeManager::instance().setTitleBar(titleBar());
 }
 
 void MainWindow::themeChanged(const oclero::qlementine::Theme *theme)
