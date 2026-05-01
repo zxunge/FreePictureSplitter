@@ -6,7 +6,6 @@ set_target_properties(FreePictureSplitter PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-add_subdirectory(3rdparty)
 add_subdirectory(app)
 add_subdirectory(core)
 add_subdirectory(resources)

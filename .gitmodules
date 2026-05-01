@@ -1,6 +1,6 @@
-[submodule "src/3rdparty/reflect-cpp"]
-	path = src/3rdparty/reflect-cpp
-	url = https://github.com/getml/reflect-cpp.git
-[submodule "src/3rdparty/qlementine"]
-	path = src/3rdparty/qlementine
+[submodule "lib/qlementine"]
+	path = lib/qlementine
 	url = https://github.com/zxunge/qlementine.git
+[submodule "lib/reflect-cpp"]
+	path = lib/reflect-cpp
+	url = https://github.com/getml/reflect-cpp.git
