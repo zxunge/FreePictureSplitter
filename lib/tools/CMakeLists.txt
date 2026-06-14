@@ -1,18 +1,15 @@
-qt_add_library(FramelessWidget STATIC
-    framelesswidget.cpp
-    framelesswidget.h
+qt_add_library(TitleBar STATIC
     titlebar.cpp
     titlebar.h
-    borderwidget.cpp
-    borderwidget.h
 )
 
-target_include_directories(FramelessWidget PUBLIC
+target_include_directories(TitleBar PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 )
 
-target_link_libraries(FramelessWidget PUBLIC
+target_link_libraries(TitleBar PUBLIC
     Qt::Widgets
     Qt::Core
     qlementine
+    WidgetFrame
 )

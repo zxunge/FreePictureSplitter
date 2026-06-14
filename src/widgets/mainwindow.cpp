@@ -9,6 +9,7 @@
 #include "fancytabwidget.h"
 #include "clickablelabel.h"
 #include "toolbutton.h"
+#include "titlebar.h"
 
 #include "utils/jsonconfigitems.h"
 #include "utils/stdpaths.h"
@@ -16,6 +17,7 @@
 #include "utils/globals.h"
 
 #include <QEvent>
+#include <QPainterPath>
 #include <QCloseEvent>
 #include <QToolButton>
 #include <QLabel>
@@ -27,18 +29,24 @@
 #include <QFile>
 #include <QVBoxLayout>
 #include <QProgressBar>
+#include <QTimer>
 
+#include <QWKWidgets/widgetwindowagent.h>
+#include <widgetframe/windowbutton.h>
 #include <oclero/qlementine/style/Theme.hpp>
 
 using namespace Qt::Literals::StringLiterals;
 using namespace Util;
 
-MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setAttribute(Qt::WA_DontCreateNativeAncestors);
+    setAttribute(Qt::WA_OpaquePaintEvent, false);
+    setAttribute(Qt::WA_TranslucentBackground);
 
     // Construct UI
     setMinimumSize({ 800, 600 });
+    setWindowTitle(App::Constants::APP_NAME);
     setCentralWidget(new QWidget(this));
 
     QVBoxLayout *verticalLayout = new QVBoxLayout(centralWidget());
@@ -47,10 +55,8 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     m_twgt = new FancyTabWidget(centralWidget());
     verticalLayout->addWidget(m_twgt);
 
-    m_statusBar = new QStatusBar();
     statusBar()->setSizeGripEnabled(false);
     statusBar()->setObjectName("statusBar");
-    verticalLayout->addWidget(m_statusBar);
     verticalLayout->setContentsMargins(5, 0, 5, 5);
 
     createTabs();
@@ -58,13 +64,6 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     setObjectName("MainWindow");
     centralWidget()->setObjectName("centralWidget");
     m_twgt->setObjectName("tabWidget");
-
-    setWindowTitle(qAppName());
-    titleBar()->setTitleText(qAppName());
-    titleBar()->setBackgroundColor(Qt::white);
-    setBackgroundColor(QColor(255, 255, 255, 255));
-    setRadius(12);
-    setBlurRadius(12);
 
     // Version label & progress bar
     ClickableLabel *labMark = new ClickableLabel(m_twgt);
@@ -91,19 +90,20 @@ MainWindow::MainWindow(QWidget *parent) : FramelessWidget(parent)
     statusBar()->addPermanentWidget(m_pbar);
     statusBar()->addPermanentWidget(tbtnTask);
 
+    installWindowAgent();
+
     connect(&Util::ThemeManager::instance(), &Util::ThemeManager::themeChanged, this,
             &MainWindow::themeChanged);
 
     QFile layoutFile(Util::dataDir() % '/' % Util::LAYOUT_FILE_NAME);
     if (layoutFile.open(QIODevice::ReadOnly))
-        FramelessWidget::restoreGeometry(layoutFile.readAll());
+        restoreGeometry(layoutFile.readAll());
 
-    ThemeManager::instance().setTitleBar(titleBar());
+    ThemeManager::instance().setTitleBar(m_titleBar);
 }
 
 void MainWindow::themeChanged(const oclero::qlementine::Theme *theme)
 {
-    Q_UNUSED(theme)
     if (ThemeManager::Theme::Dark == ThemeManager::instance().theme()) {
         m_twgt->setTab(0, QIcon(u":/controls/controls/32x32/image-dark.svg"_s),
                        tr("Single Splitting"));
@@ -132,6 +132,84 @@ void MainWindow::createTabs()
                       tr("Preferences"));
     m_twgt->setCurrentIndex(g_appConfig.dialog.lastEnteredIndex);
     m_twgt->setAutoFillBackground(true);
+}
+
+void MainWindow::installWindowAgent()
+{
+    // Setup window agent
+    m_windowAgent = new QWK::WidgetWindowAgent(this);
+    m_windowAgent->setup(this);
+
+    // Construct window bar
+    m_titleBar = new TitleBar();
+    auto titleLabel = new QLabel();
+    titleLabel->setAlignment(Qt::AlignCenter);
+    titleLabel->setObjectName(u"win-title-label"_s);
+
+    auto iconButton = new QWK::WindowButton();
+    iconButton->setObjectName(u"icon-button"_s);
+    iconButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+    auto pinButton = new QWK::WindowButton();
+    pinButton->setCheckable(true);
+    pinButton->setObjectName(QStringLiteral("pin-button"));
+    pinButton->setProperty("system-button", true);
+    pinButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+    m_titleBar->setHostWidget(this);
+    m_titleBar->setTitleLabel(titleLabel);
+    m_titleBar->setIconButton(iconButton);
+    m_titleBar->setPinButton(pinButton);
+    m_windowAgent->setTitleBar(m_titleBar);
+
+    // Set properties
+    m_windowAgent->setHitTestVisible(pinButton, true);
+    m_windowAgent->setSystemButton(QWK::WindowAgentBase::WindowIcon, iconButton);
+    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Minimize, m_titleBar->minButton());
+    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Maximize, m_titleBar->maxButton());
+    m_windowAgent->setSystemButton(QWK::WindowAgentBase::Close, m_titleBar->closeButton());
+    connect(m_titleBar, &TitleBar::pinRequested, this, [this, pinButton](bool pin) {
+        if (isHidden() || isMinimized() || isMaximized() || isFullScreen())
+            return;
+
+        setWindowFlag(Qt::WindowStaysOnTopHint, pin);
+        show();
+        pinButton->setChecked(pin);
+    });
+    connect(m_titleBar, &TitleBar::minimizeRequested, this, &QWidget::showMinimized);
+    connect(m_titleBar, &TitleBar::maximizeRequested, this, [this](bool max) {
+        if (max)
+            showMaximized();
+        else
+            showNormal();
+
+        // It's a Qt issue that if a QAbstractButton::clicked triggers a window's maximization,
+        // the button remains to be hovered until the mouse move. As a result, we need to
+        // manually send leave events to the button.
+        QWidget *widget = m_titleBar->maxButton();
+        if (!widget) {
+            return;
+        }
+        QTimer::singleShot(0, widget, [widget]() {
+            const QScreen *screen = widget->screen();
+            const QPoint globalPos = QCursor::pos(screen);
+            if (!QRect(widget->mapToGlobal(QPoint{ 0, 0 }), widget->size()).contains(globalPos)) {
+                QCoreApplication::postEvent(widget, new QEvent(QEvent::Leave));
+                if (widget->testAttribute(Qt::WA_Hover)) {
+                    const QPoint localPos = widget->mapFromGlobal(globalPos);
+                    const QPoint scenePos = widget->window()->mapFromGlobal(globalPos);
+                    static constexpr const auto oldPos = QPoint{ };
+                    const Qt::KeyboardModifiers modifiers = QGuiApplication::keyboardModifiers();
+                    const auto event = new QHoverEvent(QEvent::HoverLeave, scenePos, globalPos,
+                                                       oldPos, modifiers);
+                    Q_UNUSED(localPos);
+                    QCoreApplication::postEvent(widget, event);
+                }
+            }
+        });
+    });
+    connect(m_titleBar, &TitleBar::closeRequested, this, &QWidget::close);
+    setMenuWidget(m_titleBar);
 }
 
 void MainWindow::closeEvent(QCloseEvent *e)

@@ -24,7 +24,9 @@ target_link_libraries(FreePictureSplitter PRIVATE
     Qt::Svg
     Qt::Concurrent
     reflectcpp
-    FramelessWidget
+    QWKCore
+    QWKWidgets
+    TitleBar
     qlementine
 )
 

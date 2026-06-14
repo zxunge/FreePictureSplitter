@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  PVS-Studio:
+  clang-tidy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,11 +25,10 @@ jobs:
           modules: "qtimageformats"
           setup-python: false
           
-      - name: Build
+      - name: Export compile commands
         run: |
           # We do not want PCH to be enabled when building on GitHub Action
           cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DWITH_PCH=OFF -B build .
-          cmake --build build -j
           
       - name: Analyze
         uses: cpp-linter/cpp-linter-action@v2

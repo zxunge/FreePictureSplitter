@@ -91,29 +91,37 @@ void ThemeManager::setTitleBar(TitleBar *bar)
     m_titleBar = bar;
     if (theme() == Theme::Light) {
         m_titleBar->closeButton()->setIcon(ICON_CLOSE_LIGHT);
-        if (m_titleBar->maximizedState())
-            m_titleBar->maxButton()->setIcon(ICON_NORMAL_LIGHT);
-        else
-            m_titleBar->maxButton()->setIcon(ICON_MAX_LIGHT);
+        m_titleBar->maxButton()->setIcon(m_titleBar->maxButton()->isChecked() ? ICON_NORMAL_LIGHT
+                                                                              : ICON_MAX_LIGHT);
         m_titleBar->minButton()->setIcon(ICON_MIN_LIGHT);
+        m_titleBar->pinButton()->setIcon(m_titleBar->pinButton()->isChecked() ? ICON_PIN_FILL_LIGHT
+                                                                              : ICON_PIN_LIGHT);
         m_filter->setLeaveIcon(ICON_CLOSE_LIGHT);
     } else {
         m_titleBar->closeButton()->setIcon(ICON_CLOSE_DARK);
-        if (m_titleBar->maximizedState())
-            m_titleBar->maxButton()->setIcon(ICON_NORMAL_DARK);
-        else
-            m_titleBar->maxButton()->setIcon(ICON_MAX_DARK);
+        m_titleBar->maxButton()->setIcon(m_titleBar->maxButton()->isChecked() ? ICON_NORMAL_DARK
+                                                                              : ICON_MAX_DARK);
         m_titleBar->minButton()->setIcon(ICON_MIN_DARK);
+        m_titleBar->pinButton()->setIcon(m_titleBar->pinButton()->isChecked() ? ICON_PIN_FILL_DARK
+                                                                              : ICON_PIN_DARK);
         m_filter->setLeaveIcon(ICON_CLOSE_DARK);
     }
     m_titleBar->closeButton()->installEventFilter(m_filter);
-    connect(m_titleBar, &TitleBar::maximizedStateChanged, this, [this](bool is) {
-        if (is)
+    connect(m_titleBar->maxButton(), &QAbstractButton::toggled, this, [this](bool checked) {
+        if (checked)
             m_titleBar->maxButton()->setIcon(theme() == Theme::Dark ? ICON_NORMAL_DARK
                                                                     : ICON_NORMAL_LIGHT);
         else
             m_titleBar->maxButton()->setIcon(theme() == Theme::Dark ? ICON_MAX_DARK
                                                                     : ICON_MAX_LIGHT);
+    });
+    connect(m_titleBar->pinButton(), &QAbstractButton::toggled, this, [this](bool checked) {
+        if (checked)
+            m_titleBar->pinButton()->setIcon(theme() == Theme::Dark ? ICON_PIN_FILL_DARK
+                                                                    : ICON_PIN_FILL_LIGHT);
+        else
+            m_titleBar->pinButton()->setIcon(theme() == Theme::Dark ? ICON_PIN_DARK
+                                                                    : ICON_PIN_LIGHT);
     });
 }
 
