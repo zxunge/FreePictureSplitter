@@ -4,3 +4,6 @@
 [submodule "lib/reflect-cpp"]
 	path = lib/reflect-cpp
 	url = https://github.com/getml/reflect-cpp.git
+[submodule "lib/qwindowkit"]
+	path = lib/qwindowkit
+	url = https://github.com/stdware/qwindowkit.git

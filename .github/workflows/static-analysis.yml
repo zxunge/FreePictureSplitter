@@ -16,16 +16,6 @@ jobs:
           fetch-depth: 1
           submodules: recursive
           
-      - name: Install tools
-        run: |
-          wget -q -O - https://files.pvs-studio.com/etc/pubkey.txt \
-            | sudo apt-key add -
-          sudo wget -O /etc/apt/sources.list.d/viva64.list \
-            https://files.pvs-studio.com/etc/viva64.list
-          sudo apt update
-          sudo apt install -y pvs-studio build-essential
-          pvs-studio-analyzer credentials ${{ secrets.PVS_STUDIO_CREDENTIALS }}
-          
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
@@ -42,15 +32,14 @@ jobs:
           cmake --build build -j
           
       - name: Analyze
-        run: |
-          pvs-studio-analyzer analyze -f build/compile_commands.json -j --disableLicenseExpirationCheck
-          
-      - name: Convert report
-        run: |
-          plog-converter -t sarif -o pvs-report.sarif PVS-Studio.log -d V1042 -E ./src/3rdparty/
-          
-      - name: Publish report
-        uses: github/codeql-action/upload-sarif@v4
+        uses: cpp-linter/cpp-linter-action@v2
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          sarif_file: pvs-report.sarif
-          category: PVS-Studio
+          style: ''  # disable clang-format checks. 
+          database: ${{ github.workspace }}/build
+
+      - name: Fail fast?!
+        if: steps.linter.outputs.clang-tidy-checks-failed > 0
+        run: exit 1
