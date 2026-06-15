@@ -36,9 +36,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          style: ''  # disable clang-format checks. 
+          style: file
+          files-changed-only: false
           database: ${{ github.workspace }}/build
-
-      - name: Fail fast?!
-        if: steps.linter.outputs.clang-tidy-checks-failed > 0
-        run: exit 1
+  

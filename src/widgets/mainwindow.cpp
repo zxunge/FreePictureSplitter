@@ -41,8 +41,6 @@ using namespace Util;
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     setAttribute(Qt::WA_DontCreateNativeAncestors);
-    setAttribute(Qt::WA_OpaquePaintEvent, false);
-    setAttribute(Qt::WA_TranslucentBackground);
 
     // Construct UI
     setMinimumSize({ 800, 600 });
@@ -57,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     statusBar()->setSizeGripEnabled(false);
     statusBar()->setObjectName("statusBar");
-    verticalLayout->setContentsMargins(5, 0, 5, 5);
+    verticalLayout->setContentsMargins(0, 0, 0, 0);
 
     createTabs();
 
