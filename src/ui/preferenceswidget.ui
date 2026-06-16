@@ -229,13 +229,6 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="4">
-               <widget class="QCheckBox" name="chbSubDir">
-                <property name="text">
-                 <string>Create sub-directories under the output path.</string>
-                </property>
-               </widget>
-              </item>
               <item row="4" column="1">
                <widget class="QSpinBox" name="sbxQuality">
                 <property name="maximum">
@@ -264,7 +257,7 @@
                </widget>
               </item>
               <item row="2" column="1" colspan="3">
-               <widget class="QLineEdit" name="lePath">
+               <widget class="oclero::qlementine::LineEdit" name="lePath">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -294,11 +287,18 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="4">
+               <widget class="oclero::qlementine::Switch" name="swSubDir">
+                <property name="text">
+                 <string>Create sub-directories under the output path.</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="chbGrid">
+            <widget class="oclero::qlementine::Switch" name="swGrid">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -437,10 +437,10 @@
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QLineEdit" name="lePrefix"/>
+               <widget class="oclero::qlementine::LineEdit" name="lePrefix"/>
               </item>
               <item row="2" column="0" colspan="2">
-               <widget class="QCheckBox" name="chbNumberContained">
+               <widget class="oclero::qlementine::Switch" name="swNumberContained">
                 <property name="text">
                  <string>[Row number * Column number] contained in files' name.</string>
                 </property>
@@ -472,6 +472,18 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>oclero::qlementine::LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>oclero/qlementine/widgets/LineEdit.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>oclero::qlementine::Switch</class>
+   <extends>QPushButton</extends>
+   <header>oclero/qlementine/widgets/Switch.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/fps.qrc"/>
  </resources>

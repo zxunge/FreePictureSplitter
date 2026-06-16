@@ -102,7 +102,7 @@ BatchWidget::BatchWidget(QWidget *parent)
     ui->lePath->setEnabled(g_appConfig.options.batchOpt.savingTo == Util::SavingTo::specified);
     ui->lePath->setText(QString::fromStdString(g_appConfig.options.batchOpt.outPath));
     ui->btnChange->setEnabled(g_appConfig.options.batchOpt.savingTo == Util::SavingTo::specified);
-    ui->chbSubdir->setChecked(g_appConfig.options.batchOpt.subDir);
+    ui->swSubdir->setChecked(g_appConfig.options.batchOpt.subDir);
 
     // Signal connections
     connect(m_selModel, &QItemSelectionModel::selectionChanged, this,
@@ -242,8 +242,9 @@ void BatchWidget::openPictures()
 
 void BatchWidget::openFolder()
 {
-    QCheckBox *checkBox = new QCheckBox(tr("Iterate files in all sub-directories recursively."));
-    FileDialog dlg(checkBox, this);
+    oclero::qlementine::Switch *sw = new oclero::qlementine::Switch();
+    sw->setText(tr("Iterate files in all sub-directories recursively."));
+    FileDialog dlg(sw, this);
     dlg.setWindowTitle(tr("Choose a directory containing pictures."));
     dlg.fileDialog()->setDirectory(
             g_appConfig.dialog.lastOpenedDir.empty()
@@ -265,13 +266,13 @@ void BatchWidget::openFolder()
 
     QDirIterator it(QString::fromStdString(g_appConfig.dialog.lastOpenedDir), nameFilters,
                     QDir::Files | QDir::NoSymLinks,
-                    checkBox->isChecked() ? QDirIterator::Subdirectories
+                    sw->isChecked() ? QDirIterator::Subdirectories
                                           : QDirIterator::NoIteratorFlags);
     // A progress bar will be helpful for users
     MainWindow *wnd = Util::getMainWindow();
     wnd->progressBar()->setRange(0,
                                  Util::fileCount(it.path(), nameFilters,
-                                                 checkBox->isChecked()
+                                                 sw->isChecked()
                                                          ? QDirIterator::Subdirectories
                                                          : QDirIterator::NoIteratorFlags));
     wnd->progressBar()->setVisible(true);
@@ -390,7 +391,7 @@ void BatchWidget::startSplit()
             }
         }
         QString finalPath;
-        if (ui->chbSubdir->isChecked()) {
+        if (ui->swSubdir->isChecked()) {
             if (!QFileInfo::exists(baseDir.absolutePath() % '/' % imgDoc->baseName() % '/'))
                 if (!baseDir.mkdir(imgDoc->baseName())) {
                     QMessageBox::warning(

@@ -389,13 +389,6 @@ Top to Bottom</string>
    <item row="3" column="0" colspan="2">
     <widget class="QWidget" name="wgtOptions" native="true">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="2" colspan="2">
-       <widget class="QCheckBox" name="chbSubdir">
-        <property name="text">
-         <string>Create Sub-directories</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QComboBox" name="cbxLocation">
         <property name="sizePolicy">
@@ -457,7 +450,7 @@ Top to Bottom</string>
        </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="QLineEdit" name="lePath">
+       <widget class="oclero::qlementine::LineEdit" name="lePath">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -477,6 +470,13 @@ Top to Bottom</string>
         <property name="icon">
          <iconset resource="../resources/fps.qrc">
           <normaloff>:/controls/controls/20x20/image_split.svg</normaloff>:/controls/controls/20x20/image_split.svg</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" colspan="2">
+       <widget class="oclero::qlementine::Switch" name="swSubdir">
+        <property name="text">
+         <string>Create Sub-directories</string>
         </property>
        </widget>
       </item>
@@ -593,6 +593,18 @@ Top to Bottom</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>oclero::qlementine::LineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>oclero/qlementine/widgets/LineEdit.hpp</header>
+  </customwidget>
+  <customwidget>
+   <class>oclero::qlementine::Switch</class>
+   <extends>QPushButton</extends>
+   <header>oclero/qlementine/widgets/Switch.hpp</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../resources/fps.qrc"/>
  </resources>

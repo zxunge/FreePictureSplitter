@@ -60,7 +60,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
                              QVariant::fromValue(Util::SavingTo::specified));
     ui->cbxLocation->setCurrentIndex(
             ui->cbxLocation->findData(QVariant::fromValue(g_appConfig.options.outputOpt.savingTo)));
-    ui->chbSubDir->setChecked(g_appConfig.options.outputOpt.subDir);
+    ui->swSubDir->setChecked(g_appConfig.options.outputOpt.subDir);
     ui->lePath->setText(QString::fromStdString(g_appConfig.options.outputOpt.outPath));
     const QByteArrayList supportedImageFormats = QImageWriter::supportedImageFormats();
     Q_FOREACH (const QByteArray &imageFormat, supportedImageFormats) {
@@ -80,7 +80,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
                                 % QString::fromStdString(g_appConfig.options.gridOpt.colorRgb)
                                 % ";");
     ui->sbxLineSize->setValue(g_appConfig.options.gridOpt.lineSize);
-    ui->chbGrid->setChecked(g_appConfig.options.gridOpt.enabled);
+    ui->swGrid->setChecked(g_appConfig.options.gridOpt.enabled);
     ui->gbxGridFigure->setEnabled(g_appConfig.options.gridOpt.enabled);
 
     // ----- Naming Conventions -----
@@ -88,7 +88,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     ui->lePrefix->setEnabled(g_appConfig.options.nameOpt.prefMode == Util::Prefix::specified);
     ui->lePrefix->setText(QString::fromStdString(g_appConfig.options.nameOpt.prefix));
     ui->rbtnOriName->setChecked(g_appConfig.options.nameOpt.prefMode == Util::Prefix::same);
-    ui->chbNumberContained->setChecked(g_appConfig.options.nameOpt.rcContained);
+    ui->swNumberContained->setChecked(g_appConfig.options.nameOpt.rcContained);
     /************************************************/
 
     // Signal connections
@@ -111,7 +111,7 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
     connect(ui->lePath, &QLineEdit::textChanged, this, [&](const QString &text) {
         g_appConfig.options.outputOpt.outPath = text.toStdString();
     });
-    connect(ui->chbSubDir, &QCheckBox::toggled, this,
+    connect(ui->swSubDir, &oclero::qlementine::Switch::toggled, this,
             [&](bool checked) { g_appConfig.options.outputOpt.subDir = checked; });
     connect(ui->btnSelectColor, &QPushButton::clicked, this, [&, this]() {
         QColor color = QColorDialog::getColor(
@@ -131,14 +131,14 @@ PreferencesWidget::PreferencesWidget(QWidget *parent)
                 checked ? Util::Prefix::specified : Util::Prefix::same;
     });
     connect(ui->rbtnSpecified, &QRadioButton::toggled, ui->lePrefix, &QLineEdit::setEnabled);
-    connect(ui->chbGrid, &QCheckBox::toggled, ui->gbxGridFigure, &QGroupBox::setEnabled);
-    connect(ui->chbGrid, &QCheckBox::toggled, this,
+    connect(ui->swGrid, &oclero::qlementine::Switch::toggled, ui->gbxGridFigure, &QGroupBox::setEnabled);
+    connect(ui->swGrid, &oclero::qlementine::Switch::toggled, this,
             [&](bool checked) { g_appConfig.options.gridOpt.enabled = checked; });
     connect(ui->sbxLineSize, &QSpinBox::valueChanged, this,
             [&](int value) { g_appConfig.options.gridOpt.lineSize = value; });
     connect(ui->lePrefix, &QLineEdit::textChanged, this,
             [&](const QString &text) { g_appConfig.options.nameOpt.prefix = text.toStdString(); });
-    connect(ui->chbNumberContained, &QCheckBox::toggled, this,
+    connect(ui->swNumberContained, &oclero::qlementine::Switch::toggled, this,
             [&](bool checked) { g_appConfig.options.nameOpt.rcContained = checked; });
     connect(ui->tbtnAppearance, &QToolButton::toggled, this, [this](bool checked) {
         if (checked)

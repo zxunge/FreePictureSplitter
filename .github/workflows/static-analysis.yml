@@ -37,6 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           style: file
-          files-changed-only: false
+          files-changed-only: true
           database: ${{ github.workspace }}/build
+          tidy-checks: 'bugprone-*,clang-analyzer-*,concurrency-*,performance-*,readability-*,portability-*,modernize-*,cppcoreguidelines-*'
   
