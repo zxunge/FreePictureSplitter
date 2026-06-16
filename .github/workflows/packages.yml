@@ -32,7 +32,7 @@ jobs:
     - name: Build
       shell: pwsh
       env:
-        VCINSTALLDIR: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC'
+        VCINSTALLDIR: 'C:\Program Files\Microsoft Visual Studio\18\Enterprise\VC'
       run: |
         cd FreePictureSplitter/
         # We do not want PCH to be enabled when building on GitHub Action
