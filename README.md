@@ -11,6 +11,7 @@
 [![Welcome PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
 [![Stars](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)
 [![Repository Size](https://img.shields.io/github/repo-size/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter)
+[![cpp-linter](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml/badge.svg)](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml)
 <img alt="GitHub Created At" src="https://img.shields.io/github/created-at/zxunge/FreePictureSplitter?style=flat-square" />
 <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/zxunge/FreePictureSplitter?style=flat-square" />
 <img alt="GitHub Release" src="https://img.shields.io/github/v/release/zxunge/FreePictureSplitter?style=flat-square" />
@@ -19,6 +20,11 @@
 </div>
 
 English | [简体中文](docs/zh/index.md)
+
+## Downloads
+
+**Recommended**: The latest built package for FreePictureSplitter can be downloaded from [GitHub Actions](https://github.com/zxunge/FreePictureSplitter/actions/workflows/packages.yml).
+The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
 
 # Introduction
 
@@ -140,11 +146,6 @@ These settings affect all batch splitting tasks:
 - **Close Picture**: After processing one image, click **Close Picture** to free memory and return to a blank state.
 - **Error Log**: If the error log appears after batch processing, you can select multiple rows and press `Ctrl+C` to copy the details for troubleshooting.
 - **Grid Figure Use**: The automatically generated grid illustration is especially useful when you need to share your splitting layout with others or keep a “cutting blueprint” for reference.
-
-## Releases
-
-**Recommended**: The latest built package for FreePictureSplitter can be downloaded from [GitHub Actions](https://github.com/zxunge/FreePictureSplitter/actions/workflows/packages.yml).
-The latest release can be found at [Github Releases](https://github.com/zxunge/FreePictureSplitter/releases).
 
 ## Requirements
 

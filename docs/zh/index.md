@@ -11,6 +11,7 @@
 [![欢迎拉取请求](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/pulls)
 [![星标](https://img.shields.io/github/stars/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter/stargazers)
 [![仓库大小](https://img.shields.io/github/repo-size/zxunge/FreePictureSplitter?style=flat-square)](https://github.com/zxunge/FreePictureSplitter)
+[![cpp-linter](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml/badge.svg)](https://github.com/cpp-linter/cpp-linter-action/actions/workflows/cpp-linter.yml)
 <img alt="GitHub创建时间" src="https://img.shields.io/github/created-at/zxunge/FreePictureSplitter?style=flat-square" />
 <img alt="GitHub流行语言" src="https://img.shields.io/github/languages/top/zxunge/FreePictureSplitter?style=flat-square" />
 <img alt="GitHub发布" src="https://img.shields.io/github/v/release/zxunge/FreePictureSplitter?style=flat-square" />
