@@ -46,7 +46,7 @@ jobs:
           qt6-translations:p
 
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
@@ -78,7 +78,7 @@ jobs:
       uses: jwlawson/actions-setup-cmake@v2
       
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
@@ -107,7 +107,7 @@ jobs:
         setup-python: false
 
     - name: Checkout
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
       with:
         repository: zxunge/FreePictureSplitter
         path: FreePictureSplitter
