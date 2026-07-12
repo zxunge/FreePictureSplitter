@@ -50,6 +50,6 @@ message(STATUS "Found Qt " ${Qt6_VERSION})
 
 if(WITH_QT_GUI)
     message(STATUS "Qt GUI is enabled.")
-    add_subdirectory(src)
     add_subdirectory(lib)
+    add_subdirectory(src)
 endif()
