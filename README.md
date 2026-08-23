@@ -30,13 +30,9 @@ The latest release can be found at [Github Releases](https://github.com/zxunge/F
 
 Empower your photo processing by splitting to its best :zap:
 
-> [!IMPORTANT]  
-> As we have moved some files out of this repo's history,
-> please re-clone this repository if you have previously cloned it before 2025/07/08.
-
 ## Project Screenshot
 
-![screenshot](docs/en/screenshot.png "Screenshot")
+<video src="https://github.com/user-attachments/assets/9fb1b379-8886-48d7-ba73-f0d5fee6a3df" data-canonical-src="https://github.com/user-attachments/assets/9fb1b379-8886-48d7-ba73-f0d5fee6a3df" controls="controls" muted="muted" class="d-block rounded-bottom-2 border-top width-fit" style="max-height:640px; min-height: 200px"></video>
 
 > [!Note]
 > When we introduce something of FreePictureSplitter later, we refer to FPS version 3 and higher.
